@@ -120,36 +120,36 @@ export default function PreRegister() {
   const validateMobile = (mobile: string) => /^[0-9]{10}$/.test(mobile);
 
   // Kitchen Validation
-  const isKitchenStep1Valid = 
-    formData.kitchenName && 
-    formData.contactPerson && 
-    validateMobile(formData.mobile) && 
-    validateEmail(formData.email) && 
-    formData.vendorType && 
-    formData.priceRange && 
-    formData.state && 
+  const isKitchenStep1Valid =
+    formData.kitchenName &&
+    formData.contactPerson &&
+    validateMobile(formData.mobile) &&
+    validateEmail(formData.email) &&
+    formData.vendorType &&
+    formData.priceRange &&
+    formData.state &&
     formData.city;
 
-  const isKitchenStep2Valid = 
-    formData.fssaiStatus && 
+  const isKitchenStep2Valid =
+    formData.fssaiStatus &&
     (formData.fssaiStatus === "registered" ? formData.fssaiNumber.length === 14 : true) &&
-    formData.deliveryMethod && 
-    formData.timings.length > 0 && 
-    formData.visualStorytelling && 
+    formData.deliveryMethod &&
+    formData.timings.length > 0 &&
+    formData.visualStorytelling &&
     formData.whyJoin.length > 20;
 
   // Foodie Validation
-  const isFoodieStep1Valid = 
-    foodieData.fullName && 
-    validateMobile(foodieData.mobile) && 
-    validateEmail(foodieData.email) && 
-    foodieData.state && 
-    foodieData.city && 
+  const isFoodieStep1Valid =
+    foodieData.fullName &&
+    validateMobile(foodieData.mobile) &&
+    validateEmail(foodieData.email) &&
+    foodieData.state &&
+    foodieData.city &&
     foodieData.pincode.length === 6 &&
     foodieData.aboutSelf;
 
-  const isFoodieStep2Valid = 
-    foodieData.foodPreference && 
+  const isFoodieStep2Valid =
+    foodieData.foodPreference &&
     foodieData.lookingFor.length > 0;
 
   // Curated Major Cities Data to avoid "villages/small towns"
@@ -306,11 +306,11 @@ export default function PreRegister() {
 
       <main className="flex-1 w-full max-w-7xl mx-auto px-6 py-12 md:py-20 pt-24 md:pt-32">
         {/* Header Section */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <h1 className="text-4xl md:text-5xl font-semibold  text-[#0F172A] mb-4 tracking-tight">
-            Join the Community
+        <div className="text-center max-w-4xl mx-auto mb-16 px-4">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-[#0F172A] leading-[1.1] mb-6 tracking-tight">
+            Join the <span style={gradientText}>Community</span>
           </h1>
-          <p className="text-slate-500 text-lg">
+          <p className="text-slate-500 text-lg md:text-xl font-medium max-w-2xl mx-auto leading-relaxed">
             Pre-register now to get early access and exclusive launch benefits <br className="hidden md:block" />
             across the FreshBhoj platform.
           </p>
@@ -421,8 +421,13 @@ export default function PreRegister() {
           </div>
         ) : userType === "foodie" ? (
           /* Foodie Registration Flow */
-          <div className="max-w-4xl mx-auto">
-            <div className="bg-white rounded-[2.5rem] border border-slate-100 shadow-xl shadow-slate-200/50 overflow-hidden mb-12">
+          <div className="max-w-4xl mx-auto relative">
+            {/* Background Accent Gradients */}
+            <div className="absolute top-0 right-0 w-96 h-96 bg-[#BA2121] opacity-[0.03] blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#FF6B6B] opacity-[0.03] blur-[100px] rounded-full translate-y-1/2 -translate-x-1/2 pointer-events-none" />
+            
+            <div className="relative bg-white/80 backdrop-blur-2xl rounded-[2.5rem] border border-[#BA2121]/10 shadow-[0_30px_70px_-20px_rgba(186,33,33,0.15)] overflow-hidden mb-12">
+              <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white to-transparent opacity-80" />
               {/* Stepper Header */}
               <div className="p-8 md:p-10 border-b border-slate-50">
                 <div className="mb-6">
@@ -451,269 +456,269 @@ export default function PreRegister() {
               <div className="p-8 md:p-12 space-y-12">
                 {step === 1 ? (
                   <>
-                {/* Personal Information */}
-                <div>
-                  <div className="flex items-center gap-3 mb-8">
-                    <div className="w-10 h-10 rounded-xl bg-[#FFF5F5] flex items-center justify-center">
-                    <Image src="/personal.svg" alt="Personal" width={20} height={20} />
-                    </div>
-                    <h3 className="text-lg font-semibold text-[#0F172A]">Personal Information</h3>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                    {/* Personal Information */}
                     <div>
-                      <label className="block text-sm font-semibold text-[#0F172A] ml-1 mb-4">Full Name</label>
-                      <input
-                        type="text"
-                        placeholder="John Doe"
-                        className="w-full px-6 py-4 rounded-full bg-[#F8FAFC] border border-slate-100 focus:outline-none focus:ring-2 focus:ring-[#BA2121]/20 transition-all"
-                        value={foodieData.fullName}
-                        onChange={(e) => setFoodieData({ ...foodieData, fullName: e.target.value })}
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-semibold text-[#0F172A] ml-1 mb-4 flex justify-between">
-                        Mobile Number
-                        {foodieData.mobile && !validateMobile(foodieData.mobile) && (
-                          <span className="text-[10px] text-red-500 font-bold uppercase tracking-wider animate-pulse">Invalid (10 Digits)</span>
-                        )}
-                      </label>
-                      <input
-                        type="tel"
-                        maxLength={10}
-                        placeholder="9876543210"
-                        className={`w-full px-6 py-4 rounded-full bg-[#F8FAFC] border transition-all focus:outline-none focus:ring-2 ${foodieData.mobile && !validateMobile(foodieData.mobile) ? "border-red-200 focus:ring-red-100" : "border-slate-100 focus:ring-[#BA2121]/20"}`}
-                        value={foodieData.mobile}
-                        onChange={(e) => setFoodieData({ ...foodieData, mobile: e.target.value.replace(/\D/g, '').slice(0, 10) })}
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-semibold text-[#0F172A] ml-1 mb-4">Email ID</label>
-                    <input
-                      type="email"
-                      placeholder="example@freshbhoj.com"
-                      className="w-full px-6 py-4 rounded-full bg-[#F8FAFC] border border-slate-100 focus:outline-none focus:ring-2 focus:ring-[#BA2121]/20 transition-all"
-                      value={foodieData.email}
-                      onChange={(e) => setFoodieData({ ...foodieData, email: e.target.value })}
-                    />
-                  </div>
-                </div>
-
-                {/* Location Details */}
-                <div>
-                  <div className="flex items-center gap-3 mb-8">
-                    <Image src="/location.svg" alt="Location" width={20} height={20} />
-                    <h3 className="text-lg font-semibold text-[#0F172A]">Location Details</h3>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div>
-                      <label className="block text-sm font-semibold text-[#0F172A] ml-1 mb-4">State</label>
-                      <div className="relative">
-                        <select
-                          className="w-full px-5 py-4 rounded-full bg-[#F8FAFC] border border-slate-100 focus:outline-none focus:ring-2 focus:ring-[#BA2121]/20 transition-all appearance-none"
-                          value={foodieData.state}
-                          onChange={(e) => setFoodieData({ ...foodieData, state: e.target.value, city: "" })}
-                        >
-                          <option value="">Select State</option>
-                          {states.map((s) => (
-                            <option key={s.name} value={s.name}>{s.name}</option>
-                          ))}
-                        </select>
-                        <ChevronDown className="absolute right-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                      <div className="flex items-center gap-3 mb-8">
+                        <div className="w-10 h-10 rounded-xl bg-[#FFF5F5] flex items-center justify-center">
+                          <Image src="/personal.svg" alt="Personal" width={20} height={20} />
+                        </div>
+                        <h3 className="text-lg font-semibold text-[#0F172A]">Personal Information</h3>
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                        <div>
+                          <label className="block text-sm font-semibold text-[#0F172A] ml-1 mb-4">Full Name</label>
+                          <input
+                            type="text"
+                            placeholder="John Doe"
+                            className="w-full px-6 py-4 rounded-full input-gradient-focus"
+                            value={foodieData.fullName}
+                            onChange={(e) => setFoodieData({ ...foodieData, fullName: e.target.value })}
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-semibold text-[#0F172A] ml-1 mb-4 flex justify-between">
+                            Mobile Number
+                            {foodieData.mobile && !validateMobile(foodieData.mobile) && (
+                              <span className="text-[10px] text-red-500 font-bold uppercase tracking-wider animate-pulse">Invalid (10 Digits)</span>
+                            )}
+                          </label>
+                          <input
+                            type="tel"
+                            maxLength={10}
+                            placeholder="9876543210"
+                            className={`w-full px-6 py-4 rounded-full input-gradient-focus ${foodieData.mobile && !validateMobile(foodieData.mobile) ? "!border-red-200 !shadow-[0_0_0_4px_rgba(239,68,68,0.1)]" : ""}`}
+                            value={foodieData.mobile}
+                            onChange={(e) => setFoodieData({ ...foodieData, mobile: e.target.value.replace(/\D/g, '').slice(0, 10) })}
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-semibold text-[#0F172A] ml-1 mb-4">Email ID</label>
+                        <input
+                          type="email"
+                          placeholder="example@freshbhoj.com"
+                          className="w-full px-6 py-4 rounded-full input-gradient-focus"
+                          value={foodieData.email}
+                          onChange={(e) => setFoodieData({ ...foodieData, email: e.target.value })}
+                        />
                       </div>
                     </div>
-                    <div>
-                      <label className="block text-sm font-semibold text-[#0F172A] ml-1 mb-4">City</label>
-                      <div className="relative">
-                        <select
-                          className="w-full px-5 py-4 rounded-full bg-[#F8FAFC] border border-slate-100 focus:outline-none focus:ring-2 focus:ring-[#BA2121]/20 transition-all appearance-none disabled:opacity-50"
-                          value={foodieData.city}
-                          onChange={(e) => setFoodieData({ ...foodieData, city: e.target.value })}
-                          disabled={!foodieData.state}
-                        >
-                          <option value="">Select City</option>
-                          {cities.map((c: string) => (
-                             <option key={c} value={c}>{c}</option>
-                           ))}
-                        </select>
-                        <ChevronDown className="absolute right-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
-                      </div>
-                    </div>
-                    <div>
-                      <label className="block text-sm font-semibold text-[#0F172A] ml-1 mb-4">Area / Pincode</label>
-                      <input
-                        type="text"
-                        placeholder="400001"
-                        className="w-full px-6 py-4 rounded-full bg-[#F8FAFC] border border-slate-100 focus:outline-none focus:ring-2 focus:ring-[#BA2121]/20 transition-all"
-                        value={foodieData.pincode}
-                        onChange={(e) => setFoodieData({ ...foodieData, pincode: e.target.value })}
-                      />
-                    </div>
-                  </div>
-                </div>
 
-                {/* About Yourself */}
-                <div>
-                  <div className="flex items-center gap-3 mb-8">
-                    <div className="w-10 h-10 rounded-xl bg-[#FFF5F5] flex items-center justify-center">
-                    <Image src="/about-yourself.svg" alt="About" width={20} height={20} />
-                    </div>
-                    <h3 className="text-lg font-semibold text-[#0F172A]">Tell us about yourself</h3>
-                  </div>
-                  <div className="space-y-4">
-                    <label className="block text-sm text-slate-500 ml-1 mb-4">Who are you?</label>
-                    <div className="flex flex-wrap gap-3">
-                      {["Student", "Working Professional", "Family", "Other"].map((item) => (
-                        <button
-                          key={item}
-                          onClick={() => setFoodieData({ ...foodieData, aboutSelf: item })}
-                          className={`px-6 py-3 rounded-full font-semibold text-sm transition-all border-2 ${foodieData.aboutSelf === item
-                            ? "border-[#BA2121] bg-[#FFF5F5]"
-                            : "border-slate-100 text-slate-500 hover:border-slate-200"
-                            }`}
-                          style={foodieData.aboutSelf === item ? gradientText : {}}
-                        >
-                          <div className="flex items-center gap-2">
-                            {foodieData.aboutSelf === item && <Image src="/select.svg" alt="Selected" width={14} height={14} />}
-                            {item}
+                    {/* Location Details */}
+                    <div>
+                      <div className="flex items-center gap-3 mb-8">
+                        <Image src="/location.svg" alt="Location" width={20} height={20} />
+                        <h3 className="text-lg font-semibold text-[#0F172A]">Location Details</h3>
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div>
+                          <label className="block text-sm font-semibold text-[#0F172A] ml-1 mb-4">State</label>
+                          <div className="relative">
+                            <select
+                              className="w-full px-5 py-4 rounded-full input-gradient-focus appearance-none"
+                              value={foodieData.state}
+                              onChange={(e) => setFoodieData({ ...foodieData, state: e.target.value, city: "" })}
+                            >
+                              <option value="">Select State</option>
+                              {states.map((s) => (
+                                <option key={s.name} value={s.name}>{s.name}</option>
+                              ))}
+                            </select>
+                            <ChevronDown className="absolute right-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
                           </div>
-                        </button>
-                      ))}
+                        </div>
+                        <div>
+                          <label className="block text-sm font-semibold text-[#0F172A] ml-1 mb-4">City</label>
+                          <div className="relative">
+                            <select
+                              className="w-full px-5 py-4 rounded-full input-gradient-focus appearance-none disabled:opacity-50"
+                              value={foodieData.city}
+                              onChange={(e) => setFoodieData({ ...foodieData, city: e.target.value })}
+                              disabled={!foodieData.state}
+                            >
+                              <option value="">Select City</option>
+                              {cities.map((c: string) => (
+                                <option key={c} value={c}>{c}</option>
+                              ))}
+                            </select>
+                            <ChevronDown className="absolute right-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                          </div>
+                        </div>
+                        <div>
+                          <label className="block text-sm font-semibold text-[#0F172A] ml-1 mb-4">Area / Pincode</label>
+                          <input
+                            type="text"
+                            placeholder="400001"
+                            className="w-full px-6 py-4 rounded-full input-gradient-focus"
+                            value={foodieData.pincode}
+                            onChange={(e) => setFoodieData({ ...foodieData, pincode: e.target.value })}
+                          />
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
 
-                {/* Step 1 Button */}
-                <div className="pt-6">
-                  <button
-                    onClick={nextStep}
-                    disabled={!isFoodieStep1Valid}
-                    className={`w-full py-5 rounded-3xl text-white font-semibold text-xl shadow-[0_15px_30px_-5px_rgba(186,33,33,0.3)] transition-all flex items-center justify-center gap-3 group ${!isFoodieStep1Valid ? "opacity-50 cursor-not-allowed bg-slate-300 shadow-none scale-100" : "hover:scale-[1.02] active:scale-95"}`}
-                    style={isFoodieStep1Valid ? gradientBg : {}}
-                  >
-                    Next Step <ChevronRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
-                  </button>
-                </div>
+                    {/* About Yourself */}
+                    <div>
+                      <div className="flex items-center gap-3 mb-8">
+                        <div className="w-10 h-10 rounded-xl bg-[#FFF5F5] flex items-center justify-center">
+                          <Image src="/about-yourself.svg" alt="About" width={20} height={20} />
+                        </div>
+                        <h3 className="text-lg font-semibold text-[#0F172A]">Tell us about yourself</h3>
+                      </div>
+                      <div className="space-y-4">
+                        <label className="block text-sm text-slate-500 ml-1 mb-4">Who are you?</label>
+                        <div className="flex flex-wrap gap-3">
+                          {["Student", "Working Professional", "Family", "Other"].map((item) => (
+                            <button
+                              key={item}
+                              onClick={() => setFoodieData({ ...foodieData, aboutSelf: item })}
+                              className={`px-6 py-3 rounded-full font-semibold text-sm transition-all border-2 ${foodieData.aboutSelf === item
+                                ? "border-[#BA2121] bg-[#FFF5F5]"
+                                : "border-slate-100 text-slate-500 hover:border-slate-200"
+                                }`}
+                              style={foodieData.aboutSelf === item ? gradientText : {}}
+                            >
+                              <div className="flex items-center gap-2">
+                                {foodieData.aboutSelf === item && <Image src="/select.svg" alt="Selected" width={14} height={14} />}
+                                {item}
+                              </div>
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Step 1 Button */}
+                    <div className="pt-6">
+                      <button
+                        onClick={nextStep}
+                        disabled={!isFoodieStep1Valid}
+                        className={`w-full py-5 rounded-3xl text-white font-semibold text-xl shadow-[0_15px_30px_-5px_rgba(186,33,33,0.3)] transition-all flex items-center justify-center gap-3 group ${!isFoodieStep1Valid ? "opacity-50 cursor-not-allowed bg-slate-300 shadow-none scale-100" : "hover:scale-[1.02] active:scale-95"}`}
+                        style={isFoodieStep1Valid ? gradientBg : {}}
+                      >
+                        Next Step <ChevronRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+                      </button>
+                    </div>
                   </>
                 ) : (
                   <>
-                {/* Taste Section */}
-                <div className="animate-in fade-in slide-in-from-right-10 duration-500">
-                  <div className="flex items-center gap-3 mb-8">
-                    <div className="w-10 h-10 rounded-xl bg-[#FFF5F5] flex items-center justify-center">
-                    <Image src="/taste.svg" alt="Taste" width={20} height={20} />
-                    </div>
-                    <h3 className="text-lg font-semibold text-[#0F172A]">Tell us your taste</h3>
-                  </div>
+                    {/* Taste Section */}
+                    <div className="animate-in fade-in slide-in-from-right-10 duration-500">
+                      <div className="flex items-center gap-3 mb-8">
+                        <div className="w-10 h-10 rounded-xl bg-[#FFF5F5] flex items-center justify-center">
+                          <Image src="/taste.svg" alt="Taste" width={20} height={20} />
+                        </div>
+                        <h3 className="text-lg font-semibold text-[#0F172A]">Tell us your taste</h3>
+                      </div>
 
-                  <div className="space-y-10">
-                    <div>
-                      <label className="block text-sm text-slate-500 ml-1 mb-6">Food Preference</label>
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {[
-                          { id: "veg", label: "Veg", icon: "/veg.svg" },
-                          { id: "non-veg", label: "Non-Veg", icon: "/non-veg.svg" },
-                          { id: "both", label: "Both", icon: "/both.svg" }
-                        ].map((pref) => (
-                          <button
-                            key={pref.id}
-                            onClick={() => setFoodieData({ ...foodieData, foodPreference: pref.id })}
-                            className={`p-6 rounded-[1.5rem] border-2 transition-all flex flex-col items-center gap-4 text-center ${foodieData.foodPreference === pref.id
-                              ? "border-[#BA2121] bg-[#BA2121]/5 shadow-md shadow-[#BA2121]/5"
-                              : "border-slate-100 bg-white hover:border-slate-200"
-                              }`}
-                          >
-                            <Image src={pref.icon} alt={pref.label} width={28} height={28} />
-                            <div className="font-semibold text-[#0F172A] flex items-center gap-2">
-                              {foodieData.foodPreference === pref.id && <Image src="/select.svg" alt="Selected" width={14} height={14} />}
-                              {pref.label}
-                            </div>
-                          </button>
-                        ))}
+                      <div className="space-y-10">
+                        <div>
+                          <label className="block text-sm text-slate-500 ml-1 mb-6">Food Preference</label>
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            {[
+                              { id: "veg", label: "Veg", icon: "/veg.svg" },
+                              { id: "non-veg", label: "Non-Veg", icon: "/non-veg.svg" },
+                              { id: "both", label: "Both", icon: "/both.svg" }
+                            ].map((pref) => (
+                              <button
+                                key={pref.id}
+                                onClick={() => setFoodieData({ ...foodieData, foodPreference: pref.id })}
+                                className={`p-6 rounded-[1.5rem] border-2 transition-all flex flex-col items-center gap-4 text-center ${foodieData.foodPreference === pref.id
+                                  ? "border-[#BA2121] bg-[#BA2121]/5 shadow-md shadow-[#BA2121]/5"
+                                  : "border-slate-100 bg-white hover:border-slate-200"
+                                  }`}
+                              >
+                                <Image src={pref.icon} alt={pref.label} width={28} height={28} />
+                                <div className="font-semibold text-[#0F172A] flex items-center gap-2">
+                                  {foodieData.foodPreference === pref.id && <Image src="/select.svg" alt="Selected" width={14} height={14} />}
+                                  {pref.label}
+                                </div>
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+
+                        <div>
+                          <label className="block text-sm text-slate-500 ml-1 mb-6">Looking for</label>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {[
+                              { id: "Daily Tiffin", icon: "/daily-tiffin.svg" },
+                              { id: "Occasional", icon: "/occasional.svg" },
+                              { id: "Street Food", icon: "/street-food.svg" },
+                              { id: "Home-Style", icon: "/home.svg" }
+                            ].map((item) => (
+                              <button
+                                key={item.id}
+                                onClick={() => {
+                                  const newLooking = foodieData.lookingFor.includes(item.id)
+                                    ? foodieData.lookingFor.filter(i => i !== item.id)
+                                    : [...foodieData.lookingFor, item.id];
+                                  setFoodieData({ ...foodieData, lookingFor: newLooking });
+                                }}
+                                className={`px-6 py-4 rounded-2xl font-semibold text-sm transition-all border-2 flex items-center justify-between ${foodieData.lookingFor.includes(item.id)
+                                  ? "border-[#BA2121] bg-[#BA2121]/5 shadow-sm shadow-[#BA2121]/5"
+                                  : "border-slate-100 text-slate-500 hover:border-slate-200 bg-white"
+                                  }`}
+                              >
+                                <div className="flex items-center gap-3">
+                                  <Image src={item.icon} alt={item.id} width={20} height={20} />
+                                  <span className={foodieData.lookingFor.includes(item.id) ? "" : "text-slate-500"} style={foodieData.lookingFor.includes(item.id) ? gradientText : {}}>{item.id}</span>
+                                </div>
+                                {foodieData.lookingFor.includes(item.id) ? (
+                                  <Image src="/select.svg" alt="Selected" width={20} height={20} />
+                                ) : (
+                                  <div className="w-5 h-5 rounded-full border border-slate-200" />
+                                )}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
                       </div>
                     </div>
 
-                    <div>
-                      <label className="block text-sm text-slate-500 ml-1 mb-6">Looking for</label>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {[
-                          { id: "Daily Tiffin", icon: "/daily-tiffin.svg" },
-                          { id: "Occasional", icon: "/occasional.svg" },
-                          { id: "Street Food", icon: "/street-food.svg" },
-                          { id: "Home-Style", icon: "/home.svg" }
-                        ].map((item) => (
-                          <button
-                            key={item.id}
-                            onClick={() => {
-                              const newLooking = foodieData.lookingFor.includes(item.id)
-                                ? foodieData.lookingFor.filter(i => i !== item.id)
-                                : [...foodieData.lookingFor, item.id];
-                              setFoodieData({ ...foodieData, lookingFor: newLooking });
-                            }}
-                            className={`px-6 py-4 rounded-2xl font-semibold text-sm transition-all border-2 flex items-center justify-between ${foodieData.lookingFor.includes(item.id)
-                              ? "border-[#BA2121] bg-[#BA2121]/5 shadow-sm shadow-[#BA2121]/5"
-                              : "border-slate-100 text-slate-500 hover:border-slate-200 bg-white"
-                              }`}
-                          >
-                            <div className="flex items-center gap-3">
-                              <Image src={item.icon} alt={item.id} width={20} height={20} />
-                              <span className={foodieData.lookingFor.includes(item.id) ? "" : "text-slate-500"} style={foodieData.lookingFor.includes(item.id) ? gradientText : {}}>{item.id}</span>
-                            </div>
-                            {foodieData.lookingFor.includes(item.id) ? (
-                              <Image src="/select.svg" alt="Selected" width={20} height={20} />
-                            ) : (
-                              <div className="w-5 h-5 rounded-full border border-slate-200" />
-                            )}
-                          </button>
-                        ))}
-                      </div>
+                    {/* Notify Me */}
+                    <div className="flex items-center gap-3 pt-4">
+                      <button
+                        onClick={() => setFoodieData({ ...foodieData, notifyMe: !foodieData.notifyMe })}
+                        className="flex items-center gap-4 text-slate-500 font-medium hover:text-[#0F172A] transition-colors"
+                      >
+                        {foodieData.notifyMe ? (
+                          <Image src="/select.svg" alt="Checked" width={24} height={24} />
+                        ) : (
+                          <div className="w-6 h-6 rounded-full border-2 border-slate-200" />
+                        )}
+                        Notify me when FreshBhoj launches in my city
+                      </button>
                     </div>
-                  </div>
-                </div>
 
-                {/* Notify Me */}
-                <div className="flex items-center gap-3 pt-4">
-                  <button
-                    onClick={() => setFoodieData({ ...foodieData, notifyMe: !foodieData.notifyMe })}
-                    className="flex items-center gap-4 text-slate-500 font-medium hover:text-[#0F172A] transition-colors"
-                  >
-                    {foodieData.notifyMe ? (
-                      <Image src="/select.svg" alt="Checked" width={24} height={24} />
-                    ) : (
-                      <div className="w-6 h-6 rounded-full border-2 border-slate-200" />
-                    )}
-                    Notify me when FreshBhoj launches in my city
-                  </button>
-                </div>
-
-                  {/* Submit Button */}
-                  <div className="flex flex-col gap-6 pt-12 border-t border-slate-50">
-                  {err && <p className="text-sm text-red-500 font-semibold bg-red-50 py-3 px-4 rounded-xl text-center">{err}</p>}
-                  <div className="flex flex-row items-center gap-4 md:gap-8">
-                    <button
-                      onClick={prevStep}
-                      disabled={isSubmitting}
-                      className="flex items-center gap-2 text-slate-400 font-semibold text-sm hover:text-[#0F172A] transition-colors whitespace-nowrap"
-                    >
-                      <ChevronLeft className="w-5 h-5" /> Back
-                    </button>
-                    <button
-                      onClick={handleFoodieSubmit}
-                      disabled={isSubmitting || !isFoodieStep2Valid}
-                      className={`flex-1 py-4 md:py-5 rounded-3xl text-white font-semibold text-lg md:text-xl shadow-[0_15px_30px_-5px_rgba(186,33,33,0.3)] transition-all flex items-center justify-center gap-2 md:gap-3 ${isSubmitting || !isFoodieStep2Valid ? "opacity-50 cursor-not-allowed bg-slate-300 shadow-none scale-100" : "hover:scale-[1.02] active:scale-95"}`}
-                      style={!isSubmitting && isFoodieStep2Valid ? gradientBg : {}}
-                    >
-                      {isSubmitting ? (
-                        <>Joining... <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" /></>
-                      ) : (
-                        <>Join Waitlist <CheckCircle2 className="w-5 md:w-6 h-5 md:h-6" /></>
-                      )}
-                    </button>
-                  </div>
-                  <p className="text-xs text-slate-400 text-center">
-                    By joining, you agree to our Terms of Service and Privacy Policy.
-                  </p>
-                </div>
+                    {/* Submit Button */}
+                    <div className="flex flex-col gap-6 pt-12 border-t border-slate-50">
+                      {err && <p className="text-sm text-red-500 font-semibold bg-red-50 py-3 px-4 rounded-xl text-center">{err}</p>}
+                      <div className="flex flex-row items-center gap-4 md:gap-8">
+                        <button
+                          onClick={prevStep}
+                          disabled={isSubmitting}
+                          className="flex items-center gap-2 text-slate-400 font-semibold text-sm hover:text-[#0F172A] transition-colors whitespace-nowrap"
+                        >
+                          <ChevronLeft className="w-5 h-5" /> Back
+                        </button>
+                        <button
+                          onClick={handleFoodieSubmit}
+                          disabled={isSubmitting || !isFoodieStep2Valid}
+                          className={`flex-1 py-4 md:py-5 rounded-3xl text-white font-semibold text-lg md:text-xl shadow-[0_15px_30px_-5px_rgba(186,33,33,0.3)] transition-all flex items-center justify-center gap-2 md:gap-3 ${isSubmitting || !isFoodieStep2Valid ? "opacity-50 cursor-not-allowed bg-slate-300 shadow-none scale-100" : "hover:scale-[1.02] active:scale-95"}`}
+                          style={!isSubmitting && isFoodieStep2Valid ? gradientBg : {}}
+                        >
+                          {isSubmitting ? (
+                            <>Joining... <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" /></>
+                          ) : (
+                            <>Join Waitlist <CheckCircle2 className="w-5 md:w-6 h-5 md:h-6" /></>
+                          )}
+                        </button>
+                      </div>
+                      <p className="text-xs text-slate-400 text-center">
+                        By joining, you agree to our Terms of Service and Privacy Policy.
+                      </p>
+                    </div>
                   </>
                 )}
               </div>
@@ -721,8 +726,13 @@ export default function PreRegister() {
           </div>
         ) : (
           /* Kitchen Registration Flow */
-          <div className="max-w-4xl mx-auto">
-            <div className="bg-white rounded-[2.5rem] border border-slate-100 shadow-xl shadow-slate-200/50 overflow-hidden mb-12">
+          <div className="max-w-4xl mx-auto relative">
+            {/* Background Accent Gradients */}
+            <div className="absolute top-0 right-0 w-96 h-96 bg-[#BA2121] opacity-[0.03] blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#FF6B6B] opacity-[0.03] blur-[100px] rounded-full translate-y-1/2 -translate-x-1/2 pointer-events-none" />
+            
+            <div className="relative bg-white/80 backdrop-blur-2xl rounded-[2.5rem] border border-[#BA2121]/10 shadow-[0_30px_70px_-20px_rgba(186,33,33,0.15)] overflow-hidden mb-12">
+              <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white to-transparent opacity-80" />
               {/* Stepper Header */}
               <div className="p-8 md:p-10 border-b border-slate-50">
                 <div className="mb-6">
@@ -766,7 +776,7 @@ export default function PreRegister() {
                           <input
                             type="text"
                             placeholder="e.g. Grandma's Spices"
-                            className="w-full px-5 py-4 rounded-full bg-[#F8FAFC] border border-slate-100 focus:outline-none focus:ring-2 focus:ring-[#BA2121]/20 transition-all"
+                            className="w-full px-5 py-4 rounded-full input-gradient-focus"
                             value={formData.kitchenName}
                             onChange={(e) => setFormData({ ...formData, kitchenName: e.target.value })}
                           />
@@ -776,12 +786,12 @@ export default function PreRegister() {
                           <input
                             type="text"
                             placeholder="Your Full Name"
-                            className="w-full px-5 py-4 rounded-full bg-[#F8FAFC] border border-slate-100 focus:outline-none focus:ring-2 focus:ring-[#BA2121]/20 transition-all"
+                            className="w-full px-5 py-4 rounded-full input-gradient-focus"
                             value={formData.contactPerson}
                             onChange={(e) => setFormData({ ...formData, contactPerson: e.target.value })}
                           />
                         </div>
-                         <div>
+                        <div>
                           <label className="block text-sm font-semibold text-[#0F172A] ml-1 mb-4 flex justify-between">
                             Mobile Number
                             {formData.mobile && !validateMobile(formData.mobile) && (
@@ -792,7 +802,7 @@ export default function PreRegister() {
                             type="tel"
                             maxLength={10}
                             placeholder="9876543210"
-                            className={`w-full px-5 py-4 rounded-full bg-[#F8FAFC] border transition-all focus:outline-none focus:ring-2 ${formData.mobile && !validateMobile(formData.mobile) ? "border-red-200 focus:ring-red-100" : "border-slate-100 focus:ring-[#BA2121]/20"}`}
+                            className={`w-full px-5 py-4 rounded-full input-gradient-focus ${formData.mobile && !validateMobile(formData.mobile) ? "!border-red-200 !shadow-[0_0_0_4px_rgba(239,68,68,0.1)]" : ""}`}
                             value={formData.mobile}
                             onChange={(e) => setFormData({ ...formData, mobile: e.target.value.replace(/\D/g, '').slice(0, 10) })}
                           />
@@ -802,7 +812,7 @@ export default function PreRegister() {
                           <input
                             type="email"
                             placeholder="kitchen@example.com"
-                            className="w-full px-5 py-4 rounded-full bg-[#F8FAFC] border border-slate-100 focus:outline-none focus:ring-2 focus:ring-[#BA2121]/20 transition-all"
+                            className="w-full px-5 py-4 rounded-full input-gradient-focus"
                             value={formData.email}
                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                           />
@@ -866,7 +876,7 @@ export default function PreRegister() {
                             <label className="block text-sm font-semibold text-[#0F172A] ml-1 mb-4">State / Union Territory</label>
                             <div className="relative">
                               <select
-                                className="w-full px-5 py-4 rounded-full bg-[#F8FAFC] border border-slate-100 focus:outline-none focus:ring-2 focus:ring-[#BA2121]/20 transition-all appearance-none cursor-pointer"
+                                className="w-full px-5 py-4 rounded-full input-gradient-focus appearance-none cursor-pointer"
                                 value={formData.state}
                                 onChange={(e) => {
                                   setFormData({ ...formData, state: e.target.value, city: "" });
@@ -884,15 +894,15 @@ export default function PreRegister() {
                             <label className="block text-sm font-semibold text-[#0F172A] ml-1 mb-4">City</label>
                             <div className="relative">
                               <select
-                                className="w-full px-5 py-4 rounded-full bg-[#F8FAFC] border border-slate-100 focus:outline-none focus:ring-2 focus:ring-[#BA2121]/20 transition-all appearance-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                                className="w-full px-5 py-4 rounded-full input-gradient-focus appearance-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                                 value={formData.city}
                                 onChange={(e) => setFormData({ ...formData, city: e.target.value })}
                                 disabled={!formData.state || loadingCities}
                               >
                                 <option value="">{loadingCities ? "Loading Cities..." : "Select City"}</option>
-                                 {cities.map((c: string) => (
-                                   <option key={c} value={c}>{c}</option>
-                                 ))}
+                                {cities.map((c: string) => (
+                                  <option key={c} value={c}>{c}</option>
+                                ))}
                               </select>
                               <ChevronDown className="absolute right-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 pointer-events-none" />
                             </div>
@@ -901,7 +911,7 @@ export default function PreRegister() {
                       </div>
                     </div>
 
-                     {/* Step 1 Button */}
+                    {/* Step 1 Button */}
                     <div className="pt-6">
                       <button
                         onClick={nextStep}
@@ -973,7 +983,7 @@ export default function PreRegister() {
                           <input
                             type="text"
                             placeholder="e.g. 12345678901234"
-                            className="w-full px-5 py-4 rounded-full bg-[#F8FAFC] border border-slate-100 focus:outline-none focus:ring-2 focus:ring-[#BA2121]/20 transition-all"
+                            className="w-full px-5 py-4 rounded-full input-gradient-focus"
                             value={formData.fssaiNumber}
                             onChange={(e) => setFormData({ ...formData, fssaiNumber: e.target.value })}
                           />
@@ -983,7 +993,7 @@ export default function PreRegister() {
                           <input
                             type="text"
                             placeholder="22AAAAA0000A1Z5"
-                            className="w-full px-5 py-4 rounded-full bg-[#F8FAFC] border border-slate-100 focus:outline-none focus:ring-2 focus:ring-[#BA2121]/20 transition-all"
+                            className="w-full px-5 py-4 rounded-full input-gradient-focus"
                             value={formData.gstNumber}
                             onChange={(e) => setFormData({ ...formData, gstNumber: e.target.value })}
                           />
@@ -1133,7 +1143,7 @@ export default function PreRegister() {
                         <textarea
                           rows={4}
                           placeholder="Tell us about your culinary journey and your vision for your kitchen..."
-                          className="w-full px-6 py-6 rounded-[2rem] bg-white border border-slate-100 focus:outline-none focus:ring-2 focus:ring-[#BA2121]/20 transition-all resize-none shadow-sm placeholder:text-slate-400"
+                          className="w-full px-6 py-6 rounded-[2rem] input-gradient-focus resize-none placeholder:text-slate-400"
                           value={formData.whyJoin}
                           onChange={(e) => setFormData({ ...formData, whyJoin: e.target.value })}
                         />
@@ -1155,7 +1165,7 @@ export default function PreRegister() {
                         >
                           <ChevronLeft className="w-5 h-5" /> Back to Step 1
                         </button>
-                         <button
+                        <button
                           onClick={handleKitchenSubmit}
                           disabled={isSubmitting || !isKitchenStep2Valid}
                           className={`flex-1 py-4 md:py-5 rounded-3xl text-white font-semibold text-lg md:text-xl shadow-[0_15px_30px_-5px_rgba(186,33,33,0.3)] transition-all flex items-center justify-center gap-2 md:gap-3 ${isSubmitting || !isKitchenStep2Valid ? "opacity-50 cursor-not-allowed bg-slate-300 shadow-none scale-100" : "hover:scale-[1.02] active:scale-95"}`}

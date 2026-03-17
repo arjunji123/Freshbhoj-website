@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { SplashScreen } from "./Components";
 
 export const metadata: Metadata = {
   title: "FreshBhoj | India's First Reel-Based Food Discovery",
@@ -29,6 +30,7 @@ export default function RootLayout({
         />
       </head>
       <body style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+        <SplashScreen />
         {children}
       </body>
     </html>
