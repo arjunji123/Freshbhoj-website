@@ -60,7 +60,7 @@ export default function TermsOfService() {
       <Navbar />
 
       {/* Hero Header */}
-      <div className="w-full pt-20 md:pt-28 pb-4 md:pb-4">
+      <div className="w-full pt-28 md:pt-28 pb-4 md:pb-4">
         <div className="w-full max-w-5xl mx-auto px-6">
           <div className="flex items-center gap-2 bg-[#FFF5F5] border border-[#FFEAEA] rounded-full px-4 py-1.5 w-fit mb-4">
             <div className="relative w-3.5 h-3.5">

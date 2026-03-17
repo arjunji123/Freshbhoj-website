@@ -1,33 +1,17 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
   ChevronRight,
   ChevronLeft,
-  Store,
   UtensilsCrossed,
   ShieldCheck,
   Truck,
-  Plus,
   CheckCircle2,
-  Tags,
-  Users2,
   Sparkles,
   ChevronDown,
-  User,
-  MapPin,
-  Mail,
-  Phone,
-  Heart,
-  Info,
-  Leaf,
-  Flame,
-  Layers,
-  Package,
-  PartyPopper,
-  Home
 } from "lucide-react";
 import { Navbar, Footer } from "../Components";
 
@@ -40,6 +24,46 @@ const gradientText = {
 
 const gradientBg = {
   background: "linear-gradient(169.21deg, #FF6B6B 9%, #BA2121 77%, #670000 100%)",
+};
+
+const contactUsInputBorder =
+  "bg-slate-50 border border-slate-200/80 hover:border-slate-300 focus:bg-white focus:border-[#BA2121]/20 focus:ring-4 focus:ring-[#BA2121]/5 outline-none transition-all placeholder:text-slate-300";
+
+const scrollToTop = () => {
+  // Smooth scrolling can cause "fixed" navbar flicker on some mobile browsers.
+  const behavior: ScrollBehavior =
+    typeof window !== "undefined" && window.innerWidth < 768 ? "auto" : "smooth";
+  window.scrollTo({ top: 0, behavior });
+};
+
+type StateItem = { name: string };
+
+// Curated Major Cities Data to avoid "villages/small towns"
+const CITY_DATA: Record<string, string[]> = {
+  Rajasthan: ["Jaipur", "Jodhpur", "Udaipur", "Kota", "Ajmer", "Bikaner", "Bhilwara", "Alwar", "Sikar", "Pali", "Sri Ganganagar"],
+  Delhi: ["New Delhi", "Noida", "Gurgaon", "Ghaziabad", "Faridabad"],
+  Maharashtra: ["Mumbai", "Pune", "Nagpur", "Thane", "Nashik", "Aurangabad", "Solapur", "Amravati", "Navi Mumbai", "Kolhapur"],
+  Karnataka: ["Bangalore", "Mysore", "Hubballi-Dharwad", "Mangalore", "Belgaum", "Gulbarga", "Davangere", "Bellary"],
+  Gujarat: ["Ahmedabad", "Surat", "Vadodara", "Rajkot", "Bhavnagar", "Jamnagar", "Junagadh", "Gandhinagar", "Anand"],
+  Telangana: ["Hyderabad", "Warangal", "Nizamabad", "Khammam", "Karimnagar", "Ramagundam"],
+  "Tamil Nadu": ["Chennai", "Coimbatore", "Madurai", "Tiruchirappalli", "Salem", "Tirunelveli", "Vellore", "Erode"],
+  "Uttar Pradesh": ["Lucknow", "Kanpur", "Agra", "Varanasi", "Prayagraj", "Meerut", "Bareilly", "Aligarh", "Moradabad", "Gorakhpur"],
+  "West Bengal": ["Kolkata", "Howrah", "Asansol", "Siliguri", "Durgapur", "Bardhaman", "Malda", "Baharampur"],
+  "Madhya Pradesh": ["Indore", "Bhopal", "Jabalpur", "Gwalior", "Ujjain", "Sagar", "Ratlam", "Rewa"],
+  Punjab: ["Ludhiana", "Amritsar", "Jalandhar", "Patiala", "Bathinda", "Mohali"],
+  Haryana: ["Faridabad", "Gurgaon", "Panipat", "Ambala", "Yamunanagar", "Rohtak", "Hisar", "Panchkula"],
+  Kerala: ["Kochi", "Thiruvananthapuram", "Kozhikode", "Thrissur", "Kollam", "Palakkad", "Alappuzha"],
+  "Andhra Pradesh": ["Visakhapatnam", "Vijayawada", "Guntur", "Nellore", "Kurnool", "Rajahmundry", "Tirupati"],
+  Bihar: ["Patna", "Gaya", "Bhagalpur", "Muzaffarpur", "Purnia", "Darbhanga", "Arrah"],
+  Jharkhand: ["Jamshedpur", "Ranchi", "Dhanbad", "Bokaro", "Deoghar"],
+  Odisha: ["Bhubaneswar", "Cuttack", "Rourkela", "Berhampur", "Sambalpur"],
+  Assam: ["Guwahati", "Silchar", "Dibrugarh", "Jorhat", "Nagaon"],
+  Chhattisgarh: ["Raipur", "Bhilai", "Bilaspur", "Korba"],
+  Uttarakhand: ["Dehradun", "Haridwar", "Roorkee", "Haldwani"],
+  Goa: ["Panaji", "Margao", "Vasco da Gama"],
+  "Himachal Pradesh": ["Shimla", "Dharamshala", "Solan"],
+  "Jammu and Kashmir": ["Srinagar", "Jammu"],
+  Chandigarh: ["Chandigarh"],
 };
 
 interface KitchenFormData {
@@ -74,6 +98,7 @@ interface FoodieFormData {
 }
 
 export default function PreRegister() {
+  const formTopRef = useRef<HTMLDivElement | null>(null);
   const [userType, setUserType] = useState<"foodie" | "kitchen" | null>(null);
   const [step, setStep] = useState(1);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -112,7 +137,7 @@ export default function PreRegister() {
     notifyMe: false
   });
 
-  const [states, setStates] = useState<any[]>([]);
+  const [states, setStates] = useState<StateItem[]>([]);
   const loadingCities = false;
 
   // Validation Helpers
@@ -152,34 +177,6 @@ export default function PreRegister() {
     foodieData.foodPreference &&
     foodieData.lookingFor.length > 0;
 
-  // Curated Major Cities Data to avoid "villages/small towns"
-  const CITY_DATA: { [key: string]: string[] } = {
-    "Rajasthan": ["Jaipur", "Jodhpur", "Udaipur", "Kota", "Ajmer", "Bikaner", "Bhilwara", "Alwar", "Sikar", "Pali", "Sri Ganganagar"],
-    "Delhi": ["New Delhi", "Noida", "Gurgaon", "Ghaziabad", "Faridabad"],
-    "Maharashtra": ["Mumbai", "Pune", "Nagpur", "Thane", "Nashik", "Aurangabad", "Solapur", "Amravati", "Navi Mumbai", "Kolhapur"],
-    "Karnataka": ["Bangalore", "Mysore", "Hubballi-Dharwad", "Mangalore", "Belgaum", "Gulbarga", "Davangere", "Bellary"],
-    "Gujarat": ["Ahmedabad", "Surat", "Vadodara", "Rajkot", "Bhavnagar", "Jamnagar", "Junagadh", "Gandhinagar", "Anand"],
-    "Telangana": ["Hyderabad", "Warangal", "Nizamabad", "Khammam", "Karimnagar", "Ramagundam"],
-    "Tamil Nadu": ["Chennai", "Coimbatore", "Madurai", "Tiruchirappalli", "Salem", "Tirunelveli", "Vellore", "Erode"],
-    "Uttar Pradesh": ["Lucknow", "Kanpur", "Agra", "Varanasi", "Prayagraj", "Meerut", "Bareilly", "Aligarh", "Moradabad", "Gorakhpur"],
-    "West Bengal": ["Kolkata", "Howrah", "Asansol", "Siliguri", "Durgapur", "Bardhaman", "Malda", "Baharampur"],
-    "Madhya Pradesh": ["Indore", "Bhopal", "Jabalpur", "Gwalior", "Ujjain", "Sagar", "Ratlam", "Rewa"],
-    "Punjab": ["Ludhiana", "Amritsar", "Jalandhar", "Patiala", "Bathinda", "Mohali"],
-    "Haryana": ["Faridabad", "Gurgaon", "Panipat", "Ambala", "Yamunanagar", "Rohtak", "Hisar", "Panchkula"],
-    "Kerala": ["Kochi", "Thiruvananthapuram", "Kozhikode", "Thrissur", "Kollam", "Palakkad", "Alappuzha"],
-    "Andhra Pradesh": ["Visakhapatnam", "Vijayawada", "Guntur", "Nellore", "Kurnool", "Rajahmundry", "Tirupati"],
-    "Bihar": ["Patna", "Gaya", "Bhagalpur", "Muzaffarpur", "Purnia", "Darbhanga", "Arrah"],
-    "Jharkhand": ["Jamshedpur", "Ranchi", "Dhanbad", "Bokaro", "Deoghar"],
-    "Odisha": ["Bhubaneswar", "Cuttack", "Rourkela", "Berhampur", "Sambalpur"],
-    "Assam": ["Guwahati", "Silchar", "Dibrugarh", "Jorhat", "Nagaon"],
-    "Chhattisgarh": ["Raipur", "Bhilai", "Bilaspur", "Korba"],
-    "Uttarakhand": ["Dehradun", "Haridwar", "Roorkee", "Haldwani"],
-    "Goa": ["Panaji", "Margao", "Vasco da Gama"],
-    "Himachal Pradesh": ["Shimla", "Dharamshala", "Solan"],
-    "Jammu and Kashmir": ["Srinagar", "Jammu"],
-    "Chandigarh": ["Chandigarh"]
-  };
-
   const handleFoodieSubmit = async () => {
     setIsSubmitting(true);
     setErr(null);
@@ -215,9 +212,9 @@ export default function PreRegister() {
       }
 
       setIsSubmitted(true);
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    } catch (error: any) {
-      setErr(error.message);
+      scrollToTop();
+    } catch (error: unknown) {
+      setErr(error instanceof Error ? error.message : "Failed to submit. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -258,9 +255,9 @@ export default function PreRegister() {
       }
 
       setIsSubmitted(true);
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    } catch (error: any) {
-      setErr(error.message);
+      scrollToTop();
+    } catch (error: unknown) {
+      setErr(error instanceof Error ? error.message : "Registration failed. Check your details.");
     } finally {
       setIsSubmitting(false);
     }
@@ -274,11 +271,12 @@ export default function PreRegister() {
       body: JSON.stringify({ country: "India" }),
     })
       .then((res) => res.json())
-      .then((data) => {
+      .then((data: { error?: boolean; data?: { states?: StateItem[] } }) => {
         if (!data.error) {
           // Only show states that we have curated city data for, to maintain quality
-          const filteredStates = data.data.states.filter((s: any) => CITY_DATA[s.name]);
-          setStates(filteredStates.length > 0 ? filteredStates : data.data.states);
+          const fetchedStates = data.data?.states ?? [];
+          const filteredStates = fetchedStates.filter((s) => CITY_DATA[s.name]);
+          setStates(filteredStates.length > 0 ? filteredStates : fetchedStates);
         }
       })
       .catch((err) => console.error("Error fetching states:", err));
@@ -288,25 +286,48 @@ export default function PreRegister() {
     ? (formData.state ? (CITY_DATA[formData.state] || []) : [])
     : (foodieData.state ? (CITY_DATA[foodieData.state] || []) : []);
 
-  // Scroll to top when step or userType changes
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [step, userType]);
+  // Avoid forcing scroll on tab/step change; it causes scrollbar layout shift on some devices/browsers.
 
-  const nextStep = () => setStep(2);
-  const prevStep = () => setStep(1);
+  const scrollFormIntoView = () => {
+    const behavior: ScrollBehavior =
+      typeof window !== "undefined" && window.innerWidth < 768 ? "auto" : "smooth";
+    // Run after render/layout settles.
+    requestAnimationFrame(() => {
+      formTopRef.current?.scrollIntoView({ behavior, block: "start" });
+    });
+  };
+
+  const nextStep = () => {
+    setStep(2);
+    scrollFormIntoView();
+  };
+  const prevStep = () => {
+    setStep(1);
+    scrollFormIntoView();
+  };
 
   const vendorTypes = ["Home Kitchen", "Tiffin Service", "Cloud Kitchen", "Street Food", "Restaurant", "Cafe",];
   const priceRanges = ["₹50 - ₹100", "₹100 - ₹200", "₹200 - ₹350", "₹350+"];
   const serviceTimings = ["Breakfast (7am - 11am)", "Lunch (12pm - 4pm)", "Dinner (7pm - 11pm)"];
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] flex flex-col font-sans">
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-[#F8FAFC] flex flex-col font-sans overflow-x-hidden relative">
       <Navbar />
 
-      <main className="flex-1 w-full max-w-7xl mx-auto px-6 py-12 md:py-20 pt-24 md:pt-32">
+      <main className="flex-1 w-full max-w-7xl mx-auto px-6 py-12 md:py-20 pt-32 md:pt-32 relative">
+        {/* Subtle background accents (keeps page from looking flat) */}
+        <div className="pointer-events-none absolute -top-20 right-[-140px] w-[420px] h-[420px] bg-[#BA2121]/[0.06] blur-[90px] rounded-full" />
+        <div className="pointer-events-none absolute top-[420px] left-[-160px] w-[520px] h-[520px] bg-[#FF6B6B]/[0.05] blur-[110px] rounded-full" />
+        <div className="pointer-events-none absolute bottom-[-120px] right-[-180px] w-[560px] h-[560px] bg-slate-900/[0.03] blur-[130px] rounded-full" />
+
         {/* Header Section */}
         <div className="text-center max-w-4xl mx-auto mb-16 px-4">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur border border-slate-200 shadow-sm mb-6">
+            <span className="w-2 h-2 rounded-full bg-[#BA2121]" />
+            <span className="text-[11px] font-extrabold tracking-[0.24em] uppercase text-slate-600">
+              Early access waitlist
+            </span>
+          </div>
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-[#0F172A] leading-[1.1] mb-6 tracking-tight">
             Join the <span style={gradientText}>Community</span>
           </h1>
@@ -318,7 +339,7 @@ export default function PreRegister() {
 
         {/* User Type Switcher */}
         <div className="flex justify-center mb-16 px-4">
-          <div className="relative bg-white p-1 rounded-[2.5rem] flex w-full max-w-[400px] shadow-xl shadow-slate-200/50 border border-slate-100 overflow-hidden">
+          <div className="relative bg-white/80 backdrop-blur p-1.5 rounded-[2.5rem] flex w-full max-w-[420px] shadow-[0_18px_50px_-20px_rgba(15,23,42,0.25)] border border-slate-200/70 overflow-hidden ring-1 ring-black/[0.04]">
             {/* Sliding Background Indicator */}
             {userType && (
               <div
@@ -329,16 +350,26 @@ export default function PreRegister() {
             )}
 
             <button
-              onClick={() => { setUserType("foodie"); setStep(1); setIsSubmitted(false); }}
-              className={`relative flex-1 py-3 px-2 rounded-[2.2rem] font-bold text-sm md:text-base transition-all duration-500 flex items-center justify-center z-10 ${userType === "foodie" ? "text-white" : "text-slate-500 hover:text-slate-800"
+              onClick={() => { setUserType("foodie"); setStep(1); setIsSubmitted(false); scrollFormIntoView(); }}
+              type="button"
+              aria-pressed={userType === "foodie"}
+              className={`relative flex-1 py-3.5 px-2 rounded-[2.2rem] font-bold text-sm md:text-base transition-all duration-500 flex items-center justify-center z-10 cursor-pointer select-none focus:outline-none focus:ring-4 focus:ring-[#BA2121]/10 ${
+                userType === "foodie"
+                  ? "text-white"
+                  : "text-slate-600 hover:text-slate-900 bg-slate-50/60 hover:bg-slate-50 active:bg-slate-100"
                 }`}
             >
               I am a Foodie
             </button>
 
             <button
-              onClick={() => { setUserType("kitchen"); setStep(1); setIsSubmitted(false); }}
-              className={`relative flex-1 py-3 px-2 rounded-[2.2rem] font-bold text-sm md:text-base transition-all duration-500 flex items-center justify-center z-10 ${userType === "kitchen" ? "text-white" : "text-slate-500 hover:text-slate-800"
+              onClick={() => { setUserType("kitchen"); setStep(1); setIsSubmitted(false); scrollFormIntoView(); }}
+              type="button"
+              aria-pressed={userType === "kitchen"}
+              className={`relative flex-1 py-3.5 px-2 rounded-[2.2rem] font-bold text-sm md:text-base transition-all duration-500 flex items-center justify-center z-10 cursor-pointer select-none focus:outline-none focus:ring-4 focus:ring-[#BA2121]/10 ${
+                userType === "kitchen"
+                  ? "text-white"
+                  : "text-slate-600 hover:text-slate-900 bg-slate-50/60 hover:bg-slate-50 active:bg-slate-100"
                 }`}
             >
               I am a Kitchen
@@ -416,17 +447,17 @@ export default function PreRegister() {
             </div>
             <h2 className="text-2xl font-bold text-[#0F172A] mb-4">How would you like to join?</h2>
             <p className="text-slate-500">
-              Select whether you're here to discover incredible flavors or to share your culinary journey with the world.
+              Select whether you&apos;re here to discover incredible flavors or to share your culinary journey with the world.
             </p>
           </div>
         ) : userType === "foodie" ? (
           /* Foodie Registration Flow */
-          <div className="max-w-4xl mx-auto relative">
+          <div ref={formTopRef} className="max-w-4xl mx-auto relative scroll-mt-28 md:scroll-mt-32">
             {/* Background Accent Gradients */}
             <div className="absolute top-0 right-0 w-96 h-96 bg-[#BA2121] opacity-[0.03] blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2 pointer-events-none" />
             <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#FF6B6B] opacity-[0.03] blur-[100px] rounded-full translate-y-1/2 -translate-x-1/2 pointer-events-none" />
             
-            <div className="relative bg-white/80 backdrop-blur-2xl rounded-[2.5rem] border border-[#BA2121]/10 shadow-[0_30px_70px_-20px_rgba(186,33,33,0.15)] overflow-hidden mb-12">
+            <div className="relative bg-white/90 backdrop-blur-2xl rounded-[2.5rem] border border-[#BA2121]/15 shadow-[0_40px_90px_-35px_rgba(186,33,33,0.28)] overflow-hidden mb-12 ring-1 ring-white/60">
               <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white to-transparent opacity-80" />
               {/* Stepper Header */}
               <div className="p-8 md:p-10 border-b border-slate-50">
@@ -470,7 +501,7 @@ export default function PreRegister() {
                           <input
                             type="text"
                             placeholder="John Doe"
-                            className="w-full px-6 py-4 rounded-full input-gradient-focus"
+                            className={`w-full px-6 py-4 rounded-full ${contactUsInputBorder}`}
                             value={foodieData.fullName}
                             onChange={(e) => setFoodieData({ ...foodieData, fullName: e.target.value })}
                           />
@@ -486,7 +517,7 @@ export default function PreRegister() {
                             type="tel"
                             maxLength={10}
                             placeholder="9876543210"
-                            className={`w-full px-6 py-4 rounded-full input-gradient-focus ${foodieData.mobile && !validateMobile(foodieData.mobile) ? "!border-red-200 !shadow-[0_0_0_4px_rgba(239,68,68,0.1)]" : ""}`}
+                            className={`w-full px-6 py-4 rounded-full ${contactUsInputBorder} ${foodieData.mobile && !validateMobile(foodieData.mobile) ? "!border-red-200 !shadow-[0_0_0_4px_rgba(239,68,68,0.1)]" : ""}`}
                             value={foodieData.mobile}
                             onChange={(e) => setFoodieData({ ...foodieData, mobile: e.target.value.replace(/\D/g, '').slice(0, 10) })}
                           />
@@ -497,7 +528,7 @@ export default function PreRegister() {
                         <input
                           type="email"
                           placeholder="example@freshbhoj.com"
-                          className="w-full px-6 py-4 rounded-full input-gradient-focus"
+                          className={`w-full px-6 py-4 rounded-full ${contactUsInputBorder}`}
                           value={foodieData.email}
                           onChange={(e) => setFoodieData({ ...foodieData, email: e.target.value })}
                         />
@@ -549,7 +580,7 @@ export default function PreRegister() {
                           <input
                             type="text"
                             placeholder="400001"
-                            className="w-full px-6 py-4 rounded-full input-gradient-focus"
+                            className={`w-full px-6 py-4 rounded-full ${contactUsInputBorder}`}
                             value={foodieData.pincode}
                             onChange={(e) => setFoodieData({ ...foodieData, pincode: e.target.value })}
                           />
@@ -566,7 +597,7 @@ export default function PreRegister() {
                         <h3 className="text-lg font-semibold text-[#0F172A]">Tell us about yourself</h3>
                       </div>
                       <div className="space-y-4">
-                        <label className="block text-sm text-slate-500 ml-1 mb-4">Who are you?</label>
+                        <label className="block text-sm font-semibold text-[#0F172A] ml-1 mb-4">Who are you?</label>
                         <div className="flex flex-wrap gap-3">
                           {["Student", "Working Professional", "Family", "Other"].map((item) => (
                             <button
@@ -613,7 +644,7 @@ export default function PreRegister() {
 
                       <div className="space-y-10">
                         <div>
-                          <label className="block text-sm text-slate-500 ml-1 mb-6">Food Preference</label>
+                          <label className="block text-sm font-semibold text-[#0F172A] ml-1 mb-6">Food Preference</label>
                           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                             {[
                               { id: "veg", label: "Veg", icon: "/veg.svg" },
@@ -639,7 +670,7 @@ export default function PreRegister() {
                         </div>
 
                         <div>
-                          <label className="block text-sm text-slate-500 ml-1 mb-6">Looking for</label>
+                          <label className="block text-sm font-semibold text-[#0F172A] ml-1 mb-6">Looking for</label>
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             {[
                               { id: "Daily Tiffin", icon: "/daily-tiffin.svg" },
@@ -680,12 +711,12 @@ export default function PreRegister() {
                     <div className="flex items-center gap-3 pt-4">
                       <button
                         onClick={() => setFoodieData({ ...foodieData, notifyMe: !foodieData.notifyMe })}
-                        className="flex items-center gap-4 text-slate-500 font-medium hover:text-[#0F172A] transition-colors"
+                        className="flex items-center gap-4 text-[#0F172A] font-semibold text-sm hover:text-[#0F172A] transition-colors"
                       >
                         {foodieData.notifyMe ? (
                           <Image src="/select.svg" alt="Checked" width={24} height={24} />
                         ) : (
-                          <div className="w-6 h-6 rounded-full border-2 border-slate-200" />
+                          <div className="w-6 h-6 rounded-full border-2 border-slate-300 bg-slate-50 shadow-sm flex-shrink-0" />
                         )}
                         Notify me when FreshBhoj launches in my city
                       </button>
@@ -694,18 +725,18 @@ export default function PreRegister() {
                     {/* Submit Button */}
                     <div className="flex flex-col gap-6 pt-12 border-t border-slate-50">
                       {err && <p className="text-sm text-red-500 font-semibold bg-red-50 py-3 px-4 rounded-xl text-center">{err}</p>}
-                      <div className="flex flex-row items-center gap-4 md:gap-8">
+                      <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-8">
                         <button
                           onClick={prevStep}
                           disabled={isSubmitting}
-                          className="flex items-center gap-2 text-slate-400 font-semibold text-sm hover:text-[#0F172A] transition-colors whitespace-nowrap"
+                          className="w-full md:w-auto flex items-center justify-center md:justify-start gap-2 text-slate-500 font-semibold text-sm hover:text-[#0F172A] transition-colors whitespace-nowrap py-3 md:py-0 rounded-2xl md:rounded-none bg-slate-50 md:bg-transparent border border-slate-200/70 md:border-0"
                         >
                           <ChevronLeft className="w-5 h-5" /> Back
                         </button>
                         <button
                           onClick={handleFoodieSubmit}
                           disabled={isSubmitting || !isFoodieStep2Valid}
-                          className={`flex-1 py-4 md:py-5 rounded-3xl text-white font-semibold text-lg md:text-xl shadow-[0_15px_30px_-5px_rgba(186,33,33,0.3)] transition-all flex items-center justify-center gap-2 md:gap-3 ${isSubmitting || !isFoodieStep2Valid ? "opacity-50 cursor-not-allowed bg-slate-300 shadow-none scale-100" : "hover:scale-[1.02] active:scale-95"}`}
+                          className={`w-full md:flex-1 py-4 md:py-5 rounded-3xl text-white font-semibold text-lg md:text-xl shadow-[0_15px_30px_-5px_rgba(186,33,33,0.3)] transition-all flex items-center justify-center gap-2 md:gap-3 ${isSubmitting || !isFoodieStep2Valid ? "opacity-50 cursor-not-allowed bg-slate-300 shadow-none scale-100" : "hover:scale-[1.02] active:scale-95"}`}
                           style={!isSubmitting && isFoodieStep2Valid ? gradientBg : {}}
                         >
                           {isSubmitting ? (
@@ -726,12 +757,12 @@ export default function PreRegister() {
           </div>
         ) : (
           /* Kitchen Registration Flow */
-          <div className="max-w-4xl mx-auto relative">
+          <div ref={formTopRef} className="max-w-4xl mx-auto relative scroll-mt-28 md:scroll-mt-32">
             {/* Background Accent Gradients */}
             <div className="absolute top-0 right-0 w-96 h-96 bg-[#BA2121] opacity-[0.03] blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2 pointer-events-none" />
             <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#FF6B6B] opacity-[0.03] blur-[100px] rounded-full translate-y-1/2 -translate-x-1/2 pointer-events-none" />
             
-            <div className="relative bg-white/80 backdrop-blur-2xl rounded-[2.5rem] border border-[#BA2121]/10 shadow-[0_30px_70px_-20px_rgba(186,33,33,0.15)] overflow-hidden mb-12">
+            <div className="relative bg-white/90 backdrop-blur-2xl rounded-[2.5rem] border border-[#BA2121]/15 shadow-[0_40px_90px_-35px_rgba(186,33,33,0.28)] overflow-hidden mb-12 ring-1 ring-white/60">
               <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white to-transparent opacity-80" />
               {/* Stepper Header */}
               <div className="p-8 md:p-10 border-b border-slate-50">
@@ -776,7 +807,7 @@ export default function PreRegister() {
                           <input
                             type="text"
                             placeholder="e.g. Grandma's Spices"
-                            className="w-full px-5 py-4 rounded-full input-gradient-focus"
+                            className={`w-full px-5 py-4 rounded-full ${contactUsInputBorder}`}
                             value={formData.kitchenName}
                             onChange={(e) => setFormData({ ...formData, kitchenName: e.target.value })}
                           />
@@ -786,7 +817,7 @@ export default function PreRegister() {
                           <input
                             type="text"
                             placeholder="Your Full Name"
-                            className="w-full px-5 py-4 rounded-full input-gradient-focus"
+                            className={`w-full px-5 py-4 rounded-full ${contactUsInputBorder}`}
                             value={formData.contactPerson}
                             onChange={(e) => setFormData({ ...formData, contactPerson: e.target.value })}
                           />
@@ -802,7 +833,7 @@ export default function PreRegister() {
                             type="tel"
                             maxLength={10}
                             placeholder="9876543210"
-                            className={`w-full px-5 py-4 rounded-full input-gradient-focus ${formData.mobile && !validateMobile(formData.mobile) ? "!border-red-200 !shadow-[0_0_0_4px_rgba(239,68,68,0.1)]" : ""}`}
+                            className={`w-full px-5 py-4 rounded-full ${contactUsInputBorder} ${formData.mobile && !validateMobile(formData.mobile) ? "!border-red-200 !shadow-[0_0_0_4px_rgba(239,68,68,0.1)]" : ""}`}
                             value={formData.mobile}
                             onChange={(e) => setFormData({ ...formData, mobile: e.target.value.replace(/\D/g, '').slice(0, 10) })}
                           />
@@ -812,7 +843,7 @@ export default function PreRegister() {
                           <input
                             type="email"
                             placeholder="kitchen@example.com"
-                            className="w-full px-5 py-4 rounded-full input-gradient-focus"
+                            className={`w-full px-5 py-4 rounded-full ${contactUsInputBorder}`}
                             value={formData.email}
                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                           />
@@ -983,7 +1014,7 @@ export default function PreRegister() {
                           <input
                             type="text"
                             placeholder="e.g. 12345678901234"
-                            className="w-full px-5 py-4 rounded-full input-gradient-focus"
+                            className={`w-full px-5 py-4 rounded-full ${contactUsInputBorder}`}
                             value={formData.fssaiNumber}
                             onChange={(e) => setFormData({ ...formData, fssaiNumber: e.target.value })}
                           />
@@ -993,7 +1024,7 @@ export default function PreRegister() {
                           <input
                             type="text"
                             placeholder="22AAAAA0000A1Z5"
-                            className="w-full px-5 py-4 rounded-full input-gradient-focus"
+                            className={`w-full px-5 py-4 rounded-full ${contactUsInputBorder}`}
                             value={formData.gstNumber}
                             onChange={(e) => setFormData({ ...formData, gstNumber: e.target.value })}
                           />
@@ -1143,7 +1174,7 @@ export default function PreRegister() {
                         <textarea
                           rows={4}
                           placeholder="Tell us about your culinary journey and your vision for your kitchen..."
-                          className="w-full px-6 py-6 rounded-[2rem] input-gradient-focus resize-none placeholder:text-slate-400"
+                          className={`w-full px-6 py-6 rounded-[2rem] ${contactUsInputBorder} resize-none`}
                           value={formData.whyJoin}
                           onChange={(e) => setFormData({ ...formData, whyJoin: e.target.value })}
                         />
@@ -1157,18 +1188,18 @@ export default function PreRegister() {
                           {err}
                         </p>
                       )}
-                      <div className="flex flex-row items-center gap-4 md:gap-8">
+                      <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-8">
                         <button
                           onClick={prevStep}
                           disabled={isSubmitting}
-                          className="flex items-center gap-2 text-slate-400 font-semibold text-sm hover:text-[#0F172A] transition-colors whitespace-nowrap"
+                          className="w-full md:w-auto flex items-center justify-center md:justify-start gap-2 text-slate-500 font-semibold text-sm hover:text-[#0F172A] transition-colors whitespace-nowrap py-3 md:py-0 rounded-2xl md:rounded-none bg-slate-50 md:bg-transparent border border-slate-200/70 md:border-0"
                         >
                           <ChevronLeft className="w-5 h-5" /> Back to Step 1
                         </button>
                         <button
                           onClick={handleKitchenSubmit}
                           disabled={isSubmitting || !isKitchenStep2Valid}
-                          className={`flex-1 py-4 md:py-5 rounded-3xl text-white font-semibold text-lg md:text-xl shadow-[0_15px_30px_-5px_rgba(186,33,33,0.3)] transition-all flex items-center justify-center gap-2 md:gap-3 ${isSubmitting || !isKitchenStep2Valid ? "opacity-50 cursor-not-allowed bg-slate-300 shadow-none scale-100" : "hover:scale-[1.02] active:scale-95"}`}
+                          className={`w-full md:flex-1 py-4 md:py-5 rounded-3xl text-white font-semibold text-lg md:text-xl shadow-[0_15px_30px_-5px_rgba(186,33,33,0.3)] transition-all flex items-center justify-center gap-2 md:gap-3 ${isSubmitting || !isKitchenStep2Valid ? "opacity-50 cursor-not-allowed bg-slate-300 shadow-none scale-100" : "hover:scale-[1.02] active:scale-95"}`}
                           style={!isSubmitting && isKitchenStep2Valid ? gradientBg : {}}
                         >
                           {isSubmitting ? (
@@ -1203,7 +1234,7 @@ export default function PreRegister() {
                   desc: "Join a network of 5000+ home chefs and foodies."
                 }
               ].map((card) => (
-                <div key={card.title} className="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm flex flex-col items-center text-center group hover:bg-[#FFF5F5] transition-all duration-500">
+                <div key={card.title} className="bg-white/90 backdrop-blur p-8 rounded-[2rem] border border-slate-200/70 shadow-[0_18px_40px_-20px_rgba(15,23,42,0.22)] flex flex-col items-center text-center group hover:bg-white transition-all duration-500 hover:-translate-y-1">
                   <Image src={card.icon} alt={card.title} width={34} height={34} />
 
                   <h4 className="font-semibold text-lg text-[#0F172A] mb-2">{card.title}</h4>

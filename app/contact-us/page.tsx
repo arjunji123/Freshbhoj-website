@@ -63,7 +63,7 @@ export default function ContactUs() {
         strategy="lazyOnload"
       />
 
-      <main className="flex-1 w-full max-w-7xl mx-auto px-6 py-12 md:py-20 pt-24 md:pt-32 flex flex-col items-center">
+      <main className="flex-1 w-full max-w-7xl mx-auto px-6 py-12 md:py-20 pt-32 md:pt-32 flex flex-col items-center">
         {/* Header Section */}
         <div className="text-center max-w-4xl mb-16 px-4">
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-[#0F172A] leading-[1.1] mb-6 tracking-tight">
@@ -272,7 +272,7 @@ export default function ContactUs() {
                         type="text"
                         placeholder="John Doe"
                         required
-                        className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-transparent focus:bg-white focus:border-[#BA2121]/20 focus:ring-4 focus:ring-[#BA2121]/5 outline-none transition-all placeholder:text-slate-300"
+                        className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-slate-200/80 hover:border-slate-300 focus:bg-white focus:border-[#BA2121]/20 focus:ring-4 focus:ring-[#BA2121]/5 outline-none transition-all placeholder:text-slate-300"
                         value={msgData.name}
                         onChange={(e) => setMsgData({ ...msgData, name: e.target.value })}
                       />
@@ -283,7 +283,7 @@ export default function ContactUs() {
                         type="email"
                         placeholder="john@example.com"
                         required
-                        className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-transparent focus:bg-white focus:border-[#BA2121]/20 focus:ring-4 focus:ring-[#BA2121]/5 outline-none transition-all placeholder:text-slate-300"
+                        className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-slate-200/80 hover:border-slate-300 focus:bg-white focus:border-[#BA2121]/20 focus:ring-4 focus:ring-[#BA2121]/5 outline-none transition-all placeholder:text-slate-300"
                         value={msgData.email}
                         onChange={(e) => setMsgData({ ...msgData, email: e.target.value })}
                       />
@@ -315,7 +315,7 @@ export default function ContactUs() {
                       placeholder="Tell us how we can help..."
                       required
                       rows={5}
-                      className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-transparent focus:bg-white focus:border-[#BA2121]/20 focus:ring-4 focus:ring-[#BA2121]/5 outline-none transition-all resize-none placeholder:text-slate-300"
+                      className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-slate-200/80 hover:border-slate-300 focus:bg-white focus:border-[#BA2121]/20 focus:ring-4 focus:ring-[#BA2121]/5 outline-none transition-all resize-none placeholder:text-slate-300"
                       value={msgData.message}
                       onChange={(e) => setMsgData({ ...msgData, message: e.target.value })}
                     />

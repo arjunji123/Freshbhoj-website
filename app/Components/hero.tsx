@@ -18,6 +18,32 @@ const Hero = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Lock background scroll when mobile menu open
+  useEffect(() => {
+    if (!menuOpen) return;
+    const scrollY = window.scrollY;
+    const prev = {
+      overflow: document.body.style.overflow,
+      position: document.body.style.position,
+      top: document.body.style.top,
+      width: document.body.style.width,
+    };
+
+    // iOS Safari: overflow hidden alone may still allow scroll.
+    document.body.style.overflow = "hidden";
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.width = "100%";
+
+    return () => {
+      document.body.style.overflow = prev.overflow;
+      document.body.style.position = prev.position;
+      document.body.style.top = prev.top;
+      document.body.style.width = prev.width;
+      window.scrollTo({ top: scrollY, behavior: "auto" });
+    };
+  }, [menuOpen]);
+
   const gradientTextStyle = {
     background: "linear-gradient(169.21deg, #FF6B6B 9%, #BA2121 77%, #670000 100%)",
     WebkitBackgroundClip: "text" as const,
@@ -86,42 +112,137 @@ const Hero = () => {
 
           {/* Mobile: hamburger button */}
           <button
-            className="md:hidden flex flex-col justify-center gap-[5px] py-0.5 px-2 z-50 relative"
+            className={`md:hidden z-50 relative group inline-flex items-center justify-center w-11 h-11 rounded-2xl border transition-all duration-300 active:scale-95 focus:outline-none focus:ring-4 ${
+              scrolled
+                ? "bg-white/70 backdrop-blur-xl border-white/60 shadow-md shadow-slate-900/10 focus:ring-[#BA2121]/10"
+                : "bg-white/15 backdrop-blur-xl border-white/30 shadow-md shadow-black/10 focus:ring-white/15"
+            }`}
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label="Toggle Menu"
+            aria-expanded={menuOpen}
           >
-            <span
-              className={`block w-6 h-0.5 rounded transition-all duration-300 ${scrolled ? "bg-[#BA2121]" : "bg-white"
-                } ${menuOpen ? "rotate-45 translate-y-[7px]" : ""}`}
-            />
-            <span
-              className={`block w-6 h-0.5 rounded transition-all duration-300 ${scrolled ? "bg-[#BA2121]" : "bg-white"
-                } ${menuOpen ? "opacity-0" : ""}`}
-            />
-            <span
-              className={`block w-6 h-0.5 rounded transition-all duration-300 ${scrolled ? "bg-[#BA2121]" : "bg-white"
-                } ${menuOpen ? "-rotate-45 -translate-y-[7px]" : ""}`}
-            />
+            <span className="sr-only">Menu</span>
+            <span className="relative w-6 h-5">
+              <span
+                className={`absolute left-0 top-0 block w-6 h-[2px] rounded-full transition-all duration-300 ${
+                  scrolled ? "bg-[#BA2121]" : "bg-white"
+                } ${menuOpen ? "translate-y-[9px] rotate-45" : "opacity-95"}`}
+              />
+              <span
+                className={`absolute left-0 top-1/2 -translate-y-1/2 block w-6 h-[2px] rounded-full transition-all duration-300 ${
+                  scrolled ? "bg-[#BA2121]" : "bg-white"
+                } ${menuOpen ? "opacity-0 scale-90" : "opacity-95"}`}
+              />
+              <span
+                className={`absolute left-0 bottom-0 block w-6 h-[2px] rounded-full transition-all duration-300 ${
+                  scrolled ? "bg-[#BA2121]" : "bg-white"
+                } ${menuOpen ? "-translate-y-[9px] -rotate-45" : "opacity-95"}`}
+              />
+            </span>
           </button>
         </div>
       </nav>
 
       {/* Mobile dropdown menu */}
       <div
-        className={`md:hidden flex flex-col items-center gap-4 px-6 overflow-hidden transition-all duration-500 bg-black/40 backdrop-blur-xl fixed inset-x-0 top-0 pt-24 pb-8 z-40 ${menuOpen ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"}`}
+        className={`md:hidden fixed inset-0 z-40 ${menuOpen ? "pointer-events-auto" : "pointer-events-none"}`}
       >
-        <Link
-          href="/pre-register"
-          className="bg-white text-[#BA2121] text-lg font-bold px-8 py-3 rounded-full w-full text-center"
+        <div
+          className={`absolute inset-0 ${
+            scrolled
+              ? "bg-white/60 backdrop-blur-2xl"
+              : "bg-black/35 backdrop-blur-2xl"
+          }`}
+          onClick={() => setMenuOpen(false)}
+          style={{
+            transition: "opacity 220ms ease-out",
+            opacity: menuOpen ? 1 : 0,
+          }}
+        />
+
+        <div
+          className="relative pt-20 px-6"
+          style={{
+            transition: "transform 260ms cubic-bezier(0.22,1,0.36,1), opacity 200ms ease-out",
+            transform: menuOpen ? "translateY(0)" : "translateY(-14px)",
+            opacity: menuOpen ? 1 : 0,
+            willChange: "transform, opacity",
+          }}
         >
-          Pre-Register
-        </Link>
-        <Link
-          href="/contact-us"
-          className="bg-white text-[#BA2121] text-lg font-bold px-8 py-3 rounded-full w-full text-center"
-        >
-          Contact us
-        </Link>
+          {/* Compact panel (not full screen) */}
+          <div
+            className={`max-w-md mx-auto rounded-[2rem] border shadow-lg overflow-hidden ${
+              scrolled
+                ? "bg-white/70 backdrop-blur-2xl border-white/60"
+                : "bg-white/10 backdrop-blur-2xl border-white/25"
+            }`}
+          >
+            <div className="p-6">
+              {/* Primary actions */}
+              <div className="space-y-4">
+                <Link
+                  href="/pre-register"
+                  className="block w-full text-center text-lg font-bold px-8 py-4 rounded-2xl shadow-lg shadow-black/10"
+                  style={gradientBgStyle}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  Pre-Register
+                </Link>
+                <Link
+                  href="/contact-us"
+                  className={`block w-full text-center text-lg font-bold px-8 py-4 rounded-2xl border transition-all ${
+                    scrolled
+                      ? "bg-white/70 text-[#BA2121] border-white/60"
+                      : "bg-white/15 text-white border-white/30"
+                  }`}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  Contact us
+                </Link>
+              </div>
+
+              {/* Quote */}
+              <div className="mt-8 text-center">
+                <p
+                  className={`text-[11px] font-extrabold tracking-[0.28em] uppercase ${
+                    scrolled ? "text-slate-600" : "text-white/80"
+                  }`}
+                >
+                  FreshBhoj
+                </p>
+                <p
+                  className={`mt-3 text-sm font-semibold leading-relaxed ${
+                    scrolled ? "text-slate-800" : "text-white"
+                  }`}
+                >
+                  “Home-style food, discovered through reels — made for the way India eats.”
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Footer links outside the box */}
+          <div className="max-w-md mx-auto mt-6 flex items-center justify-center gap-8">
+            <Link
+              href="/privacy-policy"
+              onClick={() => setMenuOpen(false)}
+              className={`text-xs font-bold uppercase tracking-[0.22em] underline underline-offset-4 transition-colors ${
+                scrolled ? "text-slate-600 hover:text-slate-900" : "text-white/85 hover:text-white"
+              }`}
+            >
+              Privacy Policy
+            </Link>
+            <Link
+              href="/terms-of-service"
+              onClick={() => setMenuOpen(false)}
+              className={`text-xs font-bold uppercase tracking-[0.22em] underline underline-offset-4 transition-colors ${
+                scrolled ? "text-slate-600 hover:text-slate-900" : "text-white/85 hover:text-white"
+              }`}
+            >
+              Terms of Service
+            </Link>
+          </div>
+        </div>
       </div>
 
       {/* ── Hero Body ── */}
