@@ -112,7 +112,7 @@ export default function ContactUs() {
         </div>
 
         {/* Premium Meeting Card - Click to Flow */}
-        <div className="w-full max-w-5xl bg-white rounded-[2.5rem] p-8 md:p-16 shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-slate-50 flex flex-col lg:flex-row items-center gap-12 lg:gap-20 relative overflow-hidden mb-20">
+        <div className="w-full max-w-5xl bg-white rounded-[1.5rem] md:rounded-[2.5rem] p-6 md:p-16 shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-slate-50 flex flex-col lg:flex-row items-center gap-10 lg:gap-20 relative overflow-hidden mb-20">
           {/* Subtle Background Glow */}
           <div className="absolute top-0 right-0 w-64 h-64 bg-[#BA2121] opacity-[0.03] blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2" />
 
@@ -147,9 +147,9 @@ export default function ContactUs() {
           <div className="relative z-10 lg:w-[40%] flex justify-center">
             <div
               onClick={() => window.Calendly?.initPopupWidget({ url: 'https://calendly.com/singhnarukaarjun/30min' })}
-              className="bg-white p-6 rounded-[2.5rem] shadow-[0_40px_80px_rgba(0,0,0,0.12)] rotate-3 hover:rotate-0 transition-all duration-700 cursor-pointer group flex flex-col items-center"
+              className="bg-white p-4 md:p-6 rounded-[1.5rem] md:rounded-[2.5rem] shadow-[0_40px_80px_rgba(0,0,0,0.12)] rotate-3 hover:rotate-0 transition-all duration-700 cursor-pointer group flex flex-col items-center"
             >
-              <div className={`relative w-64 md:w-72 aspect-square overflow-hidden rounded-[1.5rem] bg-white flex items-center justify-center p-8 transition-opacity duration-700 ${qrLoaded ? 'opacity-100' : 'opacity-0'}`}>
+              <div className={`relative w-48 md:w-72 aspect-square overflow-hidden rounded-[1rem] md:rounded-[1.5rem] bg-white flex items-center justify-center p-6 md:p-8 transition-opacity duration-700 ${qrLoaded ? 'opacity-100' : 'opacity-0'}`}>
                 {/* Gradient Container */}
                 <div
                   className="absolute inset-8"
@@ -162,8 +162,8 @@ export default function ContactUs() {
                 <Image
                   src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://calendly.com/singhnarukaarjun/30min&margin=10"
                   alt="Calendly QR"
-                  width={300}
-                  height={300}
+                  width={250}
+                  height={250}
                   className="relative z-10 w-full h-full object-contain mix-blend-screen"
                   unoptimized
                   onLoad={() => setQrLoaded(true)}
@@ -174,13 +174,13 @@ export default function ContactUs() {
               </div>
 
               {/* FreshBhoj Logo & Action Text */}
-              <div className="mt-8 flex flex-col items-center w-full">
-                <div className="w-32 h-10 relative mb-3 transition-transform duration-500 group-hover:scale-110">
+              <div className="mt-6 md:mt-8 flex flex-col items-center w-full">
+                <div className="w-24 md:w-32 h-8 md:h-10 relative mb-2 md:mb-3 transition-transform duration-500 group-hover:scale-110">
                   <Image src="/freshbhoj-red-new.svg" alt="FreshBhoj" fill className="object-contain" />
                 </div>
-                <div className="flex items-center gap-3 w-full max-w-[200px]">
+                <div className="flex items-center gap-2 md:gap-3 w-full max-w-[180px] md:max-w-[200px]">
                   <div className="h-px flex-1 bg-slate-100" />
-                  <p className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.3em] whitespace-nowrap">Scan to Schedule</p>
+                  <p className="text-[8px] md:text-[9px] font-bold text-slate-400 uppercase tracking-[0.2em] md:tracking-[0.3em] whitespace-nowrap">Scan to Schedule</p>
                   <div className="h-px flex-1 bg-slate-100" />
                 </div>
               </div>
@@ -298,11 +298,11 @@ export default function ContactUs() {
                 </button>
               </div>
             ) : (
-              <div className="bg-white rounded-[2.5rem] p-10 md:p-14 shadow-xl border border-slate-50 relative overflow-hidden">
-                <h2 className="text-3xl font-bold text-[#0F172A] mb-10">Send us a Message</h2>
+              <div className="bg-white rounded-[1.5rem] md:rounded-[2.5rem] p-6 md:p-14 shadow-xl border border-slate-50 relative overflow-hidden">
+                <h2 className="text-2xl md:text-3xl font-bold text-[#0F172A] mb-8 md:mb-10">Send us a Message</h2>
 
-                <form className="space-y-6" onSubmit={handleSubmit}>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                     <div>
                       <label className="block text-xs font-bold text-[#0F172A] uppercase tracking-widest mb-3 ml-1">Your Name</label>
                       <input
@@ -402,10 +402,10 @@ export default function ContactUs() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className={`w-full py-5 rounded-2xl text-white font-bold text-lg shadow-[0_20px_40px_-10px_rgba(186,33,33,0.3)] hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-3 ${isSubmitting ? "opacity-70 cursor-not-allowed" : ""}`}
+                    className={`w-full py-4 md:py-5 rounded-xl md:rounded-2xl text-white font-bold text-base md:text-lg shadow-[0_20px_40px_-10px_rgba(186,33,33,0.3)] hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-3 ${isSubmitting ? "opacity-70 cursor-not-allowed" : ""}`}
                     style={gradientBg}
                   >
-                    {isSubmitting ? "Sending..." : "Send Message"} <Send className={`w-5 h-5 ${isSubmitting ? "animate-pulse" : ""}`} />
+                    {isSubmitting ? "Sending..." : "Send Message"} <Send className={`w-4 md:w-5 h-4 md:h-5 ${isSubmitting ? "animate-pulse" : ""}`} />
                   </button>
 
 

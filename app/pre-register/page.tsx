@@ -331,24 +331,24 @@ function PreRegisterContent() {
         <div className="pointer-events-none absolute bottom-[-120px] right-[-180px] w-[560px] h-[560px] bg-slate-900/[0.03] blur-[130px] rounded-full" />
 
         {/* Header Section */}
-        <div className="text-center max-w-4xl mx-auto mb-16 px-4">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur border border-slate-200 shadow-sm mb-6">
+        <div className="text-center max-w-4xl mx-auto mb-10 md:mb-16 px-4">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur border border-slate-200 shadow-sm mb-4 md:mb-6">
             <span className="w-2 h-2 rounded-full bg-[#BA2121]" />
-            <span className="text-[11px] font-extrabold tracking-[0.24em] uppercase text-slate-600">
+            <span className="text-[10px] md:text-[11px] font-extrabold tracking-[0.2em] md:tracking-[0.24em] uppercase text-slate-600">
               Early access waitlist
             </span>
           </div>
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-[#0F172A] leading-[1.1] mb-6 tracking-tight">
+          <h1 className="text-3xl md:text-6xl lg:text-7xl font-extrabold text-[#0F172A] leading-[1.1] mb-4 md:mb-6 tracking-tight">
             Join the <span style={gradientText}>Community</span>
           </h1>
-          <p className="text-slate-500 text-lg md:text-xl font-medium max-w-2xl mx-auto leading-relaxed">
+          <p className="text-slate-500 text-base md:text-xl font-medium max-w-2xl mx-auto leading-relaxed">
             Pre-register now to get early access and exclusive launch benefits <br className="hidden md:block" />
             across the FreshBhoj platform.
           </p>
         </div>
 
         {/* User Type Switcher */}
-        <div className="flex justify-center mb-16 px-4">
+        <div className="flex justify-center mb-10 md:mb-16 px-4">
           <div className="relative bg-white/70 backdrop-blur-xl p-1.5 rounded-full flex w-full max-w-[480px] shadow-[0_20px_50px_-20px_rgba(186,33,33,0.15)] border border-white/50 overflow-hidden ring-1 ring-black/[0.03]">
             {/* Sliding Background Indicator */}
             {userType && (
@@ -481,7 +481,7 @@ function PreRegisterContent() {
                 </div>
               </div>
 
-              <div className="p-8 md:p-12 space-y-12">
+              <div className="p-6 md:p-12 space-y-8 md:space-y-12">
                 {step === 1 ? (
                   <>
                     {/* Personal Information */}
@@ -787,10 +787,10 @@ function PreRegisterContent() {
               </div>
 
               {/* Form Content */}
-              <div className="p-8 md:p-10">
+              <div className="p-6 md:p-10">
                 {step === 1 ? (
                   /* STEP 1: Basic Details */
-                  <div className="space-y-12">
+                  <div className="space-y-8 md:space-y-12">
                     {/* Basic Details Section */}
                     <div>
                       <div className="flex items-center gap-3 mb-8">
@@ -956,7 +956,7 @@ function PreRegisterContent() {
                   </div>
                 ) : (
                   /* STEP 2: Legal & Delivery */
-                  <div className="space-y-12 animate-in fade-in slide-in-from-right-10 duration-500">
+                  <div className="space-y-8 md:space-y-12 animate-in fade-in slide-in-from-right-10 duration-500">
                     {/* Legal & Hygiene Section */}
                     <div>
                       <div className="flex items-center gap-3 mb-8">
