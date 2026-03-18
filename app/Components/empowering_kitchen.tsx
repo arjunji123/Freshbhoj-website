@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 /* ─── Card data ──────────────────────────────────────────────── */
 const KITCHEN_TYPES = [
@@ -143,8 +144,8 @@ export default function EmpoweringKitchen() {
             ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}
           `}
         >
-          <a
-            href="#register"
+          <Link
+            href="/pre-register?type=kitchen"
             className="group relative inline-flex items-center justify-center gap-4 px-12 py-5 bg-hero-gradient text-white font-semibold text-lg lg:text-xl rounded-3xl shadow-[0_15px_30px_-5px_rgba(186,33,33,0.3)] transition-all hover:scale-105"
           >
             <span>Register Your Kitchen</span>
@@ -156,7 +157,7 @@ export default function EmpoweringKitchen() {
                 className="object-contain transition-transform group-hover:translate-x-1"
               />
             </div>
-          </a>
+          </Link>
 
           <p className="mt-8 text-[#64748B] text-sm lg:text-base tracking-widest">
             Join over 1,200+  partners across India

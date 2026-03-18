@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function PreRegistration() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -115,13 +116,13 @@ export default function PreRegistration() {
                 ))}
               </div>
             </div>
-            <a
-              href="#"
+            <Link
+              href="/pre-register?type=foodie"
               className="relative flex items-center justify-center w-full py-5 rounded-2xl bg-[#0F172A] text-white font-extrabold text-lg lg:text-xl transition-all shadow-lg overflow-hidden group/btn"
             >
               <div className="absolute inset-0 bg-[linear-gradient(169.21deg,#FF6B6B_9%,#BA2121_77%,#670000_100%)] opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300"></div>
               <span className="relative z-10">Pre-Register Now →</span>
-            </a>
+            </Link>
           </div>
 
           {/* ─ Right Card: For Kitchens ─ */}
@@ -153,12 +154,12 @@ export default function PreRegistration() {
                 ))}
               </div>
             </div>
-            <a
-              href="#"
+            <Link
+              href="/pre-register?type=kitchen"
               className="flex items-center justify-center w-full py-5 rounded-2xl bg-white text-[#BA2121] font-extrabold text-lg lg:text-xl transition-all shadow-xl hover:bg-slate-50"
             >
               Register Kitchen
-            </a>
+            </Link>
           </div>
         </div>
 

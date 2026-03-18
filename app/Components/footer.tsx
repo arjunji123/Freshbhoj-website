@@ -47,24 +47,24 @@ export default function Footer() {
         {/* Social Icons */}
         <div className="flex flex-wrap justify-center items-center gap-4 md:gap-6 mb-12 w-full">
           {[
-            { src: "/x.svg", alt: "X" },
-            { src: "/insta.svg", alt: "Insta" },
-            { src: "/linkedin.svg", alt: "Linkedin" },
-            { src: "/facebook.svg", alt: "Facebook" },
-            { src: "/whatsapp.svg", alt: "Whatsapp" },
-            { src: "/youtube.svg", alt: "Youtube" },
+            { src: "/x.svg", alt: "X", href: "https://x.com/freshbhoj" },
+            { src: "/insta.svg", alt: "Insta", href: "https://www.instagram.com/freshbhoj" },
+            { src: "/linkedin.svg", alt: "Linkedin", href: "https://www.linkedin.com/company/freshbhoj/" },
+            { src: "/whatsapp.svg", alt: "Whatsapp", href: "https://wa.me/918058318556" },
           ].map((social) => (
             <a
               key={social.alt}
-              href="#"
+              href={social.href}
+              target="_blank"
+              rel="noopener noreferrer"
               className="relative w-12 h-12 flex items-center justify-center rounded-full bg-white/5 border border-white/10 transition-all hover:-translate-y-1 shadow-lg overflow-hidden group/social"
             >
               {/* Gradient Hover Layer */}
-              <div 
+              <div
                 className="absolute inset-0 opacity-0 group-hover/social:opacity-100 transition-opacity duration-300"
                 style={{ background: "linear-gradient(169.21deg, #FF6B6B 9%, #BA2121 77%, #670000 100%)" }}
               />
-              
+
               <div className="relative w-5 h-5 brightness-0 invert z-10">
                 <Image
                   src={social.src}
@@ -79,15 +79,15 @@ export default function Footer() {
 
         {/* Visionary Tagline & Copyright */}
         <div className="text-center flex flex-col items-center max-w-4xl">
-          <h4 
+          <h4
             className="text-white text-2xl md:text-3xl lg:text-5xl mb-12 italic leading-tight opacity-90 transition-all hover:opacity-100 duration-500"
             style={{ fontFamily: "'Playfair Display', serif" }}
           >
             "Your Feed is Now Your Menu."
           </h4>
-          
+
           <div className="w-full max-w-xs h-px bg-gradient-to-r from-transparent via-white/20 to-transparent mb-10" />
-          
+
           <div className="flex flex-col md:flex-row items-center gap-4 md:gap-8 opacity-40">
             <p className="text-slate-500 font-bold text-[10px] uppercase tracking-[0.4em]">
               FreshBhoj AI Platforms © 2026

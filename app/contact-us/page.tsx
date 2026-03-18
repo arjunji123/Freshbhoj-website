@@ -13,7 +13,7 @@ import {
   ChevronDown,
   MessageSquare,
   Instagram,
-  Facebook,
+  // Facebook,
   Linkedin,
   Users,
   Twitter,
@@ -41,6 +41,8 @@ const gradientBg = {
 export default function ContactUs() {
   const [qrLoaded, setQrLoaded] = useState(false);
   const [msgSubmitted, setMsgSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [msgData, setMsgData] = useState({
     name: "",
     email: "",
@@ -48,6 +50,40 @@ export default function ContactUs() {
     message: "",
     agreed: false
   });
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!msgData.agreed) {
+      setError("Please agree to the Privacy Policy");
+      return;
+    }
+
+    setIsSubmitting(true);
+    setError(null);
+
+    try {
+      const resp = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: msgData.name,
+          email: msgData.email,
+          subject: msgData.subject,
+          message: msgData.message
+        }),
+      });
+
+      if (!resp.ok) {
+        throw new Error("Failed to send message. Please try again later.");
+      }
+
+      setMsgSubmitted(true);
+    } catch (err: any) {
+      setError(err.message || "An error occurred. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#FDFDFD] flex flex-col font-sans overflow-x-hidden">
@@ -130,7 +166,7 @@ export default function ContactUs() {
                   height={300}
                   className="relative z-10 w-full h-full object-contain mix-blend-screen"
                   unoptimized
-                  onLoadingComplete={() => setQrLoaded(true)}
+                  onLoad={() => setQrLoaded(true)}
                 />
 
                 {/* Hover Effect Light Overlay */}
@@ -172,7 +208,7 @@ export default function ContactUs() {
                 </div>
                 <div className="flex flex-col">
                   <span className="text-sm font-bold text-[#0F172A]">Email Us</span>
-                  <a href="mailto:hello@freshbhoj.com" className="text-slate-500 text-sm hover:text-[#BA2121] transition-colors">hello@freshbhoj.com</a>
+                  <a href="mailto:arjun@freshbhoj.com" className="text-slate-500 text-sm hover:text-[#BA2121] transition-colors">arjun@freshbhoj.com</a>
                   <p className="text-[11px] text-slate-400 mt-1">Expected reply: 2-4 hours</p>
                 </div>
               </div>
@@ -219,18 +255,19 @@ export default function ContactUs() {
               <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em] mb-8">Follow Our Journey</h3>
               <div className="flex gap-5 px-1">
                 {[
-                  { icon: <Instagram className="w-5 h-5" />, href: "#" },
-                  { icon: <Facebook className="w-5 h-5" />, href: "#" },
-                  { icon: <Twitter className="w-5 h-5" />, href: "#" },
-                  { icon: <Linkedin className="w-5 h-5" />, href: "#" }
+                  { icon: <Instagram className="w-5 h-5" />, href: "https://www.instagram.com/freshbhoj" },
+                  { icon: <Twitter className="w-5 h-5" />, href: "https://x.com/freshbhoj" },
+                  { icon: <Linkedin className="w-5 h-5" />, href: "https://www.linkedin.com/company/freshbhoj/" }
                 ].map((social, i) => (
-                  <a 
-                    key={i} 
-                    href={social.href} 
+                  <a
+                    key={i}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="relative w-12 h-12 rounded-full flex items-center justify-center bg-white border border-slate-100 text-[#BA2121] shadow-sm transition-all duration-500 overflow-hidden group/social"
                   >
                     {/* Gradient Hover Layer */}
-                    <div 
+                    <div
                       className="absolute inset-0 opacity-0 group-hover/social:opacity-100 transition-all duration-500 transform scale-0 group-hover/social:scale-100"
                       style={gradientBg}
                     />
@@ -264,7 +301,7 @@ export default function ContactUs() {
               <div className="bg-white rounded-[2.5rem] p-10 md:p-14 shadow-xl border border-slate-50 relative overflow-hidden">
                 <h2 className="text-3xl font-bold text-[#0F172A] mb-10">Send us a Message</h2>
 
-                <form className="space-y-6" onSubmit={(e) => { e.preventDefault(); setMsgSubmitted(true); }}>
+                <form className="space-y-6" onSubmit={handleSubmit}>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label className="block text-xs font-bold text-[#0F172A] uppercase tracking-widest mb-3 ml-1">Your Name</label>
@@ -275,6 +312,7 @@ export default function ContactUs() {
                         className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-slate-200/80 hover:border-slate-300 focus:bg-white focus:border-[#BA2121]/20 focus:ring-4 focus:ring-[#BA2121]/5 outline-none transition-all placeholder:text-slate-300"
                         value={msgData.name}
                         onChange={(e) => setMsgData({ ...msgData, name: e.target.value })}
+                        disabled={isSubmitting}
                       />
                     </div>
                     <div>
@@ -286,6 +324,7 @@ export default function ContactUs() {
                         className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-slate-200/80 hover:border-slate-300 focus:bg-white focus:border-[#BA2121]/20 focus:ring-4 focus:ring-[#BA2121]/5 outline-none transition-all placeholder:text-slate-300"
                         value={msgData.email}
                         onChange={(e) => setMsgData({ ...msgData, email: e.target.value })}
+                        disabled={isSubmitting}
                       />
                     </div>
                   </div>
@@ -298,12 +337,13 @@ export default function ContactUs() {
                         className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-transparent focus:bg-white focus:border-[#BA2121]/20 focus:ring-4 focus:ring-[#BA2121]/5 outline-none transition-all appearance-none text-slate-600"
                         value={msgData.subject}
                         onChange={(e) => setMsgData({ ...msgData, subject: e.target.value })}
+                        disabled={isSubmitting}
                       >
                         <option value="">Select an option</option>
-                        <option value="partnership">Partnership Inquiry</option>
-                        <option value="kitchen">Kitchen Onboarding</option>
-                        <option value="support">Customer Support</option>
-                        <option value="other">Other</option>
+                        <option value="Partnership Inquiry">Partnership Inquiry</option>
+                        <option value="Kitchen Onboarding">Kitchen Onboarding</option>
+                        <option value="Customer Support">Customer Support</option>
+                        <option value="Other">Other</option>
                       </select>
                       <ChevronDown className="absolute right-6 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
                     </div>
@@ -318,34 +358,38 @@ export default function ContactUs() {
                       className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-slate-200/80 hover:border-slate-300 focus:bg-white focus:border-[#BA2121]/20 focus:ring-4 focus:ring-[#BA2121]/5 outline-none transition-all resize-none placeholder:text-slate-300"
                       value={msgData.message}
                       onChange={(e) => setMsgData({ ...msgData, message: e.target.value })}
+                      disabled={isSubmitting}
                     />
                   </div>
 
-                  <button 
+                  {error && (
+                    <div className="p-4 bg-red-50 border border-red-100 rounded-xl text-red-500 text-sm font-bold flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-red-500" /> {error}
+                    </div>
+                  )}
+
+                  <button
                     type="button"
-                    className="flex items-start gap-4 py-3 text-left group/check mb-4 w-full" 
+                    className="flex items-start gap-4 py-3 text-left group/check mb-4 w-full"
                     onClick={() => setMsgData({ ...msgData, agreed: !msgData.agreed })}
                   >
-                    <div 
-                      className={`mt-1 w-6 h-6 rounded-full border-2 flex-shrink-0 flex items-center justify-center transition-all duration-500 relative overflow-hidden ${
-                        msgData.agreed 
-                        ? 'border-transparent shadow-lg shadow-[#BA2121]/20' 
+                    <div
+                      className={`mt-1 w-6 h-6 rounded-full border-2 flex-shrink-0 flex items-center justify-center transition-all duration-500 relative overflow-hidden ${msgData.agreed
+                        ? 'border-transparent shadow-lg shadow-[#BA2121]/20'
                         : 'border-slate-200 bg-slate-50 group-hover/check:border-[#BA2121]/50'
-                      }`}
+                        }`}
                     >
                       {/* Perfect Internal Gradient Circle */}
-                      <div 
-                        className={`absolute inset-0 rounded-full transition-opacity duration-500 ${
-                          msgData.agreed ? 'opacity-100' : 'opacity-0'
-                        }`}
+                      <div
+                        className={`absolute inset-0 rounded-full transition-opacity duration-500 ${msgData.agreed ? 'opacity-100' : 'opacity-0'
+                          }`}
                         style={gradientBg}
                       />
-                      
-                      <Check 
-                        className={`relative z-10 w-3.5 h-3.5 text-white transition-all duration-500 ${
-                          msgData.agreed ? 'scale-100 opacity-100' : 'scale-0 opacity-0'
-                        }`} 
-                        strokeWidth={4} 
+
+                      <Check
+                        className={`relative z-10 w-3.5 h-3.5 text-white transition-all duration-500 ${msgData.agreed ? 'scale-100 opacity-100' : 'scale-0 opacity-0'
+                          }`}
+                        strokeWidth={4}
                       />
                     </div>
                     <div className="flex-1">
@@ -357,10 +401,11 @@ export default function ContactUs() {
 
                   <button
                     type="submit"
-                    className="w-full py-5 rounded-2xl text-white font-bold text-lg shadow-[0_20px_40px_-10px_rgba(186,33,33,0.3)] hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-3"
+                    disabled={isSubmitting}
+                    className={`w-full py-5 rounded-2xl text-white font-bold text-lg shadow-[0_20px_40px_-10px_rgba(186,33,33,0.3)] hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-3 ${isSubmitting ? "opacity-70 cursor-not-allowed" : ""}`}
                     style={gradientBg}
                   >
-                    Send Message <Send className="w-5 h-5" />
+                    {isSubmitting ? "Sending..." : "Send Message"} <Send className={`w-5 h-5 ${isSubmitting ? "animate-pulse" : ""}`} />
                   </button>
 
 

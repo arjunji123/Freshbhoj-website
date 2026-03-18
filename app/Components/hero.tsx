@@ -64,28 +64,19 @@ const Hero = () => {
     >
       {/* ── Navbar ── */}
       <nav
-        className={`w-full fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${scrolled ? "backdrop-blur-xl bg-white/80 py-0 shadow-lg" : "bg-transparent py-2"
+        className={`w-full fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${scrolled ? "backdrop-blur-xl bg-white/40 shadow-lg border-b border-white/20" : "bg-transparent"
           }`}
       >
-        <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-2 md:py-4 lg:py-6 relative">
-          {/* Branded Underline - Only show when scrolled */}
-          {scrolled && (
-            <div
-              className="absolute bottom-0 left-0 w-full h-[1px] opacity-10"
-              style={{ background: "linear-gradient(90deg, transparent 0%, #BA2121 50%, transparent 100%)" }}
-            />
-          )}
-          {/* Subtle Glow */}
-
-          <div className="flex-shrink-0">
+        <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-1 md:py-4 lg:py-5 relative">
+          <div className="flex-shrink-0 mt-4 md:mt-0">
             <Link href="/">
               <Image
-                src={scrolled ? "/freshbhoj-red-new.svg" : "/FreshBhoj.svg"}
+                src={(scrolled || menuOpen) ? "/freshbhoj-red-new.svg" : "/FreshBhoj.svg"}
                 alt="FreshBhoj Logo"
                 width={200}
                 height={60}
                 priority
-                className="h-8 md:h-12 lg:h-14 w-auto object-contain cursor-pointer transition-all duration-300"
+                className="h-8 md:h-10 lg:h-12 w-auto object-contain cursor-pointer transition-all duration-300"
               />
             </Link>
           </div>
@@ -93,18 +84,22 @@ const Hero = () => {
           {/* Desktop nav links */}
           <div className="hidden md:flex items-center gap-4 ml-auto font-sans">
             <Link
+              href="/"
+              className={`font-bold text-sm lg:text-base px-6 py-2.5 rounded-full transition-all duration-300 ${scrolled ? "text-white shadow-lg" : "text-white"}`}
+              style={scrolled ? gradientBgStyle : { background: 'white', color: '#BA2121' }}
+            >
+              Home
+            </Link>
+            <Link
               href="/pre-register"
-              className={`font-bold text-sm lg:text-base px-8 py-2.5 rounded-full transition-all duration-300 shadow-lg ${scrolled ? "text-white" : "bg-white text-black hover:bg-opacity-90"
-                }`}
-              style={scrolled ? gradientBgStyle : {}}
+              className={`font-bold text-sm lg:text-base px-8 py-2.5 rounded-full transition-all duration-300 ${scrolled ? "text-[#BA2121] bg-white border border-slate-100" : "text-white border border-white/30 hover:bg-white hover:text-[#BA2121]"}`}
+              style={scrolled ? {} : {}}
             >
               Pre-Register
             </Link>
             <Link
               href="/contact-us"
-              className={`font-bold text-sm lg:text-base px-6 py-2 rounded-full transition-all duration-300 ${scrolled ? "" : "text-white hover:bg-white hover:text-[#BA2121]"
-                }`}
-              style={scrolled ? gradientTextStyle : {}}
+              className={`font-bold text-sm lg:text-base px-6 py-2 rounded-full transition-all duration-300 ${scrolled ? "text-slate-600 hover:text-[#BA2121]" : "text-white hover:bg-white hover:text-[#BA2121]"}`}
             >
               Contact us
             </Link>
@@ -112,11 +107,10 @@ const Hero = () => {
 
           {/* Mobile: hamburger button */}
           <button
-            className={`md:hidden z-50 relative group inline-flex items-center justify-center w-11 h-11 rounded-2xl border transition-all duration-300 active:scale-95 focus:outline-none focus:ring-4 ${
-              scrolled
-                ? "bg-white/70 backdrop-blur-xl border-white/60 shadow-md shadow-slate-900/10 focus:ring-[#BA2121]/10"
-                : "bg-white/15 backdrop-blur-xl border-white/30 shadow-md shadow-black/10 focus:ring-white/15"
-            }`}
+            className={`md:hidden z-50 mt-4 md:mt-0 relative group inline-flex items-center justify-center w-11 h-11 rounded-xl transition-all duration-300 active:scale-95 focus:outline-none ${scrolled
+                ? "bg-white/70 backdrop-blur-xl border border-white/60"
+                : "bg-white/10 backdrop-blur-xl border border-white/20"
+              }`}
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label="Toggle Menu"
             aria-expanded={menuOpen}
@@ -124,120 +118,78 @@ const Hero = () => {
             <span className="sr-only">Menu</span>
             <span className="relative w-6 h-5">
               <span
-                className={`absolute left-0 top-0 block w-6 h-[2px] rounded-full transition-all duration-300 ${
-                  scrolled ? "bg-[#BA2121]" : "bg-white"
-                } ${menuOpen ? "translate-y-[9px] rotate-45" : "opacity-95"}`}
+                className={`absolute left-0 top-0 block w-6 h-[2.5px] rounded-full transition-all duration-300 ${(scrolled || menuOpen) ? "bg-[#BA2121]" : "bg-white"
+                  } ${menuOpen ? "translate-y-[9px] rotate-45" : "opacity-95"}`}
               />
               <span
-                className={`absolute left-0 top-1/2 -translate-y-1/2 block w-6 h-[2px] rounded-full transition-all duration-300 ${
-                  scrolled ? "bg-[#BA2121]" : "bg-white"
-                } ${menuOpen ? "opacity-0 scale-90" : "opacity-95"}`}
+                className={`absolute left-0 top-1/2 -translate-y-1/2 block w-6 h-[2.5px] rounded-full transition-all duration-300 ${(scrolled || menuOpen) ? "bg-[#BA2121]" : "bg-white"
+                  } ${menuOpen ? "opacity-0 scale-90" : "opacity-95"}`}
               />
               <span
-                className={`absolute left-0 bottom-0 block w-6 h-[2px] rounded-full transition-all duration-300 ${
-                  scrolled ? "bg-[#BA2121]" : "bg-white"
-                } ${menuOpen ? "-translate-y-[9px] -rotate-45" : "opacity-95"}`}
+                className={`absolute left-0 bottom-0 block w-6 h-[2.5px] rounded-full transition-all duration-300 ${(scrolled || menuOpen) ? "bg-[#BA2121]" : "bg-white"
+                  } ${menuOpen ? "-translate-y-[9px] -rotate-45" : "opacity-95"}`}
               />
             </span>
           </button>
         </div>
       </nav>
 
-      {/* Mobile dropdown menu */}
+      {/* Mobile dropdown menu - Redesigned to match shared Navbar */}
       <div
-        className={`md:hidden fixed inset-0 z-40 ${menuOpen ? "pointer-events-auto" : "pointer-events-none"}`}
-      >
-        <div
-          className={`absolute inset-0 ${
-            scrolled
-              ? "bg-white/60 backdrop-blur-2xl"
-              : "bg-black/35 backdrop-blur-2xl"
+        className={`md:hidden fixed top-0 left-0 w-full z-[90] transition-all duration-500 overflow-hidden bg-white/95 backdrop-blur-3xl rounded-b-[2.5rem] shadow-2xl border-b border-slate-100 ${menuOpen ? "max-h-[34rem] opacity-100 pb-12 pt-24" : "max-h-0 opacity-0 pointer-events-none pt-24"
           }`}
-          onClick={() => setMenuOpen(false)}
-          style={{
-            transition: "opacity 220ms ease-out",
-            opacity: menuOpen ? 1 : 0,
-          }}
-        />
+      >
+        <div className="flex flex-col items-center gap-4 px-6">
+          <div className="w-full flex flex-col gap-3">
+            <Link
+              href="/"
+              className="text-lg font-bold py-3.5 w-full text-center transition-all active:scale-95 text-white shadow-md shadow-[#BA2121]/20 rounded-full"
+              style={gradientBgStyle}
+              onClick={() => setMenuOpen(false)}
+            >
+              Home
+            </Link>
 
-        <div
-          className="relative pt-20 px-6"
-          style={{
-            transition: "transform 260ms cubic-bezier(0.22,1,0.36,1), opacity 200ms ease-out",
-            transform: menuOpen ? "translateY(0)" : "translateY(-14px)",
-            opacity: menuOpen ? 1 : 0,
-            willChange: "transform, opacity",
-          }}
-        >
-          {/* Compact panel (not full screen) */}
-          <div
-            className={`max-w-md mx-auto rounded-[2rem] border shadow-lg overflow-hidden ${
-              scrolled
-                ? "bg-white/70 backdrop-blur-2xl border-white/60"
-                : "bg-white/10 backdrop-blur-2xl border-white/25"
-            }`}
-          >
-            <div className="p-6">
-              {/* Primary actions */}
-              <div className="space-y-4">
-                <Link
-                  href="/pre-register"
-                  className="block w-full text-center text-lg font-bold px-8 py-4 rounded-2xl shadow-lg shadow-black/10"
-                  style={gradientBgStyle}
-                  onClick={() => setMenuOpen(false)}
-                >
-                  Pre-Register
-                </Link>
-                <Link
-                  href="/contact-us"
-                  className={`block w-full text-center text-lg font-bold px-8 py-4 rounded-2xl border transition-all ${
-                    scrolled
-                      ? "bg-white/70 text-[#BA2121] border-white/60"
-                      : "bg-white/15 text-white border-white/30"
-                  }`}
-                  onClick={() => setMenuOpen(false)}
-                >
-                  Contact us
-                </Link>
-              </div>
+            <Link
+              href="/pre-register"
+              className="text-lg font-bold py-3.5 w-full text-center transition-all active:scale-95 rounded-full"
+              style={gradientTextStyle}
+              onClick={() => setMenuOpen(false)}
+            >
+              Pre-Register
+            </Link>
 
-              {/* Quote */}
-              <div className="mt-8 text-center">
-                <p
-                  className={`text-[11px] font-extrabold tracking-[0.28em] uppercase ${
-                    scrolled ? "text-slate-600" : "text-white/80"
-                  }`}
-                >
-                  FreshBhoj
-                </p>
-                <p
-                  className={`mt-3 text-sm font-semibold leading-relaxed ${
-                    scrolled ? "text-slate-800" : "text-white"
-                  }`}
-                >
-                  “Home-style food, discovered through reels — made for the way India eats.”
-                </p>
-              </div>
-            </div>
+            <Link
+              href="/contact-us"
+              className="text-lg font-bold py-3.5 w-full text-center transition-all active:scale-95 rounded-full"
+              style={gradientTextStyle}
+              onClick={() => setMenuOpen(false)}
+            >
+              Contact us
+            </Link>
           </div>
 
-          {/* Footer links outside the box */}
-          <div className="max-w-md mx-auto mt-6 flex items-center justify-center gap-8">
+          {/* Quote */}
+          <div className="mt-4 px-6 text-center">
+            <p className="text-[#BA2121] italic text-sm font-medium opacity-80">
+              &ldquo;India&apos;s first reel-based food discovery — taste the purity.&rdquo;
+            </p>
+          </div>
+
+          {/* Legal Links */}
+          <div className="flex items-center gap-4 mt-2">
             <Link
               href="/privacy-policy"
+              className="text-gray-500 text-xs font-semibold hover:text-[#BA2121] transition-colors"
               onClick={() => setMenuOpen(false)}
-              className={`text-xs font-bold uppercase tracking-[0.22em] underline underline-offset-4 transition-colors ${
-                scrolled ? "text-slate-600 hover:text-slate-900" : "text-white/85 hover:text-white"
-              }`}
             >
               Privacy Policy
             </Link>
+            <span className="w-1.5 h-1.5 rounded-full bg-gray-300" />
             <Link
               href="/terms-of-service"
+              className="text-gray-500 text-xs font-semibold hover:text-[#BA2121] transition-colors"
               onClick={() => setMenuOpen(false)}
-              className={`text-xs font-bold uppercase tracking-[0.22em] underline underline-offset-4 transition-colors ${
-                scrolled ? "text-slate-600 hover:text-slate-900" : "text-white/85 hover:text-white"
-              }`}
             >
               Terms of Service
             </Link>
@@ -246,7 +198,7 @@ const Hero = () => {
       </div>
 
       {/* ── Hero Body ── */}
-      <div className="w-full max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between px-6 pt-20 lg:pt-8 pb-0 lg:flex-1 relative">
+      <div className="w-full max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between px-6 pt-32 lg:pt-8 pb-0 lg:flex-1 relative">
         <div className="absolute top-[22%] lg:top-[20%] left-[60%] lg:left-[38%] -translate-x-1/2 -translate-y-1/2 w-[80%] lg:w-[20%] h-[40%] lg:h-[60%] z-0 opacity-20 pointer-events-none ">
           <Image
             src="/bg-white.svg"
@@ -281,13 +233,13 @@ const Hero = () => {
 
           <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto mt-4 font-sans">
             <Link
-              href="/pre-register"
+              href="/pre-register?type=foodie"
               className="flex items-center justify-center bg-white text-black font-bold px-10 py-4 rounded-full hover:bg-opacity-90 transition-all duration-300 whitespace-nowrap text-lg shadow-lg"
             >
               Pre-Register Now →
             </Link>
             <Link
-              href="/pre-register"
+              href="/pre-register?type=kitchen"
               className="flex items-center justify-center bg-hero-gradient text-white font-bold px-10 py-4 rounded-full transition-all duration-300 whitespace-nowrap text-lg shadow-lg hover:scale-105 active:scale-95"
             >
               Register Your Kitchen

@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -97,9 +98,18 @@ interface FoodieFormData {
   notifyMe: boolean;
 }
 
-export default function PreRegister() {
+function PreRegisterContent() {
   const formTopRef = useRef<HTMLDivElement | null>(null);
-  const [userType, setUserType] = useState<"foodie" | "kitchen" | null>(null);
+  const searchParams = useSearchParams();
+  const initialType = searchParams.get("type") as "foodie" | "kitchen" | null;
+
+  const [userType, setUserType] = useState<"foodie" | "kitchen" | null>("foodie");
+
+  useEffect(() => {
+    if (initialType && (initialType === "foodie" || initialType === "kitchen")) {
+      setUserType(initialType);
+    }
+  }, [initialType]);
   const [step, setStep] = useState(1);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -339,39 +349,42 @@ export default function PreRegister() {
 
         {/* User Type Switcher */}
         <div className="flex justify-center mb-16 px-4">
-          <div className="relative bg-white/80 backdrop-blur p-1.5 rounded-[2.5rem] flex w-full max-w-[420px] shadow-[0_18px_50px_-20px_rgba(15,23,42,0.25)] border border-slate-200/70 overflow-hidden ring-1 ring-black/[0.04]">
+          <div className="relative bg-white/70 backdrop-blur-xl p-1.5 rounded-full flex w-full max-w-[480px] shadow-[0_20px_50px_-20px_rgba(186,33,33,0.15)] border border-white/50 overflow-hidden ring-1 ring-black/[0.03]">
             {/* Sliding Background Indicator */}
             {userType && (
               <div
-                className={`absolute top-1 bottom-1 w-[calc(50%-4px)] rounded-[2.2rem] transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${userType === "foodie" ? "left-1" : "left-[calc(50%+1px)]"
+                className={`absolute top-1 bottom-1 w-[calc(50%-4px)] rounded-full transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] ${userType === "foodie" ? "left-1" : "left-[calc(50%+1px)]"
                   }`}
                 style={gradientBg}
               />
             )}
 
             <button
-              onClick={() => { setUserType("foodie"); setStep(1); setIsSubmitted(false); scrollFormIntoView(); }}
+              onClick={() => { setUserType("foodie"); setStep(1); setIsSubmitted(false); }}
               type="button"
-              aria-pressed={userType === "foodie"}
-              className={`relative flex-1 py-3.5 px-2 rounded-[2.2rem] font-bold text-sm md:text-base transition-all duration-500 flex items-center justify-center z-10 cursor-pointer select-none focus:outline-none focus:ring-4 focus:ring-[#BA2121]/10 ${
-                userType === "foodie"
-                  ? "text-white"
-                  : "text-slate-600 hover:text-slate-900 bg-slate-50/60 hover:bg-slate-50 active:bg-slate-100"
+              className={`relative flex-1 py-4 px-4 rounded-full font-bold text-sm md:text-base transition-all duration-300 flex items-center justify-center gap-3 z-10 cursor-pointer select-none focus:outline-none ${userType === "foodie"
+                ? "text-white shadow-lg"
+                : "text-slate-500 hover:text-[#BA2121] hover:bg-white/50"
                 }`}
             >
+              <UtensilsCrossed className={`w-5 h-5 transition-colors ${userType === "foodie" ? "text-white" : "text-[#BA2121]/60"}`} />
               I am a Foodie
             </button>
 
             <button
-              onClick={() => { setUserType("kitchen"); setStep(1); setIsSubmitted(false); scrollFormIntoView(); }}
+              onClick={() => { setUserType("kitchen"); setStep(1); setIsSubmitted(false); }}
               type="button"
-              aria-pressed={userType === "kitchen"}
-              className={`relative flex-1 py-3.5 px-2 rounded-[2.2rem] font-bold text-sm md:text-base transition-all duration-500 flex items-center justify-center z-10 cursor-pointer select-none focus:outline-none focus:ring-4 focus:ring-[#BA2121]/10 ${
-                userType === "kitchen"
-                  ? "text-white"
-                  : "text-slate-600 hover:text-slate-900 bg-slate-50/60 hover:bg-slate-50 active:bg-slate-100"
+              className={`relative flex-1 py-4 px-4 rounded-full font-bold text-sm md:text-base transition-all duration-300 flex items-center justify-center gap-3 z-10 cursor-pointer select-none focus:outline-none ${userType === "kitchen"
+                ? "text-white shadow-lg"
+                : "text-slate-500 hover:text-[#BA2121] hover:bg-white/50"
                 }`}
             >
+              <div className={`transition-colors ${userType === "kitchen" ? "text-white" : "text-[#BA2121]/60"}`}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                  <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+              </div>
               I am a Kitchen
             </button>
           </div>
@@ -408,47 +421,31 @@ export default function PreRegister() {
                 Go Back Home <ChevronRight className="ml-2 w-5 h-5" />
               </Link>
               <div className="block pt-12">
-                <div className="flex justify-center gap-6 mt-12">
+                <div className="flex gap-4">
                   {[
-                    { src: "/insta.svg", alt: "Instagram" },
-                    { src: "/whatsapp.svg", alt: "WhatsApp" },
-                    { src: "/facebook.svg", alt: "Facebook" },
+                    { src: "/insta.svg", alt: "Instagram", href: "https://www.instagram.com/freshbhoj" },
+                    { src: "/whatsapp.svg", alt: "WhatsApp", href: "https://wa.me/918058318556" },
+                    { src: "/x.svg", alt: "X", href: "https://x.com/freshbhoj" },
                   ].map((social) => (
                     <a
                       key={social.alt}
-                      href="#"
-                      className="relative w-12 h-12 flex items-center justify-center rounded-full bg-white border border-slate-100 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg group"
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-12 h-12 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center hover:bg-[#BA2121]/5 hover:border-[#BA2121]/20 transition-all group"
                     >
-                      {/* Gradient Hover Layer */}
-                      <div
-                        className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                        style={gradientBg}
+                      <Image
+                        src={social.src}
+                        alt={social.alt}
+                        width={20}
+                        height={20}
+                        className="object-contain brightness-0 opacity-40 group-hover:opacity-100 group-hover:invert transition-all"
                       />
-                      <div className="relative w-5 h-5 z-10 transition-all">
-                        <Image
-                          src={social.src}
-                          alt={social.alt}
-                          width={20}
-                          height={20}
-                          className="object-contain brightness-0 opacity-40 group-hover:opacity-100 group-hover:invert transition-all"
-                        />
-                      </div>
                     </a>
                   ))}
                 </div>
               </div>
             </div>
-          </div>
-        ) : !userType ? (
-          /* Neutral Initial State */
-          <div className="max-w-xl mx-auto text-center py-12 animate-in fade-in zoom-in duration-700">
-            <div className="w-24 h-24 bg-[#FFF5F5] rounded-[2rem] flex items-center justify-center mx-auto mb-8 shadow-sm">
-              <Sparkles className="w-10 h-10 text-[#BA2121]" />
-            </div>
-            <h2 className="text-2xl font-bold text-[#0F172A] mb-4">How would you like to join?</h2>
-            <p className="text-slate-500">
-              Select whether you&apos;re here to discover incredible flavors or to share your culinary journey with the world.
-            </p>
           </div>
         ) : userType === "foodie" ? (
           /* Foodie Registration Flow */
@@ -456,7 +453,7 @@ export default function PreRegister() {
             {/* Background Accent Gradients */}
             <div className="absolute top-0 right-0 w-96 h-96 bg-[#BA2121] opacity-[0.03] blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2 pointer-events-none" />
             <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#FF6B6B] opacity-[0.03] blur-[100px] rounded-full translate-y-1/2 -translate-x-1/2 pointer-events-none" />
-            
+
             <div className="relative bg-white/90 backdrop-blur-2xl rounded-[2.5rem] border border-[#BA2121]/15 shadow-[0_40px_90px_-35px_rgba(186,33,33,0.28)] overflow-hidden mb-12 ring-1 ring-white/60">
               <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white to-transparent opacity-80" />
               {/* Stepper Header */}
@@ -599,7 +596,7 @@ export default function PreRegister() {
                       <div className="space-y-4">
                         <label className="block text-sm font-semibold text-[#0F172A] ml-1 mb-4">Who are you?</label>
                         <div className="flex flex-wrap gap-3">
-                          {["Student", "Working Professional", "Family", "Other"].map((item) => (
+                          {["Student", "Professional", "Family", "Other"].map((item) => (
                             <button
                               key={item}
                               onClick={() => setFoodieData({ ...foodieData, aboutSelf: item })}
@@ -761,7 +758,7 @@ export default function PreRegister() {
             {/* Background Accent Gradients */}
             <div className="absolute top-0 right-0 w-96 h-96 bg-[#BA2121] opacity-[0.03] blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2 pointer-events-none" />
             <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#FF6B6B] opacity-[0.03] blur-[100px] rounded-full translate-y-1/2 -translate-x-1/2 pointer-events-none" />
-            
+
             <div className="relative bg-white/90 backdrop-blur-2xl rounded-[2.5rem] border border-[#BA2121]/15 shadow-[0_40px_90px_-35px_rgba(186,33,33,0.28)] overflow-hidden mb-12 ring-1 ring-white/60">
               <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white to-transparent opacity-80" />
               {/* Stepper Header */}
@@ -1248,5 +1245,17 @@ export default function PreRegister() {
 
       <Footer />
     </div>
+  );
+}
+
+export default function PreRegister() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-[#FDFCFB] flex items-center justify-center">
+        <div className="w-12 h-12 border-4 border-[#BA2121]/20 border-t-[#BA2121] rounded-full animate-spin" />
+      </div>
+    }>
+      <PreRegisterContent />
+    </Suspense>
   );
 }

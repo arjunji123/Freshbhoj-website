@@ -22,6 +22,35 @@ export default function FreshBhojFix() {
   // Common styles
   const badgeClasses = "inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6 font-sans font-bold text-[10px] lg:text-xs uppercase tracking-widest bg-[#C41717]/10";
 
+  // Interactive Mouse Effect for CTA Card
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [hovering, setHovering] = useState(false);
+  const [onButton, setOnButton] = useState(false);
+  const ctaCardRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!ctaCardRef.current) return;
+    const rect = ctaCardRef.current.getBoundingClientRect();
+    setMousePos({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    });
+  };
+
+  const getTiltStyle = () => {
+    if (!hovering || !ctaCardRef.current) return {};
+    const rect = ctaCardRef.current.getBoundingClientRect();
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotateX = (mousePos.y - centerY) / 25;
+    const rotateY = (centerX - mousePos.x) / 25;
+
+    return {
+      transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`,
+      transition: "transform 0.1s ease-out",
+    };
+  };
+
   return (
     <section
       ref={sectionRef}
@@ -220,24 +249,42 @@ export default function FreshBhojFix() {
 
           {/* Final CTA */}
           <div
-            className={`relative w-full rounded-[2.5rem] lg:rounded-[3.5rem] py-16 lg:py-24 px-6 lg:px-12 text-center overflow-hidden transition-all duration-1000 delay-500 bg-[#0F172A] border border-white/5
+            ref={ctaCardRef}
+            onMouseMove={handleMouseMove}
+            onMouseEnter={() => setHovering(true)}
+            onMouseLeave={() => { setHovering(false); setOnButton(false); }}
+            className={`relative w-full rounded-[2.5rem] lg:rounded-[3.5rem] py-16 lg:py-24 px-6 lg:px-12 text-center overflow-hidden transition-all duration-700 delay-500 bg-[#0F172A] border border-white/5 shadow-2xl group
             ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}
           >
-            {/* Background elements */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-[#BA2121] opacity-10 blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2" />
-            <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500 opacity-10 blur-[100px] rounded-full translate-y-1/2 -translate-x-1/2" />
+            {/* Spotlight Glow Effect - Enhanced Multi-layer Glow */}
+            <div
+              className={`pointer-events-none absolute inset-0 transition-opacity duration-300 z-[1] ${hovering && !onButton ? "opacity-100" : "opacity-0"}`}
+              style={{
+                background: `
+                  radial-gradient(450px circle at ${mousePos.x}px ${mousePos.y}px, rgba(186, 33, 33, 0.35), transparent 70%),
+                  radial-gradient(200px circle at ${mousePos.x}px ${mousePos.y}px, rgba(255, 107, 107, 0.2), transparent 50%)
+                `
+              }}
+            />
 
-            <div className="relative z-10">
+            {/* Background elements (Fixed) */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[#BA2121] opacity-20 blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2 pointer-events-none z-0" />
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500 opacity-10 blur-[100px] rounded-full translate-y-1/2 -translate-x-1/2 pointer-events-none z-0" />
+
+            {/* Content with high Z-index */}
+            <div className="relative z-20">
               <h3 className="text-white font-extrabold mb-6 text-2xl md:text-4xl lg:text-5xl tracking-tight leading-tight">
                 Ready to fuel the <br className="md:hidden" /> future of food?
               </h3>
               <p className="mx-auto mb-10 font-medium text-slate-400 text-base md:text-lg max-w-xl md:max-w-none leading-relaxed">
                 Access our full data room, financial projections, and roadmap for Series A.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <Link
                   href="/contact-us"
-                  className="inline-flex items-center justify-center px-10 py-5 text-white font-bold rounded-3xl transition-all hover:scale-105 active:scale-95 shadow-[0_10px_20px_-5px_rgba(186,33,33,0.3)]"
+                  onMouseEnter={() => setOnButton(true)}
+                  onMouseLeave={() => setOnButton(false)}
+                  className="relative z-30 inline-flex items-center justify-center px-10 py-5 text-white font-bold rounded-3xl transition-all hover:scale-110 active:scale-95"
                   style={{
                     background: "linear-gradient(169.21deg, #FF6B6B 9%, #BA2121 77%, #670000 100%)",
                   }}
@@ -246,7 +293,9 @@ export default function FreshBhojFix() {
                 </Link>
                 <Link
                   href="/contact-us"
-                  className="inline-flex items-center justify-center px-10 py-5 text-white font-bold rounded-3xl transition-all hover:bg-white/10 bg-[#FFFFFF]/10"
+                  onMouseEnter={() => setOnButton(true)}
+                  onMouseLeave={() => setOnButton(false)}
+                  className="relative z-30 inline-flex items-center justify-center px-10 py-5 text-white font-bold rounded-3xl transition-all hover:bg-white/20 bg-[#FFFFFF]/10 border border-white/10 hover:border-white/20"
                 >
                   Contact Founders
                 </Link>
