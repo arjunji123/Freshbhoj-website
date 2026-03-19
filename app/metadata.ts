@@ -11,10 +11,14 @@ export const metadata: Metadata = {
     metadataBase: new URL("https://freshbhoj.com"),
 
     icons: {
-        icon: "/icon.svg",
+        icon: [
+            { url: "/icon.svg", type: "image/svg+xml" },
+            { url: "/icon.svg" },
+        ],
         shortcut: "/icon.svg",
         apple: "/icon.svg",
     },
+    manifest: "/manifest.json",
 
     alternates: {
         canonical: "https://freshbhoj.com",
