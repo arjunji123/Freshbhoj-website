@@ -85,6 +85,57 @@ export default function PreRegistration() {
           </p>
         </div>
 
+        {/* ₹10 UPI Cashback Banner */}
+        <div
+          className={`mb-10 lg:mb-14 transition-all duration-1000 ease-out delay-100
+          ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+        >
+          <div
+            className="relative overflow-hidden rounded-2xl lg:rounded-3xl px-6 py-5 lg:px-10 lg:py-6 flex flex-col md:flex-row items-center justify-between gap-4 md:gap-6"
+            style={{ background: "linear-gradient(120deg, #0F172A 0%, #1E293B 60%, #0F172A 100%)" }}
+          >
+            {/* Decorative glows */}
+            <div className="absolute top-0 left-1/4 w-40 h-40 bg-yellow-400/10 blur-[60px] rounded-full pointer-events-none" />
+            <div className="absolute bottom-0 right-1/4 w-40 h-40 bg-[#BA2121]/20 blur-[60px] rounded-full pointer-events-none" />
+
+            {/* Left: Icon + text */}
+            <div className="flex items-center gap-4 relative z-10">
+              <div className="flex-shrink-0 relative">
+                <div className="w-14 h-14 rounded-2xl bg-yellow-400 flex items-center justify-center shadow-2xl shadow-yellow-400/40">
+                  <span className="text-2xl font-black text-slate-900">₹</span>
+                </div>
+                <div className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-green-400 border-2 border-[#0F172A] animate-ping" />
+                <div className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-green-400 border-2 border-[#0F172A]" />
+              </div>
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-yellow-300 bg-yellow-400/15 text-[10px] font-black uppercase tracking-[0.15em] px-2.5 py-1 rounded-full border border-yellow-400/30">
+                    Limited Time Offer
+                  </span>
+                </div>
+                <p className="text-white font-black text-xl lg:text-2xl leading-tight">
+                  Earn <span className="text-yellow-300">₹10 via UPI</span> just for pre-registering!
+                </p>
+                <p className="text-white/60 text-sm font-medium mt-1">
+                  Valid for Foodies &amp; Kitchens · Requires valid email + 10-digit mobile number
+                </p>
+              </div>
+            </div>
+
+            {/* Right: Badges */}
+            <div className="flex flex-row md:flex-col items-center gap-2 relative z-10 flex-shrink-0">
+              <div className="flex items-center gap-2 bg-white/8 border border-white/10 rounded-xl px-4 py-2">
+                <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse flex-shrink-0" />
+                <span className="text-white/80 text-xs font-bold whitespace-nowrap">For Foodies ₹10</span>
+              </div>
+              <div className="flex items-center gap-2 bg-white/8 border border-white/10 rounded-xl px-4 py-2">
+                <span className="w-2 h-2 rounded-full bg-yellow-400 animate-pulse flex-shrink-0" />
+                <span className="text-white/80 text-xs font-bold whitespace-nowrap">For Kitchens ₹10</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* ── Cards Grid ── */}
         <div
           className={`grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10 mb-20 lg:mb-32 transition-all duration-1000 ease-out delay-200

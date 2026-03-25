@@ -331,7 +331,7 @@ function PreRegisterContent() {
         <div className="pointer-events-none absolute bottom-[-120px] right-[-180px] w-[560px] h-[560px] bg-slate-900/[0.03] blur-[130px] rounded-full" />
 
         {/* Header Section */}
-        <div className="text-center max-w-4xl mx-auto mb-10 md:mb-16 px-4">
+        <div className="text-center max-w-4xl mx-auto mb-10 md:mb-12 px-4">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur border border-slate-200 shadow-sm mb-4 md:mb-6">
             <span className="w-2 h-2 rounded-full bg-[#BA2121]" />
             <span className="text-[10px] md:text-[11px] font-extrabold tracking-[0.2em] md:tracking-[0.24em] uppercase text-slate-600">
@@ -345,6 +345,47 @@ function PreRegisterContent() {
             Pre-register now to get early access and exclusive launch benefits <br className="hidden md:block" />
             across the FreshBhoj platform.
           </p>
+        </div>
+
+        {/* ₹10 UPI Cashback Strip */}
+        <div className="max-w-4xl mx-auto mb-10 md:mb-14 px-4">
+          <div
+            className="relative overflow-hidden rounded-2xl lg:rounded-3xl px-6 py-4 md:px-8 md:py-5"
+            style={{ background: "linear-gradient(120deg, #0F172A 0%, #1a2744 50%, #0F172A 100%)" }}
+          >
+            {/* Shimmer sweep animation */}
+            <div className="absolute inset-0 pointer-events-none">
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -skew-x-12 animate-[shimmer_3s_ease-in-out_infinite]" />
+            </div>
+            <div className="absolute top-0 right-0 w-64 h-full bg-yellow-400/5 blur-[50px] pointer-events-none" />
+
+            <div className="relative z-10 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="flex items-center gap-4">
+                {/* Coin animation */}
+                <div className="flex-shrink-0 relative">
+                  <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-gradient-to-br from-yellow-300 to-yellow-500 flex items-center justify-center shadow-xl shadow-yellow-500/30">
+                    <span className="text-xl md:text-2xl font-black text-slate-900">₹</span>
+                  </div>
+                  <div className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-green-400 border-2 border-[#0F172A]">
+                    <div className="w-full h-full rounded-full bg-green-400 animate-ping" />
+                  </div>
+                </div>
+                <div>
+                  <p className="text-white font-black text-lg md:text-xl leading-snug">
+                    Pre-register &amp; earn{" "}
+                    <span className="text-yellow-300">₹10 directly on your UPI!</span>
+                  </p>
+                  <p className="text-white/55 text-xs md:text-sm font-medium mt-0.5">
+                    ✔ Valid email &nbsp;·&nbsp; ✔ 10-digit mobile number &nbsp;·&nbsp; ✔ Both Foodies &amp; Kitchens eligible
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2 flex-shrink-0 bg-yellow-400/15 border border-yellow-400/30 rounded-xl px-4 py-2">
+                <span className="w-2 h-2 rounded-full bg-yellow-400 animate-pulse" />
+                <span className="text-yellow-300 text-xs font-black uppercase tracking-widest whitespace-nowrap">UPI Instant</span>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* User Type Switcher */}
@@ -403,14 +444,53 @@ function PreRegisterContent() {
               </div>
             </div>
 
-            <h2 className="text-4xl font-bold text-[#0F172A] mb-6">
+            <h2 className="text-4xl font-bold text-[#0F172A] mb-4">
               {userType === "kitchen" ? "Application Submitted!" : "You're on the list!"}
             </h2>
-            <p className="text-lg text-slate-500 mb-12 leading-relaxed max-w-lg mx-auto">
+            <p className="text-lg text-slate-500 mb-8 leading-relaxed max-w-lg mx-auto">
               {userType === "kitchen"
                 ? "Thank you for sharing your journey with us. Our team will review your kitchen details and get back to you within 48 hours."
                 : "Welcome to the future of home-style dining! We've saved your spot and will notify you as soon as we launch in your city."}
             </p>
+
+            {/* ₹10 UPI Cashback Claim Card */}
+            <div
+              className="relative overflow-hidden rounded-3xl p-6 md:p-8 mb-10 text-left shadow-xl shadow-yellow-400/10"
+              style={{ background: "linear-gradient(135deg, #0F172A 0%, #1E293B 70%, #0F172A 100%)" }}
+            >
+              <div className="absolute top-0 right-0 w-48 h-48 bg-yellow-400/10 blur-[60px] rounded-full pointer-events-none" />
+              <div className="absolute bottom-0 left-0 w-32 h-32 bg-[#BA2121]/15 blur-[50px] rounded-full pointer-events-none" />
+              <div className="relative z-10">
+                <div className="flex items-start gap-4 mb-4">
+                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-yellow-300 to-yellow-500 flex items-center justify-center shadow-lg shadow-yellow-400/30 flex-shrink-0">
+                    <span className="text-2xl font-black text-slate-900">₹</span>
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-yellow-300 bg-yellow-400/15 text-[10px] font-black uppercase tracking-[0.15em] px-2 py-0.5 rounded-full border border-yellow-400/25">
+                        UPI Reward
+                      </span>
+                    </div>
+                    <p className="text-white font-black text-xl md:text-2xl">₹10 is on its way to you!</p>
+                    <p className="text-white/60 text-sm font-medium mt-1">
+                      We&apos;ll send ₹10 directly to your registered mobile number via UPI within 24–48 hours of launch.
+                    </p>
+                  </div>
+                </div>
+                <div className="border-t border-white/8 pt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  {[
+                    { label: "Amount", value: "₹10.00" },
+                    { label: "Method", value: "UPI Transfer" },
+                    { label: "To", value: "Registered Mobile" },
+                  ].map(({ label, value }) => (
+                    <div key={label} className="bg-white/5 rounded-xl px-4 py-3">
+                      <p className="text-white/40 text-[10px] font-bold uppercase tracking-widest">{label}</p>
+                      <p className="text-white font-bold text-sm mt-1">{value}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
 
             <div className="space-y-4">
               <Link
@@ -420,8 +500,8 @@ function PreRegisterContent() {
               >
                 Go Back Home <ChevronRight className="ml-2 w-5 h-5" />
               </Link>
-              <div className="block pt-12">
-                <div className="flex gap-4">
+              <div className="block pt-8">
+                <div className="flex gap-4 justify-center">
                   {[
                     { src: "/insta.svg", alt: "Instagram", href: "https://www.instagram.com/freshbhoj" },
                     { src: "/whatsapp.svg", alt: "WhatsApp", href: "https://wa.me/918058318556" },

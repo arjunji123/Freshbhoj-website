@@ -246,18 +246,40 @@ const Hero = () => {
             </Link>
           </div>
 
-          <div className="flex flex-row items-center gap-4 mt-2">
-            <div className="relative h-10 w-24">
-              <Image
-                src="/Social.png"
-                alt="Social proof"
-                fill
-                className="object-contain object-left"
-              />
+          {/* ₹10 UPI Cashback Announcement */}
+          <div className="flex flex-col gap-3 mt-2 w-full">
+            <Link href="/pre-register" className="group flex items-center gap-3 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/25 hover:border-white/50 rounded-2xl px-5 py-3.5 w-fit transition-all duration-300 hover:scale-[1.02] active:scale-95">
+              <div className="flex-shrink-0 w-8 h-8 rounded-xl bg-yellow-400 flex items-center justify-center shadow-lg shadow-yellow-400/30 animate-pulse">
+                <span className="text-base">₹</span>
+              </div>
+              <div>
+                <p className="text-white font-extrabold text-sm leading-tight">
+                  Get <span className="text-yellow-300">₹10 FREE</span> on pre-registration via UPI!
+                </p>
+                <p className="text-white/70 text-[11px] font-medium mt-0.5">
+                  Valid for both Foodies &amp; Kitchens · Valid email + mobile required
+                </p>
+              </div>
+              <div className="ml-auto flex-shrink-0 text-white/60 group-hover:text-white group-hover:translate-x-1 transition-all">
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+              </div>
+            </Link>
+
+            <div className="flex flex-row items-center gap-4">
+              <div className="relative h-10 w-24">
+                <Image
+                  src="/Social.png"
+                  alt="Social proof"
+                  fill
+                  className="object-contain object-left"
+                />
+              </div>
+              <p className="text-white/80 text-sm font-medium">
+                Join <span className="text-white font-bold">2,500+</span> foodies on the waitlist
+              </p>
             </div>
-            <p className="text-white/80 text-sm font-medium">
-              Join <span className="text-white font-bold">2,500+</span> foodies on the waitlist
-            </p>
           </div>
         </div>
 
