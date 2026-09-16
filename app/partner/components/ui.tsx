@@ -180,7 +180,7 @@ export function ConfirmDialog({
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/40 p-6" onClick={onCancel}>
+    <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/40 p-6" onClick={isLoading ? undefined : onCancel}>
       <div
         className="w-full max-w-sm bg-white rounded-3xl p-6 shadow-2xl"
         onClick={(e) => e.stopPropagation()}

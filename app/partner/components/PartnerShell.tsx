@@ -8,12 +8,16 @@ import { useState } from "react";
 import { useKitchenAuth } from "../../../lib/KitchenAuthProvider";
 import { GRADIENT_BG } from "./ui";
 
+// `requiresActive` mirrors what `PartnerGuard` actually allows: a
+// pre-approval kitchen (status !== "ACTIVE") that reaches this shell only got
+// here via its Menu/Stories exception — Dashboard/Orders/Profile would bounce
+// it straight back to /partner/onboarding.
 const NAV_ITEMS = [
-  { href: "/partner/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/partner/orders", label: "Orders", icon: ClipboardList },
-  { href: "/partner/menu", label: "Menu", icon: UtensilsCrossed },
-  { href: "/partner/stories", label: "Stories", icon: Sparkles },
-  { href: "/partner/profile", label: "Kitchen Profile", icon: Store },
+  { href: "/partner/dashboard", label: "Dashboard", icon: LayoutDashboard, requiresActive: true },
+  { href: "/partner/orders", label: "Orders", icon: ClipboardList, requiresActive: true },
+  { href: "/partner/menu", label: "Menu", icon: UtensilsCrossed, requiresActive: false },
+  { href: "/partner/stories", label: "Stories", icon: Sparkles, requiresActive: false },
+  { href: "/partner/profile", label: "Kitchen Profile", icon: Store, requiresActive: true },
 ];
 
 export default function PartnerShell({ children }: { children: React.ReactNode }) {
@@ -24,8 +28,24 @@ export default function PartnerShell({ children }: { children: React.ReactNode }
 
   const NavLinks = (
     <nav className="flex flex-col gap-1.5">
-      {NAV_ITEMS.map(({ href, label, icon: Icon }) => {
+      {NAV_ITEMS.map(({ href, label, icon: Icon, requiresActive }) => {
+        const isLocked = Boolean(isPreApproval) && requiresActive;
         const isActive = pathname === href || pathname?.startsWith(`${href}/`);
+
+        if (isLocked) {
+          return (
+            <div
+              key={href}
+              className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-slate-300 cursor-not-allowed select-none"
+              title="Available after approval"
+            >
+              <Icon size={18} strokeWidth={2.2} />
+              <span className="flex-1">{label}</span>
+              <span className="text-[10px] font-semibold normal-case">Locked</span>
+            </div>
+          );
+        }
+
         return (
           <Link
             key={href}

@@ -54,20 +54,37 @@ export function setOnSessionExpired(handler: (() => void) | null) {
   onSessionExpired = handler;
 }
 
+// The backend rotates refresh tokens on every use (single-use), so if two
+// concurrent 401s each read the same refresh token and POST it independently,
+// the "losing" call fails with 401 and would otherwise wipe out the tokens
+// the "winning" call just wrote. Sharing one in-flight promise means every
+// concurrent caller awaits the same refresh instead of racing.
+let refreshPromise: Promise<KitchenTokenPair | null> | null = null;
+
 async function refreshTokens(): Promise<KitchenTokenPair | null> {
-  const current = readTokens();
-  if (!current) return null;
+  if (refreshPromise) return refreshPromise;
 
-  const res = await fetch(`${BASE_URL}/api/v1/partner/auth/token/refresh`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ refreshToken: current.refreshToken }),
-  });
-  if (!res.ok) return null;
+  refreshPromise = (async () => {
+    const current = readTokens();
+    if (!current) return null;
 
-  const body: ApiEnvelope<KitchenTokenPair> = await res.json();
-  writeTokens(body.data);
-  return body.data;
+    const res = await fetch(`${BASE_URL}/api/v1/partner/auth/token/refresh`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ refreshToken: current.refreshToken }),
+    });
+    if (!res.ok) return null;
+
+    const body: ApiEnvelope<KitchenTokenPair> = await res.json();
+    writeTokens(body.data);
+    return body.data;
+  })();
+
+  try {
+    return await refreshPromise;
+  } finally {
+    refreshPromise = null;
+  }
 }
 
 interface RequestOptions {

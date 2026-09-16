@@ -28,6 +28,9 @@ export default function StoriesPage() {
       const [storyList, mealList] = await Promise.all([kitchenStoriesApi.list(), kitchenMenuApi.list()]);
       setStories(storyList);
       setMeals(mealList);
+      setError(null);
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : "Could not load your stories, please try again");
     } finally {
       setIsLoading(false);
     }
@@ -97,7 +100,11 @@ export default function StoriesPage() {
         </div>
       ) : activeStories.length === 0 ? (
         <Card>
-          <EmptyState title="No active stories" description="Publish one to show up in the customer app's Kitchen Stories rail." />
+          {error ? (
+            <EmptyState title="Couldn't load your stories" description={error} action={<Button onClick={load}>Retry</Button>} />
+          ) : (
+            <EmptyState title="No active stories" description="Publish one to show up in the customer app's Kitchen Stories rail." />
+          )}
         </Card>
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -219,6 +226,9 @@ function ComposeStory({ meals, onPublished }: { meals: MealDetail[]; onPublished
   };
 
   const isVideo = file?.type.startsWith("video");
+  // A published dish must be orderable — linking a draft would make the story
+  // shoppable for something customers can't actually order.
+  const availableMeals = meals.filter((meal) => meal.isAvailable);
 
   const handlePublish = async () => {
     if (!file) return;
@@ -280,7 +290,7 @@ function ComposeStory({ meals, onPublished }: { meals: MealDetail[]; onPublished
       <Field label="Link a dish (optional) — makes the story shoppable, with order tracking">
         <Select value={mealId} onChange={(e) => setMealId(e.target.value)}>
           <option value="">No dish linked</option>
-          {meals.map((meal) => (
+          {availableMeals.map((meal) => (
             <option key={meal.id} value={meal.id}>
               {meal.name} — ₹{meal.price}
             </option>

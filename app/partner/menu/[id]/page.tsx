@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { kitchenMenuApi } from "../../../../lib/kitchenApi";
+import { ApiError, kitchenMenuApi } from "../../../../lib/kitchenApi";
 import type { MealDetail } from "../../../../lib/types";
-import { BackLink, Card, PageHeader, Spinner } from "../../components/ui";
+import { BackLink, Button, Card, PageHeader, Spinner } from "../../components/ui";
 import MealForm from "../../components/MealForm";
 
 export default function EditMealPage() {
@@ -12,13 +12,29 @@ export default function EditMealPage() {
   const params = useParams<{ id: string }>();
   const [meal, setMeal] = useState<MealDetail | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [notFound, setNotFound] = useState(false);
+  const [loadError, setLoadError] = useState<string | null>(null);
+
+  const load = useCallback(async () => {
+    setIsLoading(true);
+    setNotFound(false);
+    setLoadError(null);
+    try {
+      setMeal(await kitchenMenuApi.get(params.id));
+    } catch (err) {
+      if (err instanceof ApiError && err.status === 404) {
+        setNotFound(true);
+      } else {
+        setLoadError(err instanceof ApiError ? err.message : "Could not load this dish, please try again");
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  }, [params.id]);
 
   useEffect(() => {
-    kitchenMenuApi
-      .get(params.id)
-      .then(setMeal)
-      .finally(() => setIsLoading(false));
-  }, [params.id]);
+    load();
+  }, [load]);
 
   return (
     <div>
@@ -38,8 +54,13 @@ export default function EditMealPage() {
               router.push("/partner/menu");
             }}
           />
-        ) : (
+        ) : notFound ? (
           <p className="text-sm text-slate-500">Dish not found.</p>
+        ) : (
+          <div className="flex flex-col items-start gap-3">
+            <p className="text-sm font-semibold text-red-600">{loadError ?? "Could not load this dish, please try again"}</p>
+            <Button onClick={load}>Retry</Button>
+          </div>
         )}
       </Card>
     </div>

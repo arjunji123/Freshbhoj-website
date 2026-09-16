@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { ApiError, kitchenProfileApi, kitchenUploadApi } from "../../../lib/kitchenApi";
 import type { KitchenProfile } from "../../../lib/types";
-import { Badge, Button, Card, Field, PageHeader, Spinner, TextArea, TextInput } from "../components/ui";
+import { Badge, Button, Card, EmptyState, Field, PageHeader, Spinner, TextArea, TextInput } from "../components/ui";
 
 export default function ProfilePage() {
   const [profile, setProfile] = useState<KitchenProfile | null>(null);
@@ -22,7 +22,9 @@ export default function ProfilePage() {
   const [opensAt, setOpensAt] = useState("08:00");
   const [closesAt, setClosesAt] = useState("22:00");
 
-  useEffect(() => {
+  const load = () => {
+    setIsLoading(true);
+    setError(null);
     kitchenProfileApi
       .get()
       .then((p) => {
@@ -36,7 +38,14 @@ export default function ProfilePage() {
         setOpensAt(p.opensAt);
         setClosesAt(p.closesAt);
       })
+      .catch((err) => {
+        setError(err instanceof ApiError ? err.message : "Could not load your profile, please try again");
+      })
       .finally(() => setIsLoading(false));
+  };
+
+  useEffect(() => {
+    load();
   }, []);
 
   const handleLogoUpload = async (file: File) => {
@@ -75,11 +84,23 @@ export default function ProfilePage() {
     }
   };
 
-  if (isLoading || !profile) {
+  if (isLoading) {
     return (
       <div className="flex items-center justify-center py-24">
         <Spinner className="w-8 h-8 text-[#BA2121]" />
       </div>
+    );
+  }
+
+  if (!profile) {
+    return (
+      <Card>
+        <EmptyState
+          title="Something went wrong"
+          description={error ?? "Could not load your profile, please try again"}
+          action={<Button onClick={load}>Retry</Button>}
+        />
+      </Card>
     );
   }
 

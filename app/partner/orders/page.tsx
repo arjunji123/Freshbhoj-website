@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Calendar, Clock, Phone } from "lucide-react";
+import { Calendar, Clock, Phone, StickyNote } from "lucide-react";
 import { ApiError, kitchenOrdersApi } from "../../../lib/kitchenApi";
 import type { KitchenOrderCard, OrderStatus } from "../../../lib/types";
 import { Badge, Button, Card, ConfirmDialog, EmptyState, PageHeader, Spinner } from "../components/ui";
@@ -27,6 +27,20 @@ const COLUMN_LABEL: Partial<Record<OrderStatus, string>> = {
 };
 
 const POLL_MS = 15_000;
+
+/** `item.customizations` is typed `unknown` on the wire — the backend actually populates it as `{ name, priceDelta }[]`. */
+function customizationNames(customizations: unknown): string[] {
+  if (!Array.isArray(customizations)) return [];
+  return customizations
+    .map((c) => (c && typeof c === "object" && "name" in c ? String((c as { name: unknown }).name) : null))
+    .filter((name): name is string => Boolean(name));
+}
+
+function itemNote(item: KitchenOrderCard["items"][number]): string | null {
+  const parts = [...customizationNames(item.customizations)];
+  if (item.specialInstructions) parts.push(item.specialInstructions);
+  return parts.length > 0 ? `${item.name}: ${parts.join(", ")}` : null;
+}
 
 type Tab = "live" | "history";
 
@@ -80,6 +94,9 @@ function LiveBoard() {
     if (showSpinner) setIsLoading(true);
     try {
       setOrders(await kitchenOrdersApi.incoming());
+      setError(null);
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : "Could not load orders, please try again");
     } finally {
       setIsLoading(false);
     }
@@ -128,7 +145,15 @@ function LiveBoard() {
         </div>
       ) : orders.length === 0 ? (
         <Card>
-          <EmptyState title="No live orders right now" description="New orders will show up here the moment they come in." />
+          {error ? (
+            <EmptyState
+              title="Couldn't load orders"
+              description={error}
+              action={<Button onClick={() => load(true)}>Retry</Button>}
+            />
+          ) : (
+            <EmptyState title="No live orders right now" description="New orders will show up here the moment they come in." />
+          )}
         </Card>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
@@ -239,12 +264,21 @@ function OrderCard({
       <a href={`tel:${order.customer.phone}`} className="inline-flex items-center gap-1 text-xs font-bold text-[#BA2121] mb-3">
         <Phone size={11} /> {order.customer.phone}
       </a>
-      <div className="text-xs text-slate-600 mb-3 space-y-0.5">
-        {order.items.map((item, i) => (
-          <p key={i}>
-            {item.quantity}× {item.name}
-          </p>
-        ))}
+      <div className="text-xs text-slate-600 mb-3 space-y-1">
+        {order.items.map((item, i) => {
+          const names = customizationNames(item.customizations);
+          return (
+            <div key={i}>
+              <p>
+                {item.quantity}× {item.name}
+              </p>
+              {names.length > 0 ? <p className="text-[11px] text-slate-400">{names.join(", ")}</p> : null}
+              {item.specialInstructions ? (
+                <p className="text-[11px] italic text-amber-600">&ldquo;{item.specialInstructions}&rdquo;</p>
+              ) : null}
+            </div>
+          );
+        })}
       </div>
       {order.orderNotes ? <p className="text-xs italic text-amber-600 mb-3">&ldquo;{order.orderNotes}&rdquo;</p> : null}
       <div className="flex items-center gap-1.5 text-[11px] text-slate-400 mb-3">
@@ -276,6 +310,13 @@ function OrderCard({
 
 type Period = "today" | "month" | "year" | "custom";
 
+/** Parses a `YYYY-MM-DD` `<input type="date">` value into local date parts. */
+function parseDateInput(value: string): { year: number; month: number; day: number } | null {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+  if (!match) return null;
+  return { year: Number(match[1]), month: Number(match[2]), day: Number(match[3]) };
+}
+
 function periodToRange(period: Period, customFrom: string, customTo: string): { dateFrom?: string; dateTo?: string } {
   const now = new Date();
   if (period === "today") {
@@ -290,9 +331,15 @@ function periodToRange(period: Period, customFrom: string, customTo: string): { 
     const start = new Date(now.getFullYear(), 0, 1);
     return { dateFrom: start.toISOString() };
   }
+  // Build from local date parts, same as "today"/"month"/"year" above —
+  // `new Date(customFrom)` parses the YYYY-MM-DD string as UTC midnight,
+  // which shifts the boundary by the local UTC offset and can silently
+  // exclude early-morning orders on the start date.
+  const from = customFrom ? parseDateInput(customFrom) : null;
+  const to = customTo ? parseDateInput(customTo) : null;
   return {
-    dateFrom: customFrom ? new Date(customFrom).toISOString() : undefined,
-    dateTo: customTo ? new Date(`${customTo}T23:59:59.999`).toISOString() : undefined,
+    dateFrom: from ? new Date(from.year, from.month - 1, from.day).toISOString() : undefined,
+    dateTo: to ? new Date(to.year, to.month - 1, to.day, 23, 59, 59, 999).toISOString() : undefined,
   };
 }
 
@@ -304,6 +351,7 @@ function HistoryView() {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const range = useMemo(() => periodToRange(period, customFrom, customTo), [period, customFrom, customTo]);
 
@@ -313,6 +361,9 @@ function HistoryView() {
       const result = await kitchenOrdersApi.list({ page: currentPage, limit: 20, ...currentRange });
       setOrders(result.items);
       setTotalPages(result.meta.totalPages);
+      setError(null);
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : "Could not load orders, please try again");
     } finally {
       setIsLoading(false);
     }
@@ -367,17 +418,28 @@ function HistoryView() {
         ) : null}
       </div>
 
+      {error ? <p className="text-xs font-semibold text-red-600 mb-4">{error}</p> : null}
+
       {isLoading ? (
         <div className="flex items-center justify-center py-24">
           <Spinner className="w-8 h-8 text-[#BA2121]" />
         </div>
       ) : orders.length === 0 ? (
         <Card>
-          <EmptyState
-            icon={<Calendar />}
-            title="No orders in this range"
-            description="Try a different period."
-          />
+          {error ? (
+            <EmptyState
+              icon={<Calendar />}
+              title="Couldn't load orders"
+              description={error}
+              action={<Button onClick={() => loadHistory(page, range)}>Retry</Button>}
+            />
+          ) : (
+            <EmptyState
+              icon={<Calendar />}
+              title="No orders in this range"
+              description="Try a different period."
+            />
+          )}
         </Card>
       ) : (
         <>
@@ -394,22 +456,32 @@ function HistoryView() {
                 </tr>
               </thead>
               <tbody>
-                {orders.map((order) => (
-                  <tr key={order.id} className="border-b border-slate-50 last:border-0">
-                    <td className="px-5 py-3.5 font-bold text-slate-800">#{order.orderNumber}</td>
-                    <td className="px-5 py-3.5 text-slate-500">{new Date(order.placedAt).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}</td>
-                    <td className="px-5 py-3.5 text-slate-600">{order.customer.name}</td>
-                    <td className="px-5 py-3.5 text-slate-500 max-w-[220px] truncate">
-                      {order.items.map((i) => `${i.quantity}× ${i.name}`).join(", ")}
-                    </td>
-                    <td className="px-5 py-3.5">
-                      <Badge tone={order.status === "DELIVERED" ? "success" : order.status === "CANCELLED" ? "danger" : "neutral"}>
-                        {order.status.replace(/_/g, " ")}
-                      </Badge>
-                    </td>
-                    <td className="px-5 py-3.5 text-right font-bold text-slate-800">₹{order.totalAmount}</td>
-                  </tr>
-                ))}
+                {orders.map((order) => {
+                  const notes = order.items.map(itemNote).filter((n): n is string => Boolean(n));
+                  return (
+                    <tr key={order.id} className="border-b border-slate-50 last:border-0">
+                      <td className="px-5 py-3.5 font-bold text-slate-800">#{order.orderNumber}</td>
+                      <td className="px-5 py-3.5 text-slate-500">{new Date(order.placedAt).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}</td>
+                      <td className="px-5 py-3.5 text-slate-600">{order.customer.name}</td>
+                      <td className="px-5 py-3.5 text-slate-500 max-w-[220px]">
+                        <div className="flex items-center gap-1.5">
+                          <span className="truncate">{order.items.map((i) => `${i.quantity}× ${i.name}`).join(", ")}</span>
+                          {notes.length > 0 ? (
+                            <span title={notes.join(" · ")} className="shrink-0 text-amber-500">
+                              <StickyNote size={12} />
+                            </span>
+                          ) : null}
+                        </div>
+                      </td>
+                      <td className="px-5 py-3.5">
+                        <Badge tone={order.status === "DELIVERED" ? "success" : order.status === "CANCELLED" ? "danger" : "neutral"}>
+                          {order.status.replace(/_/g, " ")}
+                        </Badge>
+                      </td>
+                      <td className="px-5 py-3.5 text-right font-bold text-slate-800">₹{order.totalAmount}</td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </Card>

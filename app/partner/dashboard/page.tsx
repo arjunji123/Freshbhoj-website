@@ -19,9 +19,9 @@ import {
   UserCog,
   Users,
 } from "lucide-react";
-import { kitchenDashboardApi, kitchenOrdersApi, kitchenProfileApi, kitchenStoriesApi } from "../../../lib/kitchenApi";
+import { ApiError, kitchenDashboardApi, kitchenOrdersApi, kitchenProfileApi, kitchenStoriesApi } from "../../../lib/kitchenApi";
 import type { DashboardSummary, KitchenOrderCard, KitchenProfile, KitchenStory } from "../../../lib/types";
-import { Badge, Card, EmptyState, Spinner } from "../components/ui";
+import { Badge, Button, Card, EmptyState, Spinner } from "../components/ui";
 
 const GRADIENT_BG = { background: "linear-gradient(169.21deg, #FF6B6B 9%, #BA2121 77%, #670000 100%)" };
 
@@ -39,6 +39,8 @@ export default function DashboardPage() {
   const [stories, setStories] = useState<KitchenStory[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isToggling, setIsToggling] = useState(false);
+  const [loadError, setLoadError] = useState<string | null>(null);
+  const [toggleError, setToggleError] = useState<string | null>(null);
 
   const load = async (showSpinner = false) => {
     if (showSpinner) setIsLoading(true);
@@ -53,6 +55,9 @@ export default function DashboardPage() {
       setProfile(profileRes);
       setLiveOrders(ordersRes);
       setStories(storiesRes);
+      setLoadError(null);
+    } catch (err) {
+      setLoadError(err instanceof ApiError ? err.message : "Something went wrong, please try again");
     } finally {
       setIsLoading(false);
     }
@@ -65,19 +70,34 @@ export default function DashboardPage() {
   const handleToggleAccepting = async () => {
     if (!summary) return;
     setIsToggling(true);
+    setToggleError(null);
     try {
       await kitchenProfileApi.setAcceptingOrders(!summary.isAcceptingOrders);
       await load(false);
+    } catch (err) {
+      setToggleError(err instanceof ApiError ? err.message : "Could not update, please try again");
     } finally {
       setIsToggling(false);
     }
   };
 
-  if (isLoading || !summary) {
+  if (isLoading) {
     return (
       <div className="flex items-center justify-center py-24">
         <Spinner className="w-8 h-8 text-[#BA2121]" />
       </div>
+    );
+  }
+
+  if (loadError || !summary) {
+    return (
+      <Card>
+        <EmptyState
+          title="Something went wrong"
+          description={loadError ?? "Could not load your dashboard, please try again"}
+          action={<Button onClick={() => load(true)}>Retry</Button>}
+        />
+      </Card>
     );
   }
 
@@ -119,6 +139,8 @@ export default function DashboardPage() {
           </button>
         </div>
       </div>
+
+      {toggleError ? <p className="text-xs font-semibold text-red-600 mb-4">{toggleError}</p> : null}
 
       {summary.actionNeeded ? (
         <Card className="mb-6 !p-4 !bg-amber-50 border-amber-100">

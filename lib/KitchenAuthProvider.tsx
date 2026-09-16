@@ -2,13 +2,15 @@
 
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { kitchenAuthApi, onboardingApi, setOnSessionExpired } from "./kitchenApi";
+import { ApiError, kitchenAuthApi, onboardingApi, setOnSessionExpired } from "./kitchenApi";
 import type { KitchenTokenPair, OnboardingStatus } from "./types";
 
 interface KitchenAuthState {
   isLoading: boolean;
   isAuthenticated: boolean;
   onboarding: OnboardingStatus | null;
+  /** Set when a `refresh()` failed for a reason other than a real session loss (network blip, 500, …). */
+  loadError: string | null;
   refresh: () => Promise<void>;
   setSession: (tokens: KitchenTokenPair) => Promise<void>;
   logout: () => void;
@@ -26,17 +28,32 @@ export function KitchenAuthProvider({ children }: { children: React.ReactNode })
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [onboarding, setOnboarding] = useState<OnboardingStatus | null>(null);
+  const [loadError, setLoadError] = useState<string | null>(null);
 
   const refresh = useCallback(async () => {
     if (!kitchenAuthApi.getTokens()) {
       setOnboarding(null);
+      setLoadError(null);
       setIsLoading(false);
       return;
     }
     try {
       setOnboarding(await onboardingApi.status());
-    } catch {
-      setOnboarding(null);
+      setLoadError(null);
+    } catch (err) {
+      // kitchenApi's request() already tried a token refresh on a 401 and,
+      // if that also failed, cleared tokens and threw this exact ApiError —
+      // that's the only case that's a real session loss. Anything else
+      // (network blip, a 500, …) must NOT clear onboarding/log the user out,
+      // since the session itself is still perfectly valid.
+      const isRealSessionLoss =
+        (err instanceof ApiError && err.status === 401) || kitchenAuthApi.getTokens() === null;
+      if (isRealSessionLoss) {
+        setOnboarding(null);
+        setLoadError(null);
+      } else {
+        setLoadError(err instanceof ApiError ? err.message : "Could not load your account, please try again");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -69,7 +86,7 @@ export function KitchenAuthProvider({ children }: { children: React.ReactNode })
 
   return (
     <KitchenAuthContext.Provider
-      value={{ isLoading, isAuthenticated: Boolean(onboarding), onboarding, refresh, setSession, logout }}
+      value={{ isLoading, isAuthenticated: Boolean(onboarding), onboarding, loadError, refresh, setSession, logout }}
     >
       {children}
     </KitchenAuthContext.Provider>

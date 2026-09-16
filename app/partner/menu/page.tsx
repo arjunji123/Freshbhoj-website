@@ -17,6 +17,9 @@ export default function MenuPage() {
     setIsLoading(true);
     try {
       setMeals(await kitchenMenuApi.list());
+      setError(null);
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : "Could not load your menu, please try again");
     } finally {
       setIsLoading(false);
     }
@@ -73,15 +76,19 @@ export default function MenuPage() {
         </div>
       ) : meals.length === 0 ? (
         <Card>
-          <EmptyState
-            title="No dishes yet"
-            description="Add your first dish — describe it and let AI suggest nutrition facts and a health score."
-            action={
-              <Link href="/partner/menu/new">
-                <Button>Add your first dish</Button>
-              </Link>
-            }
-          />
+          {error ? (
+            <EmptyState title="Couldn't load your menu" description={error} action={<Button onClick={load}>Retry</Button>} />
+          ) : (
+            <EmptyState
+              title="No dishes yet"
+              description="Add your first dish — describe it and let AI suggest nutrition facts and a health score."
+              action={
+                <Link href="/partner/menu/new">
+                  <Button>Add your first dish</Button>
+                </Link>
+              }
+            />
+          )}
         </Card>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
