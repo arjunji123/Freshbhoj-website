@@ -106,6 +106,13 @@ const Navbar = () => {
           >
             Contact us
           </Link>
+
+          <Link
+            href="/partner/login"
+            className="font-bold text-sm lg:text-base px-6 py-2.5 rounded-full border-2 border-[#BA2121]/20 text-[#BA2121] transition-all duration-300 hover:scale-105 active:scale-95 hover:bg-[#BA2121]/5"
+          >
+            Partner Login
+          </Link>
         </div>
 
         {/* Mobile: hamburger button */}
@@ -172,6 +179,14 @@ const Navbar = () => {
             onClick={() => setMenuOpen(false)}
           >
             Contact us
+          </Link>
+
+          <Link
+            href="/partner/login"
+            className="text-lg font-bold py-3.5 w-full text-center rounded-full border-2 border-[#BA2121]/20 text-[#BA2121] transition-all active:scale-95"
+            onClick={() => setMenuOpen(false)}
+          >
+            Partner Login
           </Link>
         </div>
 

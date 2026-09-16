@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { Sparkles, ClipboardList, Radio, LineChart } from "lucide-react";
 
 /* ─── Card data ──────────────────────────────────────────────── */
 const KITCHEN_TYPES = [
@@ -29,6 +30,29 @@ const KITCHEN_TYPES = [
     iconAlt: "Homestyle Thalis icon",
     title: "Homestyle Thalis",
     description: "Complete, wholesome, and nutritious platters prepared by passionate local chefs using heirloom recipes.",
+  },
+] as const;
+
+const PARTNER_FEATURES = [
+  {
+    icon: Sparkles,
+    title: "AI nutrition & health insights",
+    description: "Type your dish, and our AI estimates calories, protein, and a health score — even flags junk food — so your menu builds real customer trust.",
+  },
+  {
+    icon: ClipboardList,
+    title: "Real-time order management",
+    description: "Accept, prep, and hand off orders from one live dashboard — Placed → Accepted → Preparing → Out for Delivery, no phone calls needed.",
+  },
+  {
+    icon: Radio,
+    title: "Kitchen Stories",
+    description: "Post photos and short videos of today's specials straight to the customer app's Stories rail — free marketing, updated daily.",
+  },
+  {
+    icon: LineChart,
+    title: "Your own dashboard",
+    description: "Track today's orders, revenue, ratings, and followers at a glance — the numbers that actually run your business.",
   },
 ] as const;
 
@@ -137,6 +161,33 @@ export default function EmpoweringKitchen() {
           ))}
         </div>
 
+        {/* ── What partners get ── */}
+        <div
+          className={`
+            rounded-[2.5rem] bg-white border border-slate-100 p-8 lg:p-12 mb-20
+            transition-all duration-1000 ease-out delay-300
+            ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-20"}
+          `}
+        >
+          <p className="text-center text-xs font-bold uppercase tracking-[0.2em] text-[#BA2121] mb-3">
+            Built for kitchens, not just aggregators
+          </p>
+          <h3 className="text-2xl md:text-4xl font-extrabold text-[#0F172A] text-center mb-10 tracking-tight">
+            What you get as a FreshBhoj partner
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+            {PARTNER_FEATURES.map(({ icon: Icon, title, description }) => (
+              <div key={title} className="flex flex-col items-start">
+                <div className="w-11 h-11 rounded-2xl bg-[#BA2121]/10 flex items-center justify-center mb-4">
+                  <Icon size={18} className="text-[#BA2121]" strokeWidth={2.2} />
+                </div>
+                <h4 className="text-base font-extrabold text-[#0F172A] mb-2">{title}</h4>
+                <p className="text-sm text-slate-500 leading-relaxed">{description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* ── CTA ── */}
         <div
           className={`
@@ -144,20 +195,28 @@ export default function EmpoweringKitchen() {
             ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}
           `}
         >
-          <Link
-            href="/pre-register?type=kitchen"
-            className="group relative inline-flex items-center justify-center gap-4 px-12 py-5 bg-hero-gradient text-white font-semibold text-lg lg:text-xl rounded-3xl shadow-[0_15px_30px_-5px_rgba(186,33,33,0.3)] transition-all hover:scale-105"
-          >
-            <span>Register Your Kitchen</span>
-            <div className="relative w-6 h-6">
-              <Image
-                src="/rocket.svg"
-                alt="Register Icon"
-                fill
-                className="object-contain transition-transform group-hover:translate-x-1"
-              />
-            </div>
-          </Link>
+          <div className="flex flex-col sm:flex-row items-center gap-4">
+            <Link
+              href="/pre-register?type=kitchen"
+              className="group relative inline-flex items-center justify-center gap-4 px-12 py-5 bg-hero-gradient text-white font-semibold text-lg lg:text-xl rounded-3xl shadow-[0_15px_30px_-5px_rgba(186,33,33,0.3)] transition-all hover:scale-105"
+            >
+              <span>Register Your Kitchen</span>
+              <div className="relative w-6 h-6">
+                <Image
+                  src="/rocket.svg"
+                  alt="Register Icon"
+                  fill
+                  className="object-contain transition-transform group-hover:translate-x-1"
+                />
+              </div>
+            </Link>
+            <Link
+              href="/partner/login"
+              className="inline-flex items-center justify-center px-10 py-5 border-2 border-[#BA2121]/20 text-[#BA2121] font-semibold text-lg lg:text-xl rounded-3xl transition-all hover:bg-[#BA2121]/5 hover:scale-105"
+            >
+              Already a partner? Log in
+            </Link>
+          </div>
 
           <p className="mt-8 text-[#64748B] text-sm lg:text-base tracking-widest">
             Join over 1,200+  partners across India

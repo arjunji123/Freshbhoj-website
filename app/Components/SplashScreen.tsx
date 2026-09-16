@@ -2,15 +2,25 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 const SplashScreen = () => {
+  const pathname = usePathname();
+  const isPartnerPortal = pathname?.startsWith("/partner");
   const [isVisible, setIsVisible] = useState(true);
-  const [shouldRender, setShouldRender] = useState(true);
+  const [shouldRender, setShouldRender] = useState(!isPartnerPortal);
 
   useEffect(() => {
+    // The partner portal is a business tool, not a marketing moment — skip it there.
+    if (isPartnerPortal) {
+      setIsVisible(false);
+      setShouldRender(false);
+      return;
+    }
+
     // Check if user has already seen the splash in this session
     const hasSeenSplash = sessionStorage.getItem("hasSeenSplash");
-    
+
     if (hasSeenSplash) {
       setIsVisible(false);
       setShouldRender(false);
@@ -32,7 +42,7 @@ const SplashScreen = () => {
       clearTimeout(fadeTimer);
       clearTimeout(removeTimer);
     };
-  }, []);
+  }, [isPartnerPortal]);
 
   if (!shouldRender) return null;
 

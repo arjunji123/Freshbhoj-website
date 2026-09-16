@@ -103,6 +103,12 @@ const Hero = () => {
             >
               Contact us
             </Link>
+            <Link
+              href="/partner/login"
+              className={`font-bold text-sm lg:text-base px-6 py-2.5 rounded-full border transition-all duration-300 ${scrolled ? "text-[#BA2121] border-[#BA2121]/30 hover:bg-[#BA2121]/5" : "text-white border-white/40 hover:bg-white/10"}`}
+            >
+              Partner Login
+            </Link>
           </div>
 
           {/* Mobile: hamburger button */}
@@ -166,6 +172,14 @@ const Hero = () => {
               onClick={() => setMenuOpen(false)}
             >
               Contact us
+            </Link>
+
+            <Link
+              href="/partner/login"
+              className="text-lg font-bold py-3.5 w-full text-center transition-all active:scale-95 rounded-full border-2 border-[#BA2121]/20 text-[#BA2121]"
+              onClick={() => setMenuOpen(false)}
+            >
+              Partner Login
             </Link>
           </div>
 
