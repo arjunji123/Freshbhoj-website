@@ -148,6 +148,20 @@ export const kitchenAuthApi = {
 
   logout: () => request<null>('/partner/auth/logout', { method: 'POST' }),
 
+  requestAccountDeletion: (phone: string) =>
+    request<{ expiresInMinutes: number; devOtp?: string }>('/partner/auth/account-deletion/request', {
+      method: 'POST',
+      body: { phone },
+      skipAuth: true,
+    }),
+
+  confirmAccountDeletion: (phone: string, otp: string) =>
+    request<null>('/partner/auth/account-deletion/confirm', {
+      method: 'POST',
+      body: { phone, otp },
+      skipAuth: true,
+    }),
+
   getTokens: readTokens,
   setTokens: writeTokens,
 };

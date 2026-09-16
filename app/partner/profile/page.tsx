@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ApiError, kitchenProfileApi, kitchenUploadApi } from "../../../lib/kitchenApi";
+import { ApiError, kitchenAuthApi, kitchenProfileApi, kitchenUploadApi } from "../../../lib/kitchenApi";
 import type { KitchenProfile } from "../../../lib/types";
 import { Badge, Button, Card, EmptyState, Field, PageHeader, Spinner, TextArea, TextInput } from "../components/ui";
+
+type DeleteStep = "closed" | "phone" | "otp";
 
 export default function ProfilePage() {
   const [profile, setProfile] = useState<KitchenProfile | null>(null);
@@ -21,6 +23,13 @@ export default function ProfilePage() {
   const [prepTimeMins, setPrepTimeMins] = useState("25");
   const [opensAt, setOpensAt] = useState("08:00");
   const [closesAt, setClosesAt] = useState("22:00");
+
+  const [deleteStep, setDeleteStep] = useState<DeleteStep>("closed");
+  const [deletePhone, setDeletePhone] = useState("");
+  const [deleteOtp, setDeleteOtp] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
+  const [deleteDone, setDeleteDone] = useState(false);
 
   const load = () => {
     setIsLoading(true);
@@ -81,6 +90,35 @@ export default function ProfilePage() {
       setError(err instanceof ApiError ? err.message : "Could not save, please try again");
     } finally {
       setIsSaving(false);
+    }
+  };
+
+  const handleSendDeleteOtp = async () => {
+    if (deletePhone.replace(/\D/g, "").length !== 10) return;
+    setDeleteError(null);
+    setIsDeleting(true);
+    try {
+      await kitchenAuthApi.requestAccountDeletion(`+91${deletePhone.replace(/\D/g, "")}`);
+      setDeleteStep("otp");
+    } catch (err) {
+      setDeleteError(err instanceof ApiError ? err.message : "Could not send the code, please try again");
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
+  const handleConfirmDelete = async () => {
+    if (deleteOtp.trim().length < 4) return;
+    setDeleteError(null);
+    setIsDeleting(true);
+    try {
+      await kitchenAuthApi.confirmAccountDeletion(`+91${deletePhone.replace(/\D/g, "")}`, deleteOtp.trim());
+      kitchenAuthApi.setTokens(null);
+      setDeleteDone(true);
+    } catch (err) {
+      setDeleteError(err instanceof ApiError ? err.message : "Could not verify that code, please try again");
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -168,6 +206,62 @@ export default function ProfilePage() {
             Save changes
           </Button>
         </div>
+      </Card>
+
+      <Card className="max-w-2xl mt-8 !border-red-100 !bg-red-50/40">
+        <h3 className="text-sm font-extrabold text-red-700 uppercase tracking-wide mb-1">Danger zone</h3>
+        <p className="text-sm text-slate-600 mb-4">
+          Permanently delete your Kitchen Partner account. Verification documents and bank details are deleted outright. If your kitchen has
+          ever taken orders, its storefront is paused (hidden from customers) rather than erased, since past orders, reviews and payouts need
+          it to stay resolvable.
+        </p>
+
+        {deleteDone ? (
+          <p className="text-sm font-semibold text-emerald-700">
+            Your account has been deleted.{" "}
+            <a href="/partner/login" className="underline">
+              Return to login
+            </a>
+          </p>
+        ) : deleteStep === "closed" ? (
+          <Button variant="danger" onClick={() => setDeleteStep("phone")}>
+            Delete my account
+          </Button>
+        ) : deleteStep === "phone" ? (
+          <div className="flex flex-col gap-3 max-w-sm">
+            <Field label="Confirm your phone number">
+              <TextInput
+                value={deletePhone}
+                onChange={(e) => setDeletePhone(e.target.value.replace(/\D/g, "").slice(0, 10))}
+                placeholder="10-digit mobile number"
+              />
+            </Field>
+            {deleteError ? <p className="text-xs font-semibold text-red-600">{deleteError}</p> : null}
+            <div className="flex gap-3">
+              <Button variant="ghost" onClick={() => setDeleteStep("closed")}>
+                Cancel
+              </Button>
+              <Button variant="danger" onClick={handleSendDeleteOtp} loading={isDeleting} disabled={deletePhone.replace(/\D/g, "").length !== 10}>
+                Send verification code
+              </Button>
+            </div>
+          </div>
+        ) : (
+          <div className="flex flex-col gap-3 max-w-sm">
+            <Field label={`Enter the code sent to +91 ${deletePhone}`}>
+              <TextInput value={deleteOtp} onChange={(e) => setDeleteOtp(e.target.value.replace(/\D/g, "").slice(0, 8))} placeholder="Verification code" />
+            </Field>
+            {deleteError ? <p className="text-xs font-semibold text-red-600">{deleteError}</p> : null}
+            <div className="flex gap-3">
+              <Button variant="ghost" onClick={() => setDeleteStep("phone")}>
+                Back
+              </Button>
+              <Button variant="danger" onClick={handleConfirmDelete} loading={isDeleting} disabled={deleteOtp.trim().length < 4}>
+                Permanently delete my account
+              </Button>
+            </div>
+          </div>
+        )}
       </Card>
     </div>
   );
