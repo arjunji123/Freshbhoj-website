@@ -15,8 +15,8 @@ const KITCHEN_TYPES = [
   },
   {
     iconSrc: "/cloud-kitchen.svg",
-    iconAlt: "Cloud Kitchens icon",
-    title: "Cloud Kitchens",
+    iconAlt: "Cloud Kitchens and Restaurants icon",
+    title: "Cloud Kitchens &\nRestaurants",
     description: "Professional culinary expertise meets delivery-optimized operations for consistent gourmet quality.",
   },
   {
@@ -116,8 +116,8 @@ export default function EmpoweringKitchen() {
           </h2>
 
           <p className="font-medium text-center text-slate-500 text-base md:text-xl leading-relaxed max-w-2xl lg:max-w-4xl">
-            Connecting traditional flavors with modern accessibility. From home kitchens to <br className="hidden lg:block" />
-            street delicacies, we bring the neighborhood to you.
+            Every kind of food business is welcome — home kitchens, cloud kitchens, restaurants, <br className="hidden lg:block" />
+            cafes, tiffin services and street vendors alike. What we verify is the food itself: every dish is checked for nutrition and hygiene before it reaches you.
           </p>
         </div>
 

@@ -217,7 +217,7 @@ function KitchenDetailsForm({ onSaved }: { onSaved: () => Promise<void> }) {
         <TextInput value={name} onChange={(e) => setName(e.target.value)} placeholder="Annapurna Kitchen" />
       </Field>
       <Field label="Tagline (optional)">
-        <TextInput value={tagline} onChange={(e) => setTagline(e.target.value)} placeholder="Home-style thalis, made fresh daily" />
+        <TextInput value={tagline} onChange={(e) => setTagline(e.target.value)} placeholder="Fresh, nutritious meals made daily" />
       </Field>
       <Field label="Description (optional)">
         <TextArea rows={3} value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Tell customers what makes your kitchen special" />
