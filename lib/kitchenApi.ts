@@ -1,16 +1,42 @@
 import type {
+  BhojAiHistoryResponse,
+  BhojAiMessageResult,
+  Campaign,
+  CampaignReachEstimate,
+  CampaignStatus,
+  Cuisine,
   DashboardSummary,
+  DayOfWeek,
+  FssaiAssistanceDocumentType,
+  FssaiAssistanceStatusResponse,
+  HolidayOverride,
   KitchenAccount,
+  KitchenAdvanceStatus,
   KitchenOrderCard,
   KitchenProfile,
+  KitchenReel,
   KitchenStory,
   KitchenTokenPair,
+  KitchenType,
   MealDetail,
+  NotificationCategory,
+  NotificationListResponse,
   NutritionAnalysisResult,
   OnboardingStatus,
+  OperatingHoursDay,
+  OrderChatMessage,
   OrderDetail,
   OrderStatus,
   Paginated,
+  Payout,
+  PayoutSummary,
+  PublicKitchenDetail,
+  SubscriptionDelivery,
+  SubscriptionDetail,
+  SubscriptionListResponse,
+  SubscriptionStatus,
+  TransactionListResponse,
+  WeeklySchedule,
 } from './types';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -88,7 +114,7 @@ async function refreshTokens(): Promise<KitchenTokenPair | null> {
 }
 
 interface RequestOptions {
-  method?: 'GET' | 'POST' | 'PATCH' | 'DELETE';
+  method?: 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE';
   body?: unknown;
   skipAuth?: boolean;
   isRetry?: boolean;
@@ -176,6 +202,7 @@ export const onboardingApi = {
 
   kitchenDetails: (input: {
     name: string;
+    kitchenType: KitchenType;
     tagline?: string;
     description?: string;
     logoUrl?: string;
@@ -195,6 +222,7 @@ export const onboardingApi = {
     pincode: string;
     latitude: number;
     longitude: number;
+    serviceRadiusKm: number;
   }) => request<OnboardingStatus>('/partner/onboarding/location', { method: 'POST', body: input }),
 
   uploadDocument: (input: { type: string; number?: string; fileUrl: string }) =>
@@ -229,6 +257,19 @@ export const kitchenProfileApi = {
 
 // ── Menu ──────────────────────────────────────────────────────────────────
 
+export interface UpsertMealCustomizationOptionInput {
+  name: string;
+  priceDelta: number;
+}
+
+export interface UpsertMealCustomizationGroupInput {
+  name: string;
+  isRequired: boolean;
+  minSelect: number;
+  maxSelect: number;
+  options: UpsertMealCustomizationOptionInput[];
+}
+
 export interface UpsertMealInput {
   name: string;
   description?: string;
@@ -236,6 +277,8 @@ export interface UpsertMealInput {
   price: number;
   mrp?: number;
   foodType: string;
+  /** Only valid when foodType is VEG or VEGAN — the backend 400s otherwise. */
+  isJainAvailable?: boolean;
   categorySlug?: string;
   cuisineSlug?: string;
   slots?: string[];
@@ -250,6 +293,7 @@ export interface UpsertMealInput {
   allergens?: string[];
   prepTimeMins?: number;
   isAvailable?: boolean;
+  customizationGroups?: UpsertMealCustomizationGroupInput[];
 }
 
 export const kitchenMenuApi = {
@@ -311,6 +355,21 @@ export const kitchenDashboardApi = {
   summary: () => request<DashboardSummary>('/partner/dashboard/summary'),
 };
 
+// ── FSSAI Assistance ─────────────────────────────────────────────────────────
+
+export const fssaiAssistanceApi = {
+  status: () => request<FssaiAssistanceStatusResponse>('/partner/fssai-assistance/status'),
+  start: () => request<FssaiAssistanceStatusResponse>('/partner/fssai-assistance/start', { method: 'POST' }),
+  uploadDocument: (input: { type: FssaiAssistanceDocumentType; fileUrl: string }) =>
+    request<FssaiAssistanceStatusResponse>('/partner/fssai-assistance/documents', { method: 'POST', body: input }),
+  confirmPayment: () =>
+    request<FssaiAssistanceStatusResponse>('/partner/fssai-assistance/confirm-payment', { method: 'POST' }),
+  cancel: () => request<FssaiAssistanceStatusResponse>('/partner/fssai-assistance/cancel', { method: 'POST' }),
+  /** Dev-only — the backend refuses this in production. */
+  simulateAdvance: () =>
+    request<FssaiAssistanceStatusResponse>('/partner/fssai-assistance/simulate/advance', { method: 'POST' }),
+};
+
 // ── Upload ────────────────────────────────────────────────────────────────
 
 export const kitchenUploadApi = {
@@ -320,4 +379,146 @@ export const kitchenUploadApi = {
     form.append('purpose', purpose);
     return request<{ url: string }>('/partner/upload', { method: 'POST', body: form });
   },
+};
+
+// ── BhojAI ────────────────────────────────────────────────────────────────
+
+export const bhojaiApi = {
+  sendMessage: (message: string) =>
+    request<BhojAiMessageResult>('/partner/bhojai/message', { method: 'POST', body: { message } }),
+  history: () => request<BhojAiHistoryResponse>('/partner/bhojai/history'),
+  reset: () => request<null>('/partner/bhojai/reset', { method: 'POST' }),
+};
+
+// ── Notifications ─────────────────────────────────────────────────────────
+
+export const notificationsApi = {
+  list: (params: { category?: NotificationCategory; page?: number; limit?: number } = {}) => {
+    const query = new URLSearchParams();
+    if (params.category) query.set('category', params.category);
+    if (params.page) query.set('page', String(params.page));
+    if (params.limit) query.set('limit', String(params.limit));
+    const qs = query.toString();
+    return request<NotificationListResponse>(`/partner/notifications${qs ? `?${qs}` : ''}`);
+  },
+  markRead: (id: string) => request<{ id: string; isRead: boolean }>(`/partner/notifications/${id}/read`, { method: 'POST' }),
+  markAllRead: () => request<{ updatedCount: number }>('/partner/notifications/read-all', { method: 'POST' }),
+};
+
+// ── Payouts ───────────────────────────────────────────────────────────────
+
+export const payoutsApi = {
+  summary: () => request<PayoutSummary>('/partner/payouts/summary'),
+  request: () => request<Payout>('/partner/payouts/request', { method: 'POST' }),
+  transactions: (params: { page?: number; limit?: number } = {}) => {
+    const query = new URLSearchParams();
+    if (params.page) query.set('page', String(params.page));
+    if (params.limit) query.set('limit', String(params.limit));
+    const qs = query.toString();
+    return request<TransactionListResponse>(`/partner/payouts${qs ? `?${qs}` : ''}`);
+  },
+};
+
+// ── Operating Hours ───────────────────────────────────────────────────────
+
+export const operatingHoursApi = {
+  get: () => request<WeeklySchedule>('/partner/operating-hours'),
+  updateDay: (
+    dayOfWeek: DayOfWeek,
+    input: { isClosed: boolean; session1Start?: string; session1End?: string; session2Start?: string; session2End?: string },
+  ) => request<OperatingHoursDay>(`/partner/operating-hours/${dayOfWeek}`, { method: 'PUT', body: input }),
+  upsertHoliday: (input: {
+    date: string;
+    isClosed: boolean;
+    session1Start?: string;
+    session1End?: string;
+    session2Start?: string;
+    session2End?: string;
+    note?: string;
+  }) => request<HolidayOverride>('/partner/operating-hours/holidays', { method: 'POST', body: input }),
+  removeHoliday: (date: string) => request<null>(`/partner/operating-hours/holidays/${date}`, { method: 'DELETE' }),
+};
+
+// ── Reels ─────────────────────────────────────────────────────────────────
+// No dedicated web management page yet (Stories, above, covers that role on
+// the web today) — these exist so the API surface is complete and ready for
+// whichever screen picks it up next.
+
+export const kitchenReelsApi = {
+  list: () => request<KitchenReel[]>('/partner/reels'),
+  publish: (input: { videoUrl: string; thumbnailUrl?: string; caption?: string; hashtags?: string[]; mealId?: string }) =>
+    request<KitchenReel>('/partner/reels', { method: 'POST', body: input }),
+  update: (id: string, input: { caption?: string; hashtags?: string[] }) =>
+    request<KitchenReel>(`/partner/reels/${id}`, { method: 'PATCH', body: input }),
+  archive: (id: string) => request<{ id: string }>(`/partner/reels/${id}`, { method: 'DELETE' }),
+  pause: (id: string) => request<null>(`/partner/reels/${id}/pause`, { method: 'POST' }),
+  resume: (id: string) => request<null>(`/partner/reels/${id}/resume`, { method: 'POST' }),
+};
+
+// ── Order Chat ────────────────────────────────────────────────────────────
+// Calling `messages()` marks unread CUSTOMER messages as read (server-side side effect).
+
+export const orderChatApi = {
+  messages: (orderId: string) => request<OrderChatMessage[]>(`/partner/orders/${orderId}/messages`),
+  send: (orderId: string, body: string, advanceToStatus?: KitchenAdvanceStatus) =>
+    request<OrderChatMessage>(`/partner/orders/${orderId}/messages`, {
+      method: 'POST',
+      body: { body, advanceToStatus },
+    }),
+};
+
+// ── Ads / Reel Campaigns ──────────────────────────────────────────────────
+
+export const adsApi = {
+  estimateReach: (dailyBudgetRs: number) =>
+    request<CampaignReachEstimate>(`/partner/ads/campaigns/estimate?dailyBudgetRs=${dailyBudgetRs}`),
+  create: (input: { reelId: string; dailyBudgetRs: number; endDate?: string }) =>
+    request<Campaign>('/partner/ads/campaigns', { method: 'POST', body: input }),
+  list: (status?: CampaignStatus) =>
+    request<Campaign[]>(`/partner/ads/campaigns${status ? `?status=${status}` : ''}`),
+  get: (id: string) => request<Campaign>(`/partner/ads/campaigns/${id}`),
+  analytics: (ids: string[]) =>
+    request<Campaign[]>(`/partner/ads/campaigns/analytics?ids=${ids.map(encodeURIComponent).join(',')}`),
+  pause: (id: string) => request<Campaign>(`/partner/ads/campaigns/${id}/pause`, { method: 'POST' }),
+  resume: (id: string) => request<Campaign>(`/partner/ads/campaigns/${id}/resume`, { method: 'POST' }),
+  stop: (id: string) => request<Campaign>(`/partner/ads/campaigns/${id}/stop`, { method: 'POST' }),
+};
+
+// ── Subscriptions (kitchen-facing) ────────────────────────────────────────
+
+export const subscriptionsApi = {
+  list: (params: { status?: SubscriptionStatus; q?: string; page?: number; limit?: number } = {}) => {
+    const query = new URLSearchParams();
+    if (params.status) query.set('status', params.status);
+    if (params.q) query.set('q', params.q);
+    if (params.page) query.set('page', String(params.page));
+    if (params.limit) query.set('limit', String(params.limit));
+    const qs = query.toString();
+    return request<SubscriptionListResponse>(`/partner/subscriptions${qs ? `?${qs}` : ''}`);
+  },
+  get: (id: string) => request<SubscriptionDetail>(`/partner/subscriptions/${id}`),
+  approve: (id: string) => request<SubscriptionDetail>(`/partner/subscriptions/${id}/approve`, { method: 'POST' }),
+  reject: (id: string, reason: string) =>
+    request<SubscriptionDetail>(`/partner/subscriptions/${id}/reject`, { method: 'POST', body: { reason } }),
+  pause: (id: string) => request<SubscriptionDetail>(`/partner/subscriptions/${id}/pause`, { method: 'POST' }),
+  resume: (id: string) => request<SubscriptionDetail>(`/partner/subscriptions/${id}/resume`, { method: 'POST' }),
+  dispatchDelivery: (id: string, date: string) =>
+    request<SubscriptionDelivery>(`/partner/subscriptions/${id}/deliveries/${date}/dispatch`, { method: 'POST' }),
+  skipDelivery: (id: string, date: string, reason?: string) =>
+    request<SubscriptionDelivery>(`/partner/subscriptions/${id}/deliveries/${date}/skip`, {
+      method: 'POST',
+      body: reason ? { reason } : undefined,
+    }),
+};
+
+// ── Catalog (public) ──────────────────────────────────────────────────────
+
+export const catalogApi = {
+  cuisines: () => request<Cuisine[]>('/catalog/cuisines', { skipAuth: true }),
+};
+
+// ── Kitchens (public) ─────────────────────────────────────────────────────
+
+export const kitchensPublicApi = {
+  get: (idOrSlug: string) => request<PublicKitchenDetail>(`/kitchens/${encodeURIComponent(idOrSlug)}`, { skipAuth: true }),
 };

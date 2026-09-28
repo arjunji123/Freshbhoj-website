@@ -2,7 +2,7 @@
 
 import type { ButtonHTMLAttributes, HTMLAttributes, InputHTMLAttributes, ReactNode, SelectHTMLAttributes, TextareaHTMLAttributes } from "react";
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, X } from "lucide-react";
 
 export const GRADIENT_TEXT = {
   background: "linear-gradient(169.21deg, #FF6B6B 9%, #BA2121 77%, #670000 100%)",
@@ -139,6 +139,35 @@ export function Badge({
   );
 }
 
+export function OptionCard({
+  icon,
+  label,
+  selected,
+  onClick,
+}: {
+  icon: ReactNode;
+  label: string;
+  selected?: boolean;
+  onClick?: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-pressed={selected}
+      className={`flex flex-col items-center justify-center gap-2 rounded-2xl border-2 px-4 py-5 text-center transition-all duration-200 active:scale-95 ${
+        selected
+          ? "border-transparent text-white shadow-[0_10px_25px_-8px_rgba(186,33,33,0.5)]"
+          : "border-slate-100 text-slate-600 hover:border-[#BA2121]/20 hover:bg-[#BA2121]/5"
+      }`}
+      style={selected ? GRADIENT_BG : undefined}
+    >
+      <span className={`[&>svg]:w-6 [&>svg]:h-6 ${selected ? "text-white" : "text-[#BA2121]"}`}>{icon}</span>
+      <span className="text-sm font-bold">{label}</span>
+    </button>
+  );
+}
+
 export function EmptyState({
   title,
   description,
@@ -200,6 +229,61 @@ export function ConfirmDialog({
   );
 }
 
+/**
+ * Bottom-anchored on mobile (slides up from the bottom edge, rounded top
+ * corners only), centered/modal-style from `sm:` up — same backdrop +
+ * click-outside-to-close + `stopPropagation` on the panel as `ConfirmDialog`.
+ */
+export function BottomSheet({
+  isOpen,
+  onClose,
+  title,
+  children,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  title?: string;
+  children: ReactNode;
+}) {
+  if (!isOpen) return null;
+
+  return (
+    <div
+      className="fixed inset-0 z-[200] flex items-end sm:items-center justify-center bg-black/40 sm:p-6"
+      onClick={onClose}
+    >
+      <div
+        className="w-full sm:max-w-lg max-h-[85vh] sm:max-h-[85vh] overflow-y-auto bg-white rounded-t-3xl sm:rounded-3xl p-6 shadow-2xl animate-[sheet-in_0.2s_ease-out]"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex items-center justify-between gap-4 mb-4">
+          {title ? <h3 className="text-lg font-extrabold text-slate-900">{title}</h3> : <span />}
+          <button
+            onClick={onClose}
+            aria-label="Close"
+            className="w-8 h-8 shrink-0 rounded-full bg-slate-100 text-slate-500 hover:bg-slate-200 flex items-center justify-center transition-colors"
+          >
+            <X size={15} />
+          </button>
+        </div>
+        {children}
+      </div>
+      <style jsx>{`
+        @keyframes sheet-in {
+          from {
+            opacity: 0;
+            transform: translateY(16px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
+    </div>
+  );
+}
+
 export function BackLink({ href, label }: { href: string; label: string }) {
   return (
     <Link
@@ -209,6 +293,26 @@ export function BackLink({ href, label }: { href: string; label: string }) {
       <ArrowLeft size={15} strokeWidth={2.4} />
       {label}
     </Link>
+  );
+}
+
+const FOOD_TYPE_COLOR: Record<"VEG" | "EGG" | "NON_VEG" | "VEGAN", { border: string; dot: string }> = {
+  VEG: { border: "border-emerald-600", dot: "bg-emerald-600" },
+  VEGAN: { border: "border-emerald-600", dot: "bg-emerald-600" },
+  EGG: { border: "border-amber-500", dot: "bg-amber-500" },
+  NON_VEG: { border: "border-red-600", dot: "bg-red-600" },
+};
+
+/** The small square-with-dot indicator used on FSSAI labels — green for veg/vegan, amber for egg, red for non-veg. */
+export function FoodTypeDot({ foodType, className = "" }: { foodType: "VEG" | "EGG" | "NON_VEG" | "VEGAN"; className?: string }) {
+  const { border, dot } = FOOD_TYPE_COLOR[foodType];
+  return (
+    <span
+      title={foodType.replace("_", " ")}
+      className={`inline-flex items-center justify-center w-3.5 h-3.5 rounded-[3px] border-2 shrink-0 ${border} ${className}`}
+    >
+      <span className={`w-1.5 h-1.5 rounded-full ${dot}`} />
+    </span>
   );
 }
 

@@ -1,17 +1,20 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { Flame, Pencil, Plus, Trash2 } from "lucide-react";
 import { ApiError, kitchenMenuApi } from "../../../lib/kitchenApi";
 import type { MealDetail } from "../../../lib/types";
-import { Badge, Button, Card, EmptyState, PageHeader, Spinner } from "../components/ui";
+import { Badge, Button, Card, EmptyState, FoodTypeDot, PageHeader, Spinner } from "../components/ui";
+
+const ALL_CATEGORY = "all";
 
 export default function MenuPage() {
   const [meals, setMeals] = useState<MealDetail[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [busyId, setBusyId] = useState<string | null>(null);
+  const [activeCategory, setActiveCategory] = useState<string>(ALL_CATEGORY);
 
   const load = async () => {
     setIsLoading(true);
@@ -55,6 +58,17 @@ export default function MenuPage() {
     }
   };
 
+  const categories = useMemo(() => {
+    const seen = new Map<string, { id: string; slug: string; name: string }>();
+    for (const meal of meals) {
+      if (meal.category && !seen.has(meal.category.id)) seen.set(meal.category.id, meal.category);
+    }
+    return Array.from(seen.values());
+  }, [meals]);
+
+  const visibleMeals =
+    activeCategory === ALL_CATEGORY ? meals : meals.filter((meal) => meal.category?.id === activeCategory);
+
   return (
     <div>
       <PageHeader
@@ -69,6 +83,19 @@ export default function MenuPage() {
         }
       />
       {error ? <p className="text-xs font-semibold text-red-600 mb-4">{error}</p> : null}
+
+      {meals.length > 0 && categories.length > 0 ? (
+        <div className="flex gap-2 mb-6 overflow-x-auto pb-1">
+          <CategoryTab active={activeCategory === ALL_CATEGORY} onClick={() => setActiveCategory(ALL_CATEGORY)}>
+            All
+          </CategoryTab>
+          {categories.map((category) => (
+            <CategoryTab key={category.id} active={activeCategory === category.id} onClick={() => setActiveCategory(category.id)}>
+              {category.name}
+            </CategoryTab>
+          ))}
+        </div>
+      ) : null}
 
       {isLoading ? (
         <div className="flex items-center justify-center py-24">
@@ -90,9 +117,13 @@ export default function MenuPage() {
             />
           )}
         </Card>
+      ) : visibleMeals.length === 0 ? (
+        <Card>
+          <EmptyState title="No dishes in this category" description="Try a different category, or add a new dish here." />
+        </Card>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {meals.map((meal) => (
+          {visibleMeals.map((meal) => (
             <Card key={meal.id} className="!p-4">
               <div className="w-full h-36 rounded-xl overflow-hidden bg-slate-100 mb-3">
                 {meal.image ? (
@@ -101,9 +132,13 @@ export default function MenuPage() {
                 ) : null}
               </div>
               <div className="flex items-start justify-between gap-2 mb-1">
-                <h3 className="text-sm font-extrabold text-slate-900 line-clamp-1">{meal.name}</h3>
+                <h3 className="flex items-center gap-1.5 text-sm font-extrabold text-slate-900 min-w-0">
+                  <FoodTypeDot foodType={meal.foodType} />
+                  <span className="line-clamp-1">{meal.name}</span>
+                </h3>
                 <Badge tone={meal.isAvailable ? "success" : "neutral"}>{meal.isAvailable ? "Live" : "Draft"}</Badge>
               </div>
+              {meal.category ? <p className="text-[11px] font-semibold text-slate-400 mb-1">{meal.category.name}</p> : null}
               <p className="text-sm font-bold text-slate-700 mb-2">₹{meal.price}</p>
               <div className="flex items-center gap-1.5 text-xs text-slate-400 mb-4">
                 <Flame size={12} />
@@ -135,5 +170,19 @@ export default function MenuPage() {
         </div>
       )}
     </div>
+  );
+}
+
+function CategoryTab({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }) {
+  return (
+    <button
+      onClick={onClick}
+      className={`shrink-0 px-4 py-2 rounded-xl text-xs font-bold transition-colors ${
+        active ? "text-white" : "bg-slate-100 text-slate-500 hover:bg-slate-200"
+      }`}
+      style={active ? { background: "linear-gradient(169.21deg, #FF6B6B 9%, #BA2121 77%, #670000 100%)" } : undefined}
+    >
+      {children}
+    </button>
   );
 }

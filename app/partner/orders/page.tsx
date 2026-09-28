@@ -1,22 +1,29 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Calendar, Clock, Phone, StickyNote } from "lucide-react";
+import Link from "next/link";
+import { Calendar, Clock, MessageSquare, Phone, StickyNote } from "lucide-react";
 import { ApiError, kitchenOrdersApi } from "../../../lib/kitchenApi";
 import type { KitchenOrderCard, OrderStatus } from "../../../lib/types";
-import { Badge, Button, Card, ConfirmDialog, EmptyState, PageHeader, Spinner } from "../components/ui";
+import { Badge, Button, Card, ConfirmDialog, EmptyState, PageHeader, Spinner, TextArea } from "../components/ui";
 
-const COLUMNS: { status: OrderStatus; label: string }[] = [
-  { status: "PLACED", label: "New" },
-  { status: "ACCEPTED", label: "Accepted" },
-  { status: "PREPARING", label: "Preparing" },
-  { status: "OUT_FOR_DELIVERY", label: "Out for Delivery" },
+const POLL_MS = 15_000;
+
+type LiveTab = "NEW" | "PREPARING" | "OUT_FOR_DELIVERY";
+type Tab = LiveTab | "COMPLETED";
+
+const TAB_META: { key: Tab; label: string }[] = [
+  { key: "NEW", label: "New" },
+  { key: "PREPARING", label: "Preparing" },
+  { key: "OUT_FOR_DELIVERY", label: "Out for Delivery" },
+  { key: "COMPLETED", label: "Completed" },
 ];
 
 const ACTION_LABEL: Partial<Record<OrderStatus, string>> = {
   ACCEPTED: "Accept order",
   PREPARING: "Start preparing",
   OUT_FOR_DELIVERY: "Mark out for delivery",
+  DELIVERED: "Mark delivered",
   CANCELLED: "Cancel order",
 };
 
@@ -24,9 +31,8 @@ const COLUMN_LABEL: Partial<Record<OrderStatus, string>> = {
   ACCEPTED: "Accepted",
   PREPARING: "Preparing",
   OUT_FOR_DELIVERY: "Out for Delivery",
+  DELIVERED: "Delivered",
 };
-
-const POLL_MS = 15_000;
 
 /** `item.customizations` is typed `unknown` on the wire — the backend actually populates it as `{ name, priceDelta }[]`. */
 function customizationNames(customizations: unknown): string[] {
@@ -42,52 +48,22 @@ function itemNote(item: KitchenOrderCard["items"][number]): string | null {
   return parts.length > 0 ? `${item.name}: ${parts.join(", ")}` : null;
 }
 
-type Tab = "live" | "history";
+/** Client-side bucketing of the polled "incoming" list — `null` means it doesn't belong on a live tab. */
+function bucketOf(status: OrderStatus): LiveTab | null {
+  if (status === "PLACED" || status === "ACCEPTED") return "NEW";
+  if (status === "PREPARING") return "PREPARING";
+  if (status === "OUT_FOR_DELIVERY") return "OUT_FOR_DELIVERY";
+  return null;
+}
 
 export default function OrdersPage() {
-  const [tab, setTab] = useState<Tab>("live");
-
-  return (
-    <div>
-      <PageHeader title="Orders" subtitle={tab === "live" ? "Live orders, refreshed automatically" : "Past orders, any date range"} />
-
-      <div className="flex gap-2 mb-6 bg-slate-100 p-1 rounded-2xl w-fit">
-        <TabButton active={tab === "live"} onClick={() => setTab("live")}>
-          Live
-        </TabButton>
-        <TabButton active={tab === "history"} onClick={() => setTab("history")}>
-          History
-        </TabButton>
-      </div>
-
-      {tab === "live" ? <LiveBoard /> : <HistoryView />}
-    </div>
-  );
-}
-
-function TabButton({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }) {
-  return (
-    <button
-      onClick={onClick}
-      className={`px-5 py-2 rounded-xl text-sm font-bold transition-colors ${
-        active ? "bg-white text-[#BA2121] shadow-sm" : "text-slate-500"
-      }`}
-    >
-      {children}
-    </button>
-  );
-}
-
-// ── Live kanban board ────────────────────────────────────────────────────────
-
-function LiveBoard() {
+  const [tab, setTab] = useState<Tab>("NEW");
   const [orders, setOrders] = useState<KitchenOrderCard[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [busyOrderId, setBusyOrderId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [busyOrderId, setBusyOrderId] = useState<string | null>(null);
   const [pendingChange, setPendingChange] = useState<{ order: KitchenOrderCard; status: OrderStatus } | null>(null);
-  const [dragOrderId, setDragOrderId] = useState<string | null>(null);
-  const [dragOverStatus, setDragOverStatus] = useState<OrderStatus | null>(null);
+  const [rejecting, setRejecting] = useState<KitchenOrderCard | null>(null);
   const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const load = async (showSpinner = false) => {
@@ -110,7 +86,14 @@ function LiveBoard() {
     };
   }, []);
 
-  const requestChange = (order: KitchenOrderCard, status: OrderStatus) => setPendingChange({ order, status });
+  const buckets = useMemo(() => {
+    const grouped: Record<LiveTab, KitchenOrderCard[]> = { NEW: [], PREPARING: [], OUT_FOR_DELIVERY: [] };
+    for (const order of orders) {
+      const bucket = bucketOf(order.status);
+      if (bucket) grouped[bucket].push(order);
+    }
+    return grouped;
+  }, [orders]);
 
   const confirmChange = async () => {
     if (!pendingChange) return;
@@ -128,13 +111,121 @@ function LiveBoard() {
     }
   };
 
-  const handleDrop = (order: KitchenOrderCard, targetStatus: OrderStatus) => {
-    setDragOverStatus(null);
-    if (targetStatus === order.status) return;
-    if (!order.allowedNextStatuses.includes(targetStatus)) return;
-    requestChange(order, targetStatus);
+  const confirmReject = async (reason: string) => {
+    if (!rejecting) return;
+    const order = rejecting;
+    setError(null);
+    setBusyOrderId(order.id);
+    try {
+      await kitchenOrdersApi.advanceStatus(order.id, "CANCELLED", reason || undefined);
+      await load(false);
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : "Could not reject the order, please try again");
+    } finally {
+      setBusyOrderId(null);
+      setRejecting(null);
+    }
   };
 
+  return (
+    <div>
+      <PageHeader
+        title="Orders"
+        subtitle={tab === "COMPLETED" ? "Past orders, any date range" : "Live orders, refreshed automatically"}
+      />
+
+      <div className="flex gap-2 mb-6 bg-slate-100 p-1 rounded-2xl w-fit flex-wrap">
+        {TAB_META.map(({ key, label }) => (
+          <TabButton key={key} active={tab === key} onClick={() => setTab(key)}>
+            {label}
+            {key !== "COMPLETED" ? <CountPill count={buckets[key].length} /> : null}
+          </TabButton>
+        ))}
+      </div>
+
+      {tab === "COMPLETED" ? (
+        <HistoryView />
+      ) : (
+        <LiveTabPanel
+          tab={tab}
+          orders={buckets[tab]}
+          isLoading={isLoading}
+          error={error}
+          busyOrderId={busyOrderId}
+          onRetry={() => load(true)}
+          onRequestChange={(order, status) => setPendingChange({ order, status })}
+          onReject={(order) => setRejecting(order)}
+        />
+      )}
+
+      <ConfirmDialog
+        open={Boolean(pendingChange)}
+        title={
+          pendingChange
+            ? `${ACTION_LABEL[pendingChange.status] ?? "Update order"} #${pendingChange.order.orderNumber}?`
+            : ""
+        }
+        description={`Moves this order to "${COLUMN_LABEL[pendingChange?.status as OrderStatus] ?? pendingChange?.status}". The customer sees this update immediately.`}
+        confirmLabel={pendingChange ? ACTION_LABEL[pendingChange.status] ?? "Confirm" : "Confirm"}
+        isLoading={Boolean(busyOrderId) && busyOrderId === pendingChange?.order.id}
+        onConfirm={confirmChange}
+        onCancel={() => setPendingChange(null)}
+      />
+
+      <RejectDialog
+        key={rejecting?.id ?? "none"}
+        order={rejecting}
+        isLoading={Boolean(busyOrderId) && busyOrderId === rejecting?.id}
+        onCancel={() => setRejecting(null)}
+        onConfirm={confirmReject}
+      />
+    </div>
+  );
+}
+
+function TabButton({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }) {
+  return (
+    <button
+      onClick={onClick}
+      className={`inline-flex items-center px-5 py-2 rounded-xl text-sm font-bold transition-colors ${
+        active ? "bg-white text-[#BA2121] shadow-sm" : "text-slate-500"
+      }`}
+    >
+      {children}
+    </button>
+  );
+}
+
+function CountPill({ count }: { count: number }) {
+  if (count === 0) return null;
+  return (
+    <span className="ml-1.5 inline-flex items-center justify-center min-w-[18px] h-[18px] px-1 rounded-full text-[10px] font-extrabold bg-[#BA2121]/10 text-[#BA2121]">
+      {count}
+    </span>
+  );
+}
+
+// ── Live tab panel (New / Preparing / Out for Delivery) ─────────────────────
+
+function LiveTabPanel({
+  tab,
+  orders,
+  isLoading,
+  error,
+  busyOrderId,
+  onRetry,
+  onRequestChange,
+  onReject,
+}: {
+  tab: LiveTab;
+  orders: KitchenOrderCard[];
+  isLoading: boolean;
+  error: string | null;
+  busyOrderId: string | null;
+  onRetry: () => void;
+  onRequestChange: (order: KitchenOrderCard, status: OrderStatus) => void;
+  onReject: (order: KitchenOrderCard) => void;
+}) {
   return (
     <div>
       {error ? <p className="text-xs font-semibold text-red-600 mb-4">{error}</p> : null}
@@ -146,86 +237,27 @@ function LiveBoard() {
       ) : orders.length === 0 ? (
         <Card>
           {error ? (
-            <EmptyState
-              title="Couldn't load orders"
-              description={error}
-              action={<Button onClick={() => load(true)}>Retry</Button>}
-            />
+            <EmptyState title="Couldn't load orders" description={error} action={<Button onClick={onRetry}>Retry</Button>} />
           ) : (
-            <EmptyState title="No live orders right now" description="New orders will show up here the moment they come in." />
+            <EmptyState
+              title={`No orders in "${TAB_META.find((t) => t.key === tab)?.label}"`}
+              description="New orders will show up here the moment they come in."
+            />
           )}
         </Card>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
-          {COLUMNS.map(({ status, label }) => {
-            const columnOrders = orders.filter((o) => o.status === status);
-            const isDropTarget = dragOverStatus === status;
-            return (
-              <div
-                key={status}
-                onDragOver={(e) => {
-                  const dragged = orders.find((o) => o.id === dragOrderId);
-                  if (dragged && dragged.allowedNextStatuses.includes(status)) {
-                    e.preventDefault();
-                    setDragOverStatus(status);
-                  }
-                }}
-                onDragLeave={() => setDragOverStatus((s) => (s === status ? null : s))}
-                onDrop={(e) => {
-                  e.preventDefault();
-                  const dragged = orders.find((o) => o.id === dragOrderId);
-                  if (dragged) handleDrop(dragged, status);
-                }}
-                className={`rounded-3xl transition-colors ${isDropTarget ? "bg-[#BA2121]/5 ring-2 ring-[#BA2121]/30" : ""}`}
-              >
-                <div className="flex items-center gap-2 mb-3 px-1 pt-2">
-                  <h3 className="text-sm font-extrabold text-slate-700">{label}</h3>
-                  <span className="text-xs font-bold text-slate-400">{columnOrders.length}</span>
-                </div>
-                <div className="flex flex-col gap-3 px-1 pb-2 min-h-[80px]">
-                  {columnOrders.map((order) => (
-                    <OrderCard
-                      key={order.id}
-                      order={order}
-                      isBusy={busyOrderId === order.id}
-                      isDragging={dragOrderId === order.id}
-                      onDragStart={() => setDragOrderId(order.id)}
-                      onDragEnd={() => {
-                        setDragOrderId(null);
-                        setDragOverStatus(null);
-                      }}
-                      onRequestChange={(next) => requestChange(order, next)}
-                    />
-                  ))}
-                  {columnOrders.length === 0 ? (
-                    <div className="text-xs text-slate-300 font-semibold text-center py-6 border border-dashed border-slate-200 rounded-2xl">
-                      Drop here or nothing yet
-                    </div>
-                  ) : null}
-                </div>
-              </div>
-            );
-          })}
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+          {orders.map((order) => (
+            <OrderCard
+              key={order.id}
+              order={order}
+              isBusy={busyOrderId === order.id}
+              onRequestChange={(status) => onRequestChange(order, status)}
+              onReject={tab === "NEW" ? () => onReject(order) : undefined}
+            />
+          ))}
         </div>
       )}
-
-      <ConfirmDialog
-        open={Boolean(pendingChange)}
-        title={
-          pendingChange
-            ? `${ACTION_LABEL[pendingChange.status] ?? "Update order"} #${pendingChange.order.orderNumber}?`
-            : ""
-        }
-        description={
-          pendingChange?.status === "CANCELLED"
-            ? "This cannot be undone — the customer will be notified their order was cancelled."
-            : `Moves this order to "${COLUMN_LABEL[pendingChange?.status as OrderStatus] ?? pendingChange?.status}". The customer sees this update immediately.`
-        }
-        confirmLabel={pendingChange ? ACTION_LABEL[pendingChange.status] ?? "Confirm" : "Confirm"}
-        isLoading={Boolean(busyOrderId)}
-        onConfirm={confirmChange}
-        onCancel={() => setPendingChange(null)}
-      />
     </div>
   );
 }
@@ -233,32 +265,37 @@ function LiveBoard() {
 function OrderCard({
   order,
   isBusy,
-  isDragging,
-  onDragStart,
-  onDragEnd,
   onRequestChange,
+  onReject,
 }: {
   order: KitchenOrderCard;
   isBusy: boolean;
-  isDragging: boolean;
-  onDragStart: () => void;
-  onDragEnd: () => void;
   onRequestChange: (status: OrderStatus) => void;
+  onReject?: () => void;
 }) {
   const forwardAction = order.allowedNextStatuses.find((s) => s !== "CANCELLED");
-  const canCancel = order.allowedNextStatuses.includes("CANCELLED");
-  const isDraggable = order.allowedNextStatuses.length > 0;
+  // Outside the New tab there's no dedicated Reject flow, so fall back to the plain cancel link when it's allowed.
+  const canPlainCancel = !onReject && order.allowedNextStatuses.includes("CANCELLED");
+  // No point chatting before the kitchen has actually accepted the order.
+  const canChat = order.status !== "PLACED" && order.status !== "PENDING_PAYMENT";
 
   return (
-    <Card
-      draggable={isDraggable}
-      onDragStart={onDragStart}
-      onDragEnd={onDragEnd}
-      className={`!p-4 transition-opacity ${isDragging ? "opacity-40" : ""} ${isDraggable ? "cursor-grab active:cursor-grabbing" : ""}`}
-    >
+    <Card className="!p-4">
       <div className="flex items-center justify-between mb-2">
         <p className="text-sm font-extrabold text-slate-900">#{order.orderNumber}</p>
-        <Badge tone="brand">₹{order.totalAmount}</Badge>
+        <div className="flex items-center gap-2">
+          {canChat ? (
+            <Link
+              href={`/partner/orders/${order.id}/chat`}
+              className="w-7 h-7 rounded-lg bg-slate-100 text-slate-500 hover:bg-[#BA2121]/10 hover:text-[#BA2121] flex items-center justify-center transition-colors shrink-0"
+              aria-label="Chat with customer"
+              title="Chat with customer"
+            >
+              <MessageSquare size={13} />
+            </Link>
+          ) : null}
+          <Badge tone="brand">₹{order.totalAmount}</Badge>
+        </div>
       </div>
       <p className="text-xs text-slate-500 mb-1">{order.customer.name}</p>
       <a href={`tel:${order.customer.phone}`} className="inline-flex items-center gap-1 text-xs font-bold text-[#BA2121] mb-3">
@@ -280,11 +317,15 @@ function OrderCard({
           );
         })}
       </div>
-      {order.orderNotes ? <p className="text-xs italic text-amber-600 mb-3">&ldquo;{order.orderNotes}&rdquo;</p> : null}
+      {order.orderNotes ? (
+        <div className="flex items-start gap-1.5 text-[11px] italic text-amber-600 mb-3">
+          <StickyNote size={12} className="mt-0.5 shrink-0" />
+          <span>&ldquo;{order.orderNotes}&rdquo;</span>
+        </div>
+      ) : null}
       <div className="flex items-center gap-1.5 text-[11px] text-slate-400 mb-3">
         <Clock size={11} />
         ETA {order.etaMinutes} mins
-        {isDraggable ? <span className="ml-auto italic">drag to move →</span> : null}
       </div>
       <div className="flex flex-col gap-2">
         {forwardAction ? (
@@ -292,7 +333,11 @@ function OrderCard({
             {ACTION_LABEL[forwardAction] ?? forwardAction}
           </Button>
         ) : null}
-        {canCancel ? (
+        {onReject ? (
+          <Button variant="danger" className="w-full !py-2 !text-xs" onClick={onReject} disabled={isBusy}>
+            Reject
+          </Button>
+        ) : canPlainCancel ? (
           <button
             onClick={() => onRequestChange("CANCELLED")}
             disabled={isBusy}
@@ -306,9 +351,54 @@ function OrderCard({
   );
 }
 
-// ── History view ─────────────────────────────────────────────────────────────
+function RejectDialog({
+  order,
+  isLoading,
+  onCancel,
+  onConfirm,
+}: {
+  order: KitchenOrderCard | null;
+  isLoading: boolean;
+  onCancel: () => void;
+  onConfirm: (reason: string) => void;
+}) {
+  const [reason, setReason] = useState("");
+
+  if (!order) return null;
+
+  return (
+    <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/40 p-6" onClick={isLoading ? undefined : onCancel}>
+      <Card className="w-full max-w-sm" onClick={(e) => e.stopPropagation()}>
+        <h3 className="text-lg font-extrabold text-slate-900 mb-1.5">Reject order #{order.orderNumber}?</h3>
+        <p className="text-sm text-slate-500 mb-4">
+          This cannot be undone — the customer is notified immediately. Let them know why (optional).
+        </p>
+        <TextArea
+          rows={3}
+          placeholder="e.g. out of stock, kitchen is too busy right now…"
+          value={reason}
+          onChange={(e) => setReason(e.target.value)}
+          className="mb-4"
+          disabled={isLoading}
+        />
+        <div className="flex gap-3">
+          <Button variant="ghost" className="flex-1 justify-center bg-slate-100" onClick={onCancel} disabled={isLoading}>
+            Never mind
+          </Button>
+          <Button variant="danger" className="flex-1 justify-center" onClick={() => onConfirm(reason.trim())} loading={isLoading}>
+            Reject order
+          </Button>
+        </div>
+      </Card>
+    </div>
+  );
+}
+
+// ── History view (Completed tab) ────────────────────────────────────────────
 
 type Period = "today" | "month" | "year" | "custom";
+
+const COMPLETED_STATUSES: OrderStatus[] = ["DELIVERED", "CANCELLED"];
 
 /** Parses a `YYYY-MM-DD` `<input type="date">` value into local date parts. */
 function parseDateInput(value: string): { year: number; month: number; day: number } | null {
@@ -358,7 +448,12 @@ function HistoryView() {
   const loadHistory = async (currentPage: number, currentRange: { dateFrom?: string; dateTo?: string }) => {
     setIsLoading(true);
     try {
-      const result = await kitchenOrdersApi.list({ page: currentPage, limit: 20, ...currentRange });
+      const result = await kitchenOrdersApi.list({
+        page: currentPage,
+        limit: 20,
+        status: COMPLETED_STATUSES,
+        ...currentRange,
+      });
       setOrders(result.items);
       setTotalPages(result.meta.totalPages);
       setError(null);
@@ -436,7 +531,7 @@ function HistoryView() {
           ) : (
             <EmptyState
               icon={<Calendar />}
-              title="No orders in this range"
+              title="No completed orders in this range"
               description="Try a different period."
             />
           )}
@@ -466,8 +561,8 @@ function HistoryView() {
                       <td className="px-5 py-3.5 text-slate-500 max-w-[220px]">
                         <div className="flex items-center gap-1.5">
                           <span className="truncate">{order.items.map((i) => `${i.quantity}× ${i.name}`).join(", ")}</span>
-                          {notes.length > 0 ? (
-                            <span title={notes.join(" · ")} className="shrink-0 text-amber-500">
+                          {notes.length > 0 || order.orderNotes ? (
+                            <span title={[order.orderNotes, ...notes].filter(Boolean).join(" · ")} className="shrink-0 text-amber-500">
                               <StickyNote size={12} />
                             </span>
                           ) : null}

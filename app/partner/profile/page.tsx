@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
+import { ArrowRight, Clock, Copy, ShieldAlert, X } from "lucide-react";
 import { ApiError, kitchenAuthApi, kitchenProfileApi, kitchenUploadApi } from "../../../lib/kitchenApi";
 import type { KitchenProfile } from "../../../lib/types";
 import { Badge, Button, Card, EmptyState, Field, PageHeader, Spinner, TextArea, TextInput } from "../components/ui";
@@ -23,6 +25,10 @@ export default function ProfilePage() {
   const [prepTimeMins, setPrepTimeMins] = useState("25");
   const [opensAt, setOpensAt] = useState("08:00");
   const [closesAt, setClosesAt] = useState("22:00");
+  const [specialities, setSpecialities] = useState<string[]>([]);
+  const [specialityInput, setSpecialityInput] = useState("");
+  const [capacity, setCapacity] = useState("");
+  const [copied, setCopied] = useState(false);
 
   const [deleteStep, setDeleteStep] = useState<DeleteStep>("closed");
   const [deletePhone, setDeletePhone] = useState("");
@@ -46,6 +52,8 @@ export default function ProfilePage() {
         setPrepTimeMins(String(p.prepTimeMins));
         setOpensAt(p.opensAt);
         setClosesAt(p.closesAt);
+        setSpecialities(p.specialities ?? []);
+        setCapacity(p.capacity ? String(p.capacity) : "");
       })
       .catch((err) => {
         setError(err instanceof ApiError ? err.message : "Could not load your profile, please try again");
@@ -83,6 +91,8 @@ export default function ProfilePage() {
         prepTimeMins: Number(prepTimeMins) || undefined,
         opensAt,
         closesAt,
+        specialities,
+        capacity: capacity ? Number(capacity) : undefined,
       });
       setProfile(updated);
       setSaved(true);
@@ -90,6 +100,28 @@ export default function ProfilePage() {
       setError(err instanceof ApiError ? err.message : "Could not save, please try again");
     } finally {
       setIsSaving(false);
+    }
+  };
+
+  const handleAddSpeciality = () => {
+    const value = specialityInput.trim();
+    if (!value || specialities.includes(value) || specialities.length >= 10) {
+      setSpecialityInput("");
+      return;
+    }
+    setSpecialities((prev) => [...prev, value]);
+    setSpecialityInput("");
+  };
+
+  const handleCopyLink = async () => {
+    if (!profile) return;
+    const url = `${window.location.origin}/kitchen/${profile.slug}`;
+    try {
+      await navigator.clipboard.writeText(url);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // Clipboard API can be blocked (permissions, insecure context) — silently no-op rather than error the whole page.
     }
   };
 
@@ -147,8 +179,49 @@ export default function ProfilePage() {
       <PageHeader
         title="Kitchen Profile"
         subtitle={profile.slug}
-        action={<Badge tone={profile.isVerified ? "success" : "warning"}>{profile.isVerified ? "Verified" : "Pending verification"}</Badge>}
+        action={
+          <div className="flex items-center gap-2">
+            <Badge tone={profile.isVerified ? "success" : "warning"}>{profile.isVerified ? "Verified" : "Pending verification"}</Badge>
+            <Button variant="outline" className="!py-2 !px-3.5 !text-xs" onClick={handleCopyLink}>
+              <Copy size={13} /> {copied ? "Copied!" : "Copy Public Link"}
+            </Button>
+          </div>
+        }
       />
+
+      <Link href="/partner/timings" className="block max-w-2xl mb-4">
+        <Card className="!p-4 hover:border-[#BA2121]/20 transition-colors">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-[#BA2121]/10 text-[#BA2121] flex items-center justify-center shrink-0">
+              <Clock size={18} />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-bold text-slate-800">Operating Hours</p>
+              <p className="text-xs text-slate-500">Weekly timings, holidays, and emergency close</p>
+            </div>
+            <ArrowRight size={16} className="text-slate-400 shrink-0" />
+          </div>
+        </Card>
+      </Link>
+
+      {!profile.fssaiLicense ? (
+        <Link href="/partner/fssai-assistance" className="block max-w-2xl mb-6">
+          <Card className="!p-4 !bg-amber-50 border-amber-100 hover:border-amber-200 transition-colors">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center shrink-0">
+                <ShieldAlert size={18} />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-bold text-amber-800">No FSSAI licence on file</p>
+                <p className="text-xs text-amber-600">
+                  Let FreshBhoj handle your government registration, or upload one you already have.
+                </p>
+              </div>
+              <ArrowRight size={16} className="text-amber-500 shrink-0" />
+            </div>
+          </Card>
+        </Link>
+      ) : null}
 
       <Card className="max-w-2xl">
         <div className="flex flex-col gap-5">
@@ -194,6 +267,46 @@ export default function ProfilePage() {
               <TextInput type="time" value={closesAt} onChange={(e) => setClosesAt(e.target.value)} />
             </Field>
           </div>
+
+          <Field label="Specialities">
+            <div className="flex flex-wrap gap-2 mb-2">
+              {specialities.map((s) => (
+                <span key={s} className="inline-flex items-center gap-1.5 rounded-full bg-[#BA2121]/10 text-[#BA2121] px-3 py-1.5 text-xs font-bold">
+                  {s}
+                  <button onClick={() => setSpecialities((prev) => prev.filter((x) => x !== s))} aria-label={`Remove ${s}`}>
+                    <X size={11} />
+                  </button>
+                </span>
+              ))}
+            </div>
+            <div className="flex items-center gap-2">
+              <TextInput
+                value={specialityInput}
+                onChange={(e) => setSpecialityInput(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    handleAddSpeciality();
+                  }
+                }}
+                placeholder="e.g. North Indian, Home-style"
+                disabled={specialities.length >= 10}
+              />
+              <Button variant="outline" className="!py-3 !px-4 shrink-0" onClick={handleAddSpeciality} disabled={specialities.length >= 10}>
+                Add
+              </Button>
+            </div>
+          </Field>
+
+          <Field label="Capacity (max orders per meal slot)">
+            <TextInput
+              inputMode="numeric"
+              value={capacity}
+              onChange={(e) => setCapacity(e.target.value.replace(/\D/g, ""))}
+              placeholder="e.g. 40"
+              className="max-w-[160px]"
+            />
+          </Field>
 
           {profile.fssaiLicense ? (
             <p className="text-xs text-slate-400">FSSAI: {profile.fssaiLicense} (from onboarding — update via support)</p>

@@ -1,14 +1,42 @@
 "use client";
 
-import { useState } from "react";
-import { Sparkles, X } from "lucide-react";
-import { ApiError, kitchenMenuApi, kitchenUploadApi, type UpsertMealInput } from "../../../lib/kitchenApi";
-import type { FoodType, GoalTag, MealDetail, MealSlot, NutritionAnalysisResult } from "../../../lib/types";
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { ArrowRight, Leaf, Plus, Sparkles, Trash2, X } from "lucide-react";
+import {
+  ApiError,
+  catalogApi,
+  kitchenMenuApi,
+  kitchenUploadApi,
+  type UpsertMealCustomizationGroupInput,
+  type UpsertMealInput,
+} from "../../../lib/kitchenApi";
+import type { Cuisine, FoodType, GoalTag, MealDetail, MealSlot, NutritionAnalysisResult } from "../../../lib/types";
 import { Badge, Button, Field, Select, TextArea, TextInput } from "./ui";
 
 const FOOD_TYPES: FoodType[] = ["VEG", "EGG", "NON_VEG", "VEGAN"];
 const SLOTS: MealSlot[] = ["BREAKFAST", "LUNCH", "DINNER", "SNACKS"];
 const GOAL_TAGS: GoalTag[] = ["HIGH_PROTEIN", "LOW_CALORIE", "WEIGHT_LOSS", "MUSCLE_GAIN", "HEALTHY_LIFESTYLE"];
+const MAX_GROUPS = 6;
+const MAX_OPTIONS_PER_GROUP = 20;
+
+interface LocalOption {
+  localId: string;
+  name: string;
+  priceDelta: string;
+}
+
+interface LocalGroup {
+  localId: string;
+  name: string;
+  isRequired: boolean;
+  minSelect: string;
+  maxSelect: string;
+  options: LocalOption[];
+}
+
+let localIdSeq = 0;
+const nextLocalId = () => `local-${++localIdSeq}`;
 
 function labelize(value: string): string {
   return value
@@ -31,6 +59,22 @@ export default function MealForm({ initial, submitLabel, onSubmit }: MealFormPro
   const [price, setPrice] = useState(String(initial?.price ?? ""));
   const [mrp, setMrp] = useState(initial?.mrp ? String(initial.mrp) : "");
   const [foodType, setFoodType] = useState<FoodType>(initial?.foodType ?? "VEG");
+  const [isJainAvailable, setIsJainAvailable] = useState(initial?.isJainAvailable ?? false);
+  const jainEligible = foodType === "VEG" || foodType === "VEGAN";
+  const [cuisineSlug, setCuisineSlug] = useState("");
+  const [cuisines, setCuisines] = useState<Cuisine[]>([]);
+  const [cuisinesFailed, setCuisinesFailed] = useState(false);
+  const [isLoadingCuisines, setIsLoadingCuisines] = useState(true);
+  const [groups, setGroups] = useState<LocalGroup[]>(
+    (initial?.customizationGroups ?? []).map((g) => ({
+      localId: nextLocalId(),
+      name: g.name,
+      isRequired: g.isRequired,
+      minSelect: String(g.minSelect),
+      maxSelect: String(g.maxSelect),
+      options: g.options.map((o) => ({ localId: nextLocalId(), name: o.name, priceDelta: String(o.priceDelta) })),
+    })),
+  );
   const [slots, setSlots] = useState<MealSlot[]>(initial?.slots ?? []);
   const [goalTags, setGoalTags] = useState<GoalTag[]>(initial?.goalTags ?? []);
   const [calories, setCalories] = useState(initial?.nutrition ? String(initial.nutrition.calories) : "");
@@ -53,6 +97,58 @@ export default function MealForm({ initial, submitLabel, onSubmit }: MealFormPro
 
   const toggleFrom = <T,>(list: T[], value: T, setter: (v: T[]) => void) =>
     setter(list.includes(value) ? list.filter((v) => v !== value) : [...list, value]);
+
+  useEffect(() => {
+    catalogApi
+      .cuisines()
+      .then((list) => setCuisines(list))
+      .catch(() => setCuisinesFailed(true))
+      .finally(() => setIsLoadingCuisines(false));
+  }, []);
+
+  // The backend rejects isJainAvailable:true unless foodType is VEG/VEGAN — flip it
+  // off locally the moment the kitchen picks a foodType where it no longer applies,
+  // so the toggle can never be submitted in a state the backend would refuse.
+  useEffect(() => {
+    if (!jainEligible && isJainAvailable) setIsJainAvailable(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [jainEligible]);
+
+  const addGroup = () => {
+    if (groups.length >= MAX_GROUPS) return;
+    setGroups((prev) => [
+      ...prev,
+      { localId: nextLocalId(), name: "", isRequired: false, minSelect: "0", maxSelect: "1", options: [] },
+    ]);
+  };
+
+  const removeGroup = (groupId: string) => setGroups((prev) => prev.filter((g) => g.localId !== groupId));
+
+  const updateGroup = (groupId: string, patch: Partial<LocalGroup>) =>
+    setGroups((prev) => prev.map((g) => (g.localId === groupId ? { ...g, ...patch } : g)));
+
+  const addOption = (groupId: string) =>
+    setGroups((prev) =>
+      prev.map((g) =>
+        g.localId === groupId && g.options.length < MAX_OPTIONS_PER_GROUP
+          ? { ...g, options: [...g.options, { localId: nextLocalId(), name: "", priceDelta: "0" }] }
+          : g,
+      ),
+    );
+
+  const removeOption = (groupId: string, optionId: string) =>
+    setGroups((prev) =>
+      prev.map((g) => (g.localId === groupId ? { ...g, options: g.options.filter((o) => o.localId !== optionId) } : g)),
+    );
+
+  const updateOption = (groupId: string, optionId: string, patch: Partial<LocalOption>) =>
+    setGroups((prev) =>
+      prev.map((g) =>
+        g.localId === groupId
+          ? { ...g, options: g.options.map((o) => (o.localId === optionId ? { ...o, ...patch } : o)) }
+          : g,
+      ),
+    );
 
   const handleUploadImage = async (file: File) => {
     setIsUploading(true);
@@ -95,6 +191,20 @@ export default function MealForm({ initial, submitLabel, onSubmit }: MealFormPro
 
   const isValid = name.trim().length >= 3 && images.length > 0 && Number(price) > 0;
 
+  const buildCustomizationGroups = (): UpsertMealCustomizationGroupInput[] =>
+    groups
+      .filter((g) => g.name.trim().length > 0)
+      .map((g) => ({
+        name: g.name.trim(),
+        isRequired: g.isRequired,
+        minSelect: Number(g.minSelect) || 0,
+        maxSelect: Number(g.maxSelect) || 1,
+        options: g.options
+          .filter((o) => o.name.trim().length > 0)
+          .map((o) => ({ name: o.name.trim(), priceDelta: Number(o.priceDelta) || 0 })),
+      }))
+      .filter((g) => g.options.length > 0);
+
   const handleSubmit = async () => {
     setError(null);
     setIsSaving(true);
@@ -106,6 +216,8 @@ export default function MealForm({ initial, submitLabel, onSubmit }: MealFormPro
         price: Number(price),
         mrp: mrp ? Number(mrp) : undefined,
         foodType,
+        isJainAvailable: jainEligible ? isJainAvailable : false,
+        cuisineSlug: cuisineSlug || undefined,
         slots,
         goalTags,
         calories: Number(calories) || 0,
@@ -124,6 +236,7 @@ export default function MealForm({ initial, submitLabel, onSubmit }: MealFormPro
           .filter(Boolean),
         prepTimeMins: Number(prepTimeMins) || 25,
         isAvailable,
+        customizationGroups: buildCustomizationGroups(),
       });
     } catch (err) {
       setError(err instanceof ApiError ? err.message : "Could not save the dish, please try again");
@@ -163,6 +276,9 @@ export default function MealForm({ initial, submitLabel, onSubmit }: MealFormPro
             </label>
           ) : null}
         </div>
+        <Link href="/partner/menu/upload-guide" className="inline-flex items-center gap-1 text-xs font-bold text-[#BA2121] mt-2">
+          See upload tips <ArrowRight size={11} />
+        </Link>
       </Field>
 
       <div className="grid grid-cols-2 gap-4">
@@ -174,21 +290,150 @@ export default function MealForm({ initial, submitLabel, onSubmit }: MealFormPro
         </Field>
       </div>
 
-      <Field label="Food type">
-        <Select value={foodType} onChange={(e) => setFoodType(e.target.value as FoodType)}>
-          {FOOD_TYPES.map((t) => (
-            <option key={t} value={t}>
-              {labelize(t)}
-            </option>
-          ))}
-        </Select>
-      </Field>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <Field label="Food type">
+          <div className="flex items-center gap-3">
+            <Select value={foodType} onChange={(e) => setFoodType(e.target.value as FoodType)} className="flex-1">
+              {FOOD_TYPES.map((t) => (
+                <option key={t} value={t}>
+                  {labelize(t)}
+                </option>
+              ))}
+            </Select>
+            <button
+              type="button"
+              onClick={() => jainEligible && setIsJainAvailable((v) => !v)}
+              disabled={!jainEligible}
+              title={jainEligible ? "Can be prepared Jain-style" : "Only available for Veg / Vegan dishes"}
+              className={`shrink-0 inline-flex items-center gap-1.5 rounded-xl px-3.5 py-3 text-xs font-bold transition-colors disabled:opacity-40 disabled:cursor-not-allowed ${
+                isJainAvailable && jainEligible ? "bg-emerald-600 text-white" : "bg-slate-100 text-slate-500 hover:bg-slate-200"
+              }`}
+            >
+              <Leaf size={13} /> Jain
+            </button>
+          </div>
+        </Field>
+
+        <Field label="Cuisine">
+          {cuisinesFailed ? (
+            <TextInput value={cuisineSlug} onChange={(e) => setCuisineSlug(e.target.value)} placeholder="e.g. thali (cuisine slug)" />
+          ) : (
+            <Select value={cuisineSlug} onChange={(e) => setCuisineSlug(e.target.value)} disabled={isLoadingCuisines}>
+              <option value="">{isLoadingCuisines ? "Loading…" : "Select a cuisine (optional)"}</option>
+              {cuisines.map((c) => (
+                <option key={c.id} value={c.slug}>
+                  {c.name}
+                </option>
+              ))}
+            </Select>
+          )}
+        </Field>
+      </div>
 
       <Field label="Meal slots">
         <div className="flex flex-wrap gap-2">
           {SLOTS.map((slot) => (
             <ChipToggle key={slot} label={labelize(slot)} isActive={slots.includes(slot)} onClick={() => toggleFrom(slots, slot, setSlots)} />
           ))}
+        </div>
+      </Field>
+
+      {/* ── Customization groups ───────────────────────────────────────── */}
+      <Field label="Customizations (optional)">
+        <div className="flex flex-col gap-4">
+          {groups.map((group) => (
+            <div key={group.localId} className="rounded-2xl border border-slate-100 p-4">
+              <div className="flex items-start gap-3 mb-3">
+                <TextInput
+                  value={group.name}
+                  onChange={(e) => updateGroup(group.localId, { name: e.target.value })}
+                  placeholder="Group name, e.g. Spice Level"
+                  className="flex-1"
+                />
+                <button
+                  onClick={() => removeGroup(group.localId)}
+                  className="w-10 h-10 shrink-0 rounded-xl bg-slate-100 text-slate-400 hover:bg-red-50 hover:text-red-600 flex items-center justify-center transition-colors"
+                  aria-label="Remove group"
+                >
+                  <Trash2 size={14} />
+                </button>
+              </div>
+              <div className="flex flex-wrap items-center gap-4 mb-3">
+                <label className="flex items-center gap-2 cursor-pointer select-none">
+                  <input
+                    type="checkbox"
+                    checked={group.isRequired}
+                    onChange={(e) => updateGroup(group.localId, { isRequired: e.target.checked })}
+                    className="w-4 h-4 accent-[#BA2121]"
+                  />
+                  <span className="text-xs font-bold text-slate-600">Required</span>
+                </label>
+                <div className="flex items-center gap-1.5">
+                  <span className="text-xs font-semibold text-slate-400">Min</span>
+                  <TextInput
+                    inputMode="numeric"
+                    value={group.minSelect}
+                    onChange={(e) => updateGroup(group.localId, { minSelect: e.target.value.replace(/\D/g, "") })}
+                    className="w-16 !py-1.5 !px-2 text-center"
+                  />
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <span className="text-xs font-semibold text-slate-400">Max</span>
+                  <TextInput
+                    inputMode="numeric"
+                    value={group.maxSelect}
+                    onChange={(e) => updateGroup(group.localId, { maxSelect: e.target.value.replace(/\D/g, "") })}
+                    className="w-16 !py-1.5 !px-2 text-center"
+                  />
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-2">
+                {group.options.map((option) => (
+                  <div key={option.localId} className="flex items-center gap-2">
+                    <TextInput
+                      value={option.name}
+                      onChange={(e) => updateOption(group.localId, option.localId, { name: e.target.value })}
+                      placeholder="Option name, e.g. Extra Spicy"
+                      className="flex-1"
+                    />
+                    <div className="flex items-center gap-1 shrink-0">
+                      <span className="text-xs font-bold text-slate-400">₹</span>
+                      <TextInput
+                        inputMode="numeric"
+                        value={option.priceDelta}
+                        onChange={(e) => updateOption(group.localId, option.localId, { priceDelta: e.target.value.replace(/[^\d]/g, "") })}
+                        className="w-20 text-center"
+                      />
+                    </div>
+                    <button
+                      onClick={() => removeOption(group.localId, option.localId)}
+                      className="w-9 h-9 shrink-0 rounded-xl bg-slate-100 text-slate-400 hover:bg-red-50 hover:text-red-600 flex items-center justify-center transition-colors"
+                      aria-label="Remove option"
+                    >
+                      <X size={13} />
+                    </button>
+                  </div>
+                ))}
+                {group.options.length < MAX_OPTIONS_PER_GROUP ? (
+                  <button
+                    onClick={() => addOption(group.localId)}
+                    className="inline-flex items-center gap-1.5 self-start text-xs font-bold text-[#BA2121] mt-1"
+                  >
+                    <Plus size={13} /> Add option
+                  </button>
+                ) : null}
+              </div>
+            </div>
+          ))}
+          {groups.length < MAX_GROUPS ? (
+            <button
+              onClick={addGroup}
+              className="inline-flex items-center justify-center gap-1.5 rounded-xl px-4 py-3 text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 self-start transition-colors"
+            >
+              <Plus size={13} /> Add customization group
+            </button>
+          ) : null}
         </div>
       </Field>
 

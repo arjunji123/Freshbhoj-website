@@ -32,7 +32,12 @@ export default function PartnerGuard({ children }: { children: React.ReactNode }
   // can submit — "you can add your menu anytime, even while waiting for
   // approval" only holds if the guard actually lets them through to it.
   const hasKitchen = Boolean(onboarding?.kitchenId);
-  const isPreApprovalMenuAccess = hasKitchen && (pathname?.startsWith("/partner/menu") || pathname?.startsWith("/partner/stories"));
+  const isPreApprovalMenuAccess =
+    hasKitchen &&
+    (pathname?.startsWith("/partner/menu") ||
+      pathname?.startsWith("/partner/stories") ||
+      pathname?.startsWith("/partner/fssai-assistance") ||
+      pathname?.startsWith("/partner/bhojai"));
 
   useEffect(() => {
     if (isLoading) return;

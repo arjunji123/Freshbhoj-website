@@ -6,6 +6,7 @@ import {
   AlertTriangle,
   ArrowRight,
   BadgeCheck,
+  Bell,
   Camera,
   Eye,
   Heart,
@@ -19,11 +20,26 @@ import {
   UserCog,
   Users,
 } from "lucide-react";
-import { ApiError, kitchenDashboardApi, kitchenOrdersApi, kitchenProfileApi, kitchenStoriesApi } from "../../../lib/kitchenApi";
+import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import {
+  ApiError,
+  kitchenDashboardApi,
+  kitchenOrdersApi,
+  kitchenProfileApi,
+  kitchenStoriesApi,
+  notificationsApi,
+} from "../../../lib/kitchenApi";
 import type { DashboardSummary, KitchenOrderCard, KitchenProfile, KitchenStory } from "../../../lib/types";
 import { Badge, Button, Card, EmptyState, Spinner } from "../components/ui";
 
 const GRADIENT_BG = { background: "linear-gradient(169.21deg, #FF6B6B 9%, #BA2121 77%, #670000 100%)" };
+
+const KITCHEN_STATUS_LABEL: Record<KitchenProfile["status"], string> = {
+  PENDING: "Pending",
+  ACTIVE: "Active",
+  PAUSED: "Paused",
+  SUSPENDED: "Suspended",
+};
 
 function greeting() {
   const h = new Date().getHours();
@@ -37,6 +53,7 @@ export default function DashboardPage() {
   const [profile, setProfile] = useState<KitchenProfile | null>(null);
   const [liveOrders, setLiveOrders] = useState<KitchenOrderCard[]>([]);
   const [stories, setStories] = useState<KitchenStory[]>([]);
+  const [unreadCount, setUnreadCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [isToggling, setIsToggling] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
@@ -45,16 +62,18 @@ export default function DashboardPage() {
   const load = async (showSpinner = false) => {
     if (showSpinner) setIsLoading(true);
     try {
-      const [summaryRes, profileRes, ordersRes, storiesRes] = await Promise.all([
+      const [summaryRes, profileRes, ordersRes, storiesRes, notifRes] = await Promise.all([
         kitchenDashboardApi.summary(),
         kitchenProfileApi.get(),
         kitchenOrdersApi.incoming(),
         kitchenStoriesApi.list(),
+        notificationsApi.list({ limit: 1 }).catch(() => null),
       ]);
       setSummary(summaryRes);
       setProfile(profileRes);
       setLiveOrders(ordersRes);
       setStories(storiesRes);
+      if (notifRes) setUnreadCount(notifRes.unreadCount);
       setLoadError(null);
     } catch (err) {
       setLoadError(err instanceof ApiError ? err.message : "Something went wrong, please try again");
@@ -110,7 +129,7 @@ export default function DashboardPage() {
         <div className="relative flex flex-wrap items-center justify-between gap-4">
           <div>
             <p className="text-sm font-semibold text-white/80">{greeting()},</p>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
               <h1 className="text-2xl lg:text-3xl font-extrabold tracking-tight">{profile?.name ?? "your kitchen"}</h1>
               {profile?.isVerified ? <BadgeCheck size={22} className="text-white shrink-0" /> : null}
             </div>
@@ -119,26 +138,61 @@ export default function DashboardPage() {
             </p>
           </div>
 
-          <button
-            onClick={handleToggleAccepting}
-            disabled={isToggling}
-            className="flex items-center gap-3 bg-white/15 backdrop-blur-sm hover:bg-white/25 transition-colors rounded-2xl px-4 py-3 disabled:opacity-60"
-          >
-            <span className="text-sm font-bold">
-              {summary.isAcceptingOrders ? "Taking orders" : "Paused"}
-            </span>
-            <span
-              className={`relative w-11 h-6 rounded-full transition-colors ${summary.isAcceptingOrders ? "bg-white" : "bg-black/25"}`}
+          <div className="flex items-center gap-3">
+            <Link
+              href="/partner/notifications"
+              className="relative w-11 h-11 shrink-0 rounded-2xl bg-white/15 backdrop-blur-sm hover:bg-white/25 transition-colors flex items-center justify-center"
+              aria-label="Notifications"
             >
+              <Bell size={18} />
+              {unreadCount > 0 ? (
+                <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-white text-[#BA2121] text-[10px] font-extrabold flex items-center justify-center">
+                  {unreadCount > 9 ? "9+" : unreadCount}
+                </span>
+              ) : null}
+            </Link>
+
+            <button
+              onClick={handleToggleAccepting}
+              disabled={isToggling}
+              className="flex items-center gap-3 bg-white/15 backdrop-blur-sm hover:bg-white/25 transition-colors rounded-2xl px-4 py-3 disabled:opacity-60"
+            >
+              <span className="text-sm font-bold">
+                {summary.isAcceptingOrders ? "Taking orders" : "Paused"}
+              </span>
               <span
-                className={`absolute top-0.5 w-5 h-5 rounded-full transition-transform ${
-                  summary.isAcceptingOrders ? "translate-x-[22px] bg-[#BA2121]" : "translate-x-0.5 bg-white/90"
-                }`}
-              />
-            </span>
-          </button>
+                className={`relative w-11 h-6 rounded-full transition-colors ${summary.isAcceptingOrders ? "bg-white" : "bg-black/25"}`}
+              >
+                <span
+                  className={`absolute top-0.5 w-5 h-5 rounded-full transition-transform ${
+                    summary.isAcceptingOrders ? "translate-x-[22px] bg-[#BA2121]" : "translate-x-0.5 bg-white/90"
+                  }`}
+                />
+              </span>
+            </button>
+          </div>
         </div>
       </div>
+
+      {profile ? (
+        <div className="flex flex-wrap items-center gap-2 mb-6">
+          {summary.isAcceptingOrders && summary.accountStatus === "ACTIVE" ? (
+            <Badge tone="danger">
+              <span className="relative flex w-1.5 h-1.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-600 opacity-75" />
+                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-red-600" />
+              </span>
+              Live
+            </Badge>
+          ) : null}
+          <Badge tone={profile.status === "ACTIVE" ? "success" : "warning"}>
+            Status: {KITCHEN_STATUS_LABEL[profile.status]}
+          </Badge>
+          <Badge tone={profile.status === "ACTIVE" ? "success" : "neutral"}>
+            Visibility: {profile.status === "ACTIVE" ? "Public" : "Private"}
+          </Badge>
+        </div>
+      ) : null}
 
       {toggleError ? <p className="text-xs font-semibold text-red-600 mb-4">{toggleError}</p> : null}
 
@@ -171,6 +225,8 @@ export default function DashboardPage() {
         <QuickAction href="/partner/orders" icon={ClipboardList} label="View orders" />
         <QuickAction href="/partner/profile" icon={UserCog} label="Edit profile" />
       </div>
+
+      <RevenueTrendChart data={summary.weeklyRevenue} />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Live orders preview */}
@@ -272,6 +328,81 @@ export default function DashboardPage() {
           </Card>
         </div>
       </div>
+    </div>
+  );
+}
+
+function RevenueTrendChart({ data }: { data: DashboardSummary["weeklyRevenue"] }) {
+  const chartData = data.map((d) => {
+    const [y, m, day] = d.date.split("-").map(Number);
+    const dt = new Date(y, (m || 1) - 1, day || 1);
+    return {
+      label: dt.toLocaleDateString("en-IN", { weekday: "short" }),
+      shortDate: dt.toLocaleDateString("en-IN", { day: "numeric", month: "short" }),
+      revenue: d.revenue,
+    };
+  });
+  const hasRevenue = data.some((d) => d.revenue > 0);
+
+  return (
+    <Card className="!p-5 lg:!p-6 mb-6">
+      <div className="flex items-center justify-between mb-4">
+        <div>
+          <p className="text-xs font-bold text-slate-400 uppercase tracking-wide">Last 7 days</p>
+          <h3 className="text-base font-extrabold text-slate-900">Revenue trend</h3>
+        </div>
+        <div className="w-9 h-9 rounded-xl bg-[#BA2121]/10 text-[#BA2121] flex items-center justify-center">
+          <TrendingUp size={16} />
+        </div>
+      </div>
+      {!hasRevenue ? (
+        <div className="h-[180px] flex items-center justify-center text-xs text-slate-400 font-semibold">
+          No revenue yet this week
+        </div>
+      ) : (
+        <div className="h-[180px] -ml-3">
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={chartData} margin={{ top: 8, right: 12, bottom: 0, left: 0 }}>
+              <defs>
+                <linearGradient id="revenueLineStroke" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stopColor="#FF6B6B" />
+                  <stop offset="100%" stopColor="#BA2121" />
+                </linearGradient>
+              </defs>
+              <CartesianGrid vertical={false} stroke="#F1F5F9" />
+              <XAxis dataKey="label" axisLine={false} tickLine={false} tick={{ fontSize: 11, fontWeight: 700, fill: "#94A3B8" }} />
+              <YAxis hide />
+              <Tooltip cursor={{ stroke: "#BA2121", strokeWidth: 1, strokeDasharray: "3 3" }} content={<RevenueTooltip />} />
+              <Line
+                type="monotone"
+                dataKey="revenue"
+                stroke="url(#revenueLineStroke)"
+                strokeWidth={2.5}
+                strokeLinecap="round"
+                dot={{ r: 3, fill: "#BA2121", strokeWidth: 0 }}
+                activeDot={{ r: 5, fill: "#BA2121", stroke: "#fff", strokeWidth: 2 }}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+      )}
+    </Card>
+  );
+}
+
+function RevenueTooltip({
+  active,
+  payload,
+}: {
+  active?: boolean;
+  payload?: { payload: { shortDate: string; revenue: number } }[];
+}) {
+  if (!active || !payload?.length) return null;
+  const point = payload[0].payload;
+  return (
+    <div className="bg-white rounded-xl border border-slate-100 shadow-lg px-3 py-2">
+      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wide">{point.shortDate}</p>
+      <p className="text-sm font-extrabold text-slate-900">₹{point.revenue.toLocaleString("en-IN")}</p>
     </div>
   );
 }

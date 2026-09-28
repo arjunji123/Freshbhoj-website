@@ -3,21 +3,60 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, UtensilsCrossed, ClipboardList, Sparkles, Store, LogOut, Menu, X } from "lucide-react";
+import {
+  LayoutDashboard,
+  UtensilsCrossed,
+  ClipboardList,
+  Sparkles,
+  Store,
+  LogOut,
+  Menu,
+  X,
+  MessageCircle,
+  Bell,
+  Wallet,
+  Clock,
+  Megaphone,
+  Users,
+} from "lucide-react";
 import { useState } from "react";
 import { useKitchenAuth } from "../../../lib/KitchenAuthProvider";
 import { GRADIENT_BG } from "./ui";
 
 // `requiresActive` mirrors what `PartnerGuard` actually allows: a
 // pre-approval kitchen (status !== "ACTIVE") that reaches this shell only got
-// here via its Menu/Stories exception — Dashboard/Orders/Profile would bounce
-// it straight back to /partner/onboarding.
-const NAV_ITEMS = [
-  { href: "/partner/dashboard", label: "Dashboard", icon: LayoutDashboard, requiresActive: true },
-  { href: "/partner/orders", label: "Orders", icon: ClipboardList, requiresActive: true },
-  { href: "/partner/menu", label: "Menu", icon: UtensilsCrossed, requiresActive: false },
-  { href: "/partner/stories", label: "Stories", icon: Sparkles, requiresActive: false },
-  { href: "/partner/profile", label: "Kitchen Profile", icon: Store, requiresActive: true },
+// here via its Menu/Stories/BhojAI exception — Dashboard/Orders/Ads/Subscribers/
+// Profile would bounce it straight back to /partner/onboarding.
+const NAV_SECTIONS = [
+  {
+    title: "Overview",
+    items: [{ href: "/partner/dashboard", label: "Dashboard", icon: LayoutDashboard, requiresActive: true }],
+  },
+  {
+    title: "Operations",
+    items: [
+      { href: "/partner/orders", label: "Orders", icon: ClipboardList, requiresActive: true },
+      { href: "/partner/menu", label: "Menu", icon: UtensilsCrossed, requiresActive: false },
+      { href: "/partner/timings", label: "Timings", icon: Clock, requiresActive: true },
+    ],
+  },
+  {
+    title: "Grow",
+    items: [
+      { href: "/partner/stories", label: "Stories", icon: Sparkles, requiresActive: false },
+      { href: "/partner/ads", label: "Ads", icon: Megaphone, requiresActive: true },
+      { href: "/partner/subscriptions", label: "Subscribers", icon: Users, requiresActive: true },
+    ],
+  },
+  {
+    title: "Account",
+    items: [
+      { href: "/partner/bhojai", label: "BhojAI", icon: MessageCircle, requiresActive: false },
+      { href: "/partner/notifications", label: "Notifications", icon: Bell, requiresActive: true },
+      { href: "/partner/payouts", label: "Payouts", icon: Wallet, requiresActive: true },
+      { href: "/partner/profile", label: "Kitchen Profile", icon: Store, requiresActive: true },
+    ],
+  },
 ];
 
 export default function PartnerShell({ children }: { children: React.ReactNode }) {
@@ -27,40 +66,45 @@ export default function PartnerShell({ children }: { children: React.ReactNode }
   const isPreApproval = onboarding && onboarding.status !== "ACTIVE";
 
   const NavLinks = (
-    <nav className="flex flex-col gap-1.5">
-      {NAV_ITEMS.map(({ href, label, icon: Icon, requiresActive }) => {
-        const isLocked = Boolean(isPreApproval) && requiresActive;
-        const isActive = pathname === href || pathname?.startsWith(`${href}/`);
+    <nav className="flex flex-col gap-4">
+      {NAV_SECTIONS.map((section) => (
+        <div key={section.title} className="flex flex-col gap-1.5">
+          <p className="px-4 text-[11px] font-extrabold text-slate-300 uppercase tracking-wider">{section.title}</p>
+          {section.items.map(({ href, label, icon: Icon, requiresActive }) => {
+            const isLocked = Boolean(isPreApproval) && requiresActive;
+            const isActive = pathname === href || pathname?.startsWith(`${href}/`);
 
-        if (isLocked) {
-          return (
-            <div
-              key={href}
-              className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-slate-300 cursor-not-allowed select-none"
-              title="Available after approval"
-            >
-              <Icon size={18} strokeWidth={2.2} />
-              <span className="flex-1">{label}</span>
-              <span className="text-[10px] font-semibold normal-case">Locked</span>
-            </div>
-          );
-        }
+            if (isLocked) {
+              return (
+                <div
+                  key={href}
+                  className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-slate-300 cursor-not-allowed select-none"
+                  title="Available after approval"
+                >
+                  <Icon size={18} strokeWidth={2.2} />
+                  <span className="flex-1">{label}</span>
+                  <span className="text-[10px] font-semibold normal-case">Locked</span>
+                </div>
+              );
+            }
 
-        return (
-          <Link
-            key={href}
-            href={href}
-            onClick={() => setMobileOpen(false)}
-            className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold transition-colors ${
-              isActive ? "text-white" : "text-slate-500 hover:bg-slate-100 hover:text-slate-800"
-            }`}
-            style={isActive ? GRADIENT_BG : undefined}
-          >
-            <Icon size={18} strokeWidth={2.2} />
-            {label}
-          </Link>
-        );
-      })}
+            return (
+              <Link
+                key={href}
+                href={href}
+                onClick={() => setMobileOpen(false)}
+                className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold transition-colors ${
+                  isActive ? "text-white" : "text-slate-500 hover:bg-slate-100 hover:text-slate-800"
+                }`}
+                style={isActive ? GRADIENT_BG : undefined}
+              >
+                <Icon size={18} strokeWidth={2.2} />
+                {label}
+              </Link>
+            );
+          })}
+        </div>
+      ))}
     </nav>
   );
 
