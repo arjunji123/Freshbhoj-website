@@ -783,6 +783,47 @@ export interface SubscriptionListResponse {
   counts: SubscriptionCounts;
 }
 
+// ── Subscription Plans (kitchen-facing) ──────────────────────────────────────
+// Mirrors `freshbhoj backend/src/modules/kitchen/portal/subscription-plans/**`.
+// Reusable plan templates customers browse and subscribe to from the kitchen's
+// page — distinct from the bespoke, customer-requested Subscriptions above.
+
+export interface SubscriptionPlan {
+  id: string;
+  name: string;
+  billingCycle: SubscriptionBillingCycle;
+  deliveryDays: DayOfWeek[];
+  mealsPerDay: number;
+  priceRs: number;
+  originalPriceRs: number | null;
+  discountPercent: number;
+  dietOptions: FoodType[];
+  jainAvailable: boolean;
+  slotOptions: MealSlot[];
+  includesDescription: string;
+  isPopular: boolean;
+  isActive: boolean;
+  subscriberCount: number;
+  createdAt: string;
+}
+
+export interface CreateSubscriptionPlanInput {
+  name: string;
+  billingCycle: SubscriptionBillingCycle;
+  deliveryDays: DayOfWeek[];
+  mealsPerDay: number;
+  priceRs: number;
+  originalPriceRs?: number;
+  dietOptions: FoodType[];
+  jainAvailable?: boolean;
+  slotOptions: MealSlot[];
+  includesDescription: string;
+  isPopular?: boolean;
+}
+
+/** Same fields as create, all optional, plus `isActive` — the only way to hide a plan from customer browsing (no delete endpoint, by design). */
+export type UpdateSubscriptionPlanInput = Partial<CreateSubscriptionPlanInput> & { isActive?: boolean };
+
 // ── Public kitchen page ──────────────────────────────────────────────────────
 // Subset of `KitchenDetailDto` (`GET /kitchens/:idOrSlug`) used by the public,
 // unauthenticated `/kitchen/[slug]` preview page.

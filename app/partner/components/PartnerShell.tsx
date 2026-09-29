@@ -20,6 +20,7 @@ import {
   Users,
   Landmark,
   Crown,
+  Layers,
 } from "lucide-react";
 import { useState } from "react";
 import { useKitchenAuth } from "../../../lib/KitchenAuthProvider";
@@ -48,6 +49,7 @@ const NAV_SECTIONS = [
       { href: "/partner/stories", label: "Stories", icon: Sparkles, requiresActive: false },
       { href: "/partner/ads", label: "Ads", icon: Megaphone, requiresActive: true },
       { href: "/partner/subscriptions", label: "Subscribers", icon: Users, requiresActive: true },
+      { href: "/partner/plans", label: "Plans", icon: Layers, requiresActive: true },
     ],
   },
   {

@@ -35,10 +35,13 @@ import type {
   PremiumTier,
   PremiumTierCatalog,
   PublicKitchenDetail,
+  CreateSubscriptionPlanInput,
   SubscriptionDelivery,
   SubscriptionDetail,
   SubscriptionListResponse,
+  SubscriptionPlan,
   SubscriptionStatus,
+  UpdateSubscriptionPlanInput,
   SuggestionListResponse,
   SuggestionStatus,
   TransactionListResponse,
@@ -569,6 +572,16 @@ export const subscriptionsApi = {
       method: 'POST',
       body: reason ? { reason } : undefined,
     }),
+};
+
+// ── Subscription Plans (kitchen-facing) ─────────────────────────────────────
+
+export const subscriptionPlansApi = {
+  list: () => request<SubscriptionPlan[]>('/partner/subscription-plans'),
+  create: (input: CreateSubscriptionPlanInput) =>
+    request<SubscriptionPlan>('/partner/subscription-plans', { method: 'POST', body: input }),
+  update: (id: string, input: UpdateSubscriptionPlanInput) =>
+    request<SubscriptionPlan>(`/partner/subscription-plans/${id}`, { method: 'PATCH', body: input }),
 };
 
 // ── Catalog (public) ──────────────────────────────────────────────────────
