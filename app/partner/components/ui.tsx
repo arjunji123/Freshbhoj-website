@@ -139,6 +139,87 @@ export function Badge({
   );
 }
 
+/**
+ * Segmented-control filter tabs — a gray track with a floating white active
+ * pill. The single shared treatment for "a row of mutually-exclusive filter
+ * tabs", consolidated from what used to be three different visual styles
+ * (this one, plus solid chips and gradient chips) scattered across pages.
+ */
+export function TabBar<T extends string>({
+  tabs,
+  activeKey,
+  onChange,
+  className = "",
+}: {
+  tabs: { key: T; label: string; count?: number }[];
+  activeKey: T;
+  onChange: (key: T) => void;
+  className?: string;
+}) {
+  return (
+    <div className={`flex gap-2 bg-slate-100 p-1 rounded-2xl w-fit flex-wrap ${className}`}>
+      {tabs.map(({ key, label, count }) => (
+        <button
+          key={key}
+          onClick={() => onChange(key)}
+          className={`inline-flex items-center px-5 py-2 rounded-xl text-sm font-bold transition-colors ${
+            activeKey === key ? "bg-white text-[#BA2121] shadow-sm" : "text-slate-500"
+          }`}
+        >
+          {label}
+          {count ? (
+            <span className="ml-1.5 inline-flex items-center justify-center min-w-[18px] h-[18px] px-1 rounded-full text-[10px] font-extrabold bg-[#BA2121]/10 text-[#BA2121]">
+              {count}
+            </span>
+          ) : null}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+/**
+ * The on-brand toggle switch (brand-red knob on a white/black-25 track) —
+ * standardized from what used to be three different color schemes (this one,
+ * plus green/red "traffic light" variants) for the same on/off concept.
+ * `onLabel`/`offLabel` render inside the same clickable control, matching
+ * Dashboard's original structure; pass pill chrome (background, padding,
+ * rounding) via `className`.
+ */
+export function Toggle({
+  checked,
+  onChange,
+  onLabel,
+  offLabel,
+  disabled,
+  className = "",
+}: {
+  checked: boolean;
+  onChange?: () => void;
+  onLabel?: string;
+  offLabel?: string;
+  disabled?: boolean;
+  className?: string;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onChange}
+      disabled={disabled}
+      className={`flex items-center gap-3 transition-colors disabled:opacity-60 ${className}`}
+    >
+      {onLabel || offLabel ? <span className="text-sm font-bold">{checked ? onLabel : offLabel}</span> : null}
+      <span className={`relative w-11 h-6 rounded-full transition-colors ${checked ? "bg-white" : "bg-black/25"}`}>
+        <span
+          className={`absolute top-0.5 w-5 h-5 rounded-full transition-transform ${
+            checked ? "translate-x-[22px] bg-[#BA2121]" : "translate-x-0.5 bg-white/90"
+          }`}
+        />
+      </span>
+    </button>
+  );
+}
+
 export function OptionCard({
   icon,
   label,
@@ -284,15 +365,31 @@ export function BottomSheet({
   );
 }
 
-export function BackLink({ href, label }: { href: string; label: string }) {
-  return (
-    <Link
-      href={href}
-      className="inline-flex items-center gap-1.5 text-sm font-bold text-slate-500 hover:text-[#BA2121] transition-colors mb-4"
-    >
+/** Renders a `<Link>` when `href` is given, or a `<button>` when `onClick` is given instead. */
+export function BackLink(
+  props: { label?: string } & ({ href: string; onClick?: undefined } | { href?: undefined; onClick: () => void }),
+) {
+  const { label = "Back" } = props;
+  const className = "inline-flex items-center gap-1.5 text-sm font-bold text-slate-500 hover:text-[#BA2121] transition-colors mb-4";
+  const content = (
+    <>
       <ArrowLeft size={15} strokeWidth={2.4} />
       {label}
-    </Link>
+    </>
+  );
+
+  if (props.href) {
+    return (
+      <Link href={props.href} className={className}>
+        {content}
+      </Link>
+    );
+  }
+
+  return (
+    <button type="button" onClick={props.onClick} className={className}>
+      {content}
+    </button>
   );
 }
 

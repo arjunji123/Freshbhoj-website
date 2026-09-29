@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Flame, Pencil, Plus, Trash2 } from "lucide-react";
 import { ApiError, kitchenMenuApi } from "../../../lib/kitchenApi";
 import type { MealDetail } from "../../../lib/types";
-import { Badge, Button, Card, EmptyState, FoodTypeDot, PageHeader, Spinner } from "../components/ui";
+import { Badge, Button, Card, EmptyState, FoodTypeDot, PageHeader, Spinner, TabBar } from "../components/ui";
 
 const ALL_CATEGORY = "all";
 
@@ -85,16 +85,12 @@ export default function MenuPage() {
       {error ? <p className="text-xs font-semibold text-red-600 mb-4">{error}</p> : null}
 
       {meals.length > 0 && categories.length > 0 ? (
-        <div className="flex gap-2 mb-6 overflow-x-auto pb-1">
-          <CategoryTab active={activeCategory === ALL_CATEGORY} onClick={() => setActiveCategory(ALL_CATEGORY)}>
-            All
-          </CategoryTab>
-          {categories.map((category) => (
-            <CategoryTab key={category.id} active={activeCategory === category.id} onClick={() => setActiveCategory(category.id)}>
-              {category.name}
-            </CategoryTab>
-          ))}
-        </div>
+        <TabBar
+          className="mb-6"
+          tabs={[{ key: ALL_CATEGORY, label: "All" }, ...categories.map((c) => ({ key: c.id, label: c.name }))]}
+          activeKey={activeCategory}
+          onChange={setActiveCategory}
+        />
       ) : null}
 
       {isLoading ? (
@@ -170,19 +166,5 @@ export default function MenuPage() {
         </div>
       )}
     </div>
-  );
-}
-
-function CategoryTab({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }) {
-  return (
-    <button
-      onClick={onClick}
-      className={`shrink-0 px-4 py-2 rounded-xl text-xs font-bold transition-colors ${
-        active ? "text-white" : "bg-slate-100 text-slate-500 hover:bg-slate-200"
-      }`}
-      style={active ? { background: "linear-gradient(169.21deg, #FF6B6B 9%, #BA2121 77%, #670000 100%)" } : undefined}
-    >
-      {children}
-    </button>
   );
 }

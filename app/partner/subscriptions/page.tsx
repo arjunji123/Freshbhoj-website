@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Phone, Search, Users } from "lucide-react";
 import { ApiError, subscriptionsApi } from "../../../lib/kitchenApi";
 import type { DayOfWeek, Subscription, SubscriptionCounts, SubscriptionStatus } from "../../../lib/types";
-import { Badge, BottomSheet, Button, Card, ConfirmDialog, EmptyState, FoodTypeDot, PageHeader, Spinner, TextArea, TextInput } from "../components/ui";
+import { Badge, BottomSheet, Button, Card, ConfirmDialog, EmptyState, FoodTypeDot, PageHeader, Spinner, TabBar, TextArea, TextInput } from "../components/ui";
 
 type Tab = "ALL" | SubscriptionStatus;
 
@@ -126,27 +126,11 @@ export default function SubscriptionsPage() {
       <PageHeader title="Subscribers" subtitle="Manage subscription plans and daily deliveries" />
 
       <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
-        <div className="flex gap-2 bg-slate-100 p-1 rounded-2xl w-fit flex-wrap">
-          {TAB_META.map(({ key, label }) => {
-            const count = countFor(key);
-            return (
-              <button
-                key={key}
-                onClick={() => setTab(key)}
-                className={`inline-flex items-center px-4 py-2 rounded-xl text-sm font-bold transition-colors ${
-                  tab === key ? "bg-white text-[#BA2121] shadow-sm" : "text-slate-500"
-                }`}
-              >
-                {label}
-                {count ? (
-                  <span className="ml-1.5 inline-flex items-center justify-center min-w-[18px] h-[18px] px-1 rounded-full text-[10px] font-extrabold bg-[#BA2121]/10 text-[#BA2121]">
-                    {count}
-                  </span>
-                ) : null}
-              </button>
-            );
-          })}
-        </div>
+        <TabBar
+          tabs={TAB_META.map(({ key, label }) => ({ key, label, count: countFor(key) }))}
+          activeKey={tab}
+          onChange={setTab}
+        />
 
         <div className="relative w-full sm:w-64">
           <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />

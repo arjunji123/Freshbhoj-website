@@ -31,9 +31,7 @@ import {
   notificationsApi,
 } from "../../../lib/kitchenApi";
 import type { DashboardSummary, KitchenOrderCard, KitchenProfile, KitchenStory } from "../../../lib/types";
-import { Badge, Button, Card, EmptyState, Spinner } from "../components/ui";
-
-const GRADIENT_BG = { background: "linear-gradient(169.21deg, #FF6B6B 9%, #BA2121 77%, #670000 100%)" };
+import { Badge, Button, Card, EmptyState, GRADIENT_BG, Spinner, Toggle } from "../components/ui";
 
 const KITCHEN_STATUS_LABEL: Record<KitchenProfile["status"], string> = {
   PENDING: "Pending",
@@ -153,24 +151,14 @@ export default function DashboardPage() {
               ) : null}
             </Link>
 
-            <button
-              onClick={handleToggleAccepting}
+            <Toggle
+              checked={summary.isAcceptingOrders}
+              onChange={handleToggleAccepting}
+              onLabel="Taking orders"
+              offLabel="Paused"
               disabled={isToggling}
-              className="flex items-center gap-3 bg-white/15 backdrop-blur-sm hover:bg-white/25 transition-colors rounded-2xl px-4 py-3 disabled:opacity-60"
-            >
-              <span className="text-sm font-bold">
-                {summary.isAcceptingOrders ? "Taking orders" : "Paused"}
-              </span>
-              <span
-                className={`relative w-11 h-6 rounded-full transition-colors ${summary.isAcceptingOrders ? "bg-white" : "bg-black/25"}`}
-              >
-                <span
-                  className={`absolute top-0.5 w-5 h-5 rounded-full transition-transform ${
-                    summary.isAcceptingOrders ? "translate-x-[22px] bg-[#BA2121]" : "translate-x-0.5 bg-white/90"
-                  }`}
-                />
-              </span>
-            </button>
+              className="bg-white/15 backdrop-blur-sm hover:bg-white/25 rounded-2xl px-4 py-3"
+            />
           </div>
         </div>
       </div>

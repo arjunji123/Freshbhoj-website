@@ -18,7 +18,7 @@ import {
   Clock,
   Megaphone,
   Users,
-  PiggyBank,
+  Landmark,
   Crown,
 } from "lucide-react";
 import { useState } from "react";
@@ -55,8 +55,8 @@ const NAV_SECTIONS = [
     items: [
       { href: "/partner/bhojai", label: "BhojAI", icon: MessageCircle, requiresActive: false },
       { href: "/partner/notifications", label: "Notifications", icon: Bell, requiresActive: true },
-      { href: "/partner/payouts", label: "Payouts", icon: Wallet, requiresActive: true },
-      { href: "/partner/wallet", label: "Wallet", icon: PiggyBank, requiresActive: true },
+      { href: "/partner/payouts", label: "Payouts", icon: Landmark, requiresActive: true },
+      { href: "/partner/wallet", label: "Wallet", icon: Wallet, requiresActive: true },
       { href: "/partner/premium", label: "Premium", icon: Crown, requiresActive: true },
       { href: "/partner/profile", label: "Kitchen Profile", icon: Store, requiresActive: true },
     ],

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Bell, Check, ClipboardList, Megaphone, RefreshCcw, Sparkles, Wallet } from "lucide-react";
 import { ApiError, kitchenOrdersApi, notificationsApi } from "../../../lib/kitchenApi";
 import type { KitchenNotification, NotificationCategory } from "../../../lib/types";
-import { Badge, Button, Card, EmptyState, PageHeader, Spinner } from "../components/ui";
+import { Badge, Button, Card, EmptyState, PageHeader, Spinner, TabBar } from "../components/ui";
 
 const CATEGORY_TABS: { key?: NotificationCategory; label: string }[] = [
   { key: undefined, label: "All" },
@@ -135,19 +135,12 @@ export default function NotificationsPage() {
         }
       />
 
-      <div className="flex items-center gap-2 mb-6 overflow-x-auto pb-1">
-        {CATEGORY_TABS.map((tab) => (
-          <button
-            key={tab.label}
-            onClick={() => setCategory(tab.key)}
-            className={`shrink-0 px-4 py-2 rounded-full text-xs font-bold transition-colors ${
-              category === tab.key ? "bg-[#BA2121] text-white" : "bg-slate-100 text-slate-500 hover:bg-slate-200"
-            }`}
-          >
-            {tab.label}
-          </button>
-        ))}
-      </div>
+      <TabBar<NotificationCategory | "ALL">
+        className="mb-6"
+        tabs={CATEGORY_TABS.map((tab) => ({ key: tab.key ?? "ALL", label: tab.label }))}
+        activeKey={category ?? "ALL"}
+        onChange={(key) => setCategory(key === "ALL" ? undefined : key)}
+      />
 
       {error ? <p className="text-xs font-semibold text-red-600 mb-4">{error}</p> : null}
 

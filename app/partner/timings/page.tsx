@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { AlertTriangle, CalendarOff, Plus, Trash2 } from "lucide-react";
 import { ApiError, kitchenProfileApi, operatingHoursApi } from "../../../lib/kitchenApi";
 import type { DayOfWeek, HolidayOverride, OperatingHoursDay } from "../../../lib/types";
-import { Badge, Button, Card, Field, PageHeader, Spinner, TextInput } from "../components/ui";
+import { Badge, Button, Card, Field, PageHeader, Spinner, TextInput, Toggle } from "../components/ui";
 
 const DAY_ORDER: DayOfWeek[] = ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"];
 const DAY_LABEL: Record<DayOfWeek, string> = {
@@ -87,20 +87,14 @@ export default function TimingsPage() {
               <p className="text-xs text-slate-500 max-w-md">Stop all incoming orders immediately for today — your regular hours resume automatically tomorrow.</p>
             </div>
           </div>
-          <button
-            onClick={handleToggleAccepting}
+          <Toggle
+            checked={isAcceptingOrders}
+            onChange={handleToggleAccepting}
+            onLabel="Taking orders"
+            offLabel="Closed"
             disabled={isToggling}
-            className="flex items-center gap-3 bg-white rounded-2xl px-4 py-3 disabled:opacity-60 shrink-0 border border-red-100"
-          >
-            <span className="text-sm font-bold text-slate-700">{isAcceptingOrders ? "Taking orders" : "Closed"}</span>
-            <span className={`relative w-11 h-6 rounded-full transition-colors ${isAcceptingOrders ? "bg-emerald-500" : "bg-red-500"}`}>
-              <span
-                className={`absolute top-0.5 w-5 h-5 rounded-full bg-white transition-transform ${
-                  isAcceptingOrders ? "translate-x-[22px]" : "translate-x-0.5"
-                }`}
-              />
-            </span>
-          </button>
+            className="bg-white rounded-2xl px-4 py-3 shrink-0 border border-red-100 text-slate-700"
+          />
         </div>
       </Card>
 
@@ -176,19 +170,13 @@ function DayRow({
     <Card className="!p-4 lg:!p-5">
       <div className="flex flex-wrap items-center justify-between gap-4 mb-1">
         <p className="text-sm font-extrabold text-slate-900 w-24 shrink-0">{DAY_LABEL[day]}</p>
-        <label className="flex items-center gap-2 cursor-pointer select-none ml-auto">
-          <span className="text-xs font-bold text-slate-500">{isClosed ? "Closed" : "Open"}</span>
-          <span
-            onClick={() => setIsClosed((v) => !v)}
-            className={`relative w-10 h-[22px] rounded-full transition-colors cursor-pointer ${isClosed ? "bg-slate-300" : "bg-emerald-500"}`}
-          >
-            <span
-              className={`absolute top-0.5 w-[18px] h-[18px] rounded-full bg-white transition-transform ${
-                isClosed ? "translate-x-0.5" : "translate-x-[19px]"
-              }`}
-            />
-          </span>
-        </label>
+        <Toggle
+          checked={!isClosed}
+          onChange={() => setIsClosed((v) => !v)}
+          onLabel="Open"
+          offLabel="Closed"
+          className="ml-auto text-slate-500"
+        />
       </div>
 
       {!isClosed ? (

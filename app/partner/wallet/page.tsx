@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { ArrowDownLeft, ArrowUpRight, Calendar, Check, IndianRupee, Plus, TrendingUp, Wallet } from "lucide-react";
 import { ApiError, walletApi } from "../../../lib/kitchenApi";
 import type { WalletSummary, WalletTopupResult, WalletTransaction } from "../../../lib/types";
-import { Badge, BottomSheet, Button, Card, EmptyState, Field, PageHeader, Spinner, TextInput } from "../components/ui";
+import { Badge, BottomSheet, Button, Card, EmptyState, Field, GRADIENT_BG, PageHeader, Spinner, TextInput } from "../components/ui";
 
 const REASON_LABEL: Record<WalletTransaction["reason"], string> = {
   TOPUP: "Wallet top-up",
@@ -95,7 +95,7 @@ export default function WalletPage() {
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <Card className="!p-5">
-          <div className="w-9 h-9 rounded-xl text-white flex items-center justify-center mb-3" style={{ background: "linear-gradient(169.21deg, #FF6B6B 9%, #BA2121 77%, #670000 100%)" }}>
+          <div className="w-9 h-9 rounded-xl text-white flex items-center justify-center mb-3" style={GRADIENT_BG}>
             <Wallet size={16} />
           </div>
           <p className="text-2xl font-extrabold text-slate-900">₹{summary.balanceRs.toLocaleString("en-IN")}</p>

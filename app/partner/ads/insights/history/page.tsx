@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Search } from "lucide-react";
 import { ApiError, suggestionsApi } from "../../../../../lib/kitchenApi";
 import type { CampaignSuggestion, SuggestionStatus } from "../../../../../lib/types";
-import { BackLink, Button, Card, EmptyState, PageHeader, Spinner, TextInput } from "../../../components/ui";
+import { BackLink, Button, Card, EmptyState, PageHeader, Spinner, TabBar, TextInput } from "../../../components/ui";
 import { SuggestionCard } from "../SuggestionCard";
 
 type HistoryTab = Extract<SuggestionStatus, "APPLIED" | "DISMISSED">;
@@ -65,19 +65,7 @@ export default function SuggestionHistoryPage() {
       <PageHeader title="Suggestion History" subtitle="Suggestions you've applied or dismissed" />
 
       <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
-        <div className="flex gap-2 bg-slate-100 p-1 rounded-2xl w-fit">
-          {TAB_META.map(({ key, label }) => (
-            <button
-              key={key}
-              onClick={() => setTab(key)}
-              className={`inline-flex items-center px-5 py-2 rounded-xl text-sm font-bold transition-colors ${
-                tab === key ? "bg-white text-[#BA2121] shadow-sm" : "text-slate-500"
-              }`}
-            >
-              {label}
-            </button>
-          ))}
-        </div>
+        <TabBar tabs={TAB_META} activeKey={tab} onChange={setTab} />
 
         <div className="relative w-full sm:w-64">
           <Search size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />

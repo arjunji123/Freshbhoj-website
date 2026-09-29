@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Calendar, Clock, MessageSquare, Phone, StickyNote } from "lucide-react";
 import { ApiError, kitchenOrdersApi } from "../../../lib/kitchenApi";
 import type { KitchenOrderCard, OrderStatus } from "../../../lib/types";
-import { Badge, Button, Card, ConfirmDialog, EmptyState, PageHeader, Spinner, TextArea } from "../components/ui";
+import { Badge, Button, Card, ConfirmDialog, EmptyState, GRADIENT_BG, PageHeader, Spinner, TabBar, TextArea } from "../components/ui";
 
 const POLL_MS = 15_000;
 
@@ -134,14 +134,16 @@ export default function OrdersPage() {
         subtitle={tab === "COMPLETED" ? "Past orders, any date range" : "Live orders, refreshed automatically"}
       />
 
-      <div className="flex gap-2 mb-6 bg-slate-100 p-1 rounded-2xl w-fit flex-wrap">
-        {TAB_META.map(({ key, label }) => (
-          <TabButton key={key} active={tab === key} onClick={() => setTab(key)}>
-            {label}
-            {key !== "COMPLETED" ? <CountPill count={buckets[key].length} /> : null}
-          </TabButton>
-        ))}
-      </div>
+      <TabBar
+        className="mb-6"
+        tabs={TAB_META.map(({ key, label }) => ({
+          key,
+          label,
+          count: key !== "COMPLETED" ? buckets[key].length : undefined,
+        }))}
+        activeKey={tab}
+        onChange={setTab}
+      />
 
       {tab === "COMPLETED" ? (
         <HistoryView />
@@ -180,28 +182,6 @@ export default function OrdersPage() {
         onConfirm={confirmReject}
       />
     </div>
-  );
-}
-
-function TabButton({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }) {
-  return (
-    <button
-      onClick={onClick}
-      className={`inline-flex items-center px-5 py-2 rounded-xl text-sm font-bold transition-colors ${
-        active ? "bg-white text-[#BA2121] shadow-sm" : "text-slate-500"
-      }`}
-    >
-      {children}
-    </button>
-  );
-}
-
-function CountPill({ count }: { count: number }) {
-  if (count === 0) return null;
-  return (
-    <span className="ml-1.5 inline-flex items-center justify-center min-w-[18px] h-[18px] px-1 rounded-full text-[10px] font-extrabold bg-[#BA2121]/10 text-[#BA2121]">
-      {count}
-    </span>
   );
 }
 
@@ -482,7 +462,7 @@ function HistoryView() {
               className={`px-4 py-2 rounded-xl text-xs font-bold capitalize transition-colors ${
                 period === p ? "text-white" : "bg-slate-100 text-slate-500 hover:bg-slate-200"
               }`}
-              style={period === p ? { background: "linear-gradient(169.21deg, #FF6B6B 9%, #BA2121 77%, #670000 100%)" } : undefined}
+              style={period === p ? GRADIENT_BG : undefined}
             >
               {p === "today" ? "Today" : p === "month" ? "This month" : p === "year" ? "This year" : "Custom range"}
             </button>

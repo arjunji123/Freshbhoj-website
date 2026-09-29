@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
-  ArrowLeft,
   BadgeCheck,
   Camera,
   CheckCircle2,
@@ -25,7 +24,7 @@ import type {
   FssaiAssistanceStatus,
   FssaiAssistanceStatusResponse,
 } from "../../../lib/types";
-import { Badge, Button, Card, EmptyState, Field, OptionCard, PageHeader, Spinner, TextInput } from "../components/ui";
+import { BackLink, Badge, Button, Card, EmptyState, Field, OptionCard, PageHeader, Spinner, TextInput } from "../components/ui";
 
 const POLL_MS = 30_000;
 
@@ -160,18 +159,6 @@ export default function FssaiAssistancePage() {
 
 // ── Shared bits ──────────────────────────────────────────────────────────────
 
-function StepBackButton({ onClick, label = "Back" }: { onClick: () => void; label?: string }) {
-  return (
-    <button
-      onClick={onClick}
-      className="inline-flex items-center gap-1.5 text-sm font-bold text-slate-500 hover:text-[#BA2121] transition-colors mb-4"
-    >
-      <ArrowLeft size={15} strokeWidth={2.4} />
-      {label}
-    </button>
-  );
-}
-
 function PriceRow({ label, value, bold }: { label: string; value: number; bold?: boolean }) {
   return (
     <div className="flex items-center justify-between">
@@ -254,7 +241,7 @@ function ChoiceScreen({
 function EducationScreen({ onBack, onNext }: { onBack: () => void; onNext: () => void }) {
   return (
     <div className="max-w-xl mx-auto">
-      <StepBackButton onClick={onBack} />
+      <BackLink onClick={onBack} />
       <Card>
         <div className="w-12 h-12 rounded-2xl bg-[#BA2121]/10 text-[#BA2121] flex items-center justify-center mb-4">
           <ShieldCheck size={22} />
@@ -315,7 +302,7 @@ function PricingScreen({ onBack, onStart }: { onBack: () => void; onStart: () =>
 
   return (
     <div className="max-w-xl mx-auto">
-      <StepBackButton onClick={onBack} />
+      <BackLink onClick={onBack} />
       <Card>
         <h2 className="text-lg font-extrabold text-slate-900 mb-1">Pricing</h2>
         <p className="text-sm text-slate-500 mb-6">A one-time fee that covers your full government registration.</p>
@@ -358,7 +345,7 @@ function AlreadyHaveScreen({ onBack, onDone, homeHref }: { onBack: () => void; o
 
   return (
     <div className="max-w-xl mx-auto">
-      <StepBackButton onClick={onBack} />
+      <BackLink onClick={onBack} />
       <Card>
         {done ? (
           <div className="text-center py-4">

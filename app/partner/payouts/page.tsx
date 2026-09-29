@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { ArrowDownLeft, ArrowUpRight, Banknote, CalendarClock, IndianRupee, Wallet } from "lucide-react";
 import { ApiError, payoutsApi } from "../../../lib/kitchenApi";
 import type { PayoutStatus, PayoutSummary, Transaction } from "../../../lib/types";
-import { Badge, Button, Card, EmptyState, PageHeader, Spinner } from "../components/ui";
+import { Badge, Button, Card, EmptyState, GRADIENT_BG, PageHeader, Spinner } from "../components/ui";
 
 const STATUS_TONE: Record<PayoutStatus, "neutral" | "success" | "warning" | "danger"> = {
   REQUESTED: "warning",
@@ -109,7 +109,7 @@ export default function PayoutsPage() {
           <p className="text-xs font-semibold text-slate-400 mt-0.5">Total earnings</p>
         </Card>
         <Card className="!p-5">
-          <div className="w-9 h-9 rounded-xl text-white flex items-center justify-center mb-3" style={{ background: "linear-gradient(169.21deg, #FF6B6B 9%, #BA2121 77%, #670000 100%)" }}>
+          <div className="w-9 h-9 rounded-xl text-white flex items-center justify-center mb-3" style={GRADIENT_BG}>
             <Wallet size={16} />
           </div>
           <p className="text-2xl font-extrabold text-slate-900">₹{summary.availableForPayout.toLocaleString("en-IN")}</p>

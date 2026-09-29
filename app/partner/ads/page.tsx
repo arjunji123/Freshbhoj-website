@@ -21,7 +21,7 @@ import {
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { adsApi, ApiError, kitchenReelsApi, walletApi } from "../../../lib/kitchenApi";
 import type { Campaign, CampaignDailyStat, CampaignStatus, KitchenReel, WalletSummary } from "../../../lib/types";
-import { Badge, BottomSheet, Button, Card, EmptyState, Field, PageHeader, RangeSlider, Spinner } from "../components/ui";
+import { Badge, BottomSheet, Button, Card, EmptyState, Field, PageHeader, RangeSlider, Spinner, TabBar } from "../components/ui";
 
 type Tab = "ALL" | CampaignStatus;
 
@@ -165,24 +165,11 @@ export default function AdsPage() {
       />
 
       <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
-        <div className="flex gap-2 bg-slate-100 p-1 rounded-2xl w-fit flex-wrap">
-          {TAB_META.map(({ key, label }) => (
-            <button
-              key={key}
-              onClick={() => setTab(key)}
-              className={`inline-flex items-center px-5 py-2 rounded-xl text-sm font-bold transition-colors ${
-                tab === key ? "bg-white text-[#BA2121] shadow-sm" : "text-slate-500"
-              }`}
-            >
-              {label}
-              {counts[key] > 0 ? (
-                <span className="ml-1.5 inline-flex items-center justify-center min-w-[18px] h-[18px] px-1 rounded-full text-[10px] font-extrabold bg-[#BA2121]/10 text-[#BA2121]">
-                  {counts[key]}
-                </span>
-              ) : null}
-            </button>
-          ))}
-        </div>
+        <TabBar
+          tabs={TAB_META.map(({ key, label }) => ({ key, label, count: counts[key] }))}
+          activeKey={tab}
+          onChange={setTab}
+        />
 
         {selected.size > 0 ? (
           <Button variant="outline" onClick={handleCompare} disabled={selected.size < 2} loading={isComparing}>
