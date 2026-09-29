@@ -565,6 +565,8 @@ export interface Campaign {
   reel: { thumbnailUrl: string | null; videoUrl: string; caption: string | null } | null;
   dailyBudgetRs: number;
   endDate: string | null;
+  /** Round 5+ campaigns always set this (wallet-funded, mandatory at creation); `null` only on a pre-Round-5 legacy campaign. */
+  durationDays: number | null;
   status: CampaignStatus;
   spendRs: number;
   impressions: number;
@@ -582,6 +584,124 @@ export interface Campaign {
   createdAt: string;
   pausedAt: string | null;
   endedAt: string | null;
+}
+
+// ── AI Optimization Suggestions ───────────────────────────────────────────
+// Mirrors `freshbhoj backend/src/modules/kitchen/portal/ads/suggestions/**`.
+
+export type SuggestionType = 'BUDGET_INCREASE' | 'DELIVERY_RADIUS' | 'TARGET_CUISINE' | 'CREATIVE_REFRESH';
+export type SuggestionStatus = 'NEW' | 'APPLIED' | 'DISMISSED';
+export type SuggestionEffort = 'LOW' | 'MEDIUM' | 'HIGH';
+
+export interface SuggestionImpact {
+  reachDeltaPct: number | null;
+  ordersDeltaPct: number | null;
+  roiDeltaPct: number | null;
+  expectedOrders: number | null;
+  suggestedDailyBudgetRs: number | null;
+  suggestedRadiusKm: number | null;
+  costRs: number;
+  effort: SuggestionEffort;
+}
+
+export interface SuggestionAppliedChange {
+  field: string;
+  before: number;
+  after: number;
+}
+
+export interface CampaignSuggestion {
+  id: string;
+  type: SuggestionType;
+  title: string;
+  description: string;
+  /** null for a kitchen-wide suggestion (DELIVERY_RADIUS / TARGET_CUISINE). */
+  campaignId: string | null;
+  impact: SuggestionImpact;
+  reasoning: string;
+  status: SuggestionStatus;
+  appliedChanges: SuggestionAppliedChange | null;
+  /** YYYY-MM-DD, IST calendar date of the generation batch this belongs to. */
+  batchDate: string;
+  appliedAt: string | null;
+  dismissedAt: string | null;
+  createdAt: string;
+}
+
+export interface SuggestionListResponse {
+  items: CampaignSuggestion[];
+  meta: PageMeta;
+}
+
+// ── Wallet ─────────────────────────────────────────────────────────────────
+// Mirrors `freshbhoj backend/src/modules/kitchen/portal/wallet/**`.
+
+export interface WalletSummary {
+  balanceRs: number;
+  totalCreditsRs: number;
+  thisMonthSpentRs: number;
+  /** The kitchen's premium-plan renewal date, if it has an active auto-renewing plan. */
+  nextBillingAt: string | null;
+}
+
+export type WalletTransactionType = 'CREDIT' | 'DEBIT';
+export type WalletTransactionReason = 'TOPUP' | 'AD_BOOST' | 'PREMIUM_PLAN';
+
+export interface WalletTransaction {
+  id: string;
+  type: WalletTransactionType;
+  reason: WalletTransactionReason;
+  amountRs: number;
+  description: string;
+  referenceId: string | null;
+  createdAt: string;
+}
+
+export interface WalletTransactionListResponse {
+  items: WalletTransaction[];
+  meta: PageMeta;
+}
+
+export interface WalletTopupResult {
+  wallet: WalletSummary;
+  transaction: WalletTransaction;
+}
+
+// ── Kitchen Premium Plans ─────────────────────────────────────────────────
+// Mirrors `freshbhoj backend/src/modules/kitchen/portal/premium/**`.
+
+export type PremiumTier = 'BASIC' | 'PRO' | 'ELITE';
+export type PremiumSubscriptionStatus = 'ACTIVE' | 'EXPIRED' | 'NONE';
+
+export interface PremiumFeatures {
+  /** null = unlimited; 2 for BASIC. */
+  reelsPerMonth: number | null;
+  advancedAnalytics: boolean;
+  priorityBoostMultiplier: number;
+  aiVideoEditing: boolean;
+  sponsoredProfile: boolean;
+  aiMenuInsights: boolean;
+  prioritySupport: boolean;
+  verifiedBadge: boolean;
+  dedicatedGrowthManager: boolean;
+}
+
+export interface PremiumTierCatalog {
+  tier: PremiumTier;
+  /** Whole rupees per 28-day period — placeholder prices, not final business numbers. */
+  priceRs: number;
+  /** true only for PRO. */
+  isMostPopular: boolean;
+  features: PremiumFeatures;
+}
+
+export interface PremiumSubscription {
+  tier: PremiumTier | null;
+  status: PremiumSubscriptionStatus;
+  priceRs: number | null;
+  currentPeriodEnd: string | null;
+  autoRenew: boolean;
+  features: PremiumFeatures;
 }
 
 // ── Subscriptions (kitchen-facing) ───────────────────────────────────────────

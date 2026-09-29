@@ -316,6 +316,45 @@ export function FoodTypeDot({ foodType, className = "" }: { foodType: "VEG" | "E
   );
 }
 
+/** A labeled `<input type="range">` with min/max captions below it — promoted from the one-off slider in onboarding's LocationForm. */
+export function RangeSlider({
+  label,
+  value,
+  min,
+  max,
+  step = 1,
+  onChange,
+  minLabel,
+  maxLabel,
+}: {
+  label: string;
+  value: number;
+  min: number;
+  max: number;
+  step?: number;
+  onChange: (value: number) => void;
+  minLabel?: string;
+  maxLabel?: string;
+}) {
+  return (
+    <Field label={label}>
+      <input
+        type="range"
+        min={min}
+        max={max}
+        step={step}
+        value={value}
+        onChange={(e) => onChange(Number(e.target.value))}
+        className="w-full accent-[#BA2121]"
+      />
+      <div className="flex justify-between text-[10px] font-semibold text-slate-400 mt-1">
+        <span>{minLabel ?? min}</span>
+        <span>{maxLabel ?? max}</span>
+      </div>
+    </Field>
+  );
+}
+
 export function PageHeader({ title, subtitle, action }: { title: string; subtitle?: string; action?: ReactNode }) {
   return (
     <div className="flex items-start justify-between gap-4 mb-8">

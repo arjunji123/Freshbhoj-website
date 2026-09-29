@@ -197,7 +197,7 @@ export default function EmpoweringKitchen() {
         >
           <div className="flex flex-col sm:flex-row items-center gap-4">
             <Link
-              href="/pre-register?type=kitchen"
+              href="/partner/login"
               className="group relative inline-flex items-center justify-center gap-4 px-12 py-5 bg-hero-gradient text-white font-semibold text-lg lg:text-xl rounded-3xl shadow-[0_15px_30px_-5px_rgba(186,33,33,0.3)] transition-all hover:scale-105"
             >
               <span>Register Your Kitchen</span>

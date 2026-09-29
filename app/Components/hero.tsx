@@ -253,7 +253,7 @@ const Hero = () => {
               Pre-Register Now →
             </Link>
             <Link
-              href="/pre-register?type=kitchen"
+              href="/partner/login"
               className="flex items-center justify-center bg-hero-gradient text-white font-bold px-10 py-4 rounded-full transition-all duration-300 whitespace-nowrap text-lg shadow-lg hover:scale-105 active:scale-95"
             >
               Register Your Kitchen

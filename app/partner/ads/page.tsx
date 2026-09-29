@@ -2,7 +2,9 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
+  AlertTriangle,
   ArrowRight,
   BarChart3,
   Check,
@@ -11,14 +13,15 @@ import {
   Pause,
   Play,
   Plus,
+  Sparkles,
   Square,
   Target,
   Video,
 } from "lucide-react";
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import { adsApi, ApiError, kitchenReelsApi } from "../../../lib/kitchenApi";
-import type { Campaign, CampaignDailyStat, CampaignStatus, KitchenReel } from "../../../lib/types";
-import { Badge, BottomSheet, Button, Card, EmptyState, Field, PageHeader, Spinner, TextInput } from "../components/ui";
+import { adsApi, ApiError, kitchenReelsApi, walletApi } from "../../../lib/kitchenApi";
+import type { Campaign, CampaignDailyStat, CampaignStatus, KitchenReel, WalletSummary } from "../../../lib/types";
+import { Badge, BottomSheet, Button, Card, EmptyState, Field, PageHeader, RangeSlider, Spinner } from "../components/ui";
 
 type Tab = "ALL" | CampaignStatus;
 
@@ -35,11 +38,8 @@ const STATUS_TONE: Record<CampaignStatus, "success" | "warning" | "neutral"> = {
   ENDED: "neutral",
 };
 
-function todayStr(): string {
-  return new Date().toISOString().slice(0, 10);
-}
-
 export default function AdsPage() {
+  const router = useRouter();
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
   const [reels, setReels] = useState<KitchenReel[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -153,9 +153,14 @@ export default function AdsPage() {
         title="Ads"
         subtitle="Promote your reels to reach more customers nearby"
         action={
-          <Button onClick={() => setShowCreate(true)}>
-            <Plus size={15} /> New campaign
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button variant="outline" onClick={() => router.push("/partner/ads/insights")}>
+              <Sparkles size={15} /> AI Insights
+            </Button>
+            <Button onClick={() => setShowCreate(true)}>
+              <Plus size={15} /> New campaign
+            </Button>
+          </div>
         }
       />
 
@@ -450,6 +455,12 @@ function DailyStatsChart({ dailyStats, height = 160 }: { dailyStats: CampaignDai
   );
 }
 
+const MIN_DAILY_BUDGET = 50;
+const MAX_DAILY_BUDGET = 2000;
+const BUDGET_STEP = 50;
+const MIN_DURATION_DAYS = 1;
+const MAX_DURATION_DAYS = 30;
+
 function CreateCampaignSheet({
   isOpen,
   onClose,
@@ -461,51 +472,57 @@ function CreateCampaignSheet({
   reels: KitchenReel[];
   onCreated: (campaign: Campaign) => void;
 }) {
+  const router = useRouter();
   const [reelId, setReelId] = useState<string | null>(null);
-  const [budgetStr, setBudgetStr] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const [dailyBudgetRs, setDailyBudgetRs] = useState(200);
+  const [durationDays, setDurationDays] = useState(7);
   const [estimate, setEstimate] = useState<{ min: number; max: number } | null>(null);
   const [isEstimating, setIsEstimating] = useState(false);
+  const [wallet, setWallet] = useState<WalletSummary | null>(null);
+  const [isLoadingWallet, setIsLoadingWallet] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const budget = Number(budgetStr);
-  const isValidBudget = budgetStr.trim() !== "" && Number.isFinite(budget) && budget > 0;
+  const totalCostRs = dailyBudgetRs * durationDays;
+  const hasSufficientBalance = wallet ? wallet.balanceRs >= totalCostRs : true;
 
-  // Reset the form each time the sheet is (re)opened.
+  // Reset the form each time the sheet is (re)opened, and fetch the current wallet balance.
   useEffect(() => {
     if (isOpen) {
       setReelId(null);
-      setBudgetStr("");
-      setEndDate("");
+      setDailyBudgetRs(200);
+      setDurationDays(7);
       setEstimate(null);
       setError(null);
+      setIsLoadingWallet(true);
+      walletApi
+        .summary()
+        .then(setWallet)
+        .catch(() => setWallet(null))
+        .finally(() => setIsLoadingWallet(false));
     }
   }, [isOpen]);
 
-  // Live reach estimate as the partner types a budget — debounced so it doesn't fire on every keystroke.
+  // Live reach estimate as the partner drags the budget slider — debounced.
   useEffect(() => {
-    if (!isValidBudget) {
-      setEstimate(null);
-      return;
-    }
+    if (!isOpen) return;
     setIsEstimating(true);
     const timer = setTimeout(() => {
       adsApi
-        .estimateReach(budget)
+        .estimateReach(dailyBudgetRs)
         .then(setEstimate)
         .catch(() => setEstimate(null))
         .finally(() => setIsEstimating(false));
     }, 400);
     return () => clearTimeout(timer);
-  }, [budget, isValidBudget]);
+  }, [dailyBudgetRs, isOpen]);
 
   const handleCreate = async () => {
-    if (!reelId || !isValidBudget) return;
+    if (!reelId) return;
     setIsCreating(true);
     setError(null);
     try {
-      const campaign = await adsApi.create({ reelId, dailyBudgetRs: budget, endDate: endDate || undefined });
+      const campaign = await adsApi.create({ reelId, dailyBudgetRs, durationDays });
       onCreated(campaign);
     } catch (err) {
       setError(err instanceof ApiError ? err.message : "Could not create this campaign, please try again");
@@ -552,16 +569,16 @@ function CreateCampaignSheet({
           )}
         </Field>
 
-        <Field label="Daily budget (₹)">
-          <TextInput
-            type="number"
-            min={1}
-            inputMode="numeric"
-            placeholder="e.g. 200"
-            value={budgetStr}
-            onChange={(e) => setBudgetStr(e.target.value)}
-          />
-        </Field>
+        <RangeSlider
+          label={`Daily budget — ₹${dailyBudgetRs.toLocaleString("en-IN")}`}
+          min={MIN_DAILY_BUDGET}
+          max={MAX_DAILY_BUDGET}
+          step={BUDGET_STEP}
+          value={dailyBudgetRs}
+          onChange={setDailyBudgetRs}
+          minLabel={`₹${MIN_DAILY_BUDGET}`}
+          maxLabel={`₹${MAX_DAILY_BUDGET.toLocaleString("en-IN")}`}
+        />
         {isEstimating ? (
           <p className="text-xs text-slate-400 -mt-3">Estimating reach…</p>
         ) : estimate ? (
@@ -570,15 +587,58 @@ function CreateCampaignSheet({
           </p>
         ) : null}
 
-        <Field label="End date (optional)">
-          <TextInput type="date" value={endDate} min={todayStr()} onChange={(e) => setEndDate(e.target.value)} />
-        </Field>
-        <p className="text-[11px] text-slate-400 -mt-3">Leave blank to run until you pause or stop it.</p>
+        <RangeSlider
+          label={`Duration — ${durationDays} day${durationDays === 1 ? "" : "s"}`}
+          min={MIN_DURATION_DAYS}
+          max={MAX_DURATION_DAYS}
+          step={1}
+          value={durationDays}
+          onChange={setDurationDays}
+          minLabel="1 day"
+          maxLabel="30 days"
+        />
+
+        <div className="rounded-2xl bg-slate-50 p-4 flex flex-col gap-2">
+          <div className="flex items-center justify-between text-xs">
+            <span className="font-semibold text-slate-500">Wallet balance</span>
+            <span className="font-bold text-slate-800">
+              {isLoadingWallet ? "…" : wallet ? `₹${wallet.balanceRs.toLocaleString("en-IN")}` : "—"}
+            </span>
+          </div>
+          <div className="flex items-center justify-between text-xs">
+            <span className="font-semibold text-slate-500">Total promotion cost</span>
+            <span className="font-extrabold text-slate-900">₹{totalCostRs.toLocaleString("en-IN")}</span>
+          </div>
+        </div>
+
+        {!isLoadingWallet && wallet && !hasSufficientBalance ? (
+          <div className="rounded-2xl bg-amber-50 p-4 flex items-start gap-3">
+            <AlertTriangle className="text-amber-500 mt-0.5 shrink-0" size={16} />
+            <div className="flex-1">
+              <p className="text-xs font-bold text-amber-700">Not enough wallet balance</p>
+              <p className="text-[11px] text-amber-600 mt-0.5 mb-2">
+                You need ₹{(totalCostRs - wallet.balanceRs).toLocaleString("en-IN")} more to boost this reel.
+              </p>
+              <button
+                type="button"
+                onClick={() => router.push("/partner/wallet")}
+                className="text-xs font-bold text-[#BA2121] underline underline-offset-2"
+              >
+                Add Money
+              </button>
+            </div>
+          </div>
+        ) : null}
 
         {error ? <p className="text-xs font-semibold text-red-600">{error}</p> : null}
 
-        <Button className="w-full justify-center" onClick={handleCreate} loading={isCreating} disabled={!reelId || !isValidBudget}>
-          Launch campaign
+        <Button
+          className="w-full justify-center"
+          onClick={handleCreate}
+          loading={isCreating}
+          disabled={!reelId || (!isLoadingWallet && Boolean(wallet) && !hasSufficientBalance)}
+        >
+          Confirm &amp; Boost Now
         </Button>
       </div>
     </BottomSheet>

@@ -14,6 +14,7 @@ import {
   ClipboardList,
   Package,
   Phone,
+  PiggyBank,
   Plus,
   Star,
   TrendingUp,
@@ -224,6 +225,7 @@ export default function DashboardPage() {
         <QuickAction href="/partner/stories" icon={Camera} label="Post a story" />
         <QuickAction href="/partner/orders" icon={ClipboardList} label="View orders" />
         <QuickAction href="/partner/profile" icon={UserCog} label="Edit profile" />
+        <QuickAction href="/partner/wallet" icon={PiggyBank} label="Wallet" />
       </div>
 
       <RevenueTrendChart data={summary.weeklyRevenue} />

@@ -3,7 +3,7 @@
 import { useCallback, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { onboardingApi } from "../../../../lib/kitchenApi";
-import { Button, Field, TextInput } from "../../components/ui";
+import { Button, Field, RangeSlider, TextInput } from "../../components/ui";
 import { useStepForm } from "./useStepForm";
 import type { LatLng } from "../../components/MapPicker";
 
@@ -144,21 +144,16 @@ export function LocationForm({ onSaved }: { onSaved: () => Promise<void> }) {
         </Field>
       </div>
 
-      <Field label={`Service radius — ${serviceRadiusKm} km`}>
-        <input
-          type="range"
-          min={1}
-          max={40}
-          step={1}
-          value={serviceRadiusKm}
-          onChange={(e) => setServiceRadiusKm(Number(e.target.value))}
-          className="w-full accent-[#BA2121]"
-        />
-        <div className="flex justify-between text-[10px] font-semibold text-slate-400 mt-1">
-          <span>1 km</span>
-          <span>40 km</span>
-        </div>
-      </Field>
+      <RangeSlider
+        label={`Service radius — ${serviceRadiusKm} km`}
+        min={1}
+        max={40}
+        step={1}
+        value={serviceRadiusKm}
+        onChange={setServiceRadiusKm}
+        minLabel="1 km"
+        maxLabel="40 km"
+      />
 
       {error ? <p className="text-xs font-semibold text-red-600">{error}</p> : null}
       <Button onClick={submit} disabled={!isValid} loading={isSaving}>

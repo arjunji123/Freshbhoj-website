@@ -4,6 +4,7 @@ import type {
   Campaign,
   CampaignReachEstimate,
   CampaignStatus,
+  CampaignSuggestion,
   Cuisine,
   DashboardSummary,
   DayOfWeek,
@@ -30,12 +31,20 @@ import type {
   Paginated,
   Payout,
   PayoutSummary,
+  PremiumSubscription,
+  PremiumTier,
+  PremiumTierCatalog,
   PublicKitchenDetail,
   SubscriptionDelivery,
   SubscriptionDetail,
   SubscriptionListResponse,
   SubscriptionStatus,
+  SuggestionListResponse,
+  SuggestionStatus,
   TransactionListResponse,
+  WalletSummary,
+  WalletTopupResult,
+  WalletTransactionListResponse,
   WeeklySchedule,
 } from './types';
 
@@ -472,7 +481,8 @@ export const orderChatApi = {
 export const adsApi = {
   estimateReach: (dailyBudgetRs: number) =>
     request<CampaignReachEstimate>(`/partner/ads/campaigns/estimate?dailyBudgetRs=${dailyBudgetRs}`),
-  create: (input: { reelId: string; dailyBudgetRs: number; endDate?: string }) =>
+  /** `durationDays` is mandatory — the full `dailyBudgetRs × durationDays` cost is charged from the wallet immediately. */
+  create: (input: { reelId: string; dailyBudgetRs: number; durationDays: number }) =>
     request<Campaign>('/partner/ads/campaigns', { method: 'POST', body: input }),
   list: (status?: CampaignStatus) =>
     request<Campaign[]>(`/partner/ads/campaigns${status ? `?status=${status}` : ''}`),
@@ -482,6 +492,56 @@ export const adsApi = {
   pause: (id: string) => request<Campaign>(`/partner/ads/campaigns/${id}/pause`, { method: 'POST' }),
   resume: (id: string) => request<Campaign>(`/partner/ads/campaigns/${id}/resume`, { method: 'POST' }),
   stop: (id: string) => request<Campaign>(`/partner/ads/campaigns/${id}/stop`, { method: 'POST' }),
+};
+
+// ── AI Optimization Suggestions ───────────────────────────────────────────
+// Capped to one real AI call per kitchen per IST calendar day — `generate()`
+// called again the same day just re-returns that day's batch (expected, not
+// an error). Can also 400 (zero ACTIVE campaigns) or 503 (Gemini is down);
+// both are normal, retry-able error states callers should handle explicitly.
+
+export const suggestionsApi = {
+  generate: () => request<CampaignSuggestion[]>('/partner/ads/suggestions/generate', { method: 'POST' }),
+  list: (params: { status?: SuggestionStatus; q?: string; page?: number; limit?: number } = {}) => {
+    const query = new URLSearchParams();
+    if (params.status) query.set('status', params.status);
+    if (params.q) query.set('q', params.q);
+    if (params.page) query.set('page', String(params.page));
+    if (params.limit) query.set('limit', String(params.limit));
+    const qs = query.toString();
+    return request<SuggestionListResponse>(`/partner/ads/suggestions${qs ? `?${qs}` : ''}`);
+  },
+  get: (id: string) => request<CampaignSuggestion>(`/partner/ads/suggestions/${id}`),
+  /** Only callable while `status === 'NEW'` — 400 otherwise. */
+  apply: (id: string) => request<CampaignSuggestion>(`/partner/ads/suggestions/${id}/apply`, { method: 'POST' }),
+  /** Only callable while `status === 'NEW'` — 400 otherwise. */
+  dismiss: (id: string) => request<CampaignSuggestion>(`/partner/ads/suggestions/${id}/dismiss`, { method: 'POST' }),
+};
+
+// ── Wallet ────────────────────────────────────────────────────────────────
+
+export const walletApi = {
+  summary: () => request<WalletSummary>('/partner/wallet'),
+  transactions: (params: { page?: number; limit?: number } = {}) => {
+    const query = new URLSearchParams();
+    if (params.page) query.set('page', String(params.page));
+    if (params.limit) query.set('limit', String(params.limit));
+    const qs = query.toString();
+    return request<WalletTransactionListResponse>(`/partner/wallet/transactions${qs ? `?${qs}` : ''}`);
+  },
+  /** Completes immediately — no payment gateway wired, same as every other payment-adjacent flow in this app. */
+  topup: (amountRs: number) =>
+    request<WalletTopupResult>('/partner/wallet/topup', { method: 'POST', body: { amountRs } }),
+};
+
+// ── Kitchen Premium Plans ─────────────────────────────────────────────────
+
+export const premiumApi = {
+  listTiers: () => request<PremiumTierCatalog[]>('/partner/premium/tiers'),
+  subscription: () => request<PremiumSubscription>('/partner/premium/subscription'),
+  /** Same endpoint serves first purchase and upgrading from an existing tier. Charges the wallet immediately. */
+  purchase: (tier: PremiumTier) =>
+    request<PremiumSubscription>('/partner/premium/purchase', { method: 'POST', body: { tier } }),
 };
 
 // ── Subscriptions (kitchen-facing) ────────────────────────────────────────

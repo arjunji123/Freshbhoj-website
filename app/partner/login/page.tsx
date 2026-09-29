@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { ChefHat, ShieldCheck } from "lucide-react";
+import { ChefHat } from "lucide-react";
 import { kitchenAuthApi } from "../../../lib/kitchenApi";
 import { ApiError } from "../../../lib/kitchenApi";
 import { useKitchenAuth } from "../../../lib/KitchenAuthProvider";
@@ -144,14 +144,6 @@ export default function PartnerLoginPage() {
               </button>
             </div>
           )}
-        </div>
-
-        <div className="flex items-center justify-center gap-2 mt-6 text-xs text-slate-400">
-          <ShieldCheck size={14} />
-          <span>Not a kitchen partner yet? </span>
-          <Link href="/pre-register?type=kitchen" className="font-bold text-[#BA2121]">
-            Register your interest
-          </Link>
         </div>
       </div>
     </div>
