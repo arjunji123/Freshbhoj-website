@@ -4,7 +4,8 @@ import { useEffect, useRef, useState, type ClipboardEvent, type KeyboardEvent } 
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, BadgeCheck, Banknote, Clapperboard, Percent, ShieldCheck, Smartphone, Star, TrendingUp } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, BadgeCheck, ShieldCheck, Smartphone } from "lucide-react";
+import DashboardPreview from "./DashboardPreview";
 import { kitchenAuthApi } from "../../../lib/kitchenApi";
 import { ApiError } from "../../../lib/kitchenApi";
 import { useKitchenAuth } from "../../../lib/KitchenAuthProvider";
@@ -97,19 +98,12 @@ export default function PartnerLoginPage() {
     }
   };
 
-  const BENEFITS = [
-    { icon: Percent, title: "0% commission", text: "For your first 3 months." },
-    { icon: Clapperboard, title: "Free Reels & Stories", text: "Show your food, get found nearby." },
-    { icon: BadgeCheck, title: "Verified badge", text: "Earn customer trust after an in-person visit." },
-    { icon: Banknote, title: "Simple payouts", text: "Track earnings, withdraw to your bank." },
-  ];
-
   const phoneReady = phoneDigits.replace(/\D/g, "").length === 10;
 
   return (
-    <div className="min-h-screen w-full grid lg:grid-cols-[1.05fr_1fr] font-sans bg-white">
+    <div className="min-h-screen w-full grid lg:grid-cols-[1.45fr_1fr] font-sans bg-white">
       {/* ── Brand panel ── */}
-      <aside className="relative overflow-hidden text-white bg-[linear-gradient(160deg,#14ADA0_0%,#087F78_45%,#0B4F6C_100%)] px-6 py-8 lg:px-14 lg:py-14 flex flex-col">
+      <aside className="relative overflow-hidden text-white bg-[linear-gradient(160deg,#14ADA0_0%,#087F78_45%,#0B4F6C_100%)] px-6 py-8 lg:px-10 xl:px-12 lg:py-10 flex flex-col lg:min-h-screen">
         <div className="pointer-events-none absolute -top-24 -left-20 w-96 h-96 rounded-full bg-[#5EE6D0]/30 blur-3xl animate-[drift_14s_ease-in-out_infinite]" />
         <div className="pointer-events-none absolute -bottom-32 -right-16 w-[28rem] h-[28rem] rounded-full bg-white/15 blur-3xl animate-[drift_18s_ease-in-out_infinite_reverse]" />
         <div className="pointer-events-none absolute inset-0 opacity-[0.12] [background-image:radial-gradient(#fff_1px,transparent_1px)] [background-size:26px_26px] [mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)]" />
@@ -121,50 +115,29 @@ export default function PartnerLoginPage() {
           <Link href="/" className="lg:hidden text-sm font-semibold text-white/80 hover:text-white">← Home</Link>
         </div>
 
-        <div className="relative my-8 lg:my-auto lg:py-10">
-          <span className="inline-flex items-center gap-2 rounded-full bg-white/15 border border-white/25 backdrop-blur px-4 py-2 text-[10px] lg:text-xs font-bold uppercase tracking-[0.2em] mb-6">
-            <span className="w-2 h-2 rounded-full bg-[#FFC21A] animate-pulse" /> Partner Portal
+        <div className="relative mt-8 lg:mt-10">
+          <span className="inline-flex items-center gap-2 rounded-full bg-white/15 border border-white/25 backdrop-blur px-4 py-2 text-[10px] lg:text-xs font-bold uppercase tracking-[0.2em] mb-5">
+            <span className="w-2 h-2 rounded-full bg-[#FFC21A] animate-pulse" /> Partner Portal · Sample preview
           </span>
-          <h1 className="text-4xl md:text-5xl xl:text-6xl font-extrabold leading-[1.05] mb-5">
-            Your kitchen.
-            <br />
-            Their next{" "}
-            <span className="text-[#FFC21A]" style={{ fontFamily: "var(--font-instrument), Georgia, serif", fontStyle: "italic", fontWeight: 400 }}>
-              favourite order.
-            </span>
+          <h1 className="text-3xl md:text-4xl xl:text-5xl font-extrabold leading-[1.08] mb-3">
+            Your kitchen&apos;s{" "}
+            <span className="text-[#FFC21A]" style={{ fontFamily: "var(--font-instrument), Georgia, serif", fontStyle: "italic", fontWeight: 400 }}>command centre.</span>
           </h1>
-          <p className="text-white/80 text-base lg:text-lg max-w-lg leading-relaxed">
-            Restaurant, dhaba, café, bakery, cloud or home kitchen. If you cook great food, FreshBhoj helps you sell it.
+          <p className="text-white/80 text-sm lg:text-base max-w-xl leading-relaxed">
+            Orders, menu, Reels, ads and payouts in one dashboard. This is what you get after you log in. The numbers below are sample data.
           </p>
-
-          <ul className="hidden sm:grid grid-cols-2 gap-3 mt-9 max-w-xl">
-            {BENEFITS.map(({ icon: Icon, title, text }) => (
-              <li key={title} className="rounded-2xl bg-white/10 border border-white/15 backdrop-blur p-4 hover:bg-white/15 transition-colors">
-                <span className="w-9 h-9 rounded-xl bg-white/15 flex items-center justify-center mb-3"><Icon size={18} /></span>
-                <p className="font-bold text-sm">{title}</p>
-                <p className="text-white/70 text-xs leading-relaxed mt-0.5">{text}</p>
-              </li>
-            ))}
-          </ul>
         </div>
 
-        {/* floating dashboard preview */}
-        <div className="relative hidden lg:flex items-center gap-3">
-          <div className="rounded-2xl bg-white text-[#0D1B1E] px-4 py-3 shadow-2xl flex items-center gap-3 animate-[float_5s_ease-in-out_infinite]">
-            <span className="w-10 h-10 rounded-xl bg-[#087F78]/10 text-[#087F78] flex items-center justify-center"><TrendingUp size={18} /></span>
-            <div>
-              <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Today</p>
-              <p className="text-sm font-extrabold whitespace-nowrap">12 orders · ₹4,860</p>
-            </div>
-          </div>
-          <div className="rounded-2xl bg-white text-[#0D1B1E] px-4 py-3 shadow-2xl flex items-center gap-3 animate-[float_6s_ease-in-out_infinite]" style={{ animationDelay: "1s" }}>
-            <span className="w-10 h-10 rounded-xl bg-[#FFC21A]/20 text-[#F59E0B] flex items-center justify-center"><Star size={18} className="fill-current" /></span>
-            <div>
-              <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Rating</p>
-              <p className="text-sm font-extrabold whitespace-nowrap">4.8 ★ Verified</p>
-            </div>
-          </div>
-          <p className="text-[10px] text-white/50 ml-1">Sample dashboard preview</p>
+        <div className="relative flex-1 min-h-[340px] mt-7 overflow-hidden">
+          <DashboardPreview />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#0B4F6C] to-transparent" />
+        </div>
+
+        <div className="relative mt-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <p className="text-xs text-white/70 max-w-xs">Sample data shown, not a real kitchen. Want a walkthrough before you sign up?</p>
+          <Link href="/contact-us" className="inline-flex items-center justify-center gap-2 rounded-full bg-white text-[#0D1B1E] font-bold px-7 py-3.5 hover:scale-105 active:scale-95 transition-transform shadow-xl">
+            Contact us <ArrowUpRight size={18} />
+          </Link>
         </div>
       </aside>
 

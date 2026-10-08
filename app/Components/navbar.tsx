@@ -2,221 +2,164 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import { ArrowUpRight, X } from "lucide-react";
+
+const LINKS = [
+  { label: "Home", href: "/" },
+  { label: "How it works", href: "/#problem-fix" },
+  { label: "Verified", href: "/#verified" },
+  { label: "Features", href: "/#features" },
+  { label: "Contact", href: "/contact-us" },
+] as const;
 
 const Navbar = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
-  // Lock background scroll when mobile menu open
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // lock page scroll while the mobile sheet is open
   useEffect(() => {
     if (!menuOpen) return;
-    const scrollY = window.scrollY;
-    
-    // Lock scroll
+    const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    document.body.style.position = "fixed";
-    document.body.style.top = `-${scrollY}px`;
-    document.body.style.width = "100%";
-
     return () => {
-      document.body.style.overflow = "";
-      document.body.style.position = "";
-      document.body.style.top = "";
-      document.body.style.width = "";
-      window.scrollTo({ top: scrollY, behavior: "auto" });
+      document.body.style.overflow = prev;
     };
   }, [menuOpen]);
-  const isPreRegisterPage = pathname === "/pre-register";
-  const isGlassyGradientHeader = !!pathname && [
-    "/contact-us",
-    "/pre-register",
-    "/privacy-policy",
-    "/terms-of-service",
-  ].includes(pathname);
 
-  const gradientStyle = {
-    background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)",
-    WebkitBackgroundClip: "text" as const,
-    WebkitTextFillColor: "transparent" as const,
-    backgroundClip: "text" as const,
-  };
-
-  const activeBgGradient = "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)";
-
-  const getLinkStyle = (path: string) => {
-    const isActive = pathname === path;
-    if (isActive) {
-      return {
-        background: activeBgGradient,
-        color: "white",
-        borderRadius: "9999px",
-      };
-    }
-    return gradientStyle;
-  };
+  // Transparent-on-teal only on the home hero; every other page (and any scrolled state) uses the light glass bar.
+  const onDark = pathname === "/" && !scrolled && !menuOpen;
+  const isActive = (href: string) => (href === "/" ? pathname === "/" : !href.includes("#") && pathname === href);
 
   return (
-    <div
-      className={`w-full fixed top-0 left-0 right-0 z-[100] transition-all duration-300 border-b ${
-        isGlassyGradientHeader
-          ? "bg-white/40 backdrop-blur-xl border-white/20 shadow-sm"
-          : "bg-white/40 backdrop-blur-xl border-white/20"
-      }`}
-    >
-      <nav className="w-full max-w-7xl mx-auto flex items-center justify-between px-6 py-1 md:py-4 lg:py-5">
-
-        {/* Logo */}
-        <div className="flex-shrink-0 mt-4 md:mt-0">
-          <Link href="/">
-            <Image
-              src="/freshbhoj-red-new.svg"
-              alt="FreshBhoj Logo"
-              width={180}
-              height={50}
-              priority
-              className="h-8 md:h-10 lg:h-12 w-auto object-contain cursor-pointer"
-            />
-          </Link>
-        </div>
-
-        {/* Desktop nav links */}
-        <div className="hidden md:flex items-center gap-6 ml-auto font-sans">
-          <Link
-            href="/"
-            className={`font-bold text-sm lg:text-base px-6 py-2.5 transition-all duration-300 hover:scale-105 active:scale-95 ${pathname === "/" ? "text-white" : ""}`}
-            style={getLinkStyle("/")}
-          >
-            Home
-          </Link>
-
-          <Link
-            href="/pre-register"
-            className={`font-bold text-sm lg:text-base px-8 py-2.5 transition-all duration-300 hover:scale-105 active:scale-95 ${pathname === "/pre-register" ? "text-white shadow-lg" : ""}`}
-            style={getLinkStyle("/pre-register")}
-          >
-            Pre-Register
-          </Link>
-
-          <Link
-            href="/contact-us"
-            className={`font-bold text-sm lg:text-base px-6 py-2.5 transition-all duration-300 hover:scale-105 active:scale-95 ${pathname === "/contact-us" ? "text-white" : "hover:bg-slate-100"}`}
-            style={getLinkStyle("/contact-us")}
-          >
-            Contact us
-          </Link>
-
-          <Link
-            href="/partner/login"
-            className="font-bold text-sm lg:text-base px-6 py-2.5 rounded-full border-2 border-[#087F78]/20 text-[#087F78] transition-all duration-300 hover:scale-105 active:scale-95 hover:bg-[#087F78]/5"
-          >
-            Partner Login
-          </Link>
-        </div>
-
-        {/* Mobile: hamburger button */}
-        <button
-          className={`md:hidden mt-4 md:mt-0 z-50 relative group inline-flex items-center justify-center w-11 h-11 rounded-xl transition-all duration-300 active:scale-95 focus:outline-none ${
-            isGlassyGradientHeader
-              ? "bg-white/10 backdrop-blur-lg border border-white/20"
-              : "bg-white/70 backdrop-blur-xl border border-white/50"
+    <>
+      <header className="fixed top-3 md:top-4 inset-x-0 z-[100] px-3 md:px-6 pointer-events-none">
+        <div
+          className={`pointer-events-auto mx-auto max-w-6xl flex items-center justify-between gap-3 rounded-full pl-5 pr-2 py-2 transition-all duration-300 border ${
+            onDark
+              ? "bg-white/10 backdrop-blur-xl border-white/25"
+              : "bg-white/85 backdrop-blur-xl border-slate-200/70 shadow-[0_10px_40px_-12px_rgba(8,127,120,0.35)]"
           }`}
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Toggle Menu"
-          aria-expanded={menuOpen}
         >
-          <span className="sr-only">Menu</span>
-          <span className="relative w-6 h-5">
-            <span
-              className={`absolute left-0 top-0 block w-6 h-[2.5px] rounded-full bg-[#087F78] transition-all duration-300 ${
-                menuOpen ? "translate-y-[9px] rotate-45" : "opacity-90"
-              }`}
+          <Link href="/" aria-label="FreshBhoj home" className="shrink-0">
+            <Image
+              src={onDark ? "/FreshBhoj.svg" : "/freshbhoj-red-new.svg"}
+              alt="FreshBhoj"
+              width={160}
+              height={44}
+              priority
+              className="h-8 md:h-9 w-auto object-contain"
             />
-            <span
-              className={`absolute left-0 top-1/2 -translate-y-1/2 block w-6 h-[2.5px] rounded-full bg-[#087F78] transition-all duration-300 ${
-                menuOpen ? "opacity-0 scale-90" : "opacity-90"
-              }`}
-            />
-            <span
-              className={`absolute left-0 bottom-0 block w-6 h-[2.5px] rounded-full bg-[#087F78] transition-all duration-300 ${
-                menuOpen ? "-translate-y-[9px] -rotate-45" : "opacity-90"
-              }`}
-            />
-          </span>
-        </button>
-      </nav>
+          </Link>
 
-      {/* Mobile dropdown menu - Multi-element redesign */}
+          <nav className="hidden lg:flex items-center gap-1" aria-label="Main">
+            {LINKS.map((l) => {
+              const active = isActive(l.href);
+              return (
+                <Link
+                  key={l.label}
+                  href={l.href}
+                  className={`px-4 py-2 rounded-full text-sm font-bold transition-colors ${
+                    active
+                      ? onDark
+                        ? "bg-white text-[#087F78]"
+                        : "bg-[#087F78]/10 text-[#087F78]"
+                      : onDark
+                        ? "text-white/85 hover:text-white hover:bg-white/10"
+                        : "text-slate-600 hover:text-[#087F78] hover:bg-[#087F78]/5"
+                  }`}
+                >
+                  {l.label}
+                </Link>
+              );
+            })}
+          </nav>
+
+          <div className="flex items-center gap-2">
+            <Link
+              href="/partner/login"
+              className={`hidden md:inline-flex px-5 py-2.5 rounded-full text-sm font-bold border transition-colors ${
+                onDark ? "text-white border-white/35 hover:bg-white/10" : "text-[#087F78] border-[#087F78]/25 hover:bg-[#087F78]/5"
+              }`}
+            >
+              Partner Login
+            </Link>
+            <Link
+              href="/pre-register"
+              className="hidden sm:inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full text-sm font-extrabold bg-[#FFC21A] text-[#0D1B1E] shadow-[0_8px_20px_-8px_rgba(255,194,26,0.9)] hover:scale-105 active:scale-95 transition-transform"
+            >
+              Pre-register <ArrowUpRight size={15} />
+            </Link>
+            <button
+              className={`lg:hidden w-11 h-11 rounded-full flex items-center justify-center transition-colors ${onDark ? "bg-white/15 text-white" : "bg-[#087F78]/10 text-[#087F78]"}`}
+              onClick={() => setMenuOpen((v) => !v)}
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={menuOpen}
+            >
+              {menuOpen ? (
+                <X size={20} />
+              ) : (
+                <span className="flex flex-col gap-[5px]">
+                  <span className="block w-5 h-[2px] rounded-full bg-current" />
+                  <span className="block w-3.5 h-[2px] rounded-full bg-current ml-auto" />
+                  <span className="block w-5 h-[2px] rounded-full bg-current" />
+                </span>
+              )}
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* Mobile / tablet sheet */}
       <div
-        className={`md:hidden flex flex-col items-center gap-4 px-6 overflow-hidden transition-all duration-500 rounded-b-[2.5rem] bg-white/95 backdrop-blur-3xl border-b border-slate-100 shadow-2xl ${
-          menuOpen ? "max-h-[32rem] opacity-100 pb-12 mt-0" : "max-h-0 opacity-0 pointer-events-none"
-        }`}
+        className={`lg:hidden fixed inset-0 z-[90] transition-all duration-300 ${menuOpen ? "opacity-100 visible" : "opacity-0 invisible"}`}
+        aria-hidden={!menuOpen}
       >
-        <div className="w-full flex flex-col gap-3 mt-6">
-          <Link
-            href="/"
-            className={`text-lg font-bold py-3.5 w-full text-center transition-all active:scale-95 ${pathname === "/" ? "text-white shadow-md shadow-[#087F78]/20" : ""}`}
-            style={getLinkStyle("/")}
-            onClick={() => setMenuOpen(false)}
-          >
-            Home
-          </Link>
-          
-          <Link
-            href="/pre-register"
-            className={`text-lg font-bold py-3.5 w-full text-center transition-all active:scale-95 ${pathname === "/pre-register" ? "text-white shadow-md shadow-[#087F78]/20" : ""}`}
-            style={getLinkStyle("/pre-register")}
-            onClick={() => setMenuOpen(false)}
-          >
-            Pre-Register
-          </Link>
-          
-          <Link
-            href="/contact-us"
-            className={`text-lg font-bold py-3.5 w-full text-center transition-all active:scale-95 ${pathname === "/contact-us" ? "text-white shadow-md shadow-[#087F78]/20" : ""}`}
-            style={getLinkStyle("/contact-us")}
-            onClick={() => setMenuOpen(false)}
-          >
-            Contact us
-          </Link>
-
-          <Link
-            href="/partner/login"
-            className="text-lg font-bold py-3.5 w-full text-center rounded-full border-2 border-[#087F78]/20 text-[#087F78] transition-all active:scale-95"
-            onClick={() => setMenuOpen(false)}
-          >
-            Partner Login
-          </Link>
-        </div>
-
-        {/* Distinguishing Fact/Quote */}
-        <div className="mt-4 px-6 text-center">
-            <p className="text-[#087F78] italic text-sm font-medium opacity-80">
-                &ldquo;India&apos;s first reel-based food discovery — taste the purity.&rdquo;
-            </p>
-        </div>
-
-        {/* Single row for Privacy & Terms */}
-        <div className="flex items-center gap-4 mt-2">
-            <Link 
-                href="/privacy-policy" 
-                className="text-gray-500 text-xs font-semibold hover:text-[#087F78] transition-colors"
+        <button className="absolute inset-0 bg-[#0D1B1E]/60 backdrop-blur-sm" onClick={() => setMenuOpen(false)} aria-label="Close menu" tabIndex={-1} />
+        <div
+          className={`absolute top-0 inset-x-0 rounded-b-[2.5rem] bg-white pt-24 pb-8 px-6 shadow-2xl transition-transform duration-300 ${menuOpen ? "translate-y-0" : "-translate-y-8"}`}
+        >
+          <nav className="flex flex-col gap-1 mb-6">
+            {LINKS.map((l, i) => (
+              <Link
+                key={l.label}
+                href={l.href}
                 onClick={() => setMenuOpen(false)}
-            >
-                Privacy Policy
+                className={`flex items-center justify-between rounded-2xl px-4 py-3.5 text-xl font-extrabold transition-colors ${
+                  isActive(l.href) ? "bg-[#087F78]/10 text-[#087F78]" : "text-[#0D1B1E] hover:bg-slate-50"
+                }`}
+                style={{ transitionDelay: menuOpen ? `${i * 30}ms` : "0ms" }}
+              >
+                {l.label}
+                <ArrowUpRight size={18} className="text-slate-300" />
+              </Link>
+            ))}
+          </nav>
+          <div className="grid grid-cols-2 gap-3">
+            <Link href="/partner/login" onClick={() => setMenuOpen(false)} className="text-center rounded-full border-2 border-[#087F78]/25 text-[#087F78] font-bold py-3.5">
+              Partner Login
             </Link>
-            <span className="w-1.5 h-1.5 rounded-full bg-gray-300" />
-            <Link 
-                href="/terms-of-service" 
-                className="text-gray-500 text-xs font-semibold hover:text-[#087F78] transition-colors"
-                onClick={() => setMenuOpen(false)}
-            >
-                Terms of Service
+            <Link href="/pre-register" onClick={() => setMenuOpen(false)} className="text-center rounded-full bg-[#FFC21A] text-[#0D1B1E] font-extrabold py-3.5">
+              Pre-register
             </Link>
+          </div>
+          <div className="flex items-center justify-center gap-4 mt-6 text-xs font-semibold text-slate-400">
+            <Link href="/privacy-policy" onClick={() => setMenuOpen(false)} className="hover:text-[#087F78]">Privacy Policy</Link>
+            <span className="w-1 h-1 rounded-full bg-slate-300" />
+            <Link href="/terms-of-service" onClick={() => setMenuOpen(false)} className="hover:text-[#087F78]">Terms of Service</Link>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
