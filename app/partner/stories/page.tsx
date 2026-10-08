@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Eye, Heart, Pencil, Plus, Share2, ShoppingBag, Trash2, Video, X } from "lucide-react";
 import { ApiError, kitchenMenuApi, kitchenStoriesApi, kitchenUploadApi } from "../../../lib/kitchenApi";
 import type { KitchenStory, MealDetail } from "../../../lib/types";
-import { Badge, Button, Card, EmptyState, Field, PageHeader, Select, Spinner, TextArea, TextInput } from "../components/ui";
+import { Button, Card, ConfirmDialog, EmptyState, Field, PageHeader, Select, Spinner, TextArea, TextInput } from "../components/ui";
 
 function timeLeft(expiresAt: string): string {
   const ms = new Date(expiresAt).getTime() - Date.now();
@@ -20,6 +20,7 @@ export default function StoriesPage() {
   const [isComposing, setIsComposing] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [busyId, setBusyId] = useState<string | null>(null);
+  const [pendingDeleteId, setPendingDeleteId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const load = async () => {
@@ -41,7 +42,7 @@ export default function StoriesPage() {
   }, []);
 
   const handleDeactivate = async (id: string) => {
-    if (!window.confirm("Remove this story? It disappears from the customer app immediately.")) return;
+    setPendingDeleteId(null);
     setBusyId(id);
     try {
       await kitchenStoriesApi.deactivate(id);
@@ -67,7 +68,7 @@ export default function StoriesPage() {
           </Button>
         }
       />
-      {error ? <p className="text-xs font-semibold text-red-600 mb-4">{error}</p> : null}
+      {error && (isLoading || activeStories.length > 0) ? <p className="text-xs font-semibold text-red-600 mb-4">{error}</p> : null}
 
       {isComposing ? (
         <Card className="mb-6">
@@ -120,20 +121,20 @@ export default function StoriesPage() {
                   <img src={story.mediaUrl} alt={story.caption ?? "Story"} className="w-full h-full object-cover" />
                 )}
                 <div className="absolute top-2 left-2">
-                  <Badge tone="brand">{timeLeft(story.expiresAt)}</Badge>
+                  <span className="inline-flex items-center rounded-full bg-black/55 px-3 py-1 text-xs font-bold uppercase tracking-wide text-white backdrop-blur-sm">{timeLeft(story.expiresAt)}</span>
                 </div>
                 <div className="absolute top-2 right-2 flex gap-1.5">
                   <button
                     onClick={() => setEditingId(story.id)}
-                    className="w-7 h-7 rounded-full bg-black/50 text-white flex items-center justify-center"
+                    className="w-9 h-9 rounded-full bg-black/50 text-white flex items-center justify-center"
                     aria-label="Edit caption"
                   >
                     <Pencil size={12} />
                   </button>
                   <button
-                    onClick={() => handleDeactivate(story.id)}
+                    onClick={() => setPendingDeleteId(story.id)}
                     disabled={busyId === story.id}
-                    className="w-7 h-7 rounded-full bg-black/50 text-white flex items-center justify-center disabled:opacity-50"
+                    className="w-9 h-9 rounded-full bg-black/50 text-white flex items-center justify-center disabled:opacity-50"
                     aria-label="Delete story"
                   >
                     <Trash2 size={12} />
@@ -168,6 +169,15 @@ export default function StoriesPage() {
           ))}
         </div>
       )}
+
+      <ConfirmDialog
+        open={pendingDeleteId !== null}
+        title="Remove this story?"
+        description="It disappears from the customer app immediately."
+        confirmLabel="Remove"
+        onConfirm={() => pendingDeleteId && handleDeactivate(pendingDeleteId)}
+        onCancel={() => setPendingDeleteId(null)}
+      />
     </div>
   );
 }

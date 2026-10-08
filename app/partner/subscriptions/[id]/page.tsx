@@ -152,7 +152,7 @@ export default function SubscriptionDetailPage() {
 
       <div className="flex flex-wrap items-start justify-between gap-4 mb-6">
         <div className="flex items-center gap-4">
-          <div className="w-14 h-14 rounded-full bg-slate-100 overflow-hidden shrink-0 flex items-center justify-center text-slate-300 font-bold text-lg">
+          <div className="w-14 h-14 rounded-full bg-[#087F78]/10 overflow-hidden shrink-0 flex items-center justify-center text-[#087F78] font-bold text-lg">
             {sub.customer.profileImage ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img src={sub.customer.profileImage} alt="" className="w-full h-full object-cover" />

@@ -92,6 +92,7 @@ export default function TimingsPage() {
             onChange={handleToggleAccepting}
             onLabel="Taking orders"
             offLabel="Closed"
+            tone="light"
             disabled={isToggling}
             className="bg-white rounded-2xl px-4 py-3 shrink-0 border border-red-100 text-slate-700"
           />
@@ -175,6 +176,7 @@ function DayRow({
           onChange={() => setIsClosed((v) => !v)}
           onLabel="Open"
           offLabel="Closed"
+          tone="light"
           className="ml-auto text-slate-500"
         />
       </div>

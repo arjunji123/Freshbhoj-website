@@ -179,12 +179,16 @@ export default function AiInsightsPage() {
         </Card>
       ) : null}
 
-      {loadError ? <p className="text-xs font-semibold text-red-600 mb-4">{loadError}</p> : null}
+      {loadError && suggestions.length > 0 ? <p className="text-xs font-semibold text-red-600 mb-4">{loadError}</p> : null}
 
       {isLoading ? (
         <div className="flex items-center justify-center py-24">
           <Spinner className="w-8 h-8 text-[#087F78]" />
         </div>
+      ) : suggestions.length === 0 && loadError ? (
+        <Card>
+          <EmptyState title="Couldn't load suggestions" description={loadError} action={<Button onClick={() => load()}>Retry</Button>} />
+        </Card>
       ) : suggestions.length === 0 ? (
         <Card>
           <EmptyState

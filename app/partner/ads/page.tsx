@@ -178,12 +178,16 @@ export default function AdsPage() {
         ) : null}
       </div>
 
-      {error ? <p className="text-xs font-semibold text-red-600 mb-4">{error}</p> : null}
+      {error && displayed.length > 0 ? <p className="text-xs font-semibold text-red-600 mb-4">{error}</p> : null}
 
       {isLoading ? (
         <div className="flex items-center justify-center py-24">
           <Spinner className="w-8 h-8 text-[#087F78]" />
         </div>
+      ) : displayed.length === 0 && error ? (
+        <Card>
+          <EmptyState title="Couldn't load campaigns" description={error} action={<Button onClick={() => load()}>Retry</Button>} />
+        </Card>
       ) : displayed.length === 0 ? (
         <Card>
           <EmptyState

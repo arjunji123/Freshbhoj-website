@@ -136,6 +136,7 @@ export default function SubscriptionsPage() {
           <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
           <TextInput
             placeholder="Search by name or phone…"
+            aria-label="Search subscribers"
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
             className="!pl-10"
@@ -143,12 +144,16 @@ export default function SubscriptionsPage() {
         </div>
       </div>
 
-      {error ? <p className="text-xs font-semibold text-red-600 mb-4">{error}</p> : null}
+      {error && items.length > 0 ? <p className="text-xs font-semibold text-red-600 mb-4">{error}</p> : null}
 
       {isLoading ? (
         <div className="flex items-center justify-center py-24">
           <Spinner className="w-8 h-8 text-[#087F78]" />
         </div>
+      ) : items.length === 0 && error ? (
+        <Card>
+          <EmptyState title="Couldn't load subscribers" description={error} action={<Button onClick={() => load(page)}>Retry</Button>} />
+        </Card>
       ) : items.length === 0 ? (
         <Card>
           <EmptyState
@@ -256,7 +261,7 @@ function SubscriberCard({
     <Card className="!p-4 flex flex-col gap-3">
       <Link href={`/partner/subscriptions/${sub.id}`} className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-3 min-w-0">
-          <div className="w-10 h-10 rounded-full bg-slate-100 overflow-hidden shrink-0 flex items-center justify-center text-slate-300 font-bold">
+          <div className="w-10 h-10 rounded-full bg-[#087F78]/10 overflow-hidden shrink-0 flex items-center justify-center text-[#087F78] font-bold">
             {sub.customer.profileImage ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img src={sub.customer.profileImage} alt="" className="w-full h-full object-cover" />

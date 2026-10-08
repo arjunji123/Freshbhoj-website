@@ -81,7 +81,7 @@ export default function Features() {
           </div>
         </div>
 
-        <div key={tab} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5 auto-rows-fr animate-[fadeUp_0.5s_ease-out]">
+        <div key={tab} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5 lg:auto-rows-fr animate-[fadeUp_0.5s_ease-out]">
           {list.map(({ icon: Icon, title, text, big, chips }) => (
             <div
               key={title}

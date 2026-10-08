@@ -88,14 +88,14 @@ export default function BhojAiPage() {
   return (
     <div>
       <div className="flex items-start justify-between gap-4 mb-6">
-        <div>
+        <div className="min-w-0">
           <div className="flex items-center gap-2">
             <div className="w-9 h-9 rounded-xl text-white flex items-center justify-center shrink-0" style={GRADIENT_BG}>
               <Sparkles size={16} />
             </div>
             <h1 className="text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight">BhojAI</h1>
           </div>
-          <p className="text-sm text-slate-500 mt-1 ml-[46px]">Your AI assistant — grounded in your own kitchen&apos;s data</p>
+          <p className="text-sm text-slate-500 mt-1 sm:ml-[46px]">Your AI assistant — grounded in your own kitchen&apos;s data</p>
         </div>
         <button
           onClick={handleReset}

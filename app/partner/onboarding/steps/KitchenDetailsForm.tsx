@@ -62,7 +62,7 @@ export function KitchenDetailsForm({ onSaved }: { onSaved: () => Promise<void> }
       <Field label="Description (optional)">
         <TextArea rows={3} value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Tell customers what makes your kitchen special" />
       </Field>
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 min-[420px]:grid-cols-3 gap-4">
         <Field label="Prep time (mins)">
           <TextInput inputMode="numeric" value={prepTimeMins} onChange={(e) => setPrepTimeMins(e.target.value.replace(/\D/g, ""))} />
         </Field>

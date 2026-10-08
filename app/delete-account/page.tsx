@@ -94,7 +94,7 @@ export default function DeleteAccountPage() {
     <div className="min-h-screen bg-white flex flex-col font-sans">
       <Navbar />
 
-      <div className="w-full pt-28 md:pt-28 pb-8 md:pb-16 border-b border-slate-100">
+      <div className="w-full pt-36 md:pt-40 pb-8 md:pb-16 border-b border-slate-100">
         <div className="w-full max-w-3xl mx-auto px-6">
           <div className="flex items-center gap-2 bg-[#EFFAF8] rounded-full px-4 py-1.5 w-fit mb-4">
             <div className="relative w-3.5 h-3.5">

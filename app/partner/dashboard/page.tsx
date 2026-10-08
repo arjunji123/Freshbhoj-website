@@ -208,7 +208,7 @@ export default function DashboardPage() {
       </div>
 
       {/* Quick actions */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
+      <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 mb-8 [&>*:last-child]:col-span-2 lg:[&>*:last-child]:col-span-1">
         <QuickAction href="/partner/menu/new" icon={Plus} label="Add a dish" />
         <QuickAction href="/partner/stories" icon={Camera} label="Post a story" />
         <QuickAction href="/partner/orders" icon={ClipboardList} label="View orders" />
@@ -269,9 +269,11 @@ export default function DashboardPage() {
                 <p className="text-xl font-extrabold text-slate-900">₹{summary.allTime.revenue.toLocaleString("en-IN")}</p>
                 <p className="text-[11px] text-slate-400 font-semibold">revenue</p>
               </div>
-              <div className="flex items-center gap-1.5">
-                <Users size={13} className="text-slate-400" />
+              <div>
                 <p className="text-xl font-extrabold text-slate-900">{summary.allTime.followerCount}</p>
+                <p className="flex items-center gap-1 text-[11px] text-slate-400 font-semibold">
+                  <Users size={11} /> followers
+                </p>
               </div>
               <div>
                 <p className="text-xl font-extrabold text-slate-900">{summary.allTime.activeMealCount}</p>

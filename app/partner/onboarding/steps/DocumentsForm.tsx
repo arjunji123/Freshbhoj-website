@@ -47,8 +47,8 @@ export function DocumentsForm({ onSaved, documents }: { onSaved: () => Promise<v
         The FSSAI licence and both kitchen photos are required to submit — the rest speed up approval.
       </p>
       {DOCUMENT_TYPES.map(({ type, label, required, accept }) => (
-        <div key={type} className="flex items-center gap-3 border border-slate-100 rounded-xl p-4">
-          <div className="flex-1">
+        <div key={type} className="flex flex-col sm:flex-row sm:items-center gap-3 border border-slate-100 rounded-xl p-4">
+          <div className="flex-1 min-w-0">
             <p className="text-sm font-bold text-slate-800">
               {label} {required ? <span className="text-red-500">*</span> : null}
             </p>
@@ -68,14 +68,14 @@ export function DocumentsForm({ onSaved, documents }: { onSaved: () => Promise<v
           {type === "FSSAI" && !hasFssai ? (
             <Link
               href="/partner/fssai-assistance"
-              className="shrink-0 inline-flex items-center gap-1.5 rounded-xl px-4 py-2.5 text-xs font-bold bg-[#087F78]/10 text-[#087F78] hover:bg-[#087F78]/15 transition-colors"
+              className="shrink-0 self-start sm:self-auto inline-flex items-center gap-1.5 rounded-xl px-4 py-2.5 text-xs font-bold bg-[#087F78]/10 text-[#087F78] hover:bg-[#087F78]/15 transition-colors"
             >
               <ShieldCheck size={13} />
               Get / Upload
               <ArrowRight size={12} />
             </Link>
           ) : (
-            <label className="shrink-0">
+            <label className="shrink-0 self-start sm:self-auto">
               <input
                 type="file"
                 accept={accept ?? "image/*,.pdf"}

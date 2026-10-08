@@ -1,6 +1,8 @@
 # *
 User-agent: *
 Allow: /
+Disallow: /partner/
+Disallow: /api/
 
 # Host
 Host: https://freshbhoj.com

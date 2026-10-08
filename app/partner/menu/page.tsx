@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Flame, Pencil, Plus, Trash2 } from "lucide-react";
 import { ApiError, kitchenMenuApi } from "../../../lib/kitchenApi";
 import type { MealDetail } from "../../../lib/types";
-import { Badge, Button, Card, EmptyState, FoodTypeDot, PageHeader, Spinner, TabBar } from "../components/ui";
+import { Badge, Button, Card, ConfirmDialog, EmptyState, FoodTypeDot, PageHeader, Spinner, TabBar } from "../components/ui";
 
 const ALL_CATEGORY = "all";
 
@@ -14,6 +14,7 @@ export default function MenuPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [busyId, setBusyId] = useState<string | null>(null);
+  const [pendingDelete, setPendingDelete] = useState<MealDetail | null>(null);
   const [activeCategory, setActiveCategory] = useState<string>(ALL_CATEGORY);
 
   const load = async () => {
@@ -46,7 +47,7 @@ export default function MenuPage() {
   };
 
   const handleDelete = async (meal: MealDetail) => {
-    if (!window.confirm(`Remove "${meal.name}" permanently?`)) return;
+    setPendingDelete(null);
     setBusyId(meal.id);
     try {
       await kitchenMenuApi.remove(meal.id);
@@ -82,7 +83,7 @@ export default function MenuPage() {
           </Link>
         }
       />
-      {error ? <p className="text-xs font-semibold text-red-600 mb-4">{error}</p> : null}
+      {error && meals.length > 0 ? <p className="text-xs font-semibold text-red-600 mb-4">{error}</p> : null}
 
       {meals.length > 0 && categories.length > 0 ? (
         <TabBar
@@ -149,14 +150,15 @@ export default function MenuPage() {
                 <button
                   onClick={() => handleToggle(meal)}
                   disabled={busyId === meal.id}
-                  className="text-xs font-bold text-slate-500 hover:text-[#087F78] px-2 disabled:opacity-50"
+                  className="text-xs font-bold text-slate-500 hover:text-[#087F78] px-3 py-2.5 rounded-lg disabled:opacity-50"
                 >
                   {meal.isAvailable ? "Pause" : "Publish"}
                 </button>
                 <button
-                  onClick={() => handleDelete(meal)}
+                  onClick={() => setPendingDelete(meal)}
                   disabled={busyId === meal.id}
-                  className="w-8 h-8 rounded-lg flex items-center justify-center text-slate-400 hover:bg-red-50 hover:text-red-600 disabled:opacity-50"
+                  aria-label={`Delete ${meal.name}`}
+                  className="w-10 h-10 rounded-lg flex items-center justify-center text-slate-400 hover:bg-red-50 hover:text-red-600 disabled:opacity-50"
                 >
                   <Trash2 size={14} />
                 </button>
@@ -165,6 +167,15 @@ export default function MenuPage() {
           ))}
         </div>
       )}
+
+      <ConfirmDialog
+        open={pendingDelete !== null}
+        title="Remove this dish?"
+        description={pendingDelete ? `"${pendingDelete.name}" will be removed permanently.` : undefined}
+        confirmLabel="Remove"
+        onConfirm={() => pendingDelete && handleDelete(pendingDelete)}
+        onCancel={() => setPendingDelete(null)}
+      />
     </div>
   );
 }

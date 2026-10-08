@@ -103,12 +103,16 @@ export default function PlansPage() {
         }
       />
 
-      {error ? <p className="text-xs font-semibold text-red-600 mb-4">{error}</p> : null}
+      {error && plans.length > 0 ? <p className="text-xs font-semibold text-red-600 mb-4">{error}</p> : null}
 
       {isLoading ? (
         <div className="flex items-center justify-center py-24">
           <Spinner className="w-8 h-8 text-[#087F78]" />
         </div>
+      ) : plans.length === 0 && error ? (
+        <Card>
+          <EmptyState title="Couldn't load plans" description={error} action={<Button onClick={() => load()}>Retry</Button>} />
+        </Card>
       ) : plans.length === 0 ? (
         <Card>
           <EmptyState
@@ -211,7 +215,7 @@ function PlanCard({
         <span className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-500">
           <Users size={12} /> {plan.subscriberCount} subscriber{plan.subscriberCount === 1 ? "" : "s"}
         </span>
-        <Toggle checked={plan.isActive} onChange={onToggleActive} onLabel="Live" offLabel="Hidden" disabled={isToggling} className="text-slate-500" />
+        <Toggle checked={plan.isActive} onChange={onToggleActive} onLabel="Live" offLabel="Hidden" disabled={isToggling} tone="light" className="text-slate-500" />
       </div>
     </Card>
   );
@@ -416,7 +420,7 @@ function PlanFormSheet({
               onChange={(e) => setForm((f) => ({ ...f, priceRs: e.target.value.replace(/\D/g, "") }))}
             />
           </Field>
-          <Field label="Original price (₹, optional)">
+          <Field label="Original price (optional)">
             <TextInput
               inputMode="numeric"
               placeholder="e.g. 1799"
@@ -439,7 +443,7 @@ function PlanFormSheet({
             <p className="text-sm font-bold text-slate-700">Jain available</p>
             <p className="text-xs text-slate-400">No onion or garlic, on request</p>
           </div>
-          <Toggle checked={form.jainAvailable} onChange={() => setForm((f) => ({ ...f, jainAvailable: !f.jainAvailable }))} />
+          <Toggle tone="light" checked={form.jainAvailable} onChange={() => setForm((f) => ({ ...f, jainAvailable: !f.jainAvailable }))} />
         </div>
 
         <Field label="Delivery slots">
@@ -465,7 +469,7 @@ function PlanFormSheet({
             <p className="text-sm font-bold text-slate-700">Mark as popular</p>
             <p className="text-xs text-slate-400">Shows a &quot;Popular&quot; badge to customers</p>
           </div>
-          <Toggle checked={form.isPopular} onChange={() => setForm((f) => ({ ...f, isPopular: !f.isPopular }))} />
+          <Toggle tone="light" checked={form.isPopular} onChange={() => setForm((f) => ({ ...f, isPopular: !f.isPopular }))} />
         </div>
 
         {error ? <p className="text-xs font-semibold text-red-600">{error}</p> : null}

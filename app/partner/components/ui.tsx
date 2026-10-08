@@ -1,8 +1,9 @@
 "use client";
 
+import { cloneElement, isValidElement, useId } from "react";
 import type { ButtonHTMLAttributes, HTMLAttributes, InputHTMLAttributes, ReactNode, SelectHTMLAttributes, TextareaHTMLAttributes } from "react";
 import Link from "next/link";
-import { ArrowLeft, X } from "lucide-react";
+import { ArrowLeft, Inbox, X } from "lucide-react";
 
 export const GRADIENT_TEXT = {
   background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)",
@@ -27,10 +28,18 @@ export function Field({
   error?: string | null;
   children: ReactNode;
 }) {
+  const autoId = useId();
+  // Associate the label with the control when the field's child is a single input/textarea/select.
+  const isControl = isValidElement<{ id?: string }>(children) && (children.type === TextInput || children.type === TextArea || children.type === Select);
+  const controlId = isControl ? ((children as React.ReactElement<{ id?: string }>).props.id ?? autoId) : undefined;
   return (
     <div>
-      {label ? <label className={FIELD_LABEL}>{label}</label> : null}
-      {children}
+      {label ? (
+        <label htmlFor={controlId} className={FIELD_LABEL}>
+          {label}
+        </label>
+      ) : null}
+      {isControl ? cloneElement(children as React.ReactElement<{ id?: string }>, { id: controlId }) : children}
       {error ? <p className={FIELD_ERROR}>{error}</p> : null}
     </div>
   );
@@ -179,7 +188,7 @@ export function TabBar<T extends string>({
 }
 
 /**
- * The on-brand toggle switch (brand-red knob on a white/black-25 track) —
+ * The on-brand toggle switch (teal knob on a white/black-25 track by default; `tone="light"` for white surfaces) —
  * standardized from what used to be three different color schemes (this one,
  * plus green/red "traffic light" variants) for the same on/off concept.
  * `onLabel`/`offLabel` render inside the same clickable control, matching
@@ -193,6 +202,7 @@ export function Toggle({
   offLabel,
   disabled,
   className = "",
+  tone = "onBrand",
 }: {
   checked: boolean;
   onChange?: () => void;
@@ -200,19 +210,29 @@ export function Toggle({
   offLabel?: string;
   disabled?: boolean;
   className?: string;
+  /** "onBrand" = white track for use on the teal gradient; "light" = teal track for use on white/light surfaces. */
+  tone?: "onBrand" | "light";
 }) {
   return (
     <button
       type="button"
+      role="switch"
+      aria-checked={checked}
       onClick={onChange}
       disabled={disabled}
       className={`flex items-center gap-3 transition-colors disabled:opacity-60 ${className}`}
     >
       {onLabel || offLabel ? <span className="text-sm font-bold">{checked ? onLabel : offLabel}</span> : null}
-      <span className={`relative w-11 h-6 rounded-full transition-colors ${checked ? "bg-white" : "bg-black/25"}`}>
+      <span
+        className={`relative w-11 h-6 shrink-0 rounded-full transition-colors ${
+          tone === "light" ? (checked ? "bg-[#087F78]" : "bg-slate-300") : checked ? "bg-white" : "bg-black/25"
+        }`}
+      >
         <span
-          className={`absolute top-0.5 w-5 h-5 rounded-full transition-transform ${
-            checked ? "translate-x-[22px] bg-[#087F78]" : "translate-x-0.5 bg-white/90"
+          className={`absolute left-0.5 top-0.5 w-5 h-5 rounded-full shadow-sm transition-transform ${
+            tone === "light"
+              ? checked ? "translate-x-5 bg-white" : "translate-x-0 bg-white"
+              : checked ? "translate-x-5 bg-[#087F78]" : "translate-x-0 bg-white/90"
           }`}
         />
       </span>
@@ -262,7 +282,7 @@ export function EmptyState({
 }) {
   return (
     <div className="flex flex-col items-center justify-center text-center py-16 px-6">
-      {icon ? <div className="w-12 h-12 mb-4 text-slate-300 [&>svg]:w-full [&>svg]:h-full">{icon}</div> : null}
+      <div className="w-12 h-12 mb-4 text-slate-300 [&>svg]:w-full [&>svg]:h-full [&>svg]:stroke-[1.5]">{icon ?? <Inbox />}</div>
       <h3 className="text-lg font-extrabold text-slate-900 mb-2">{title}</h3>
       {description ? <p className="text-sm text-slate-500 max-w-sm mb-6">{description}</p> : null}
       {action}
@@ -454,8 +474,8 @@ export function RangeSlider({
 
 export function PageHeader({ title, subtitle, action }: { title: string; subtitle?: string; action?: ReactNode }) {
   return (
-    <div className="flex items-start justify-between gap-4 mb-8">
-      <div>
+    <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-3 mb-8">
+      <div className="min-w-[14rem] flex-1">
         <h1 className="text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight">{title}</h1>
         {subtitle ? <p className="text-sm text-slate-500 mt-1">{subtitle}</p> : null}
       </div>

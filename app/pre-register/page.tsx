@@ -324,7 +324,7 @@ function PreRegisterContent() {
     <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-[#F8FAFC] flex flex-col font-sans overflow-x-hidden relative">
       <Navbar />
 
-      <main className="flex-1 w-full max-w-7xl mx-auto px-6 py-12 md:py-20 pt-32 md:pt-32 relative">
+      <main className="flex-1 w-full max-w-7xl mx-auto px-6 py-12 md:py-20 pt-36 md:pt-40 relative">
         {/* Subtle background accents (keeps page from looking flat) */}
         <div className="pointer-events-none absolute -top-20 right-[-140px] w-[420px] h-[420px] bg-[#087F78]/[0.06] blur-[90px] rounded-full" />
         <div className="pointer-events-none absolute top-[420px] left-[-160px] w-[520px] h-[520px] bg-[#1DB9A0]/[0.05] blur-[110px] rounded-full" />

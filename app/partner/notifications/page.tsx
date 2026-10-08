@@ -142,12 +142,16 @@ export default function NotificationsPage() {
         onChange={(key) => setCategory(key === "ALL" ? undefined : key)}
       />
 
-      {error ? <p className="text-xs font-semibold text-red-600 mb-4">{error}</p> : null}
+      {error && items.length > 0 ? <p className="text-xs font-semibold text-red-600 mb-4">{error}</p> : null}
 
       {isLoading ? (
         <div className="flex items-center justify-center py-24">
           <Spinner className="w-8 h-8 text-[#087F78]" />
         </div>
+      ) : items.length === 0 && error ? (
+        <Card>
+          <EmptyState title="Couldn't load notifications" description={error} action={<Button onClick={() => load(category, 1, false)}>Retry</Button>} />
+        </Card>
       ) : items.length === 0 ? (
         <Card>
           <EmptyState
@@ -206,10 +210,19 @@ function NotificationRow({
   const wasAccepted = Boolean(notif.data?.accepted);
 
   return (
-    <button
+    // A div (not a <button>) because the "Accept order" action below is itself a button — nested buttons are invalid HTML.
+    <div
+      role="button"
+      tabIndex={0}
       onClick={onTap}
-      className={`w-full flex items-start gap-3 px-5 py-4 text-left transition-colors ${
-        notif.isRead ? "bg-white" : "bg-[#087F78]/[0.03] border-l-[3px] border-[#087F78]"
+      onKeyDown={(e) => {
+        if (e.target === e.currentTarget && (e.key === "Enter" || e.key === " ")) {
+          e.preventDefault();
+          onTap();
+        }
+      }}
+      className={`w-full flex items-start gap-3 px-5 py-4 text-left cursor-pointer transition-colors hover:bg-slate-50/60 focus-visible:outline-none focus-visible:bg-slate-50 ${
+        notif.isRead ? "bg-white" : "bg-[#087F78]/[0.03] shadow-[inset_3px_0_0_#087F78]"
       }`}
     >
       <div className="w-9 h-9 rounded-xl bg-[#087F78]/10 text-[#087F78] flex items-center justify-center shrink-0">
@@ -243,6 +256,6 @@ function NotificationRow({
           </div>
         ) : null}
       </div>
-    </button>
+    </div>
   );
 }

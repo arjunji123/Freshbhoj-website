@@ -182,7 +182,7 @@ export default function ProfilePage() {
         action={
           <div className="flex items-center gap-2">
             <Badge tone={profile.isVerified ? "success" : "warning"}>{profile.isVerified ? "Verified" : "Pending verification"}</Badge>
-            <Button variant="outline" className="!py-2 !px-3.5 !text-xs" onClick={handleCopyLink}>
+            <Button variant="outline" className="!py-2 !px-3.5 !text-xs whitespace-nowrap" onClick={handleCopyLink}>
               <Copy size={13} /> {copied ? "Copied!" : "Copy Public Link"}
             </Button>
           </div>
@@ -256,7 +256,7 @@ export default function ProfilePage() {
           <Field label="Contact phone">
             <TextInput value={contactPhone} onChange={(e) => setContactPhone(e.target.value)} placeholder="+919876543210" />
           </Field>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <Field label="Prep time (mins)">
               <TextInput inputMode="numeric" value={prepTimeMins} onChange={(e) => setPrepTimeMins(e.target.value.replace(/\D/g, ""))} />
             </Field>

@@ -285,7 +285,7 @@ export default function MealForm({ initial, submitLabel, onSubmit }: MealFormPro
         <Field label="Price (₹)">
           <TextInput inputMode="numeric" value={price} onChange={(e) => setPrice(e.target.value.replace(/\D/g, ""))} />
         </Field>
-        <Field label="MRP / strike-through (optional)">
+        <Field label="MRP (optional)">
           <TextInput inputMode="numeric" value={mrp} onChange={(e) => setMrp(e.target.value.replace(/\D/g, ""))} />
         </Field>
       </div>
@@ -348,7 +348,7 @@ export default function MealForm({ initial, submitLabel, onSubmit }: MealFormPro
                   value={group.name}
                   onChange={(e) => updateGroup(group.localId, { name: e.target.value })}
                   placeholder="Group name, e.g. Spice Level"
-                  className="flex-1"
+                  className="flex-1 min-w-0"
                 />
                 <button
                   onClick={() => removeGroup(group.localId)}
@@ -374,7 +374,7 @@ export default function MealForm({ initial, submitLabel, onSubmit }: MealFormPro
                     inputMode="numeric"
                     value={group.minSelect}
                     onChange={(e) => updateGroup(group.localId, { minSelect: e.target.value.replace(/\D/g, "") })}
-                    className="w-16 !py-1.5 !px-2 text-center"
+                    className="!w-16 !py-1.5 !px-2 text-center"
                   />
                 </div>
                 <div className="flex items-center gap-1.5">
@@ -383,7 +383,7 @@ export default function MealForm({ initial, submitLabel, onSubmit }: MealFormPro
                     inputMode="numeric"
                     value={group.maxSelect}
                     onChange={(e) => updateGroup(group.localId, { maxSelect: e.target.value.replace(/\D/g, "") })}
-                    className="w-16 !py-1.5 !px-2 text-center"
+                    className="!w-16 !py-1.5 !px-2 text-center"
                   />
                 </div>
               </div>
@@ -395,7 +395,8 @@ export default function MealForm({ initial, submitLabel, onSubmit }: MealFormPro
                       value={option.name}
                       onChange={(e) => updateOption(group.localId, option.localId, { name: e.target.value })}
                       placeholder="Option name, e.g. Extra Spicy"
-                      className="flex-1"
+                      aria-label="Option name"
+                      className="flex-1 min-w-0"
                     />
                     <div className="flex items-center gap-1 shrink-0">
                       <span className="text-xs font-bold text-slate-400">₹</span>
@@ -403,7 +404,7 @@ export default function MealForm({ initial, submitLabel, onSubmit }: MealFormPro
                         inputMode="numeric"
                         value={option.priceDelta}
                         onChange={(e) => updateOption(group.localId, option.localId, { priceDelta: e.target.value.replace(/[^\d]/g, "") })}
-                        className="w-20 text-center"
+                        className="!w-20 text-center"
                       />
                     </div>
                     <button
