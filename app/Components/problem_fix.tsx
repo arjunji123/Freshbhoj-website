@@ -82,7 +82,7 @@ export default function ProblemFix() {
           onMouseLeave={() => setPaused(false)}
         >
           {/* Left: the problems — stretches to the full height of the fix panel */}
-          <div className="flex lg:flex-col gap-3 lg:gap-4 overflow-x-auto lg:overflow-visible pb-1 -mx-6 px-6 lg:mx-0 lg:px-0 snap-x">
+          <div className="flex lg:flex-col gap-3 lg:gap-4 overflow-x-auto lg:overflow-visible pb-1 -mx-6 px-6 scroll-pl-6 lg:mx-0 lg:px-0 snap-x">
             {ITEMS.map((it, i) => {
               const Icon = it.icon;
               const on = i === active;

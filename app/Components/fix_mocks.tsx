@@ -3,7 +3,7 @@
 import { useState, type ReactNode } from "react";
 import Image from "next/image";
 import {
-  BadgeCheck, Bookmark, Heart, Share2, Star, Clock3, MapPin, Sparkles, Rocket, Repeat, Pause, Leaf, Eye, Flame, ShoppingBag, PlayCircle,
+  BadgeCheck, Bookmark, Heart, Share2, Star, Clock3, MapPin, Sparkles, Rocket, Repeat, Pause, Leaf, Eye,
 } from "lucide-react";
 
 /** Phone shell used by all three fix visuals. */
@@ -12,18 +12,6 @@ function Phone({ children }: { children: ReactNode }) {
     <div className="relative w-[236px] sm:w-[250px] h-[470px] sm:h-[490px] rounded-[2.4rem] bg-[#0D1B1E] p-[9px] shadow-[0_40px_70px_-25px_rgba(0,0,0,0.6)] ring-1 ring-white/20">
       <div className="absolute top-[14px] left-1/2 -translate-x-1/2 w-20 h-5 rounded-full bg-black z-30" />
       <div className="relative w-full h-full rounded-[1.9rem] overflow-hidden bg-white">{children}</div>
-    </div>
-  );
-}
-
-function Callout({ icon, title, text }: { icon: ReactNode; title: string; text: string }) {
-  return (
-    <div className="flex items-center gap-2.5 rounded-2xl bg-white text-[#0D1B1E] pl-2.5 pr-4 py-2.5 shadow-xl">
-      <span className="w-8 h-8 rounded-xl bg-[#087F78]/10 text-[#087F78] flex items-center justify-center shrink-0">{icon}</span>
-      <span className="leading-tight">
-        <span className="block text-[11px] font-extrabold">{title}</span>
-        <span className="block text-[10px] text-slate-500">{text}</span>
-      </span>
     </div>
   );
 }
@@ -80,10 +68,6 @@ export function FeedMock() {
           </div>
         </div>
       </Phone>
-      <div className="flex flex-wrap justify-center gap-2 max-w-[330px]">
-       <Callout icon={<PlayCircle size={16} />} title="Watch it being made" text="No guessing from a photo" />
-       <Callout icon={<ShoppingBag size={16} />} title="One tap to order" text="The exact dish you watched" />
-      </div>
     </div>
   );
 }
@@ -148,10 +132,6 @@ export function GrowthMock() {
           <span className="mt-auto rounded-xl text-center py-2.5 text-[11px] font-extrabold bg-[#FFC21A] text-[#0D1B1E] inline-flex items-center justify-center gap-1.5"><Rocket size={13} /> Boost this Reel</span>
         </div>
       </Phone>
-      <div className="flex flex-wrap justify-center gap-2 max-w-[330px]">
-       <Callout icon={<Flame size={16} />} title="Free Reels & Stories" text="Get found with no ad budget" />
-       <Callout icon={<Sparkles size={16} />} title="AI tells you what to do" text="Daily tips from BhojAI" />
-      </div>
     </div>
   );
 }
@@ -232,10 +212,6 @@ export function SubsMock() {
           <p className="mt-auto text-center text-[9px] text-slate-400">Tap a day, swap or skip. Change anytime.</p>
         </div>
       </Phone>
-      <div className="flex flex-wrap justify-center gap-2 max-w-[330px]">
-       <Callout icon={<Repeat size={16} />} title="Swap tomorrow's meal" text="Try it — tap Swap meal" />
-       <Callout icon={<Pause size={16} />} title="Pause or skip any day" text="No lock-in, no waste" />
-      </div>
     </div>
   );
 }
