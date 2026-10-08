@@ -100,3 +100,8 @@ h1, h2, h3 {
     font-family: var(--font-bricolage), var(--font-jakarta), sans-serif;
     letter-spacing: -0.02em;
 }
+
+@keyframes fb-grow {
+    from { transform: scaleY(0); }
+    to { transform: scaleY(1); }
+}

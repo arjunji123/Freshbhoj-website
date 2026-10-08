@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
-import { Eye, TrendingUp, CalendarClock, Check } from "lucide-react";
+import { Eye, TrendingUp, CalendarClock, Check, ArrowRight, X } from "lucide-react";
+import { FeedMock, GrowthMock, SubsMock } from "./fix_mocks";
 
 const ITEMS = [
   {
@@ -14,8 +14,9 @@ const ITEMS = [
     fix: "Visual-first discovery",
     fixText: "Short Reels show the dish being made, so you see exactly what you're ordering before you tap order.",
     points: ["65% faster ordering", "Trust-based browsing", "Real nutrition on every dish"],
-    img: "/visual-first.svg",
-    portrait: true,
+    before: "Scroll long menus, guess from photos, 15+ minutes to decide.",
+    after: "Watch a short reel, see the nutrition, order in one tap.",
+    Mock: FeedMock,
   },
   {
     icon: TrendingUp,
@@ -25,8 +26,9 @@ const ITEMS = [
     fix: "Creator-led growth",
     fixText: "Every kitchen becomes a ‘Food Creator’ brand with Reels, Stories and performance data to grow direct customers.",
     points: ["Free Reels & Stories", "Built-in Boost ads + AI tips", "Target 3x growth"],
-    img: "/creator-led.svg",
-    portrait: false,
+    before: "Buried under big-platform ads. Nobody finds a small kitchen.",
+    after: "Free Reels & Stories plus AI tips put you in front of nearby customers.",
+    Mock: GrowthMock,
   },
   {
     icon: CalendarClock,
@@ -36,8 +38,9 @@ const ITEMS = [
     fix: "AI-smart subscriptions",
     fixText: "Pick a kitchen's plan or build your own. AI-assisted 30-day plans match your diet, days and budget.",
     points: ["Swap tomorrow's meal", "Pause / skip any day", "Diet & budget aware"],
-    img: "/tiffin-schdule.svg",
-    portrait: false,
+    before: "Fixed plans. Can't change a dish, can't skip a day.",
+    after: "Swap tomorrow's meal, skip or pause any day, AI plans the rest.",
+    Mock: SubsMock,
   },
 ] as const;
 
@@ -69,7 +72,7 @@ export default function ProblemFix() {
         <div className="text-center mb-10 lg:mb-14">
           <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#087F78] mb-4">The reality check</p>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#0D1B1E] tracking-tight leading-tight">
-            Food delivery is broken. <span className="bg-gradient-to-r from-[#1DB9A0] to-[#0B4F6C] bg-clip-text text-transparent"><span style={{ fontFamily: "var(--font-instrument), Georgia, serif", fontStyle: "italic", fontWeight: 400 }}>We fixed it.</span></span>
+            Food delivery is broken. <span className="inline-block pr-[0.14em] -mr-[0.14em] bg-gradient-to-r from-[#1DB9A0] to-[#0B4F6C] bg-clip-text text-transparent"><span style={{ fontFamily: "var(--font-instrument), Georgia, serif", fontStyle: "italic", fontWeight: 400 }}>We fixed it.</span></span>
           </h2>
         </div>
 
@@ -125,23 +128,31 @@ export default function ProblemFix() {
               <span className="text-white/70 text-xs md:text-sm font-medium">for “{cur.problem}”</span>
             </div>
 
-            <div className="relative z-10 flex-1 grid grid-cols-1 md:grid-cols-[1.1fr_0.9fr] gap-8 items-center">
-              <div>
+            <div className="relative z-10 flex-1 grid grid-cols-1 xl:grid-cols-[1fr_auto] gap-10 items-center">
+              <div className="max-w-xl">
                 <h3 className="text-3xl lg:text-5xl font-extrabold tracking-tight leading-[1.1] mb-4">{cur.fix}</h3>
-                <p className="text-white/85 text-base lg:text-lg leading-relaxed mb-8">{cur.fixText}</p>
-                <ul className="flex flex-col gap-3">
+                <p className="text-white/85 text-base lg:text-lg leading-relaxed mb-6">{cur.fixText}</p>
+
+                <div className="grid grid-cols-1 gap-2 mb-6">
+                  <div className="rounded-2xl bg-black/20 border border-white/10 p-4">
+                    <p className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-white/60 mb-1.5"><X size={12} /> Before</p>
+                    <p className="text-sm text-white/80 leading-snug">{cur.before}</p>
+                  </div>
+                  <span className="flex items-center justify-center text-[#FFC21A] -my-0.5"><ArrowRight size={18} className="rotate-90" /></span>
+                  <div className="rounded-2xl bg-white text-[#0D1B1E] p-4 shadow-xl">
+                    <p className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-[#087F78] mb-1.5"><Check size={12} strokeWidth={3} /> With FreshBhoj</p>
+                    <p className="text-sm font-semibold leading-snug">{cur.after}</p>
+                  </div>
+                </div>
+
+                <ul className="flex flex-wrap gap-2">
                   {cur.points.map((p) => (
-                    <li key={p} className="flex items-center gap-3 font-semibold text-sm md:text-base">
-                      <span className="w-6 h-6 shrink-0 rounded-full bg-white/20 flex items-center justify-center"><Check size={14} strokeWidth={3} /></span>
-                      {p}
-                    </li>
+                    <li key={p} className="rounded-full bg-white/15 border border-white/20 px-3.5 py-1.5 text-xs md:text-sm font-semibold">{p}</li>
                   ))}
                 </ul>
               </div>
-              <div className="flex justify-center">
-                <div className={`relative w-full drop-shadow-2xl ${cur.portrait ? "max-w-[200px] aspect-[9/16]" : "max-w-[400px] aspect-[1.3/1]"}`}>
-                  <Image src={cur.img} alt={cur.fix} fill className="object-contain" />
-                </div>
+              <div className="flex justify-center xl:pl-6">
+                <cur.Mock />
               </div>
             </div>
           </div>

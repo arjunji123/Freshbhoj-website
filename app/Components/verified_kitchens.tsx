@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { BadgeCheck, MapPinned, ClipboardCheck, Star, ShieldCheck, Clock3, Search } from "lucide-react";
 
 const STEPS = [
@@ -22,10 +23,10 @@ const STEPS = [
 ] as const;
 
 const KITCHENS = [
-  { name: "Sharma Family Kitchen", meta: "North Indian · 1.2 km", rating: "4.8", time: "25 min", verified: true, tone: "from-[#1DB9A0] to-[#0B4F6C]" },
-  { name: "Night Owl Café", meta: "Snacks · 3.1 km", rating: "4.3", time: "30 min", verified: false, tone: "from-[#FFC21A] to-[#F59E0B]" },
-  { name: "Highway Dhaba Express", meta: "Punjabi · 2.4 km", rating: "4.5", time: "35 min", verified: true, tone: "from-[#5EE6D0] to-[#087F78]" },
-  { name: "Mithai Corner", meta: "Sweets · 1.9 km", rating: "4.4", time: "20 min", verified: false, tone: "from-[#8BD3FF] to-[#1E7BD8]" },
+  { name: "Sharma Family Kitchen", meta: "North Indian · 1.2 km", rating: "4.8", time: "25 min", verified: true, tone: "from-[#FFE7A8] to-[#FFC21A]", img: "/food/rice.webp" },
+  { name: "Night Owl Café", meta: "Snacks · 3.1 km", rating: "4.3", time: "30 min", verified: false, tone: "from-[#D3F1EE] to-[#5EE6D0]", img: "/food/momo.webp" },
+  { name: "Highway Dhaba Express", meta: "Punjabi · 2.4 km", rating: "4.5", time: "35 min", verified: true, tone: "from-[#FFD9B0] to-[#F59E0B]", img: "/food/naan.webp" },
+  { name: "Mithai Corner", meta: "Sweets · 1.9 km", rating: "4.4", time: "20 min", verified: false, tone: "from-[#FFE7A8] to-[#FFB84D]", img: "/food/mango.webp" },
 ] as const;
 
 export default function VerifiedKitchens() {
@@ -69,7 +70,7 @@ export default function VerifiedKitchens() {
           </div>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#0D1B1E] mb-6 leading-[1.05] tracking-tight">
             Trust you can{" "}
-            <span className="bg-gradient-to-r from-[#1DB9A0] via-[#087F78] to-[#0B4F6C] bg-clip-text text-transparent"><span style={{ fontFamily: "var(--font-instrument), Georgia, serif", fontStyle: "italic", fontWeight: 400 }}>see</span></span>
+            <span className="inline-block pr-[0.14em] -mr-[0.14em] bg-gradient-to-r from-[#1DB9A0] via-[#087F78] to-[#0B4F6C] bg-clip-text text-transparent"><span style={{ fontFamily: "var(--font-instrument), Georgia, serif", fontStyle: "italic", fontWeight: 400 }}>see</span></span>
           </h2>
           <p className="text-slate-500 text-base md:text-xl leading-relaxed mb-10 max-w-xl">
             Every kitchen is welcome to sell. The ones we visit and verify in person get a Verified badge and are shown
@@ -170,7 +171,9 @@ export default function VerifiedKitchens() {
                       k.verified ? "border-[#1E7BD8]/25 shadow-[0_12px_24px_-16px_rgba(30,123,216,0.6)]" : "border-slate-100"
                     }`}
                   >
-                    <div className={`w-14 h-14 shrink-0 rounded-xl bg-gradient-to-br ${k.tone}`} />
+                    <div className={`relative w-16 h-16 shrink-0 rounded-2xl bg-gradient-to-br ${k.tone} flex items-center justify-center overflow-hidden`}>
+                      <Image src={k.img} alt="" width={56} height={56} className="w-full h-full object-cover scale-110" />
+                    </div>
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-1.5">
                         <h4 className="font-extrabold text-[#0D1B1E] text-sm truncate">{k.name}</h4>

@@ -97,7 +97,7 @@ export default function Footer() {
             style={{ fontFamily: "var(--font-instrument), Georgia, serif" }}
           >
             &ldquo;Your Feed is Now{" "}
-            <span className="bg-gradient-to-r from-[#5EE6D0] to-[#FFC21A] bg-clip-text text-transparent">Your Menu.</span>&rdquo;
+            <span className="inline-block pr-[0.14em] -mr-[0.14em] bg-gradient-to-r from-[#5EE6D0] to-[#FFC21A] bg-clip-text text-transparent">Your Menu.</span>&rdquo;
           </h4>
 
           <div className="w-full max-w-xs h-px bg-gradient-to-r from-transparent via-[#1DB9A0] to-transparent mb-10" />

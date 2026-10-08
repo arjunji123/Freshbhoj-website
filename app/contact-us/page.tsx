@@ -139,7 +139,7 @@ export default function ContactUs() {
           </span>
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold text-[#0D1B1E] leading-[1.02] mb-6">
             Let&apos;s{" "}
-            <span style={{ ...gradientText, fontFamily: "var(--font-instrument), Georgia, serif", fontStyle: "italic", fontWeight: 400 }}>talk</span>
+            <span className="inline-block pr-[0.14em] -mr-[0.14em]" style={{ ...gradientText, fontFamily: "var(--font-instrument), Georgia, serif", fontStyle: "italic", fontWeight: 400 }}>talk</span>
             .
           </h1>
           <p className="text-slate-500 text-lg md:text-2xl font-medium max-w-2xl mx-auto leading-relaxed">
@@ -331,7 +331,7 @@ export default function ContactUs() {
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#087F78] mb-3">Quick answers</p>
             <h2 className="text-4xl md:text-5xl font-extrabold text-[#0D1B1E]">
               Maybe we already{" "}
-              <span style={{ ...gradientText, fontFamily: "var(--font-instrument), Georgia, serif", fontStyle: "italic", fontWeight: 400 }}>answered it</span>
+              <span className="inline-block pr-[0.14em] -mr-[0.14em]" style={{ ...gradientText, fontFamily: "var(--font-instrument), Georgia, serif", fontStyle: "italic", fontWeight: 400 }}>answered it</span>
             </h2>
           </div>
           <div className="flex flex-col gap-3">
