@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
 import { Eye, TrendingUp, CalendarClock, Check, ArrowRight, X } from "lucide-react";
 import { FeedMock, GrowthMock, SubsMock } from "./fix_mocks";
 
@@ -158,11 +157,6 @@ export default function ProblemFix() {
           </div>
         </div>
 
-        <div className="mt-10 text-center">
-          <Link href="/pre-register?type=foodie" className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#14ADA0] to-[#0B4F6C] text-white font-bold px-8 py-4 shadow-[0_18px_40px_-14px_rgba(8,127,120,0.7)] hover:scale-105 transition-transform">
-            Get early access →
-          </Link>
-        </div>
       </div>
     </section>
   );

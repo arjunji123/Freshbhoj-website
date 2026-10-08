@@ -52,14 +52,10 @@ const Hero = () => {
       <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-6 px-6 pt-32 lg:pt-28 pb-16 lg:pb-16 lg:flex-1">
         {/* Copy */}
         <div className="w-full lg:w-[52%] flex flex-col items-start text-left">
-          <Link
-            href="/pre-register?type=foodie"
-            className="group inline-flex items-center gap-3 rounded-full bg-white/12 border border-white/25 backdrop-blur-md pl-2 pr-4 py-1.5 mb-7 hover:bg-white/20 transition-colors"
-          >
+          <div className="inline-flex items-center gap-3 rounded-full bg-white/12 border border-white/25 backdrop-blur-md pl-2 pr-4 py-1.5 mb-7">
             <span className="rounded-full bg-[#FFC21A] text-[#0D1B1E] px-3 py-1 text-[10px] font-extrabold uppercase tracking-widest">New</span>
             <span className="text-white text-xs lg:text-sm font-bold">Early access is open</span>
-            <ArrowUpRight size={14} className="text-white/80 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-          </Link>
+          </div>
 
           <h1 className="font-extrabold text-white text-[2.9rem] sm:text-6xl lg:text-[3.9vw] xl:text-[4.7rem] leading-[1.02] tracking-[-0.03em] mb-5">
             India&apos;s First

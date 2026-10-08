@@ -1,10 +1,9 @@
 "use client";
 
 import { useState, type MouseEvent } from "react";
-import Link from "next/link";
 import {
   MapPin, Clapperboard, SlidersHorizontal, Truck, CalendarSync, Wallet, Leaf, BadgeCheck, MessagesSquare,
-  UtensilsCrossed, ArrowUpRight, ChefHat, ListOrdered, Sparkles, Megaphone, Repeat, Banknote, FileCheck2, Crown, Timer, type LucideIcon,
+  ListOrdered, Sparkles, Megaphone, Repeat, Banknote, FileCheck2, Crown, Timer, type LucideIcon,
 } from "lucide-react";
 
 type Feature = { icon: LucideIcon; title: string; text: string; big?: boolean; chips?: string[] };
@@ -112,47 +111,6 @@ export default function Features() {
           ))}
         </div>
 
-        {/* Join CTA */}
-        <div className="mt-14 lg:mt-20 grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
-          <Link
-            href="/pre-register?type=foodie"
-            className="group relative overflow-hidden rounded-[2rem] p-8 lg:p-10 bg-white text-[#0D1B1E] transition-transform hover:-translate-y-1"
-          >
-            <div className="pointer-events-none absolute -right-10 -bottom-10 w-56 h-56 rounded-full bg-gradient-to-br from-[#1DB9A0] to-[#0B4F6C] opacity-15 group-hover:opacity-30 transition-opacity" />
-            <div className="relative flex items-start justify-between gap-4">
-              <div>
-                <span className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-[#087F78] mb-4">
-                  <UtensilsCrossed size={14} /> For foodies
-                </span>
-                <h3 className="text-2xl lg:text-3xl font-extrabold tracking-tight mb-2">Get early access</h3>
-                <p className="text-slate-500 text-sm lg:text-base max-w-sm">Join 2,500+ on the waitlist. ₹500 wallet credit and 30 days free delivery at launch.</p>
-              </div>
-              <span className="shrink-0 w-12 h-12 rounded-full bg-[#0D1B1E] text-white flex items-center justify-center group-hover:bg-[#087F78] group-hover:rotate-45 transition-all">
-                <ArrowUpRight size={22} />
-              </span>
-            </div>
-          </Link>
-
-          <Link
-            href="/partner/login"
-            className="group relative overflow-hidden rounded-[2rem] p-8 lg:p-10 text-white bg-[linear-gradient(135deg,#14ADA0_0%,#087F78_55%,#0B4F6C_100%)] transition-transform hover:-translate-y-1"
-          >
-            <div className="pointer-events-none absolute -right-10 -top-10 w-56 h-56 rounded-full bg-[#FFC21A] opacity-25 blur-2xl group-hover:opacity-40 transition-opacity" />
-            <div className="relative flex items-start justify-between gap-4">
-              <div>
-                <span className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-[#FFC21A] mb-4">
-                  <ChefHat size={14} /> For kitchens
-                </span>
-                <h3 className="text-2xl lg:text-3xl font-extrabold tracking-tight mb-2">Register your kitchen</h3>
-                <p className="text-white/80 text-sm lg:text-base max-w-sm">Restaurant, dhaba, café or home kitchen — 0% commission for your first 3 months.</p>
-              </div>
-              <span className="shrink-0 w-12 h-12 rounded-full bg-[#FFC21A] text-[#0D1B1E] flex items-center justify-center group-hover:rotate-45 transition-transform">
-                <ArrowUpRight size={22} />
-              </span>
-            </div>
-          </Link>
-        </div>
-        <p className="text-center text-white/40 text-sm mt-6 tracking-wide">Already a partner? <Link href="/partner/login" className="text-white/70 underline underline-offset-4 hover:text-white">Log in</Link> · 1,200+ partners across India</p>
       </div>
     </section>
   );

@@ -117,7 +117,7 @@ export default function PreRegistration() {
               ))}
             </ul>
             <Link
-              href="/pre-register?type=kitchen"
+              href="/partner/login"
               className="relative mt-auto inline-flex items-center justify-center gap-2 w-full h-14 rounded-2xl bg-[#FFC21A] text-[#0D1B1E] font-extrabold text-lg shadow-[0_20px_40px_-14px_rgba(255,194,26,0.7)] hover:scale-[1.02] active:scale-[0.99] transition-transform"
             >
               Register Kitchen <ArrowUpRight size={20} />
@@ -140,7 +140,7 @@ export default function PreRegistration() {
             We&apos;re rolling out city by city. Pre-register now and you&apos;ll be first in line when we reach yours.
           </p>
 
-          <ol className="relative grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6 max-w-4xl mx-auto mb-12 text-left">
+          <ol className="relative grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6 max-w-4xl mx-auto text-left">
             <span className="hidden md:block absolute top-5 left-[16.6%] right-[16.6%] h-0.5 bg-gradient-to-r from-[#087F78] via-[#087F78]/30 to-slate-200" />
             {ROADMAP.map((s, i) => (
               <li key={s.title} className="relative flex md:flex-col md:items-center md:text-center gap-4">
@@ -161,22 +161,6 @@ export default function PreRegistration() {
               </li>
             ))}
           </ol>
-
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link
-              href="/pre-register?type=foodie"
-              className="inline-flex items-center justify-center gap-2 h-14 px-9 rounded-full text-white font-bold shadow-[0_18px_40px_-14px_rgba(8,127,120,0.7)] hover:scale-105 transition-transform"
-              style={{ background: "linear-gradient(135deg,#14ADA0,#087F78 55%,#0B4F6C)" }}
-            >
-              Pre-register now <ArrowUpRight size={18} />
-            </Link>
-            <Link
-              href="/partner/login"
-              className="inline-flex items-center justify-center h-14 px-9 rounded-full border-2 border-[#0D1B1E]/15 text-[#0D1B1E] font-bold hover:border-[#087F78] hover:text-[#087F78] transition-colors"
-            >
-              Register your kitchen
-            </Link>
-          </div>
         </div>
       </div>
     </section>
