@@ -1,200 +1,184 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
+import { ArrowUpRight, Clapperboard, Megaphone, Percent, ShoppingBag, Sparkles, Truck, UtensilsCrossed, Wallet, Check, type LucideIcon } from "lucide-react";
+
+const accent = { fontFamily: "var(--font-instrument), Georgia, serif", fontStyle: "italic" as const, fontWeight: 400 };
+
+type Perk = { icon: LucideIcon; text: string };
+
+const FOODIE_PERKS: Perk[] = [
+  { icon: Wallet, text: "Flat ₹500 Wallet Credit" },
+  { icon: Clapperboard, text: "Early Access to Top Rated Reels" },
+  { icon: Truck, text: "Exclusive 30-day Free Delivery" },
+];
+
+const KITCHEN_PERKS: Perk[] = [
+  { icon: Percent, text: "0% Commission for 3 Months" },
+  { icon: Megaphone, text: "₹5000 Sponsored Credits" },
+  { icon: Sparkles, text: "Priority AI Video Production" },
+];
+
+const ROADMAP = [
+  { tag: "Live now", title: "Pre-registration", text: "Reserve your spot and your launch rewards.", live: true },
+  { tag: "Next", title: "Early access invites", text: "Waitlist members get in before everyone else.", live: false },
+  { tag: "Soon", title: "City-by-city launch", text: "Reels, verified kitchens and subscriptions go live.", live: false },
+];
 
 export default function PreRegistration() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) setVisible(true);
-      },
-      { threshold: 0.1 }
-    );
+    const observer = new IntersectionObserver(([entry]) => entry.isIntersecting && setVisible(true), { threshold: 0.1 });
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
 
-  return (
-    <section
-      ref={sectionRef}
-      className="w-full overflow-hidden bg-white pt-10 lg:pt-8 pb-16 lg:pb-28 font-sans"
-    >
-      <div className="w-full max-w-7xl mx-auto px-6">
+  const reveal = (delay = "") => `transition-all duration-1000 ease-out ${delay} ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`;
 
+  return (
+    <section id="pre-reg" ref={sectionRef} className="relative w-full overflow-hidden font-sans py-16 lg:py-28 bg-gradient-to-b from-white via-[#EFFAF8] to-white">
+      <div className="pointer-events-none absolute inset-0 opacity-40 [background-image:radial-gradient(#087F78_1px,transparent_1px)] [background-size:28px_28px] [mask-image:radial-gradient(ellipse_at_top,black_10%,transparent_65%)]" />
+      <div className="pointer-events-none absolute top-20 -left-24 w-[380px] h-[380px] rounded-full bg-[#1DB9A0]/20 blur-[110px]" />
+      <div className="pointer-events-none absolute top-40 -right-24 w-[340px] h-[340px] rounded-full bg-[#FFC21A]/20 blur-[110px]" />
+
+      <div className="relative w-full max-w-7xl mx-auto px-6">
         {/* ── Header ── */}
-        <div
-          className={`text-center mb-16 lg:mb-24 flex flex-col items-center transition-all duration-1000 ease-out
-          ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
-        >
-          <div className="mb-4">
-            <p
-              className="text-xs md:text-sm font-bold tracking-[0.2em] uppercase inline-block"
-              style={{
-                background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text"
-              }}
-            >
-              Limited early spots
-            </p>
-          </div>
-          <h2
-            className="text-4xl md:text-5xl lg:text-7xl text-[#0D1B1E] mb-8 leading-tight tracking-tight"
-            style={{ fontFamily: "var(--font-instrument), Georgia, serif", fontWeight: 400 }}
-          >
-            Exclusive <span
-              style={{
-                background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text"
-              }}
-            >Pre-Registration</span> <br className="hidden lg:block" /> Benefits
+        <div className={`text-center max-w-3xl mx-auto mb-14 lg:mb-20 ${reveal()}`}>
+          <span className="inline-flex items-center gap-2 rounded-full bg-white border border-[#087F78]/15 shadow-sm px-5 py-2 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-[#087F78] mb-7">
+            <span className="w-2 h-2 rounded-full bg-[#FFC21A] animate-pulse" /> Limited early spots
+          </span>
+          <h2 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-[#0D1B1E] leading-[1.05] mb-6">
+            Join early.{" "}
+            <span className="inline-block pr-[0.14em] -mr-[0.14em] bg-gradient-to-r from-[#1DB9A0] via-[#087F78] to-[#0B4F6C] bg-clip-text text-transparent" >
+              <span style={accent}>Get rewarded.</span>
+            </span>
           </h2>
-          <p className="text-center font-medium text-slate-500 text-base md:text-xl leading-relaxed max-w-2xl md:max-w-none">
-            Join the movement before the public launch and unlock massive rewards. Limited spots available for the early community.
+          <p className="text-slate-500 text-base md:text-xl leading-relaxed">
+            Be part of FreshBhoj before the public launch and unlock rewards made for early members. Spots are limited.
           </p>
         </div>
 
-        {/* ── Cards Grid ── */}
-        <div
-          className={`grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10 mb-20 lg:mb-32 transition-all duration-1000 ease-out delay-200
-          ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-20"}`}
-        >
-          {/* ─ Left Card: For Foodies ─ */}
-          <div className="flex flex-col justify-between bg-white rounded-[2.5rem] lg:rounded-[3.5rem] border border-slate-100 p-10 lg:p-14 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.05)] hover:shadow-[0_30px_70px_-10px_rgba(0,0,0,0.12)] transition-all duration-500 hover:-translate-y-2 group">
-            <div>
-              <div className="mb-10">
-                <div className="relative w-16 h-16">
-                  <Image src="/for-foodie.svg" alt="Foodies" fill className="object-contain" />
-                </div>
-              </div>
-              <h3 className="text-[#0D1B1E] font-extrabold text-3xl lg:text-5xl mb-8 leading-tight tracking-tight">
-                For Foodies
-              </h3>
-              <div className="flex flex-col gap-5 mb-12">
-                {[
-                  "Flat ₹500 Wallet Credit",
-                  "Early Access to Top Rated Reels",
-                  "Exclusive 30-day Free Delivery",
-                ].map((item) => (
-                  <div key={item} className="flex items-center gap-4 text-slate-700 font-bold text-base lg:text-xl">
-                    <div className="relative w-6 h-6 flex-shrink-0">
-                      <Image src="/green-right.svg" alt="✓" fill className="object-contain" />
-                    </div>
-                    {item}
-                  </div>
-                ))}
-              </div>
+        {/* ── Cards ── */}
+        <div className={`grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 mb-16 lg:mb-24 ${reveal("delay-200")}`}>
+          {/* Foodies */}
+          <div className="group relative overflow-hidden rounded-[2.5rem] bg-white border border-slate-100 p-8 lg:p-12 shadow-[0_30px_70px_-40px_rgba(8,127,120,0.5)] hover:-translate-y-1.5 transition-transform duration-500 flex flex-col">
+            <div className="pointer-events-none absolute -top-24 -right-24 w-72 h-72 rounded-full bg-[#1DB9A0]/15 blur-3xl group-hover:bg-[#1DB9A0]/25 transition-colors" />
+            <div className="relative flex items-center justify-between mb-8">
+              <span className="inline-flex items-center gap-2 rounded-full bg-[#087F78]/10 text-[#087F78] px-4 py-2 text-xs font-bold uppercase tracking-widest">
+                <ShoppingBag size={14} /> For Foodies
+              </span>
             </div>
+            <div className="relative mb-8">
+              <p className="text-7xl lg:text-8xl font-extrabold leading-none bg-gradient-to-br from-[#1DB9A0] to-[#0B4F6C] bg-clip-text text-transparent">₹500</p>
+              <p className="text-slate-500 font-semibold mt-2">wallet credit for early members</p>
+            </div>
+            <ul className="relative flex flex-col gap-3 mb-10">
+              {FOODIE_PERKS.map(({ icon: Icon, text }) => (
+                <li key={text} className="flex items-center gap-4 rounded-2xl bg-[#F3F8F8] px-4 py-3.5 group-hover:bg-[#EFFAF8] transition-colors">
+                  <span className="w-10 h-10 shrink-0 rounded-xl bg-white text-[#087F78] shadow-sm flex items-center justify-center"><Icon size={18} /></span>
+                  <span className="font-bold text-[#0D1B1E]">{text}</span>
+                  <Check size={16} className="ml-auto text-[#087F78] shrink-0" strokeWidth={3} />
+                </li>
+              ))}
+            </ul>
             <Link
               href="/pre-register?type=foodie"
-              className="relative flex items-center justify-center w-full py-5 rounded-2xl bg-[linear-gradient(135deg,#14ADA0,#0B4F6C)] hover:brightness-110 text-white font-extrabold text-lg lg:text-xl transition-all shadow-lg overflow-hidden group/btn"
+              className="relative mt-auto inline-flex items-center justify-center gap-2 w-full h-14 rounded-2xl text-white font-extrabold text-lg shadow-[0_20px_40px_-14px_rgba(8,127,120,0.7)] hover:scale-[1.02] active:scale-[0.99] transition-transform"
+              style={{ background: "linear-gradient(135deg,#14ADA0,#087F78 55%,#0B4F6C)" }}
             >
-              <div className="absolute inset-0 bg-[linear-gradient(169.21deg,#1DB9A0_9%,#087F78_77%,#0B4F6C_100%)] opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300"></div>
-              <span className="relative z-10">Pre-Register Now →</span>
+              Pre-Register Now <ArrowUpRight size={20} />
             </Link>
           </div>
 
-          {/* ─ Right Card: For Kitchens ─ */}
-          <div className="relative flex flex-col justify-between rounded-[2.5rem] lg:rounded-[3.5rem] p-10 lg:p-14 overflow-hidden text-white bg-[linear-gradient(169.21deg,#1DB9A0_8.65%,#087F78_77.4%,#0B4F6C_100%)] shadow-[0_20px_50px_-12px_rgba(8,127,120,0.3)] hover:shadow-[0_30px_70px_-10px_rgba(8,127,120,0.5)] transition-all duration-500 hover:-translate-y-2 group">
-            <div className="absolute top-8 right-8 bg-white/20 backdrop-blur-md text-white text-[10px] lg:text-xs font-bold uppercase tracking-widest px-5 py-2 rounded-full">
-              Premium Offer
+          {/* Kitchens */}
+          <div className="group relative overflow-hidden rounded-[2.5rem] bg-[#0D1B1E] text-white p-8 lg:p-12 shadow-[0_30px_70px_-30px_rgba(11,79,108,0.7)] hover:-translate-y-1.5 transition-transform duration-500 flex flex-col">
+            <div className="pointer-events-none absolute -top-24 -left-20 w-80 h-80 rounded-full bg-[#087F78]/50 blur-3xl animate-[drift_14s_ease-in-out_infinite]" />
+            <div className="pointer-events-none absolute -bottom-28 -right-16 w-80 h-80 rounded-full bg-[#0B4F6C]/60 blur-3xl animate-[drift_18s_ease-in-out_infinite_reverse]" />
+            <div className="relative flex items-center justify-between mb-8">
+              <span className="inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/15 px-4 py-2 text-xs font-bold uppercase tracking-widest">
+                <UtensilsCrossed size={14} /> For Kitchens
+              </span>
+              <span className="rounded-full bg-[#FFC21A] text-[#0D1B1E] px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-widest">Premium offer</span>
             </div>
-            <div>
-              <div className="mb-10">
-                <div className="relative w-16 h-16">
-                  <Image src="/Overlay.svg" alt="Kitchens" fill className="object-contain" />
-                </div>
-              </div>
-              <h3 className="font-extrabold text-3xl lg:text-5xl mb-8 leading-tight tracking-tight">
-                For Kitchens
-              </h3>
-              <div className="flex flex-col gap-5 mb-12">
-                {[
-                  "0% Commission for 3 Months",
-                  "₹5000 Sponsored Credits",
-                  "Priority AI Video Production",
-                ].map((item) => (
-                  <div key={item} className="flex items-center gap-4 font-bold text-base lg:text-xl">
-                    <div className="relative w-6 h-6 flex-shrink-0">
-                      <Image src="/white-right.svg" alt="✓" fill className="object-contain" />
-                    </div>
-                    {item}
-                  </div>
-                ))}
-              </div>
+            <div className="relative mb-8">
+              <p className="text-7xl lg:text-8xl font-extrabold leading-none bg-gradient-to-br from-[#FFE08A] to-[#FFC21A] bg-clip-text text-transparent">0%</p>
+              <p className="text-white/70 font-semibold mt-2">commission for your first 3 months</p>
             </div>
+            <ul className="relative flex flex-col gap-3 mb-10">
+              {KITCHEN_PERKS.map(({ icon: Icon, text }) => (
+                <li key={text} className="flex items-center gap-4 rounded-2xl bg-white/[0.06] border border-white/10 px-4 py-3.5 group-hover:bg-white/10 transition-colors">
+                  <span className="w-10 h-10 shrink-0 rounded-xl bg-white/10 text-[#5EE6D0] flex items-center justify-center"><Icon size={18} /></span>
+                  <span className="font-bold">{text}</span>
+                  <Check size={16} className="ml-auto text-[#FFC21A] shrink-0" strokeWidth={3} />
+                </li>
+              ))}
+            </ul>
             <Link
               href="/pre-register?type=kitchen"
-              className="flex items-center justify-center w-full py-5 rounded-2xl bg-white text-[#087F78] font-extrabold text-lg lg:text-xl transition-all shadow-xl hover:bg-slate-50"
+              className="relative mt-auto inline-flex items-center justify-center gap-2 w-full h-14 rounded-2xl bg-[#FFC21A] text-[#0D1B1E] font-extrabold text-lg shadow-[0_20px_40px_-14px_rgba(255,194,26,0.7)] hover:scale-[1.02] active:scale-[0.99] transition-transform"
             >
-              Register Kitchen
+              Register Kitchen <ArrowUpRight size={20} />
             </Link>
           </div>
         </div>
 
-        {/* ── The Future is Cooking ── */}
-        <div
-          className={`relative overflow-hidden rounded-[2.5rem] lg:rounded-[3.5rem] px-6 py-14 lg:px-16 lg:py-20 text-center text-white bg-[linear-gradient(135deg,#0B4F6C_0%,#087F78_55%,#14ADA0_100%)] transition-all duration-1000 ease-out delay-300
-          ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
-        >
-          <div className="pointer-events-none absolute -top-24 -left-16 w-80 h-80 rounded-full bg-[#5EE6D0]/30 blur-3xl animate-[drift_14s_ease-in-out_infinite]" />
-          <div className="pointer-events-none absolute -bottom-28 -right-10 w-96 h-96 rounded-full bg-white/20 blur-3xl animate-[drift_18s_ease-in-out_infinite_reverse]" />
-          <div className="pointer-events-none absolute inset-0 opacity-[0.15] [background-image:radial-gradient(#fff_1px,transparent_1px)] [background-size:26px_26px] [mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)]" />
-
-          <div className="relative">
-            <span className="inline-flex items-center gap-2 rounded-full bg-white/15 border border-white/25 backdrop-blur px-5 py-2 text-[10px] lg:text-xs font-bold uppercase tracking-[0.2em] mb-8">
-              <span className="w-2 h-2 rounded-full bg-[#FFC21A] animate-pulse" />
-              Launching nationally soon
+        {/* ── Launch roadmap ── */}
+        <div className={`relative rounded-[2.5rem] lg:rounded-[3.5rem] border border-[#087F78]/10 bg-white/70 backdrop-blur px-6 py-12 lg:px-16 lg:py-16 text-center shadow-[0_30px_80px_-50px_rgba(8,127,120,0.5)] ${reveal("delay-300")}`}>
+          <span className="inline-flex items-center gap-2 rounded-full bg-[#087F78]/10 text-[#087F78] px-5 py-2 text-[10px] lg:text-xs font-bold uppercase tracking-[0.2em] mb-6">
+            <span className="w-2 h-2 rounded-full bg-[#087F78] animate-pulse" /> Launching nationally soon
+          </span>
+          <h3 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#0D1B1E] leading-[1.05] mb-4">
+            The future is{" "}
+            <span className="inline-block pr-[0.14em] -mr-[0.14em] bg-gradient-to-r from-[#1DB9A0] to-[#0B4F6C] bg-clip-text text-transparent">
+              <span style={accent}>cooking.</span>
             </span>
-            <h3
-              className="text-5xl md:text-6xl lg:text-8xl leading-[1.02] mb-6"
-              style={{ fontFamily: "var(--font-instrument), Georgia, serif", fontWeight: 400 }}
-            >
-              The future is <span className="italic text-[#FFC21A]">cooking.</span>
-            </h3>
-            <p className="text-white/80 text-base md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed">
-              We&apos;re rolling out city by city. Pre-register now and you&apos;ll be first in line when we reach yours.
-            </p>
+          </h3>
+          <p className="text-slate-500 text-base md:text-lg max-w-2xl mx-auto mb-12 leading-relaxed">
+            We&apos;re rolling out city by city. Pre-register now and you&apos;ll be first in line when we reach yours.
+          </p>
 
-            {/* Roadmap */}
-            <div className="relative grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 max-w-4xl mx-auto mb-12 text-left">
-              {[
-                { tag: "Live now", title: "Pre-registration", text: "Reserve your spot and your launch rewards.", live: true },
-                { tag: "Next", title: "Early access invites", text: "Waitlist members get in before everyone else.", live: false },
-                { tag: "Soon", title: "City-by-city launch", text: "Reels, verified kitchens and subscriptions go live.", live: false },
-              ].map((s, i) => (
-                <div key={s.title} className={`rounded-3xl p-6 border backdrop-blur ${s.live ? "bg-white text-[#0D1B1E] border-white shadow-2xl" : "bg-white/10 border-white/20"}`}>
-                  <div className="flex items-center justify-between mb-4">
-                    <span className={`text-[10px] font-bold uppercase tracking-widest rounded-full px-3 py-1 ${s.live ? "bg-[#087F78] text-white" : "bg-white/15 text-white/80"}`}>{s.tag}</span>
-                    <span className={`text-3xl font-extrabold leading-none ${s.live ? "text-[#087F78]/25" : "text-white/20"}`}>0{i + 1}</span>
-                  </div>
-                  <h4 className="font-extrabold text-lg mb-1">{s.title}</h4>
-                  <p className={`text-sm leading-relaxed ${s.live ? "text-slate-500" : "text-white/70"}`}>{s.text}</p>
+          <ol className="relative grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6 max-w-4xl mx-auto mb-12 text-left">
+            <span className="hidden md:block absolute top-5 left-[16.6%] right-[16.6%] h-0.5 bg-gradient-to-r from-[#087F78] via-[#087F78]/30 to-slate-200" />
+            {ROADMAP.map((s, i) => (
+              <li key={s.title} className="relative flex md:flex-col md:items-center md:text-center gap-4">
+                <span className="relative shrink-0 w-10 h-10">
+                  {s.live ? <span className="absolute inset-0 rounded-full bg-[#087F78]/30 animate-ping" /> : null}
+                  <span
+                    className={`relative w-10 h-10 rounded-full flex items-center justify-center text-sm font-extrabold ${s.live ? "text-white" : "bg-white border-2 border-slate-200 text-slate-400"}`}
+                    style={s.live ? { background: "linear-gradient(135deg,#14ADA0,#0B4F6C)" } : undefined}
+                  >
+                    {i + 1}
+                  </span>
+                </span>
+                <div>
+                  <span className={`inline-block text-[10px] font-bold uppercase tracking-widest rounded-full px-3 py-1 mb-2 ${s.live ? "bg-[#087F78] text-white" : "bg-slate-100 text-slate-500"}`}>{s.tag}</span>
+                  <h4 className="font-extrabold text-[#0D1B1E] text-lg mb-1">{s.title}</h4>
+                  <p className="text-slate-500 text-sm leading-relaxed">{s.text}</p>
                 </div>
-              ))}
-            </div>
+              </li>
+            ))}
+          </ol>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/pre-register?type=foodie" className="inline-flex justify-center rounded-full bg-white text-[#0D1B1E] font-bold px-9 py-4 hover:scale-105 transition-transform shadow-xl">
-                Pre-register now →
-              </Link>
-              <Link href="/partner/login" className="inline-flex justify-center rounded-full bg-[#FFC21A] text-[#0D1B1E] font-bold px-9 py-4 hover:scale-105 transition-transform shadow-xl">
-                Register your kitchen
-              </Link>
-            </div>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <Link
+              href="/pre-register?type=foodie"
+              className="inline-flex items-center justify-center gap-2 h-14 px-9 rounded-full text-white font-bold shadow-[0_18px_40px_-14px_rgba(8,127,120,0.7)] hover:scale-105 transition-transform"
+              style={{ background: "linear-gradient(135deg,#14ADA0,#087F78 55%,#0B4F6C)" }}
+            >
+              Pre-register now <ArrowUpRight size={18} />
+            </Link>
+            <Link
+              href="/partner/login"
+              className="inline-flex items-center justify-center h-14 px-9 rounded-full border-2 border-[#0D1B1E]/15 text-[#0D1B1E] font-bold hover:border-[#087F78] hover:text-[#087F78] transition-colors"
+            >
+              Register your kitchen
+            </Link>
           </div>
         </div>
-
       </div>
     </section>
   );
 }
-
