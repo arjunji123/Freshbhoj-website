@@ -44,7 +44,7 @@ const Navbar = () => {
     <>
       <header className="fixed top-3 md:top-4 inset-x-0 z-[100] px-3 md:px-6 pointer-events-none">
         <div
-          className={`pointer-events-auto mx-auto max-w-6xl flex items-center justify-between gap-3 rounded-full pl-5 pr-2 py-2 transition-all duration-300 border ${
+          className={`pointer-events-auto mx-auto max-w-6xl flex items-center justify-between gap-3 rounded-full h-[60px] md:h-[68px] pl-6 pr-2.5 transition-all duration-300 border ${
             onDark
               ? "bg-white/10 backdrop-blur-xl border-white/25"
               : "bg-white/85 backdrop-blur-xl border-slate-200/70 shadow-[0_10px_40px_-12px_rgba(8,127,120,0.35)]"
@@ -57,7 +57,7 @@ const Navbar = () => {
               width={160}
               height={44}
               priority
-              className="h-8 md:h-9 w-auto object-contain"
+              className="h-6 md:h-7 w-auto object-contain"
             />
           </Link>
 
@@ -68,7 +68,7 @@ const Navbar = () => {
                 <Link
                   key={l.label}
                   href={l.href}
-                  className={`px-4 py-2 rounded-full text-sm font-bold transition-colors ${
+                  className={`h-10 inline-flex items-center px-4 rounded-full text-sm font-bold transition-colors ${
                     active
                       ? onDark
                         ? "bg-white text-[#087F78]"
@@ -87,7 +87,7 @@ const Navbar = () => {
           <div className="flex items-center gap-2">
             <Link
               href="/partner/login"
-              className={`hidden md:inline-flex px-5 py-2.5 rounded-full text-sm font-bold border transition-colors ${
+              className={`hidden md:inline-flex items-center h-11 px-5 rounded-full text-sm font-bold border transition-colors ${
                 onDark ? "text-white border-white/35 hover:bg-white/10" : "text-[#087F78] border-[#087F78]/25 hover:bg-[#087F78]/5"
               }`}
             >
@@ -95,12 +95,12 @@ const Navbar = () => {
             </Link>
             <Link
               href="/pre-register"
-              className="hidden sm:inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full text-sm font-extrabold bg-[#FFC21A] text-[#0D1B1E] shadow-[0_8px_20px_-8px_rgba(255,194,26,0.9)] hover:scale-105 active:scale-95 transition-transform"
+              className="hidden sm:inline-flex items-center h-11 gap-1.5 px-5 rounded-full text-sm font-extrabold bg-[#FFC21A] text-[#0D1B1E] shadow-[0_8px_20px_-8px_rgba(255,194,26,0.9)] hover:scale-105 active:scale-95 transition-transform"
             >
               Pre-register <ArrowUpRight size={15} />
             </Link>
             <button
-              className={`lg:hidden w-11 h-11 rounded-full flex items-center justify-center transition-colors ${onDark ? "bg-white/15 text-white" : "bg-[#087F78]/10 text-[#087F78]"}`}
+              className={`lg:hidden w-11 h-11 shrink-0 rounded-full flex items-center justify-center transition-colors ${onDark ? "bg-white/15 text-white" : "bg-[#087F78]/10 text-[#087F78]"}`}
               onClick={() => setMenuOpen((v) => !v)}
               aria-label={menuOpen ? "Close menu" : "Open menu"}
               aria-expanded={menuOpen}
