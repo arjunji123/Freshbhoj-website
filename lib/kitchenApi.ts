@@ -514,13 +514,21 @@ export const operatingHoursApi = {
 };
 
 // ── Reels ─────────────────────────────────────────────────────────────────
-// No dedicated web management page yet (Stories, above, covers that role on
-// the web today) — these exist so the API surface is complete and ready for
-// whichever screen picks it up next.
+// Powers the Reels management page at /partner/reels and the reel picker on
+// /partner/ads. Upload the video (purpose REEL_VIDEO) and optional thumbnail
+// (purpose REEL_THUMBNAIL) via kitchenUploadApi first, then publish the URLs.
 
 export const kitchenReelsApi = {
   list: () => request<KitchenReel[]>('/partner/reels'),
-  publish: (input: { videoUrl: string; thumbnailUrl?: string; caption?: string; hashtags?: string[]; mealId?: string }) =>
+  publish: (input: {
+    videoUrl: string;
+    thumbnailUrl?: string;
+    caption?: string;
+    hashtags?: string[];
+    mealId?: string;
+    /** Backend accepts 3-120 seconds; omit when unknown. */
+    durationSec?: number;
+  }) =>
     request<KitchenReel>('/partner/reels', { method: 'POST', body: input }),
   update: (id: string, input: { caption?: string; hashtags?: string[] }) =>
     request<KitchenReel>(`/partner/reels/${id}`, { method: 'PATCH', body: input }),

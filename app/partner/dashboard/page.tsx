@@ -8,9 +8,11 @@ import {
   BadgeCheck,
   Bell,
   Camera,
+  Clapperboard,
   Eye,
   Heart,
   IndianRupee,
+  Megaphone,
   ClipboardList,
   Package,
   Phone,
@@ -208,9 +210,12 @@ export default function DashboardPage() {
       </div>
 
       {/* Quick actions */}
-      <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 mb-8 [&>*:last-child]:col-span-2 lg:[&>*:last-child]:col-span-1">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
         <QuickAction href="/partner/menu/new" icon={Plus} label="Add a dish" />
         <QuickAction href="/partner/stories" icon={Camera} label="Post a story" />
+        <QuickAction href="/partner/reels" icon={Clapperboard} label="Create a reel" />
+        <QuickAction href="/partner/ads" icon={Megaphone} label="Promote a reel" />
+        <QuickAction href="/partner/subscriptions" icon={Users} label="Subscribers" />
         <QuickAction href="/partner/orders" icon={ClipboardList} label="View orders" />
         <QuickAction href="/partner/profile" icon={UserCog} label="Edit profile" />
         <QuickAction href="/partner/wallet" icon={PiggyBank} label="Wallet" />

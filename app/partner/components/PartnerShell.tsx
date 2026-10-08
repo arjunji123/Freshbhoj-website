@@ -21,6 +21,7 @@ import {
   Landmark,
   Crown,
   Layers,
+  Clapperboard,
 } from "lucide-react";
 import { useState } from "react";
 import { useKitchenAuth } from "../../../lib/KitchenAuthProvider";
@@ -47,6 +48,7 @@ const NAV_SECTIONS = [
     title: "Grow",
     items: [
       { href: "/partner/stories", label: "Stories", icon: Sparkles, requiresActive: false },
+      { href: "/partner/reels", label: "Reels", icon: Clapperboard, requiresActive: true },
       { href: "/partner/ads", label: "Ads", icon: Megaphone, requiresActive: true },
       { href: "/partner/subscriptions", label: "Subscribers", icon: Users, requiresActive: true },
       { href: "/partner/plans", label: "Plans", icon: Layers, requiresActive: true },
