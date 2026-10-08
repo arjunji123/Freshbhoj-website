@@ -270,13 +270,13 @@ export default function MealForm({ initial, submitLabel, onSubmit }: MealFormPro
             </div>
           ))}
           {images.length < 6 ? (
-            <label className="w-20 h-20 rounded-xl border-2 border-dashed border-slate-200 flex items-center justify-center cursor-pointer text-xs font-bold text-slate-400 hover:border-[#0A8068]/30 hover:text-[#0A8068] transition-colors">
+            <label className="w-20 h-20 rounded-xl border-2 border-dashed border-slate-200 flex items-center justify-center cursor-pointer text-xs font-bold text-slate-400 hover:border-[#087F78]/30 hover:text-[#087F78] transition-colors">
               {isUploading ? "…" : "+ Add"}
               <input type="file" accept="image/*" className="hidden" onChange={(e) => e.target.files?.[0] && handleUploadImage(e.target.files[0])} />
             </label>
           ) : null}
         </div>
-        <Link href="/partner/menu/upload-guide" className="inline-flex items-center gap-1 text-xs font-bold text-[#0A8068] mt-2">
+        <Link href="/partner/menu/upload-guide" className="inline-flex items-center gap-1 text-xs font-bold text-[#087F78] mt-2">
           See upload tips <ArrowRight size={11} />
         </Link>
       </Field>
@@ -364,7 +364,7 @@ export default function MealForm({ initial, submitLabel, onSubmit }: MealFormPro
                     type="checkbox"
                     checked={group.isRequired}
                     onChange={(e) => updateGroup(group.localId, { isRequired: e.target.checked })}
-                    className="w-4 h-4 accent-[#0A8068]"
+                    className="w-4 h-4 accent-[#087F78]"
                   />
                   <span className="text-xs font-bold text-slate-600">Required</span>
                 </label>
@@ -418,7 +418,7 @@ export default function MealForm({ initial, submitLabel, onSubmit }: MealFormPro
                 {group.options.length < MAX_OPTIONS_PER_GROUP ? (
                   <button
                     onClick={() => addOption(group.localId)}
-                    className="inline-flex items-center gap-1.5 self-start text-xs font-bold text-[#0A8068] mt-1"
+                    className="inline-flex items-center gap-1.5 self-start text-xs font-bold text-[#087F78] mt-1"
                   >
                     <Plus size={13} /> Add option
                   </button>
@@ -438,10 +438,10 @@ export default function MealForm({ initial, submitLabel, onSubmit }: MealFormPro
       </Field>
 
       {/* ── AI nutrition assist ─────────────────────────────────────────── */}
-      <div className="rounded-2xl border-2 border-dashed border-[#0A8068]/20 p-5 bg-[#0A8068]/[0.02]">
+      <div className="rounded-2xl border-2 border-dashed border-[#087F78]/20 p-5 bg-[#087F78]/[0.02]">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
-            <Sparkles size={16} className="text-[#0A8068]" />
+            <Sparkles size={16} className="text-[#087F78]" />
             <p className="text-sm font-extrabold text-slate-800">AI nutrition &amp; health assist</p>
           </div>
           <Button variant="outline" className="!py-2 !px-4 !text-xs" onClick={handleAnalyze} disabled={name.trim().length < 3} loading={isAnalyzing}>
@@ -460,7 +460,7 @@ export default function MealForm({ initial, submitLabel, onSubmit }: MealFormPro
             </div>
             <p className="text-xs text-slate-500">{analysis.reason}</p>
             {analysis.suggestedGoalTags.length ? (
-              <button onClick={handleApplySuggestedTags} className="text-xs font-bold text-[#0A8068] text-left mt-1">
+              <button onClick={handleApplySuggestedTags} className="text-xs font-bold text-[#087F78] text-left mt-1">
                 Apply suggested tags: {analysis.suggestedGoalTags.map(labelize).join(", ")}
               </button>
             ) : null}
@@ -515,7 +515,7 @@ export default function MealForm({ initial, submitLabel, onSubmit }: MealFormPro
       </Field>
 
       <label className="flex items-center gap-3 cursor-pointer select-none">
-        <input type="checkbox" checked={isAvailable} onChange={(e) => setIsAvailable(e.target.checked)} className="w-4 h-4 accent-[#0A8068]" />
+        <input type="checkbox" checked={isAvailable} onChange={(e) => setIsAvailable(e.target.checked)} className="w-4 h-4 accent-[#087F78]" />
         <span className="text-sm font-bold text-slate-700">Publish immediately (visible to customers)</span>
       </label>
       {!isAvailable && Number(calories) > 0 && Number(proteinG) > 0 ? null : !isAvailable ? (
@@ -537,7 +537,7 @@ function ChipToggle({ label, isActive, onClick }: { label: string; isActive: boo
       type="button"
       onClick={onClick}
       className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-colors ${
-        isActive ? "bg-[#0A8068] text-white" : "bg-slate-100 text-slate-500 hover:bg-slate-200"
+        isActive ? "bg-[#087F78] text-white" : "bg-slate-100 text-slate-500 hover:bg-slate-200"
       }`}
     >
       {label}

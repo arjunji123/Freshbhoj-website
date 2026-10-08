@@ -146,7 +146,7 @@ export default function NotificationsPage() {
 
       {isLoading ? (
         <div className="flex items-center justify-center py-24">
-          <Spinner className="w-8 h-8 text-[#0A8068]" />
+          <Spinner className="w-8 h-8 text-[#087F78]" />
         </div>
       ) : items.length === 0 ? (
         <Card>
@@ -209,16 +209,16 @@ function NotificationRow({
     <button
       onClick={onTap}
       className={`w-full flex items-start gap-3 px-5 py-4 text-left transition-colors ${
-        notif.isRead ? "bg-white" : "bg-[#0A8068]/[0.03] border-l-[3px] border-[#0A8068]"
+        notif.isRead ? "bg-white" : "bg-[#087F78]/[0.03] border-l-[3px] border-[#087F78]"
       }`}
     >
-      <div className="w-9 h-9 rounded-xl bg-[#0A8068]/10 text-[#0A8068] flex items-center justify-center shrink-0">
+      <div className="w-9 h-9 rounded-xl bg-[#087F78]/10 text-[#087F78] flex items-center justify-center shrink-0">
         <Icon size={16} />
       </div>
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 flex-wrap">
           <p className={`text-sm ${notif.isRead ? "font-semibold text-slate-700" : "font-extrabold text-slate-900"}`}>{notif.title}</p>
-          {!notif.isRead ? <span className="w-1.5 h-1.5 rounded-full bg-[#0A8068] shrink-0" /> : null}
+          {!notif.isRead ? <span className="w-1.5 h-1.5 rounded-full bg-[#087F78] shrink-0" /> : null}
         </div>
         <p className="text-xs text-slate-500 mt-0.5">{notif.body}</p>
         <p className="text-[11px] text-slate-400 mt-1">

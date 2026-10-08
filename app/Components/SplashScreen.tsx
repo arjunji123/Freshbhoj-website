@@ -55,10 +55,10 @@ const SplashScreen = () => {
       <div className="relative flex flex-col items-center justify-center">
         
         {/* Elegant Backdrop Glow */}
-        <div className="absolute w-[300px] h-[300px] bg-gradient-to-r from-[#16B088]/10 via-[#0A8068]/5 to-transparent rounded-full blur-[60px] animate-pulse-slow" />
+        <div className="absolute w-[300px] h-[300px] bg-gradient-to-r from-[#1DB9A0]/10 via-[#087F78]/5 to-transparent rounded-full blur-[60px] animate-pulse-slow" />
 
         {/* Logo Container */}
-        <div className="relative mb-14 drop-shadow-[0_10px_30px_rgba(10,128,104,0.15)]">
+        <div className="relative mb-14 drop-shadow-[0_10px_30px_rgba(8,127,120,0.15)]">
           <div className="relative z-10 animate-logo-reveal">
             <Image
               src="/freshbhoj-red-new.svg"
@@ -82,7 +82,7 @@ const SplashScreen = () => {
 
         {/* Minimal Progress Loader */}
         <div className="w-40 h-[1.5px] bg-gray-100/80 overflow-hidden rounded-full">
-          <div className="h-full bg-gradient-to-r from-[#16B088] to-[#0A8068] animate-progress-load" />
+          <div className="h-full bg-gradient-to-r from-[#1DB9A0] to-[#087F78] animate-progress-load" />
         </div>
       </div>
 

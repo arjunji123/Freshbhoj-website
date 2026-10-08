@@ -1,10 +1,10 @@
 .pageRoot {
-  --primary-50: #F0FAF6;
-  --primary-100: #D5F2E6;
-  --primary-400: #16B088;
-  --primary-600: #0A8068;
-  --primary-700: #0A8068;
-  --primary-900: #074A5C;
+  --primary-50: #EFFAF8;
+  --primary-100: #D3F1EE;
+  --primary-400: #1DB9A0;
+  --primary-600: #087F78;
+  --primary-700: #087F78;
+  --primary-900: #0B4F6C;
   --accent-500: #22c55e;
   --accent-600: #16a34a;
   --amber-50: #fffbeb;
@@ -20,7 +20,7 @@
   --neutral-600: #475569;
   --neutral-700: #334155;
   --neutral-800: #1e293b;
-  --neutral-900: #0f172a;
+  --neutral-900: #0D1B1E;
   --text-primary: var(--neutral-900);
   --text-secondary: var(--neutral-500);
   --text-tertiary: var(--neutral-400);
@@ -31,7 +31,7 @@
   --border-default: var(--neutral-300);
   --brand-gradient: linear-gradient(169.21deg, var(--primary-400) 8.65%, var(--primary-700) 77.4%, var(--primary-900) 100%);
   --text-brand: var(--primary-600);
-  --wash-primary: rgba(10,128,104, 0.06);
+  --wash-primary: rgba(8,127,120, 0.06);
   --callout-bg: var(--amber-50);
   --callout-accent: var(--amber-700);
   --shadow-rgb: 15, 23, 42;
@@ -45,11 +45,11 @@
 }
 
 .pageRoot[data-theme='dark'] {
-  --neutral-0: #0b0f19;
-  --neutral-50: #111827;
-  --neutral-100: #1b2333;
-  --neutral-200: #2a3347;
-  --neutral-300: #3d4759;
+  --neutral-0: #071417;
+  --neutral-50: #0C1C1F;
+  --neutral-100: #13272A;
+  --neutral-200: #1D3639;
+  --neutral-300: #2C4A4E;
   --neutral-400: #5b6478;
   --neutral-500: #7c8598;
   --neutral-600: #9ca6b8;
@@ -65,7 +65,7 @@
   --border-subtle: var(--neutral-200);
   --border-default: var(--neutral-300);
   --text-brand: var(--primary-400);
-  --wash-primary: rgba(10,128,104, 0.14);
+  --wash-primary: rgba(8,127,120, 0.14);
   --callout-bg: rgba(245, 158, 11, 0.16);
   --callout-accent: var(--amber-500);
   --shadow-rgb: 0, 0, 0;

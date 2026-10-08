@@ -31,7 +31,7 @@ export async function POST(req: Request) {
       `,
       html: `
         <div style="font-family: sans-serif; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
-          <h2 style="color: #0A8068;">New Contact Message</h2>
+          <h2 style="color: #087F78;">New Contact Message</h2>
           <p><strong>Name:</strong> ${name}</p>
           <p><strong>Email:</strong> ${email}</p>
           <p><strong>Subject:</strong> ${subject}</p>

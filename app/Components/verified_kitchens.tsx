@@ -56,8 +56,8 @@ export default function VerifiedKitchens() {
               FreshBhoj Verified
             </span>
           </div>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#0F172A] mb-6 leading-tight tracking-tight">
-            Trust you can <span className="text-[#0A8068]">see</span>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#0D1B1E] mb-6 leading-tight tracking-tight">
+            Trust you can <span className="text-[#087F78]">see</span>
           </h2>
           <p className="text-slate-500 text-base md:text-xl leading-relaxed mb-10 max-w-xl">
             Every kitchen is welcome to sell. The ones we visit and verify in person get a Verified badge and are
@@ -66,11 +66,11 @@ export default function VerifiedKitchens() {
           <div className="flex flex-col gap-6">
             {STEPS.map(({ icon: Icon, title, description }) => (
               <div key={title} className="flex items-start gap-4">
-                <div className="w-11 h-11 shrink-0 rounded-2xl bg-[#0A8068]/10 flex items-center justify-center">
-                  <Icon size={20} className="text-[#0A8068]" strokeWidth={2.2} />
+                <div className="w-11 h-11 shrink-0 rounded-2xl bg-[#087F78]/10 flex items-center justify-center">
+                  <Icon size={20} className="text-[#087F78]" strokeWidth={2.2} />
                 </div>
                 <div>
-                  <h3 className="font-extrabold text-[#0F172A] text-lg mb-1">{title}</h3>
+                  <h3 className="font-extrabold text-[#0D1B1E] text-lg mb-1">{title}</h3>
                   <p className="text-slate-500 text-sm md:text-base leading-relaxed">{description}</p>
                 </div>
               </div>
@@ -78,7 +78,7 @@ export default function VerifiedKitchens() {
           </div>
         </div>
 
-        <div className="rounded-[2.5rem] bg-[#F4F8F6] border border-slate-100 p-6 md:p-10">
+        <div className="rounded-[2.5rem] bg-[#F3F8F8] border border-slate-100 p-6 md:p-10">
           <p className="text-xs font-bold uppercase tracking-[0.2em] text-slate-400 mb-5">Near you</p>
           <div className="flex flex-col gap-4">
             {SAMPLE.map((k) => (
@@ -90,14 +90,14 @@ export default function VerifiedKitchens() {
               >
                 <div className="min-w-0">
                   <div className="flex items-center gap-2">
-                    <h4 className="font-extrabold text-[#0F172A] truncate">{k.name}</h4>
+                    <h4 className="font-extrabold text-[#0D1B1E] truncate">{k.name}</h4>
                     {k.verified ? <BadgeCheck size={18} className="text-[#1E7BD8] shrink-0" aria-label="Verified" /> : null}
                   </div>
                   <p className="text-sm text-slate-500 mt-1">{k.meta}</p>
                 </div>
                 <div className="flex flex-col items-end gap-2 shrink-0">
-                  <span className="inline-flex items-center gap-1 text-sm font-bold text-[#0F172A]">
-                    <Star size={14} className="fill-[#FFB020] text-[#FFB020]" /> {k.rating}
+                  <span className="inline-flex items-center gap-1 text-sm font-bold text-[#0D1B1E]">
+                    <Star size={14} className="fill-[#FFC21A] text-[#FFC21A]" /> {k.rating}
                   </span>
                   {k.verified ? (
                     <span className="text-[10px] font-bold uppercase tracking-widest text-[#1E7BD8] bg-[#1E7BD8]/10 rounded-full px-3 py-1">

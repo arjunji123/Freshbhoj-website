@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Navbar, Footer } from "../Components";
 
 const gradientStyle = {
-  background: "linear-gradient(169.21deg, #16B088 9%, #0A8068 77%, #074A5C 100%)",
+  background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)",
   WebkitBackgroundClip: "text" as const,
   WebkitTextFillColor: "transparent" as const,
   backgroundClip: "text" as const,
@@ -80,20 +80,20 @@ export default function PrivacyPolicy() {
       {/* Hero Header — No Background */}
       <div className="w-full pt-28 md:pt-28 pb-8 md:pb-16 lg:pb-24 border-b border-slate-100">
         <div className="w-full max-w-5xl mx-auto px-6">
-          <div className="flex items-center gap-2 bg-[#F0FAF6] rounded-full px-4 py-1.5 w-fit mb-4">
+          <div className="flex items-center gap-2 bg-[#EFFAF8] rounded-full px-4 py-1.5 w-fit mb-4">
             <div className="relative w-3.5 h-3.5">
               <Image src="/legal.svg" alt="legal" fill className="object-contain" />
             </div>
-            <span className="text-[#0A8068] text-[10px] font-bold uppercase tracking-[0.2em]">
+            <span className="text-[#087F78] text-[10px] font-bold uppercase tracking-[0.2em]">
               Legal
             </span>
           </div>
           <h1 className="font-extrabold text-5xl md:text-6xl lg:text-7xl leading-tight tracking-tight mb-4">
-            <span className="text-[#0F172A]">Privacy </span>
+            <span className="text-[#0D1B1E]">Privacy </span>
             <span
               className="inline-block"
               style={{
-                background: "linear-gradient(169.21deg, #16B088 9%, #0A8068 77%, #074A5C 100%)",
+                background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text"
@@ -156,13 +156,13 @@ export default function PrivacyPolicy() {
                           className="object-contain"
                         />
                       </div>
-                      <h3 className="font-extrabold text-[#0F172A] text-lg mb-4">{card.title}</h3>
+                      <h3 className="font-extrabold text-[#0D1B1E] text-lg mb-4">{card.title}</h3>
                       <ul className="flex flex-col gap-3">
                         {card.items.map((item) => (
                           <li key={item} className="flex items-center gap-3 text-slate-600 font-medium text-sm md:text-base">
                             <span
                               className="w-2 h-2 rounded-full flex-shrink-0"
-                              style={{ background: "linear-gradient(169.21deg, #16B088 9%, #0A8068 77%, #074A5C 100%)" }}
+                              style={{ background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)" }}
                             />
                             {item}
                           </li>
@@ -190,7 +190,7 @@ export default function PrivacyPolicy() {
                         />
                       </div>
                       <span>
-                        <span className="font-bold text-[#0F172A]">{point.bold}</span> {point.text}
+                        <span className="font-bold text-[#0D1B1E]">{point.bold}</span> {point.text}
                       </span>
                     </li>
                   ))}
@@ -199,7 +199,7 @@ export default function PrivacyPolicy() {
 
               {/* Rights — Bordered Card with 2x2 Grid */}
               {section.rights && (
-                <div className="rounded-2xl bg-[#F0FAF6] border-l-4 p-6 mt-2" style={{ borderColor: "#0A8068" }}>
+                <div className="rounded-2xl bg-[#EFFAF8] border-l-4 p-6 mt-2" style={{ borderColor: "#087F78" }}>
                   {/* Description text inside card */}
                   {section.content.map((para, i) => (
                     <p key={i} className="text-slate-600 text-sm md:text-base leading-relaxed mb-6">
@@ -221,7 +221,7 @@ export default function PrivacyPolicy() {
                             className="object-contain"
                           />
                         </div>
-                        <span className="font-semibold text-[#0F172A] text-sm md:text-base">
+                        <span className="font-semibold text-[#0D1B1E] text-sm md:text-base">
                           {right.label}
                         </span>
                       </div>
@@ -234,8 +234,8 @@ export default function PrivacyPolicy() {
         </div>
 
         {/* Contact CTA */}
-        <div className="mt-24 rounded-[2.5rem] lg:rounded-[3.5rem] py-16 px-8 text-center overflow-hidden relative bg-[#0F172A] border border-white/5">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-[#0A8068] opacity-10 blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2" />
+        <div className="mt-24 rounded-[2.5rem] lg:rounded-[3.5rem] py-16 px-8 text-center overflow-hidden relative bg-[#0D1B1E] border border-white/5">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-[#087F78] opacity-10 blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2" />
           <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500 opacity-10 blur-[100px] rounded-full" />
           <div className="relative z-10">
             <p className="text-slate-400 font-medium text-base md:text-lg mb-8">
@@ -245,7 +245,7 @@ export default function PrivacyPolicy() {
               href="mailto:privacy@freshbhoj.com"
               className="inline-flex items-center justify-center px-10 py-5 text-white font-bold rounded-2xl transition-all hover:scale-105 active:scale-95 shadow-xl"
               style={{
-                background: "linear-gradient(169.21deg, #16B088 9%, #0A8068 77%, #074A5C 100%)",
+                background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)",
               }}
             >
               Contact Support Team →

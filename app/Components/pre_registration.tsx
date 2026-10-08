@@ -58,7 +58,7 @@ export default function PreRegistration() {
             <p
               className="text-xs md:text-sm font-bold tracking-[0.2em] uppercase inline-block"
               style={{
-                background: "linear-gradient(169.21deg, #16B088 9%, #0A8068 77%, #074A5C 100%)",
+                background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text"
@@ -68,12 +68,12 @@ export default function PreRegistration() {
             </p>
           </div>
           <h2
-            className="text-4xl md:text-5xl lg:text-7xl text-[#0F172A] mb-8 leading-tight tracking-tight"
+            className="text-4xl md:text-5xl lg:text-7xl text-[#0D1B1E] mb-8 leading-tight tracking-tight"
             style={{ fontFamily: "'Playfair Display', serif", fontWeight: 400 }}
           >
             Exclusive <span
               style={{
-                background: "linear-gradient(169.21deg, #16B088 9%, #0A8068 77%, #074A5C 100%)",
+                background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text"
@@ -98,7 +98,7 @@ export default function PreRegistration() {
                   <Image src="/for-foodie.svg" alt="Foodies" fill className="object-contain" />
                 </div>
               </div>
-              <h3 className="text-[#0F172A] font-extrabold text-3xl lg:text-5xl mb-8 leading-tight tracking-tight">
+              <h3 className="text-[#0D1B1E] font-extrabold text-3xl lg:text-5xl mb-8 leading-tight tracking-tight">
                 For Foodies
               </h3>
               <div className="flex flex-col gap-5 mb-12">
@@ -118,15 +118,15 @@ export default function PreRegistration() {
             </div>
             <Link
               href="/pre-register?type=foodie"
-              className="relative flex items-center justify-center w-full py-5 rounded-2xl bg-[#0F172A] text-white font-extrabold text-lg lg:text-xl transition-all shadow-lg overflow-hidden group/btn"
+              className="relative flex items-center justify-center w-full py-5 rounded-2xl bg-[#0D1B1E] text-white font-extrabold text-lg lg:text-xl transition-all shadow-lg overflow-hidden group/btn"
             >
-              <div className="absolute inset-0 bg-[linear-gradient(169.21deg,#16B088_9%,#0A8068_77%,#074A5C_100%)] opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300"></div>
+              <div className="absolute inset-0 bg-[linear-gradient(169.21deg,#1DB9A0_9%,#087F78_77%,#0B4F6C_100%)] opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300"></div>
               <span className="relative z-10">Pre-Register Now →</span>
             </Link>
           </div>
 
           {/* ─ Right Card: For Kitchens ─ */}
-          <div className="relative flex flex-col justify-between rounded-[2.5rem] lg:rounded-[3.5rem] p-10 lg:p-14 overflow-hidden text-white bg-[linear-gradient(169.21deg,#16B088_8.65%,#0A8068_77.4%,#074A5C_100%)] shadow-[0_20px_50px_-12px_rgba(10,128,104,0.3)] hover:shadow-[0_30px_70px_-10px_rgba(10,128,104,0.5)] transition-all duration-500 hover:-translate-y-2 group">
+          <div className="relative flex flex-col justify-between rounded-[2.5rem] lg:rounded-[3.5rem] p-10 lg:p-14 overflow-hidden text-white bg-[linear-gradient(169.21deg,#1DB9A0_8.65%,#087F78_77.4%,#0B4F6C_100%)] shadow-[0_20px_50px_-12px_rgba(8,127,120,0.3)] hover:shadow-[0_30px_70px_-10px_rgba(8,127,120,0.5)] transition-all duration-500 hover:-translate-y-2 group">
             <div className="absolute top-8 right-8 bg-white/20 backdrop-blur-md text-white text-[10px] lg:text-xs font-bold uppercase tracking-widest px-5 py-2 rounded-full">
               Premium Offer
             </div>
@@ -156,7 +156,7 @@ export default function PreRegistration() {
             </div>
             <Link
               href="/pre-register?type=kitchen"
-              className="flex items-center justify-center w-full py-5 rounded-2xl bg-white text-[#0A8068] font-extrabold text-lg lg:text-xl transition-all shadow-xl hover:bg-slate-50"
+              className="flex items-center justify-center w-full py-5 rounded-2xl bg-white text-[#087F78] font-extrabold text-lg lg:text-xl transition-all shadow-xl hover:bg-slate-50"
             >
               Register Kitchen
             </Link>
@@ -169,7 +169,7 @@ export default function PreRegistration() {
           ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
         >
           <h3
-            className="text-4xl md:text-5xl lg:text-6xl text-[#0F172A] mb-12 leading-tight tracking-tight"
+            className="text-4xl md:text-5xl lg:text-6xl text-[#0D1B1E] mb-12 leading-tight tracking-tight"
             style={{ fontFamily: "'Playfair Display', serif", fontWeight: 400 }}
           >
             The Future is Cooking.
@@ -190,7 +190,7 @@ export default function PreRegistration() {
                 <span
                   className="text-4xl lg:text-6xl font-extrabold tabular-nums transition-transform duration-500 group-hover:scale-110"
                   style={{
-                    background: "linear-gradient(169.21deg, #16B088 9%, #0A8068 77%, #074A5C 100%)",
+                    background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
                     backgroundClip: "text"
@@ -206,18 +206,18 @@ export default function PreRegistration() {
           </div>
 
           {/* Launching badge */}
-          <div className="inline-flex items-center gap-3 px-8 py-3 rounded-full bg-[#0A8068]/5">
+          <div className="inline-flex items-center gap-3 px-8 py-3 rounded-full bg-[#087F78]/5">
             <span
               className="w-3 h-3 rounded-full animate-pulse"
               style={{
-                background: "linear-gradient(169.21deg, #16B088 9%, #0A8068 77%, #074A5C 100%)",
-                boxShadow: "0 0 10px rgba(10,128,104, 0.4)"
+                background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)",
+                boxShadow: "0 0 10px rgba(8,127,120, 0.4)"
               }}
             />
             <span
               className="text-sm font-extrabold uppercase tracking-[0.2em] inline-block"
               style={{
-                background: "linear-gradient(169.21deg, #16B088 9%, #0A8068 77%, #074A5C 100%)",
+                background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text"

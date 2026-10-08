@@ -40,7 +40,7 @@ export default function PremiumSubscriptionPage() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-24">
-        <Spinner className="w-8 h-8 text-[#0A8068]" />
+        <Spinner className="w-8 h-8 text-[#087F78]" />
       </div>
     );
   }
@@ -131,7 +131,7 @@ export default function PremiumSubscriptionPage() {
           <div>
             <p className="text-xs font-bold text-slate-400 uppercase tracking-wide">Reels</p>
             <h3 className="text-base font-extrabold text-slate-900 flex items-center gap-1.5">
-              <Video size={15} className="text-[#0A8068]" /> {reelsLabel(subscription.features)}
+              <Video size={15} className="text-[#087F78]" /> {reelsLabel(subscription.features)}
             </h3>
           </div>
           {subscription.features.priorityBoostMultiplier > 1 ? (

@@ -182,7 +182,7 @@ export default function AdsPage() {
 
       {isLoading ? (
         <div className="flex items-center justify-center py-24">
-          <Spinner className="w-8 h-8 text-[#0A8068]" />
+          <Spinner className="w-8 h-8 text-[#087F78]" />
         </div>
       ) : displayed.length === 0 ? (
         <Card>
@@ -231,7 +231,7 @@ export default function AdsPage() {
       >
         {isComparing ? (
           <div className="flex items-center justify-center py-10">
-            <Spinner className="w-6 h-6 text-[#0A8068]" />
+            <Spinner className="w-6 h-6 text-[#087F78]" />
           </div>
         ) : compareError ? (
           <p className="text-sm font-semibold text-red-600">{compareError}</p>
@@ -313,7 +313,7 @@ function CampaignRow({
           aria-pressed={isSelected}
           aria-label="Select for comparison"
           className={`mt-1 w-5 h-5 rounded-md border-2 flex items-center justify-center shrink-0 transition-colors ${
-            isSelected ? "border-transparent text-white bg-[#0A8068]" : "border-slate-200"
+            isSelected ? "border-transparent text-white bg-[#087F78]" : "border-slate-200"
           }`}
         >
           {isSelected ? <Check size={12} /> : null}
@@ -366,13 +366,13 @@ function CampaignRow({
             ) : null}
             <button
               onClick={onToggleExpand}
-              className="inline-flex items-center gap-1 text-xs font-bold text-slate-500 hover:text-[#0A8068] transition-colors ml-auto"
+              className="inline-flex items-center gap-1 text-xs font-bold text-slate-500 hover:text-[#087F78] transition-colors ml-auto"
             >
               Trend {isExpanded ? <ChevronUp size={13} /> : <ChevronDown size={13} />}
             </button>
             <Link
               href={`/partner/ads/${campaign.id}`}
-              className="inline-flex items-center gap-1 text-xs font-bold text-[#0A8068]"
+              className="inline-flex items-center gap-1 text-xs font-bold text-[#087F78]"
             >
               Deep dive <ArrowRight size={12} />
             </Link>
@@ -384,7 +384,7 @@ function CampaignRow({
         <div className="mt-4 pt-4 border-t border-slate-100">
           {isExpandLoading ? (
             <div className="flex items-center justify-center py-8">
-              <Spinner className="w-5 h-5 text-[#0A8068]" />
+              <Spinner className="w-5 h-5 text-[#087F78]" />
             </div>
           ) : campaign.dailyStats && campaign.dailyStats.length > 0 ? (
             <DailyStatsChart dailyStats={campaign.dailyStats} height={160} />
@@ -431,10 +431,10 @@ function DailyStatsChart({ dailyStats, height = 160 }: { dailyStats: CampaignDai
           <XAxis dataKey="shortDate" axisLine={false} tickLine={false} tick={{ fontSize: 10, fontWeight: 700, fill: "#94A3B8" }} />
           <YAxis hide />
           <Tooltip
-            cursor={{ stroke: "#0A8068", strokeWidth: 1, strokeDasharray: "3 3" }}
+            cursor={{ stroke: "#087F78", strokeWidth: 1, strokeDasharray: "3 3" }}
             contentStyle={{ borderRadius: 12, border: "1px solid #F1F5F9", fontSize: 11 }}
           />
-          <Line type="monotone" dataKey="impressions" name="Impressions" stroke="#0A8068" strokeWidth={2.5} dot={false} />
+          <Line type="monotone" dataKey="impressions" name="Impressions" stroke="#087F78" strokeWidth={2.5} dot={false} />
           <Line type="monotone" dataKey="clicks" name="Clicks" stroke="#94A3B8" strokeWidth={2} dot={false} />
         </LineChart>
       </ResponsiveContainer>
@@ -534,7 +534,7 @@ function CreateCampaignSheet({
                   type="button"
                   onClick={() => setReelId(reel.id)}
                   className={`text-left rounded-2xl overflow-hidden border-2 transition-colors ${
-                    reelId === reel.id ? "border-[#0A8068]" : "border-slate-100 hover:border-[#0A8068]/30"
+                    reelId === reel.id ? "border-[#087F78]" : "border-slate-100 hover:border-[#087F78]/30"
                   }`}
                 >
                   <div className="aspect-video bg-slate-100">
@@ -609,7 +609,7 @@ function CreateCampaignSheet({
               <button
                 type="button"
                 onClick={() => router.push("/partner/wallet")}
-                className="text-xs font-bold text-[#0A8068] underline underline-offset-2"
+                className="text-xs font-bold text-[#087F78] underline underline-offset-2"
               >
                 Add Money
               </button>

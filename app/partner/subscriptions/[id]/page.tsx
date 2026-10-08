@@ -126,7 +126,7 @@ export default function SubscriptionDetailPage() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-24">
-        <Spinner className="w-8 h-8 text-[#0A8068]" />
+        <Spinner className="w-8 h-8 text-[#087F78]" />
       </div>
     );
   }
@@ -167,7 +167,7 @@ export default function SubscriptionDetailPage() {
               </h1>
               <Badge tone={STATUS_TONE[sub.status]}>{sub.status}</Badge>
             </div>
-            <a href={`tel:${sub.customer.phone}`} className="inline-flex items-center gap-1.5 text-sm font-bold text-[#0A8068] mt-1">
+            <a href={`tel:${sub.customer.phone}`} className="inline-flex items-center gap-1.5 text-sm font-bold text-[#087F78] mt-1">
               <Phone size={13} /> {sub.customer.phone}
             </a>
           </div>
@@ -419,7 +419,7 @@ function DeliveryCell({ day, isToday }: { day: SubscriptionDeliveryScheduleItem;
   return (
     <div
       className={`flex flex-col items-center gap-1.5 rounded-2xl px-2 py-3 ${tone.bg} ${
-        isToday ? "ring-2 ring-[#0A8068]/40" : ""
+        isToday ? "ring-2 ring-[#087F78]/40" : ""
       }`}
     >
       <p className={`text-[10px] font-bold uppercase tracking-wide ${tone.text}`}>{isToday ? "Today" : weekday}</p>

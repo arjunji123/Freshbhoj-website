@@ -24,15 +24,15 @@ export default function PublicKitchenPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen w-full flex items-center justify-center bg-[#F4F8F6]">
-        <Spinner className="w-8 h-8 text-[#0A8068]" />
+      <div className="min-h-screen w-full flex items-center justify-center bg-[#F3F8F8]">
+        <Spinner className="w-8 h-8 text-[#087F78]" />
       </div>
     );
   }
 
   if (error || !kitchen) {
     return (
-      <div className="min-h-screen w-full flex flex-col items-center justify-center bg-[#F4F8F6] px-6 text-center">
+      <div className="min-h-screen w-full flex flex-col items-center justify-center bg-[#F3F8F8] px-6 text-center">
         <h1 className="text-lg font-extrabold text-slate-900 mb-2">Kitchen not found</h1>
         <p className="text-sm text-slate-500">{error ?? "This kitchen page doesn't exist or is no longer available."}</p>
       </div>
@@ -40,13 +40,13 @@ export default function PublicKitchenPage() {
   }
 
   return (
-    <div className="min-h-screen w-full bg-[#F4F8F6]">
+    <div className="min-h-screen w-full bg-[#F3F8F8]">
       <div className="relative w-full h-48 sm:h-64 bg-slate-200">
         {kitchen.coverImage ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img src={kitchen.coverImage} alt="" className="w-full h-full object-cover" />
         ) : (
-          <div className="w-full h-full" style={{ background: "linear-gradient(169.21deg, #16B088 9%, #0A8068 77%, #074A5C 100%)" }} />
+          <div className="w-full h-full" style={{ background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)" }} />
         )}
       </div>
 
@@ -63,7 +63,7 @@ export default function PublicKitchenPage() {
         <div className="bg-white rounded-3xl border border-slate-100 shadow-[0_4px_20px_-8px_rgba(0,0,0,0.06)] p-6">
           <div className="flex items-center gap-2 flex-wrap mb-1">
             <h1 className="text-xl font-extrabold text-slate-900">{kitchen.name}</h1>
-            {kitchen.isVerified ? <BadgeCheck size={18} className="text-[#0A8068] shrink-0" /> : null}
+            {kitchen.isVerified ? <BadgeCheck size={18} className="text-[#087F78] shrink-0" /> : null}
           </div>
           {kitchen.tagline ? <p className="text-sm text-slate-500 mb-3">{kitchen.tagline}</p> : null}
 

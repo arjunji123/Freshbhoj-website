@@ -26,7 +26,7 @@ export default function OnboardingPage() {
   const formStep = nextFormFor(onboarding.currentStep);
 
   return (
-    <div className="min-h-screen w-full bg-[#F4F8F6] font-sans px-6 py-10">
+    <div className="min-h-screen w-full bg-[#F3F8F8] font-sans px-6 py-10">
       <div className="max-w-2xl mx-auto">
         <div className="flex flex-col items-center mb-8">
           <Image src="/freshbhoj-red-new.svg" alt="FreshBhoj" width={150} height={40} className="h-9 w-auto object-contain mb-6" />
@@ -48,7 +48,7 @@ export default function OnboardingPage() {
                   s.isComplete
                     ? "bg-emerald-50 text-emerald-700"
                     : s.isCurrent
-                    ? "bg-[#0A8068]/10 text-[#0A8068]"
+                    ? "bg-[#087F78]/10 text-[#087F78]"
                     : "bg-slate-100 text-slate-400"
                 }`}
               >

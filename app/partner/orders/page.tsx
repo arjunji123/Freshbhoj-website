@@ -212,7 +212,7 @@ function LiveTabPanel({
 
       {isLoading ? (
         <div className="flex items-center justify-center py-24">
-          <Spinner className="w-8 h-8 text-[#0A8068]" />
+          <Spinner className="w-8 h-8 text-[#087F78]" />
         </div>
       ) : orders.length === 0 ? (
         <Card>
@@ -267,7 +267,7 @@ function OrderCard({
           {canChat ? (
             <Link
               href={`/partner/orders/${order.id}/chat`}
-              className="w-7 h-7 rounded-lg bg-slate-100 text-slate-500 hover:bg-[#0A8068]/10 hover:text-[#0A8068] flex items-center justify-center transition-colors shrink-0"
+              className="w-7 h-7 rounded-lg bg-slate-100 text-slate-500 hover:bg-[#087F78]/10 hover:text-[#087F78] flex items-center justify-center transition-colors shrink-0"
               aria-label="Chat with customer"
               title="Chat with customer"
             >
@@ -278,7 +278,7 @@ function OrderCard({
         </div>
       </div>
       <p className="text-xs text-slate-500 mb-1">{order.customer.name}</p>
-      <a href={`tel:${order.customer.phone}`} className="inline-flex items-center gap-1 text-xs font-bold text-[#0A8068] mb-3">
+      <a href={`tel:${order.customer.phone}`} className="inline-flex items-center gap-1 text-xs font-bold text-[#087F78] mb-3">
         <Phone size={11} /> {order.customer.phone}
       </a>
       <div className="text-xs text-slate-600 mb-3 space-y-1">
@@ -497,7 +497,7 @@ function HistoryView() {
 
       {isLoading ? (
         <div className="flex items-center justify-center py-24">
-          <Spinner className="w-8 h-8 text-[#0A8068]" />
+          <Spinner className="w-8 h-8 text-[#087F78]" />
         </div>
       ) : orders.length === 0 ? (
         <Card>

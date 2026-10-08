@@ -51,7 +51,7 @@ export function SuggestionCard({
             aria-pressed={selected}
             aria-label="Select for comparison"
             className={`mt-1 w-5 h-5 rounded-md border-2 flex items-center justify-center shrink-0 transition-colors ${
-              selected ? "border-transparent text-white bg-[#0A8068]" : "border-slate-200"
+              selected ? "border-transparent text-white bg-[#087F78]" : "border-slate-200"
             }`}
           >
             {selected ? <Check size={12} /> : null}
@@ -99,7 +99,7 @@ export function SuggestionCard({
             )}
             <Link
               href={`/partner/ads/insights/${suggestion.id}`}
-              className="inline-flex items-center gap-1 text-xs font-bold text-[#0A8068] ml-auto"
+              className="inline-flex items-center gap-1 text-xs font-bold text-[#087F78] ml-auto"
             >
               View details <ArrowRight size={12} />
             </Link>

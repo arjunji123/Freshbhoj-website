@@ -94,7 +94,7 @@ export default function FssaiAssistancePage() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-24">
-        <Spinner className="w-8 h-8 text-[#0A8068]" />
+        <Spinner className="w-8 h-8 text-[#087F78]" />
       </div>
     );
   }
@@ -243,7 +243,7 @@ function EducationScreen({ onBack, onNext }: { onBack: () => void; onNext: () =>
     <div className="max-w-xl mx-auto">
       <BackLink onClick={onBack} />
       <Card>
-        <div className="w-12 h-12 rounded-2xl bg-[#0A8068]/10 text-[#0A8068] flex items-center justify-center mb-4">
+        <div className="w-12 h-12 rounded-2xl bg-[#087F78]/10 text-[#087F78] flex items-center justify-center mb-4">
           <ShieldCheck size={22} />
         </div>
         <h2 className="text-lg font-extrabold text-slate-900 mb-2">What is FSSAI, and why does it matter?</h2>
@@ -425,7 +425,7 @@ function DocumentsScreen({
             const uploaded = documents.find((d) => d.type === type);
             return (
               <div key={type} className="flex items-center gap-3 border border-slate-100 rounded-xl p-4">
-                <div className="w-10 h-10 rounded-xl bg-[#0A8068]/10 text-[#0A8068] flex items-center justify-center shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-[#087F78]/10 text-[#087F78] flex items-center justify-center shrink-0">
                   <Icon size={18} />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -628,7 +628,7 @@ function SuccessScreen({ request, homeHref }: { request: FssaiAssistanceRequest;
               href={request.certificateUrl}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-1.5 text-sm font-bold text-[#0A8068]"
+              className="inline-flex items-center gap-1.5 text-sm font-bold text-[#087F78]"
             >
               <Download size={14} /> Download certificate
             </a>

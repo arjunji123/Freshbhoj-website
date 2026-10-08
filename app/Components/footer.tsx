@@ -6,7 +6,7 @@ import Link from "next/link";
 export default function Footer() {
   return (
     <footer
-      className="w-full overflow-hidden bg-[#0F172A] border-t border-white/5"
+      className="w-full overflow-hidden bg-[#0D1B1E] border-t border-white/5"
     >
       <div className="w-full max-w-7xl mx-auto px-6 py-16 lg:py-24 flex flex-col items-center">
 
@@ -38,7 +38,7 @@ export default function Footer() {
               {link.label}
               <span
                 className="absolute -bottom-1 left-0 w-0 h-px transition-all group-hover:w-full"
-                style={{ background: "linear-gradient(169.21deg, #16B088 9%, #0A8068 77%, #074A5C 100%)" }}
+                style={{ background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)" }}
               />
             </Link>
           ))}
@@ -62,7 +62,7 @@ export default function Footer() {
               {/* Gradient Hover Layer */}
               <div
                 className="absolute inset-0 opacity-0 group-hover/social:opacity-100 transition-opacity duration-300"
-                style={{ background: "linear-gradient(169.21deg, #16B088 9%, #0A8068 77%, #074A5C 100%)" }}
+                style={{ background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)" }}
               />
 
               <div className="relative w-5 h-5 brightness-0 invert z-10">

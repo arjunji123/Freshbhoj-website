@@ -59,7 +59,7 @@ export default function CampaignDetailPage() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-24">
-        <Spinner className="w-8 h-8 text-[#0A8068]" />
+        <Spinner className="w-8 h-8 text-[#087F78]" />
       </div>
     );
   }
@@ -206,7 +206,7 @@ function StatCard({
 }) {
   return (
     <Card className="!p-5">
-      <div className="w-9 h-9 rounded-xl bg-[#0A8068]/10 text-[#0A8068] flex items-center justify-center mb-3">
+      <div className="w-9 h-9 rounded-xl bg-[#087F78]/10 text-[#087F78] flex items-center justify-center mb-3">
         <Icon size={16} />
       </div>
       <p className="text-2xl font-extrabold text-slate-900">{value}</p>
@@ -245,10 +245,10 @@ function DailyStatsChart({ dailyStats, height = 220 }: { dailyStats: CampaignDai
           <XAxis dataKey="shortDate" axisLine={false} tickLine={false} tick={{ fontSize: 11, fontWeight: 700, fill: "#94A3B8" }} />
           <YAxis hide />
           <Tooltip
-            cursor={{ stroke: "#0A8068", strokeWidth: 1, strokeDasharray: "3 3" }}
+            cursor={{ stroke: "#087F78", strokeWidth: 1, strokeDasharray: "3 3" }}
             contentStyle={{ borderRadius: 12, border: "1px solid #F1F5F9", fontSize: 12 }}
           />
-          <Line type="monotone" dataKey="impressions" name="Impressions" stroke="#0A8068" strokeWidth={2.5} dot={{ r: 3, fill: "#0A8068", strokeWidth: 0 }} />
+          <Line type="monotone" dataKey="impressions" name="Impressions" stroke="#087F78" strokeWidth={2.5} dot={{ r: 3, fill: "#087F78", strokeWidth: 0 }} />
           <Line type="monotone" dataKey="clicks" name="Clicks" stroke="#94A3B8" strokeWidth={2} dot={{ r: 3, fill: "#94A3B8", strokeWidth: 0 }} />
         </LineChart>
       </ResponsiveContainer>
