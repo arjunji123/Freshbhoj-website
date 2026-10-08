@@ -69,7 +69,7 @@ export default function VerifiedKitchens() {
           </div>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#0D1B1E] mb-6 leading-[1.05] tracking-tight">
             Trust you can{" "}
-            <span className="bg-gradient-to-r from-[#1DB9A0] via-[#087F78] to-[#0B4F6C] bg-clip-text text-transparent">see</span>
+            <span className="bg-gradient-to-r from-[#1DB9A0] via-[#087F78] to-[#0B4F6C] bg-clip-text text-transparent"><span style={{ fontFamily: "var(--font-instrument), Georgia, serif", fontStyle: "italic", fontWeight: 400 }}>see</span></span>
           </h2>
           <p className="text-slate-500 text-base md:text-xl leading-relaxed mb-10 max-w-xl">
             Every kitchen is welcome to sell. The ones we visit and verify in person get a Verified badge and are shown

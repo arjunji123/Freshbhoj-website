@@ -94,7 +94,7 @@ export default function Footer() {
         <div className="text-center flex flex-col items-center max-w-4xl">
           <h4
             className="text-white text-2xl md:text-3xl lg:text-5xl mb-12 italic leading-tight opacity-90 transition-all hover:opacity-100 duration-500"
-            style={{ fontFamily: "'Playfair Display', serif" }}
+            style={{ fontFamily: "var(--font-instrument), Georgia, serif" }}
           >
             &ldquo;Your Feed is Now{" "}
             <span className="bg-gradient-to-r from-[#5EE6D0] to-[#FFC21A] bg-clip-text text-transparent">Your Menu.</span>&rdquo;

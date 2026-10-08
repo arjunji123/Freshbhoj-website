@@ -3,7 +3,9 @@
 @theme {
     --breakpoint-3xl: 2560px;
     --breakpoint-4k: 3840px;
-    --font-sans: "Plus Jakarta Sans", sans-serif;
+    --font-sans: var(--font-jakarta), "Plus Jakarta Sans", sans-serif;
+    --font-display: var(--font-bricolage), var(--font-jakarta), sans-serif;
+    --font-serif: var(--font-instrument), Georgia, serif;
 
     /* FreshBhoj brand: leaf-green -> emerald -> deep ocean teal, marigold accent, blue for "Verified" */
     --color-brand-300: #1DB9A0;
@@ -91,4 +93,10 @@ select.input-gradient-focus:focus {
 @keyframes drift {
     0%, 100% { transform: translate(0, 0) scale(1); }
     50% { transform: translate(40px, -24px) scale(1.12); }
+}
+
+/* Display font for headings; body stays Plus Jakarta Sans */
+h1, h2, h3 {
+    font-family: var(--font-bricolage), var(--font-jakarta), sans-serif;
+    letter-spacing: -0.02em;
 }

@@ -19,29 +19,6 @@ export default function PreRegistration() {
     return () => observer.disconnect();
   }, []);
 
-  /* ── Countdown Timer ── */
-  const [timeLeft, setTimeLeft] = useState({ days: 14, hours: 8, mins: 45, secs: 12 });
-
-  useEffect(() => {
-    const target = new Date();
-    target.setDate(target.getDate() + 14);
-    target.setHours(target.getHours() + 8);
-
-    const tick = () => {
-      const now = new Date();
-      const diff = Math.max(0, target.getTime() - now.getTime());
-      setTimeLeft({
-        days: Math.floor(diff / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
-        mins: Math.floor((diff / (1000 * 60)) % 60),
-        secs: Math.floor((diff / 1000) % 60),
-      });
-    };
-    tick();
-    const id = setInterval(tick, 1000);
-    return () => clearInterval(id);
-  }, []);
-
   return (
     <section
       ref={sectionRef}
@@ -69,7 +46,7 @@ export default function PreRegistration() {
           </div>
           <h2
             className="text-4xl md:text-5xl lg:text-7xl text-[#0D1B1E] mb-8 leading-tight tracking-tight"
-            style={{ fontFamily: "'Playfair Display', serif", fontWeight: 400 }}
+            style={{ fontFamily: "var(--font-instrument), Georgia, serif", fontWeight: 400 }}
           >
             Exclusive <span
               style={{
@@ -118,7 +95,7 @@ export default function PreRegistration() {
             </div>
             <Link
               href="/pre-register?type=foodie"
-              className="relative flex items-center justify-center w-full py-5 rounded-2xl bg-[#0D1B1E] text-white font-extrabold text-lg lg:text-xl transition-all shadow-lg overflow-hidden group/btn"
+              className="relative flex items-center justify-center w-full py-5 rounded-2xl bg-[linear-gradient(135deg,#14ADA0,#0B4F6C)] hover:brightness-110 text-white font-extrabold text-lg lg:text-xl transition-all shadow-lg overflow-hidden group/btn"
             >
               <div className="absolute inset-0 bg-[linear-gradient(169.21deg,#1DB9A0_9%,#087F78_77%,#0B4F6C_100%)] opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300"></div>
               <span className="relative z-10">Pre-Register Now →</span>
@@ -165,66 +142,54 @@ export default function PreRegistration() {
 
         {/* ── The Future is Cooking ── */}
         <div
-          className={`text-center flex flex-col items-center transition-all duration-1000 ease-out delay-400
+          className={`relative overflow-hidden rounded-[2.5rem] lg:rounded-[3.5rem] px-6 py-14 lg:px-16 lg:py-20 text-center text-white bg-[linear-gradient(135deg,#0B4F6C_0%,#087F78_55%,#14ADA0_100%)] transition-all duration-1000 ease-out delay-300
           ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
         >
-          <h3
-            className="text-4xl md:text-5xl lg:text-6xl text-[#0D1B1E] mb-12 leading-tight tracking-tight"
-            style={{ fontFamily: "'Playfair Display', serif", fontWeight: 400 }}
-          >
-            The Future is Cooking.
-          </h3>
+          <div className="pointer-events-none absolute -top-24 -left-16 w-80 h-80 rounded-full bg-[#5EE6D0]/30 blur-3xl animate-[drift_14s_ease-in-out_infinite]" />
+          <div className="pointer-events-none absolute -bottom-28 -right-10 w-96 h-96 rounded-full bg-white/20 blur-3xl animate-[drift_18s_ease-in-out_infinite_reverse]" />
+          <div className="pointer-events-none absolute inset-0 opacity-[0.15] [background-image:radial-gradient(#fff_1px,transparent_1px)] [background-size:26px_26px] [mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)]" />
 
-          {/* Countdown */}
-          <div className="flex flex-wrap justify-center items-center gap-4 lg:gap-8 mb-16">
-            {[
-              { value: timeLeft.days, label: "DAYS" },
-              { value: timeLeft.hours, label: "HOURS" },
-              { value: timeLeft.mins, label: "MINS" },
-              { value: timeLeft.secs, label: "SECS" },
-            ].map(({ value, label }) => (
-              <div
-                key={label}
-                className="flex flex-col items-center justify-center w-[120px] h-[120px] lg:w-[160px] lg:h-[160px] rounded-[2rem] border border-slate-100 bg-[#F1F5F9] transition-all duration-500 hover:bg-white hover:scale-105 hover:shadow-2xl hover:shadow-slate-200 group"
-              >
-                <span
-                  className="text-4xl lg:text-6xl font-extrabold tabular-nums transition-transform duration-500 group-hover:scale-110"
-                  style={{
-                    background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text"
-                  }}
-                >
-                  {String(value).padStart(2, "0")}
-                </span>
-                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 mt-3 transition-colors duration-500">
-                  {label}
-                </span>
-              </div>
-            ))}
-          </div>
-
-          {/* Launching badge */}
-          <div className="inline-flex items-center gap-3 px-8 py-3 rounded-full bg-[#087F78]/5">
-            <span
-              className="w-3 h-3 rounded-full animate-pulse"
-              style={{
-                background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)",
-                boxShadow: "0 0 10px rgba(8,127,120, 0.4)"
-              }}
-            />
-            <span
-              className="text-sm font-extrabold uppercase tracking-[0.2em] inline-block"
-              style={{
-                background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text"
-              }}
-            >
-              Launching Nationally Soon
+          <div className="relative">
+            <span className="inline-flex items-center gap-2 rounded-full bg-white/15 border border-white/25 backdrop-blur px-5 py-2 text-[10px] lg:text-xs font-bold uppercase tracking-[0.2em] mb-8">
+              <span className="w-2 h-2 rounded-full bg-[#FFC21A] animate-pulse" />
+              Launching nationally soon
             </span>
+            <h3
+              className="text-5xl md:text-6xl lg:text-8xl leading-[1.02] mb-6"
+              style={{ fontFamily: "var(--font-instrument), Georgia, serif", fontWeight: 400 }}
+            >
+              The future is <span className="italic text-[#FFC21A]">cooking.</span>
+            </h3>
+            <p className="text-white/80 text-base md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed">
+              We&apos;re rolling out city by city. Pre-register now and you&apos;ll be first in line when we reach yours.
+            </p>
+
+            {/* Roadmap */}
+            <div className="relative grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 max-w-4xl mx-auto mb-12 text-left">
+              {[
+                { tag: "Live now", title: "Pre-registration", text: "Reserve your spot and your launch rewards.", live: true },
+                { tag: "Next", title: "Early access invites", text: "Waitlist members get in before everyone else.", live: false },
+                { tag: "Soon", title: "City-by-city launch", text: "Reels, verified kitchens and subscriptions go live.", live: false },
+              ].map((s, i) => (
+                <div key={s.title} className={`rounded-3xl p-6 border backdrop-blur ${s.live ? "bg-white text-[#0D1B1E] border-white shadow-2xl" : "bg-white/10 border-white/20"}`}>
+                  <div className="flex items-center justify-between mb-4">
+                    <span className={`text-[10px] font-bold uppercase tracking-widest rounded-full px-3 py-1 ${s.live ? "bg-[#087F78] text-white" : "bg-white/15 text-white/80"}`}>{s.tag}</span>
+                    <span className={`text-3xl font-extrabold leading-none ${s.live ? "text-[#087F78]/25" : "text-white/20"}`}>0{i + 1}</span>
+                  </div>
+                  <h4 className="font-extrabold text-lg mb-1">{s.title}</h4>
+                  <p className={`text-sm leading-relaxed ${s.live ? "text-slate-500" : "text-white/70"}`}>{s.text}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link href="/pre-register?type=foodie" className="inline-flex justify-center rounded-full bg-white text-[#0D1B1E] font-bold px-9 py-4 hover:scale-105 transition-transform shadow-xl">
+                Pre-register now →
+              </Link>
+              <Link href="/partner/login" className="inline-flex justify-center rounded-full bg-[#FFC21A] text-[#0D1B1E] font-bold px-9 py-4 hover:scale-105 transition-transform shadow-xl">
+                Register your kitchen
+              </Link>
+            </div>
           </div>
         </div>
 

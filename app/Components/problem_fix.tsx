@@ -69,7 +69,7 @@ export default function ProblemFix() {
         <div className="text-center mb-10 lg:mb-14">
           <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#087F78] mb-4">The reality check</p>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#0D1B1E] tracking-tight leading-tight">
-            Food delivery is broken. <span className="bg-gradient-to-r from-[#1DB9A0] to-[#0B4F6C] bg-clip-text text-transparent">We fixed it.</span>
+            Food delivery is broken. <span className="bg-gradient-to-r from-[#1DB9A0] to-[#0B4F6C] bg-clip-text text-transparent"><span style={{ fontFamily: "var(--font-instrument), Georgia, serif", fontStyle: "italic", fontWeight: 400 }}>We fixed it.</span></span>
           </h2>
         </div>
 
@@ -90,23 +90,23 @@ export default function ProblemFix() {
                   aria-pressed={on}
                   className={`group relative snap-start shrink-0 lg:shrink lg:flex-1 text-left rounded-3xl p-5 lg:p-7 border transition-all duration-300 overflow-hidden w-[280px] lg:w-auto flex flex-col justify-center ${
                     on
-                      ? "bg-[#0D1B1E] border-[#0D1B1E] text-white shadow-2xl lg:scale-[1.02]"
-                      : "bg-[#F3F8F8] border-slate-200/70 text-[#0D1B1E] hover:bg-white hover:shadow-lg hover:-translate-y-0.5"
+                      ? "bg-white border-[#087F78]/30 text-[#0D1B1E] shadow-[0_24px_50px_-20px_rgba(8,127,120,0.55)] lg:translate-x-2"
+                      : "bg-[#EAF6F4]/70 border-[#087F78]/10 text-[#0D1B1E] hover:bg-white hover:shadow-lg hover:-translate-y-0.5"
                   }`}
                 >
                   <div className="flex items-center justify-between mb-3">
-                    <span className={`inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest ${on ? "text-[#FFC21A]" : "text-slate-400"}`}>
-                      <span className={`w-9 h-9 rounded-xl flex items-center justify-center ${on ? "bg-[#FFC21A] text-[#0D1B1E]" : "bg-white text-[#087F78] shadow-sm"}`}>
+                    <span className={`inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest ${on ? "text-[#087F78]" : "text-slate-400"}`}>
+                      <span className={`w-9 h-9 rounded-xl flex items-center justify-center ${on ? "bg-gradient-to-br from-[#1DB9A0] to-[#0B4F6C] text-white" : "bg-white text-[#087F78] shadow-sm"}`}>
                         <Icon size={18} strokeWidth={2.4} />
                       </span>
                       Problem 0{i + 1}
                     </span>
-                    <span className={`text-4xl font-extrabold leading-none transition-colors ${on ? "text-white/15" : "text-slate-200"}`}>0{i + 1}</span>
+                    <span className={`text-4xl font-extrabold leading-none transition-colors ${on ? "text-[#087F78]/20" : "text-slate-300/70"}`}>0{i + 1}</span>
                   </div>
                   <span className="block font-extrabold text-xl lg:text-2xl leading-tight mb-2">{it.problem}</span>
-                  <span className={`block text-sm leading-relaxed ${on ? "text-white/65" : "text-slate-500"}`}>{it.problemText}</span>
+                  <span className={`block text-sm leading-relaxed text-slate-500`}>{it.problemText}</span>
                   {on && !paused && inView ? (
-                    <span key={active} className="absolute left-0 bottom-0 h-1 w-full origin-left bg-[#FFC21A]" style={{ animation: `fb-progress ${DURATION}ms linear forwards` }} />
+                    <span key={active} className="absolute left-0 bottom-0 h-1 w-full origin-left bg-gradient-to-r from-[#1DB9A0] to-[#FFC21A]" style={{ animation: `fb-progress ${DURATION}ms linear forwards` }} />
                   ) : null}
                 </button>
               );
@@ -115,7 +115,7 @@ export default function ProblemFix() {
 
           {/* Right: the fix */}
           <div key={active} className="relative rounded-[2rem] lg:rounded-[2.5rem] overflow-hidden bg-gradient-to-br from-[#14ADA0] via-[#087F78] to-[#0B4F6C] text-white p-6 md:p-10 lg:p-12 flex flex-col animate-[fadeUp_0.5s_ease-out]">
-            <div className="pointer-events-none absolute -top-24 -right-24 w-80 h-80 rounded-full bg-[#FFC21A]/25 blur-3xl" />
+            <div className="pointer-events-none absolute -top-24 -right-24 w-80 h-80 rounded-full bg-white/20 blur-3xl" />
             <div className="pointer-events-none absolute -bottom-32 -left-20 w-72 h-72 rounded-full bg-[#5EE6D0]/20 blur-3xl" />
 
             <div className="relative z-10 flex flex-wrap items-center gap-3 mb-8">
@@ -148,7 +148,7 @@ export default function ProblemFix() {
         </div>
 
         <div className="mt-10 text-center">
-          <Link href="/pre-register?type=foodie" className="inline-flex items-center gap-2 rounded-full bg-[#0D1B1E] text-white font-bold px-8 py-4 hover:scale-105 transition-transform">
+          <Link href="/pre-register?type=foodie" className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#14ADA0] to-[#0B4F6C] text-white font-bold px-8 py-4 shadow-[0_18px_40px_-14px_rgba(8,127,120,0.7)] hover:scale-105 transition-transform">
             Get early access →
           </Link>
         </div>
