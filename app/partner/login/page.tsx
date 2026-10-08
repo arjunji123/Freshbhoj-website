@@ -101,9 +101,9 @@ export default function PartnerLoginPage() {
   const phoneReady = phoneDigits.replace(/\D/g, "").length === 10;
 
   return (
-    <div className="min-h-screen w-full grid lg:grid-cols-[1.45fr_1fr] font-sans bg-white">
+    <div className="min-h-screen lg:h-screen lg:overflow-hidden w-full grid lg:grid-cols-[1.45fr_1fr] font-sans bg-white">
       {/* ── Brand panel ── */}
-      <aside className="relative overflow-hidden text-white bg-[linear-gradient(160deg,#14ADA0_0%,#087F78_45%,#0B4F6C_100%)] px-6 py-8 lg:px-10 xl:px-12 lg:py-10 flex flex-col lg:min-h-screen">
+      <aside className="relative overflow-hidden text-white bg-[linear-gradient(160deg,#14ADA0_0%,#087F78_45%,#0B4F6C_100%)] px-6 py-8 lg:px-10 xl:px-12 lg:py-7 flex flex-col lg:h-screen lg:min-h-0">
         <div className="pointer-events-none absolute -top-24 -left-20 w-96 h-96 rounded-full bg-[#5EE6D0]/30 blur-3xl animate-[drift_14s_ease-in-out_infinite]" />
         <div className="pointer-events-none absolute -bottom-32 -right-16 w-[28rem] h-[28rem] rounded-full bg-white/15 blur-3xl animate-[drift_18s_ease-in-out_infinite_reverse]" />
         <div className="pointer-events-none absolute inset-0 opacity-[0.12] [background-image:radial-gradient(#fff_1px,transparent_1px)] [background-size:26px_26px] [mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)]" />
@@ -115,11 +115,11 @@ export default function PartnerLoginPage() {
           <Link href="/" className="lg:hidden text-sm font-semibold text-white/80 hover:text-white">← Home</Link>
         </div>
 
-        <div className="relative mt-8 lg:mt-10">
-          <span className="inline-flex items-center gap-2 rounded-full bg-white/15 border border-white/25 backdrop-blur px-4 py-2 text-[10px] lg:text-xs font-bold uppercase tracking-[0.2em] mb-5">
+        <div className="relative mt-6 lg:mt-5">
+          <span className="inline-flex items-center gap-2 rounded-full bg-white/15 border border-white/25 backdrop-blur px-4 py-2 text-[10px] lg:text-xs font-bold uppercase tracking-[0.2em] mb-3">
             <span className="w-2 h-2 rounded-full bg-[#FFC21A] animate-pulse" /> Partner Portal · Sample preview
           </span>
-          <h1 className="text-3xl md:text-4xl xl:text-5xl font-extrabold leading-[1.08] mb-3">
+          <h1 className="text-3xl md:text-4xl xl:text-[2.6rem] font-extrabold leading-[1.08] mb-2">
             Your kitchen&apos;s{" "}
             <span className="text-[#FFC21A]" style={{ fontFamily: "var(--font-instrument), Georgia, serif", fontStyle: "italic", fontWeight: 400 }}>command centre.</span>
           </h1>
@@ -128,12 +128,12 @@ export default function PartnerLoginPage() {
           </p>
         </div>
 
-        <div className="relative flex-1 min-h-[340px] mt-7 overflow-hidden">
+        <div className="relative flex-1 min-h-[340px] lg:min-h-0 mt-5 lg:mt-5 overflow-hidden">
           <DashboardPreview />
           <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#0B4F6C] to-transparent" />
         </div>
 
-        <div className="relative mt-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="relative mt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <p className="text-xs text-white/70 max-w-xs">Sample data shown, not a real kitchen. Want a walkthrough before you sign up?</p>
           <Link href="/contact-us" className="inline-flex items-center justify-center gap-2 rounded-full bg-white text-[#0D1B1E] font-bold px-7 py-3.5 hover:scale-105 active:scale-95 transition-transform shadow-xl">
             Contact us <ArrowUpRight size={18} />
@@ -142,7 +142,7 @@ export default function PartnerLoginPage() {
       </aside>
 
       {/* ── Form panel ── */}
-      <main className="relative flex items-center justify-center px-6 py-12 lg:py-16 bg-[#F3F8F8] lg:bg-white">
+      <main className="relative flex items-center justify-center px-6 py-12 lg:py-6 lg:h-screen lg:overflow-y-auto bg-[#F3F8F8] lg:bg-white">
         <Link href="/" className="hidden lg:inline-flex absolute top-8 left-8 items-center gap-2 text-sm font-semibold text-slate-400 hover:text-[#087F78] transition-colors">
           <ArrowLeft size={16} /> Back to home
         </Link>
@@ -256,7 +256,7 @@ export default function PartnerLoginPage() {
             </div>
           )}
 
-          <div className="mt-10 flex items-start gap-3 rounded-2xl bg-[#EFFAF8] border border-[#087F78]/10 p-4">
+          <div className="mt-7 flex items-start gap-3 rounded-2xl bg-[#EFFAF8] border border-[#087F78]/10 p-4">
             <ShieldCheck size={20} className="text-[#087F78] shrink-0 mt-0.5" />
             <p className="text-xs text-slate-500 leading-relaxed">
               New here? The same login creates your kitchen account. By continuing you agree to our{" "}
@@ -264,7 +264,7 @@ export default function PartnerLoginPage() {
               <Link href="/privacy-policy" className="font-bold text-[#087F78] hover:underline">Privacy Policy</Link>.
             </p>
           </div>
-          <p className="text-center text-sm text-slate-400 mt-6">
+          <p className="text-center text-sm text-slate-400 mt-4">
             Need help? <Link href="/contact-us" className="font-bold text-[#087F78] hover:underline">Contact us</Link>
           </p>
         </div>
