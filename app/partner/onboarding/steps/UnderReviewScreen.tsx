@@ -70,7 +70,7 @@ export function UnderReviewScreen() {
           ))}
         </div>
 
-        {!isSuspended ? (
+        {!isSuspended && process.env.NODE_ENV !== "production" ? (
           <Button variant="outline" onClick={handleSimulateApprove} loading={isSimulating}>
             Simulate approval (dev only)
           </Button>

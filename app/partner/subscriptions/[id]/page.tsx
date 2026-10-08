@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { CheckCircle2, CircleSlash, Clock, MessageCircle, Pencil, Phone } from "lucide-react";
+import { CheckCircle2, CircleSlash, Clock, Phone } from "lucide-react";
 import { ApiError, subscriptionsApi } from "../../../../lib/kitchenApi";
 import type { DayOfWeek, SubscriptionDeliveryScheduleItem, SubscriptionDetail } from "../../../../lib/types";
 import { BackLink, Badge, BottomSheet, Button, Card, ConfirmDialog, EmptyState, FoodTypeDot, Spinner, TextArea } from "../../components/ui";
@@ -174,18 +174,12 @@ export default function SubscriptionDetailPage() {
         </div>
 
         <div className="flex items-center gap-2 flex-wrap">
-          <div className="relative">
-            <Button variant="outline" disabled>
-              <MessageCircle size={15} /> Message
-            </Button>
-            <span className="absolute -top-2 -right-2 text-[9px] font-extrabold bg-slate-200 text-slate-500 rounded-full px-1.5 py-0.5">SOON</span>
-          </div>
-          <div className="relative">
-            <Button variant="outline" disabled>
-              <Pencil size={15} /> Edit plan
-            </Button>
-            <span className="absolute -top-2 -right-2 text-[9px] font-extrabold bg-slate-200 text-slate-500 rounded-full px-1.5 py-0.5">SOON</span>
-          </div>
+          <a
+            href={`tel:${sub.customer.phone}`}
+            className="inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-bold border-2 border-[#087F78]/20 text-[#087F78] hover:bg-[#087F78]/5 transition-colors"
+          >
+            <Phone size={15} /> Call customer
+          </a>
           {sub.status === "PENDING" ? (
             <>
               <Button variant="danger" onClick={() => setShowReject(true)} disabled={isActing}>
@@ -320,7 +314,7 @@ export default function SubscriptionDetailPage() {
       <ConfirmDialog
         open={confirmAction === "pause"}
         title="Pause this subscription?"
-        description="Deliveries stop until you resume it."
+        description="No deliveries will be scheduled until you resume it."
         confirmLabel="Pause"
         isLoading={isActing}
         onConfirm={() => runAction("pause")}

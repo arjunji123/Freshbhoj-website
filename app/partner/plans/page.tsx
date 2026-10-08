@@ -319,7 +319,7 @@ function PlanFormSheet({
     if (form.mealsPerDay < 1 || form.mealsPerDay > 3) return "Meals per day must be between 1 and 3.";
 
     const price = Number(form.priceRs);
-    if (!form.priceRs.trim() || !Number.isFinite(price) || price <= 0) return "Enter a valid price.";
+    if (!form.priceRs.trim() || !Number.isInteger(price) || price <= 0) return "Enter the plan price as a whole number of rupees.";
 
     const originalPrice = form.originalPriceRs.trim() ? Number(form.originalPriceRs) : null;
     if (originalPrice != null && (!Number.isFinite(originalPrice) || originalPrice <= price)) {
@@ -350,7 +350,8 @@ function PlanFormSheet({
         deliveryDays: form.deliveryDays,
         mealsPerDay: form.mealsPerDay,
         priceRs: Number(form.priceRs),
-        originalPriceRs: form.originalPriceRs.trim() ? Number(form.originalPriceRs) : undefined,
+        // On edit, 0 is how the backend clears an existing discount badge.
+        originalPriceRs: form.originalPriceRs.trim() ? Number(form.originalPriceRs) : plan?.originalPriceRs ? 0 : undefined,
         dietOptions: form.dietOptions,
         jainAvailable: form.jainAvailable,
         slotOptions: form.slotOptions,

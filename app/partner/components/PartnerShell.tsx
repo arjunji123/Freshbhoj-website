@@ -124,7 +124,7 @@ export default function PartnerShell({ children }: { children: React.ReactNode }
         {NavLinks}
         <button
           onClick={logout}
-          className="mt-auto flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-slate-400 hover:bg-red-50 hover:text-red-600 transition-colors"
+          className="mt-auto flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition-colors"
         >
           <LogOut size={18} strokeWidth={2.2} />
           Log out
@@ -147,7 +147,7 @@ export default function PartnerShell({ children }: { children: React.ReactNode }
           {NavLinks}
           <button
             onClick={logout}
-            className="mt-4 flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-red-600 bg-red-50 w-full"
+            className="mt-4 flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-slate-600 bg-slate-100 w-full"
           >
             <LogOut size={18} strokeWidth={2.2} />
             Log out

@@ -4,7 +4,8 @@ import { useCallback, useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { ApiError, kitchenMenuApi } from "../../../../lib/kitchenApi";
 import type { MealDetail } from "../../../../lib/types";
-import { BackLink, Button, Card, PageHeader, Spinner } from "../../components/ui";
+import { Trash2 } from "lucide-react";
+import { BackLink, Button, Card, ConfirmDialog, PageHeader, Spinner } from "../../components/ui";
 import MealForm from "../../components/MealForm";
 
 export default function EditMealPage() {
@@ -14,6 +15,22 @@ export default function EditMealPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
+
+  const handleDelete = async () => {
+    setDeleteError(null);
+    setIsDeleting(true);
+    try {
+      await kitchenMenuApi.remove(params.id);
+      router.push("/partner/menu");
+    } catch (err) {
+      setConfirmDelete(false);
+      setDeleteError(err instanceof ApiError ? err.message : "Could not delete this dish, please try again");
+      setIsDeleting(false);
+    }
+  };
 
   const load = useCallback(async () => {
     setIsLoading(true);
@@ -39,7 +56,17 @@ export default function EditMealPage() {
   return (
     <div>
       <BackLink href="/partner/menu" label="Back to Menu" />
-      <PageHeader title="Edit dish" />
+      <PageHeader
+        title="Edit dish"
+        action={
+          meal ? (
+            <Button variant="outline" className="!py-2 !px-4 !text-xs" onClick={() => setConfirmDelete(true)} disabled={isDeleting}>
+              <Trash2 size={13} /> Delete dish
+            </Button>
+          ) : undefined
+        }
+      />
+      {deleteError ? <p className="text-xs font-semibold text-red-600 mb-4">{deleteError}</p> : null}
       <Card>
         {isLoading ? (
           <div className="flex items-center justify-center py-16">
@@ -63,6 +90,15 @@ export default function EditMealPage() {
           </div>
         )}
       </Card>
+      <ConfirmDialog
+        open={confirmDelete}
+        title="Delete this dish?"
+        description="It will be removed from your menu and from customers' feeds. Past orders are not affected."
+        confirmLabel="Delete"
+        isLoading={isDeleting}
+        onConfirm={handleDelete}
+        onCancel={() => setConfirmDelete(false)}
+      />
     </div>
   );
 }

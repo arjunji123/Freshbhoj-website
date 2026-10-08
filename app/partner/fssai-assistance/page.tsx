@@ -24,9 +24,12 @@ import type {
   FssaiAssistanceStatus,
   FssaiAssistanceStatusResponse,
 } from "../../../lib/types";
-import { BackLink, Badge, Button, Card, EmptyState, Field, OptionCard, PageHeader, Spinner, TextInput } from "../components/ui";
+import { BackLink, Badge, Button, Card, ConfirmDialog, EmptyState, Field, OptionCard, PageHeader, Spinner, TextInput } from "../components/ui";
 
 const POLL_MS = 30_000;
+
+// The simulate endpoints are refused by the backend in production, so the buttons only exist in dev builds.
+const SHOW_DEV_TOOLS = process.env.NODE_ENV !== "production";
 
 const KYC_DOCS: {
   type: FssaiAssistanceDocumentType;
@@ -171,15 +174,22 @@ function PriceRow({ label, value, bold }: { label: string; value: number; bold?:
 }
 
 function CancelApplicationLink({ onCancelled }: { onCancelled: () => void }) {
+  const [isConfirming, setIsConfirming] = useState(false);
   const [isCancelling, setIsCancelling] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
+  // The backend only allows this while the application is still PENDING_PAYMENT, which is
+  // exactly when the Documents and Pay screens (the only callers) are shown.
   const handleCancel = async () => {
-    if (!window.confirm("Cancel this FSSAI application? You can start a new one anytime.")) return;
+    setError(null);
     setIsCancelling(true);
     try {
       await fssaiAssistanceApi.cancel();
+      setIsConfirming(false);
       onCancelled();
-    } catch {
+    } catch (err) {
+      setIsConfirming(false);
+      setError(err instanceof ApiError ? err.message : "Could not cancel the application, please try again");
       setIsCancelling(false);
     }
   };
@@ -187,12 +197,23 @@ function CancelApplicationLink({ onCancelled }: { onCancelled: () => void }) {
   return (
     <div className="text-center mt-4">
       <button
-        onClick={handleCancel}
+        type="button"
+        onClick={() => setIsConfirming(true)}
         disabled={isCancelling}
-        className="text-xs font-bold text-slate-400 hover:text-red-600 transition-colors disabled:opacity-50"
+        className="text-xs font-bold text-slate-400 hover:text-slate-600 transition-colors disabled:opacity-50"
       >
         {isCancelling ? "Cancelling…" : "Cancel this application"}
       </button>
+      {error ? <p className="text-xs font-semibold text-red-600 mt-2">{error}</p> : null}
+      <ConfirmDialog
+        open={isConfirming}
+        title="Cancel this FSSAI application?"
+        description="You can start a new one any time."
+        confirmLabel="Cancel application"
+        isLoading={isCancelling}
+        onConfirm={handleCancel}
+        onCancel={() => setIsConfirming(false)}
+      />
     </div>
   );
 }
@@ -583,9 +604,11 @@ function StatusTrackerScreen({ request, onRefresh }: { request: FssaiAssistanceR
         })}
       </div>
 
-      <Button variant="outline" onClick={handleSimulate} loading={isSimulating}>
-        Simulate advance (dev only)
-      </Button>
+      {SHOW_DEV_TOOLS ? (
+        <Button variant="outline" onClick={handleSimulate} loading={isSimulating}>
+          Simulate advance (dev only)
+        </Button>
+      ) : null}
     </div>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Check, Crown, Sparkles } from "lucide-react";
 import { ApiError, premiumApi } from "../../../lib/kitchenApi";
@@ -9,6 +10,13 @@ import { Badge, Button, Card, ConfirmDialog, EmptyState, GRADIENT_BG, PageHeader
 import { pricingChecklist } from "./shared";
 
 const TIER_LABEL: Record<PremiumTier, string> = { BASIC: "Basic", PRO: "Pro", ELITE: "Elite" };
+const TIER_ORDER: PremiumTier[] = ["BASIC", "PRO", "ELITE"];
+
+/** "Upgrade" / "Switch" (a downgrade, which is also immediate and charged) / "Choose" for a first purchase. */
+function changeKind(current: PremiumTier | null, target: PremiumTier): "choose" | "upgrade" | "switch" {
+  if (!current) return "choose";
+  return TIER_ORDER.indexOf(target) < TIER_ORDER.indexOf(current) ? "switch" : "upgrade";
+}
 
 export default function PremiumPricingPage() {
   const router = useRouter();
@@ -71,6 +79,9 @@ export default function PremiumPricingPage() {
   }
 
   const isActive = subscription?.status === "ACTIVE";
+  const currentTier = isActive ? subscription?.tier ?? null : null;
+  const confirmKind = confirmTier ? changeKind(currentTier, confirmTier.tier) : "choose";
+  const insufficientBalance = Boolean(purchaseError && /insufficient/i.test(purchaseError));
 
   return (
     <div>
@@ -125,7 +136,8 @@ export default function PremiumPricingPage() {
                   <Badge tone="success">Current Plan</Badge>
                 ) : (
                   <Button className="w-full justify-center" variant={catalogTier.isMostPopular ? "primary" : "outline"} onClick={() => setConfirmTier(catalogTier)}>
-                    <Sparkles size={14} /> {isActive ? "Upgrade" : "Choose plan"}
+                    <Sparkles size={14} />{" "}
+                    {{ choose: "Choose plan", upgrade: `Upgrade to ${TIER_LABEL[catalogTier.tier]}`, switch: `Switch to ${TIER_LABEL[catalogTier.tier]}` }[changeKind(currentTier, catalogTier.tier)]}
                   </Button>
                 )}
               </Card>
@@ -136,13 +148,29 @@ export default function PremiumPricingPage() {
 
       <ConfirmDialog
         open={Boolean(confirmTier)}
-        title={confirmTier ? `${isActive ? "Upgrade" : "Purchase"} ${TIER_LABEL[confirmTier.tier]}?` : ""}
+        title={
+          confirmTier
+            ? `${{ choose: "Choose the", upgrade: "Upgrade to", switch: "Switch to" }[confirmKind]} ${TIER_LABEL[confirmTier.tier]}${confirmKind === "choose" ? " plan" : ""}?`
+            : ""
+        }
         description={
           confirmTier
-            ? `₹${confirmTier.priceRs.toLocaleString("en-IN")} will be charged from your wallet balance for a 28-day period.${purchaseError ? `\n\n${purchaseError}` : ""}`
+            ? `₹${confirmTier.priceRs.toLocaleString("en-IN")} will be charged from your wallet balance immediately and starts a new 28-day period.`
             : undefined
         }
-        confirmLabel={isActive ? "Upgrade" : "Purchase"}
+        extra={
+          purchaseError ? (
+            <div>
+              <p className="text-xs font-semibold text-red-600">{purchaseError}</p>
+              {insufficientBalance ? (
+                <Link href="/partner/wallet" className="inline-block mt-2 text-xs font-bold text-[#087F78]">
+                  Add money to your wallet →
+                </Link>
+              ) : null}
+            </div>
+          ) : undefined
+        }
+        confirmLabel={{ choose: "Confirm", upgrade: "Upgrade", switch: "Switch" }[confirmKind]}
         isLoading={isPurchasing}
         onConfirm={handlePurchase}
         onCancel={() => {

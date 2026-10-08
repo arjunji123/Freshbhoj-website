@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { AlertTriangle, CalendarOff, Plus, Trash2 } from "lucide-react";
 import { ApiError, kitchenProfileApi, operatingHoursApi } from "../../../lib/kitchenApi";
 import type { DayOfWeek, HolidayOverride, OperatingHoursDay } from "../../../lib/types";
-import { Badge, Button, Card, Field, PageHeader, Spinner, TextInput, Toggle } from "../components/ui";
+import { Badge, Button, Card, ConfirmDialog, EmptyState, Field, PageHeader, Spinner, TextInput, Toggle } from "../components/ui";
 
 const DAY_ORDER: DayOfWeek[] = ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"];
 const DAY_LABEL: Record<DayOfWeek, string> = {
@@ -16,6 +16,27 @@ const DAY_LABEL: Record<DayOfWeek, string> = {
   SATURDAY: "Saturday",
   SUNDAY: "Sunday",
 };
+
+/** Today's date in the browser's local zone as YYYY-MM-DD. `toISOString()` is UTC, which is yesterday for part of every IST morning. */
+function localDateString(d = new Date()): string {
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+}
+
+/** True only for a real calendar day (rejects 2026-02-31 and half-typed values). Pure UTC maths, so no timezone can shift it. */
+function isRealCalendarDate(value: string): boolean {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+  if (!match) return false;
+  const [year, month, day] = [Number(match[1]), Number(match[2]), Number(match[3])];
+  const check = new Date(Date.UTC(year, month - 1, day));
+  return check.getUTCFullYear() === year && check.getUTCMonth() === month - 1 && check.getUTCDate() === day;
+}
+
+/** Formats a YYYY-MM-DD (or ISO) date without letting the viewer's timezone move it to another day. */
+function formatHolidayDate(value: string): string {
+  const [y, m, d] = value.slice(0, 10).split("-").map(Number);
+  return new Date(Date.UTC(y, m - 1, d)).toLocaleDateString("en-IN", { weekday: "short", day: "numeric", month: "short", timeZone: "UTC" });
+}
 
 /** Both fields of a session must be set together, or neither — mirrors the backend's rule so we never send a half-pair. */
 function sessionPairValid(start: string, end: string): boolean {
@@ -65,6 +86,17 @@ export default function TimingsPage() {
     return (
       <div className="flex items-center justify-center py-24">
         <Spinner className="w-8 h-8 text-[#087F78]" />
+      </div>
+    );
+  }
+
+  if (error && weekly.length === 0) {
+    return (
+      <div>
+        <PageHeader title="Timings" subtitle="Your weekly hours, holidays, and emergency stop" />
+        <Card>
+          <EmptyState title="Couldn't load your hours" description={error} action={<Button onClick={load}>Retry</Button>} />
+        </Card>
       </div>
     );
   }
@@ -232,6 +264,8 @@ function HolidaysSection({
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [deletingDate, setDeletingDate] = useState<string | null>(null);
+  const [pendingRemove, setPendingRemove] = useState<HolidayOverride | null>(null);
+  const [removeError, setRemoveError] = useState<string | null>(null);
 
   const session1Ok = sessionPairValid(s1Start, s1End);
   const session2Ok = sessionPairValid(s2Start, s2End);
@@ -248,8 +282,12 @@ function HolidaysSection({
   };
 
   const handleAdd = async () => {
-    if (!date) {
-      setError("Pick a date");
+    if (!isRealCalendarDate(date)) {
+      setError("Pick a valid date.");
+      return;
+    }
+    if (date < localDateString()) {
+      setError("Pick today or a future date.");
       return;
     }
     if (!session1Ok || !session2Ok) {
@@ -279,12 +317,15 @@ function HolidaysSection({
   };
 
   const handleDelete = async (holidayDate: string) => {
+    setPendingRemove(null);
+    setRemoveError(null);
     setDeletingDate(holidayDate);
     try {
-      await operatingHoursApi.removeHoliday(holidayDate);
+      await operatingHoursApi.removeHoliday(holidayDate.slice(0, 10));
       setHolidays((prev) => prev.filter((h) => h.date !== holidayDate));
-    } catch {
+    } catch (err) {
       // Leave it in the list — the user can retry the delete.
+      setRemoveError(err instanceof ApiError ? err.message : "Could not remove this holiday, please try again");
     } finally {
       setDeletingDate(null);
     }
@@ -306,7 +347,7 @@ function HolidaysSection({
         <div className="rounded-2xl border border-slate-100 p-4 mb-4 flex flex-col gap-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Field label="Date">
-              <TextInput type="date" value={date} onChange={(e) => setDate(e.target.value)} min={new Date().toISOString().slice(0, 10)} />
+              <TextInput type="date" value={date} onChange={(e) => setDate(e.target.value)} min={localDateString()} />
             </Field>
             <Field label="Status">
               <div className="flex gap-2">
@@ -364,6 +405,8 @@ function HolidaysSection({
         </div>
       ) : null}
 
+      {removeError ? <p className="text-xs font-semibold text-red-600 mb-3">{removeError}</p> : null}
+
       {holidays.length === 0 ? (
         <div className="flex flex-col items-center text-center py-10">
           <CalendarOff size={28} className="text-slate-300 mb-3" />
@@ -376,9 +419,9 @@ function HolidaysSection({
               <div className="min-w-0">
                 <div className="flex items-center gap-2 flex-wrap">
                   <p className="text-sm font-bold text-slate-800">
-                    {new Date(h.date).toLocaleDateString("en-IN", { weekday: "short", day: "numeric", month: "short" })}
+                    {formatHolidayDate(h.date)}
                   </p>
-                  <Badge tone={h.isClosed ? "danger" : "warning"}>{h.isClosed ? "Closed" : "Custom hours"}</Badge>
+                  <Badge tone={h.isClosed ? "neutral" : "warning"}>{h.isClosed ? "Closed" : "Custom hours"}</Badge>
                 </div>
                 {!h.isClosed && h.session1Start ? (
                   <p className="text-xs text-slate-500 mt-0.5">
@@ -389,10 +432,10 @@ function HolidaysSection({
                 {h.note ? <p className="text-xs text-slate-400 mt-0.5">{h.note}</p> : null}
               </div>
               <button
-                onClick={() => handleDelete(h.date)}
+                onClick={() => setPendingRemove(h)}
                 disabled={deletingDate === h.date}
                 className="w-8 h-8 rounded-lg bg-slate-100 text-slate-400 hover:bg-red-50 hover:text-red-600 flex items-center justify-center shrink-0 transition-colors disabled:opacity-50"
-                aria-label="Remove"
+                aria-label={`Remove holiday ${h.date.slice(0, 10)}`}
               >
                 <Trash2 size={13} />
               </button>
@@ -400,6 +443,15 @@ function HolidaysSection({
           ))}
         </div>
       )}
+
+      <ConfirmDialog
+        open={pendingRemove !== null}
+        title="Remove this holiday?"
+        description={pendingRemove ? `${formatHolidayDate(pendingRemove.date)} goes back to your regular weekly hours.` : undefined}
+        confirmLabel="Remove"
+        onConfirm={() => pendingRemove && handleDelete(pendingRemove.date)}
+        onCancel={() => setPendingRemove(null)}
+      />
     </Card>
   );
 }

@@ -174,11 +174,12 @@ export interface MealDetail {
   goalTags: GoalTag[];
   slots: MealSlot[];
   nutrition: {
-    calories: number;
-    proteinG: number;
-    carbsG: number;
-    fatG: number;
-    fiberG: number;
+    calories: number | null;
+    proteinG: number | null;
+    // Older dishes can have carbs/fat/fibre unset — never assume a number.
+    carbsG: number | null;
+    fatG: number | null;
+    fiberG: number | null;
     macroSplit: { proteinPercent: number; carbsPercent: number; fatPercent: number };
   };
   servingSize: string | null;
@@ -193,6 +194,8 @@ export interface MealDetail {
   isFavorite: boolean;
   orderCount: number;
   category: { id: string; slug: string; name: string } | null;
+  /** Slug of the cuisine the dish is tagged with (partner menu reads only) — pre-selects the edit form. */
+  cuisineSlug?: string | null;
   customizationGroups: MealCustomizationGroup[];
 }
 

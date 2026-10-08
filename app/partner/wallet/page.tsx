@@ -25,6 +25,7 @@ export default function WalletPage() {
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showAddMoney, setShowAddMoney] = useState(false);
+  const [loadMoreError, setLoadMoreError] = useState<string | null>(null);
 
   const load = async () => {
     setIsLoading(true);
@@ -47,6 +48,7 @@ export default function WalletPage() {
   }, []);
 
   const handleLoadMore = async () => {
+    setLoadMoreError(null);
     setIsLoadingMore(true);
     try {
       const res = await walletApi.transactions({ page: page + 1, limit: 15 });
@@ -54,7 +56,7 @@ export default function WalletPage() {
       setHasNextPage(res.meta.hasNextPage);
       setPage((p) => p + 1);
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : "Could not load more transactions");
+      setLoadMoreError(err instanceof ApiError ? err.message : "Could not load more transactions");
     } finally {
       setIsLoadingMore(false);
     }
@@ -140,7 +142,7 @@ export default function WalletPage() {
                   <div className="flex items-center gap-3 min-w-0">
                     <div
                       className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${
-                        tx.type === "CREDIT" ? "bg-emerald-50 text-emerald-600" : "bg-red-50 text-red-600"
+                        tx.type === "CREDIT" ? "bg-emerald-50 text-emerald-600" : "bg-slate-100 text-slate-500"
                       }`}
                     >
                       {tx.type === "CREDIT" ? <ArrowDownLeft size={15} /> : <ArrowUpRight size={15} />}
@@ -151,7 +153,7 @@ export default function WalletPage() {
                     </div>
                   </div>
                   <div className="text-right shrink-0">
-                    <p className={`text-sm font-extrabold ${tx.type === "CREDIT" ? "text-emerald-600" : "text-red-600"}`}>
+                    <p className={`text-sm font-extrabold ${tx.type === "CREDIT" ? "text-emerald-600" : "text-slate-900"}`}>
                       {tx.type === "CREDIT" ? "+" : "−"}₹{tx.amountRs.toLocaleString("en-IN")}
                     </p>
                     <Badge tone="neutral">{REASON_LABEL[tx.reason]}</Badge>
@@ -159,10 +161,11 @@ export default function WalletPage() {
                 </div>
               ))}
             </div>
+            {loadMoreError ? <p className="text-xs font-semibold text-red-600 text-center pt-3">{loadMoreError}</p> : null}
             {hasNextPage ? (
               <div className="flex justify-center py-4">
                 <Button variant="ghost" onClick={handleLoadMore} loading={isLoadingMore}>
-                  Load more
+                  {loadMoreError ? "Retry" : "Load more"}
                 </Button>
               </div>
             ) : null}
@@ -192,7 +195,7 @@ function AddMoneySheet({
   const [result, setResult] = useState<WalletTopupResult | null>(null);
 
   const amount = Number(amountStr);
-  const isValidAmount = amountStr.trim() !== "" && Number.isFinite(amount) && amount > 0;
+  const isValidAmount = amountStr.trim() !== "" && Number.isInteger(amount) && amount > 0;
 
   // Reset the form each time the sheet is (re)opened.
   useEffect(() => {
@@ -237,12 +240,10 @@ function AddMoneySheet({
         <div className="flex flex-col gap-5">
           <Field label="Amount (₹)">
             <TextInput
-              type="number"
-              min={1}
               inputMode="numeric"
               placeholder="e.g. 500"
               value={amountStr}
-              onChange={(e) => setAmountStr(e.target.value)}
+              onChange={(e) => setAmountStr(e.target.value.replace(/\D/g, "").slice(0, 7))}
             />
           </Field>
           <div className="flex gap-2 flex-wrap -mt-3">

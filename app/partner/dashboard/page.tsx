@@ -166,10 +166,10 @@ export default function DashboardPage() {
       {profile ? (
         <div className="flex flex-wrap items-center gap-2 mb-6">
           {summary.isAcceptingOrders && summary.accountStatus === "ACTIVE" ? (
-            <Badge tone="danger">
+            <Badge tone="success">
               <span className="relative flex w-1.5 h-1.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-600 opacity-75" />
-                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-red-600" />
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-600 opacity-75" />
+                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-600" />
               </span>
               Live
             </Badge>
@@ -234,7 +234,9 @@ export default function DashboardPage() {
           ) : (
             <div className="divide-y divide-slate-50">
               {liveOrders.slice(0, 5).map((order) => (
-                <div key={order.id} className="flex items-center justify-between gap-4 px-6 py-4">
+                <div key={order.id} className="relative flex items-center justify-between gap-4 px-6 py-4 hover:bg-slate-50/60 transition-colors">
+                  {/* Whole row opens the orders board; the Call link below sits above this overlay. */}
+                  <Link href="/partner/orders" aria-label={`Open order #${order.orderNumber}`} className="absolute inset-0" />
                   <div className="min-w-0">
                     <div className="flex items-center gap-2">
                       <p className="text-sm font-extrabold text-slate-900">#{order.orderNumber}</p>
@@ -246,7 +248,7 @@ export default function DashboardPage() {
                   </div>
                   <div className="text-right shrink-0">
                     <p className="text-sm font-extrabold text-slate-800">₹{order.totalAmount}</p>
-                    <a href={`tel:${order.customer.phone}`} className="inline-flex items-center gap-1 text-[11px] font-bold text-slate-400 mt-1">
+                    <a href={`tel:${order.customer.phone}`} className="relative z-10 inline-flex items-center gap-1 text-[11px] font-bold text-slate-400 hover:text-[#087F78] mt-1">
                       <Phone size={10} /> Call
                     </a>
                   </div>

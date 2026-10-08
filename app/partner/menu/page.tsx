@@ -48,6 +48,7 @@ export default function MenuPage() {
 
   const handleDelete = async (meal: MealDetail) => {
     setPendingDelete(null);
+    setError(null);
     setBusyId(meal.id);
     try {
       await kitchenMenuApi.remove(meal.id);
@@ -139,7 +140,7 @@ export default function MenuPage() {
               <p className="text-sm font-bold text-slate-700 mb-2">₹{meal.price}</p>
               <div className="flex items-center gap-1.5 text-xs text-slate-400 mb-4">
                 <Flame size={12} />
-                {meal.nutrition.calories} kcal · {meal.nutrition.proteinG}g protein
+                {meal.nutrition.calories ?? 0} kcal · {meal.nutrition.proteinG ?? 0}g protein
               </div>
               <div className="flex items-center gap-2">
                 <Link href={`/partner/menu/${meal.id}`} className="flex-1">

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { ArrowDownLeft, ArrowUpRight, Banknote, CalendarClock, IndianRupee, Wallet } from "lucide-react";
 import { ApiError, payoutsApi } from "../../../lib/kitchenApi";
 import type { PayoutStatus, PayoutSummary, Transaction } from "../../../lib/types";
-import { Badge, Button, Card, EmptyState, GRADIENT_BG, PageHeader, Spinner } from "../components/ui";
+import { Badge, Button, Card, ConfirmDialog, EmptyState, GRADIENT_BG, PageHeader, Spinner } from "../components/ui";
 
 const STATUS_TONE: Record<PayoutStatus, "neutral" | "success" | "warning" | "danger"> = {
   REQUESTED: "warning",
@@ -28,6 +28,8 @@ export default function PayoutsPage() {
   const [error, setError] = useState<string | null>(null);
   const [requestError, setRequestError] = useState<string | null>(null);
   const [requestSuccess, setRequestSuccess] = useState(false);
+  const [confirmingRequest, setConfirmingRequest] = useState(false);
+  const [loadMoreError, setLoadMoreError] = useState<string | null>(null);
 
   const load = async () => {
     setIsLoading(true);
@@ -50,6 +52,7 @@ export default function PayoutsPage() {
   }, []);
 
   const handleLoadMore = async () => {
+    setLoadMoreError(null);
     setIsLoadingMore(true);
     try {
       const res = await payoutsApi.transactions({ page: page + 1, limit: 15 });
@@ -57,13 +60,14 @@ export default function PayoutsPage() {
       setHasNextPage(res.meta.hasNextPage);
       setPage((p) => p + 1);
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : "Could not load more transactions");
+      setLoadMoreError(err instanceof ApiError ? err.message : "Could not load more transactions");
     } finally {
       setIsLoadingMore(false);
     }
   };
 
   const handleRequestPayout = async () => {
+    setConfirmingRequest(false);
     setRequestError(null);
     setRequestSuccess(false);
     setIsRequesting(true);
@@ -127,7 +131,7 @@ export default function PayoutsPage() {
                 : "Nothing available to pay out right now."}
             </p>
           </div>
-          <Button onClick={handleRequestPayout} loading={isRequesting} disabled={!canRequest}>
+          <Button onClick={() => setConfirmingRequest(true)} loading={isRequesting} disabled={!canRequest}>
             <Banknote size={15} /> Request payout
           </Button>
         </div>
@@ -209,7 +213,7 @@ export default function PayoutsPage() {
                   <div className="flex items-center gap-3 min-w-0">
                     <div
                       className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${
-                        tx.sign === 1 ? "bg-emerald-50 text-emerald-600" : "bg-red-50 text-red-600"
+                        tx.sign === 1 ? "bg-emerald-50 text-emerald-600" : "bg-slate-100 text-slate-500"
                       }`}
                     >
                       {tx.sign === 1 ? <ArrowDownLeft size={15} /> : <ArrowUpRight size={15} />}
@@ -220,7 +224,7 @@ export default function PayoutsPage() {
                     </div>
                   </div>
                   <div className="text-right shrink-0">
-                    <p className={`text-sm font-extrabold ${tx.sign === 1 ? "text-emerald-600" : "text-red-600"}`}>
+                    <p className={`text-sm font-extrabold ${tx.sign === 1 ? "text-emerald-600" : "text-slate-900"}`}>
                       {tx.sign === 1 ? "+" : "−"}₹{tx.amount.toLocaleString("en-IN")}
                     </p>
                     <Badge tone={tx.type === "ORDER" ? "neutral" : STATUS_TONE[tx.status as PayoutStatus] ?? "neutral"}>{tx.status}</Badge>
@@ -228,16 +232,26 @@ export default function PayoutsPage() {
                 </div>
               ))}
             </div>
+            {loadMoreError ? <p className="text-xs font-semibold text-red-600 text-center pt-3">{loadMoreError}</p> : null}
             {hasNextPage ? (
               <div className="flex justify-center py-4">
                 <Button variant="ghost" onClick={handleLoadMore} loading={isLoadingMore}>
-                  Load more
+                  {loadMoreError ? "Retry" : "Load more"}
                 </Button>
               </div>
             ) : null}
           </>
         )}
       </Card>
+
+      <ConfirmDialog
+        open={confirmingRequest}
+        title="Request payout?"
+        description={`₹${summary.availableForPayout.toLocaleString("en-IN")} will be sent to the bank account on file.`}
+        confirmLabel="Request payout"
+        onConfirm={handleRequestPayout}
+        onCancel={() => setConfirmingRequest(false)}
+      />
     </div>
   );
 }

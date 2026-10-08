@@ -9,6 +9,11 @@ import { Badge, Button, Card, EmptyState, Field, PageHeader, Spinner, TextArea, 
 
 type DeleteStep = "closed" | "phone" | "otp";
 
+const MAX_SPECIALITIES = 10;
+
+/** The saved +91XXXXXXXXXX number as the 10 digits the input shows. */
+const localPhone = (p: string | null) => (p ?? "").replace(/^\+91/, "");
+
 export default function ProfilePage() {
   const [profile, setProfile] = useState<KitchenProfile | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -48,7 +53,7 @@ export default function ProfilePage() {
         setTagline(p.tagline ?? "");
         setDescription(p.description ?? "");
         setLogoUrl(p.logoUrl ?? "");
-        setContactPhone(p.contactPhone ?? "");
+        setContactPhone(localPhone(p.contactPhone));
         setPrepTimeMins(String(p.prepTimeMins));
         setOpensAt(p.opensAt);
         setClosesAt(p.closesAt);
@@ -78,22 +83,39 @@ export default function ProfilePage() {
   };
 
   const handleSave = async () => {
-    setError(null);
+    if (!profile) return;
     setSaved(false);
+    // Mirrors UpdateKitchenProfileDto so the partner sees a readable reason instead of a 400.
+    if (name.trim().length < 3) return setError("The kitchen name needs to be at least 3 characters.");
+    if (contactPhone && !/^[6-9]\d{9}$/.test(contactPhone)) return setError("Enter a valid 10-digit Indian mobile number for the contact number.");
+    const prep = Number(prepTimeMins);
+    if (!Number.isInteger(prep) || prep < 5 || prep > 180) return setError("Prep time must be a whole number of minutes between 5 and 180.");
+    if (!/^([01]\d|2[0-3]):[0-5]\d$/.test(opensAt) || !/^([01]\d|2[0-3]):[0-5]\d$/.test(closesAt)) {
+      return setError("Set both the opening and closing time.");
+    }
+    const capacityValue = capacity.trim() ? Number(capacity) : null;
+    if (capacityValue !== null && (!Number.isInteger(capacityValue) || capacityValue < 1)) {
+      return setError("Capacity must be a whole number of orders, 1 or more.");
+    }
+
+    // Send only what changed, so an untouched field is never overwritten (and a cleared text field really clears).
+    const patch: Partial<KitchenProfile> = {};
+    if (name.trim() !== profile.name) patch.name = name.trim();
+    if (tagline.trim() !== (profile.tagline ?? "")) patch.tagline = tagline.trim();
+    if (description.trim() !== (profile.description ?? "")) patch.description = description.trim();
+    if (logoUrl !== (profile.logoUrl ?? "") && logoUrl) patch.logoUrl = logoUrl;
+    if (contactPhone !== localPhone(profile.contactPhone) && contactPhone) patch.contactPhone = `+91${contactPhone}`;
+    if (prep !== profile.prepTimeMins) patch.prepTimeMins = prep;
+    if (opensAt !== profile.opensAt) patch.opensAt = opensAt;
+    if (closesAt !== profile.closesAt) patch.closesAt = closesAt;
+    if (specialities.join("\u0000") !== (profile.specialities ?? []).join("\u0000")) patch.specialities = specialities;
+    if (capacityValue !== null && capacityValue !== profile.capacity) patch.capacity = capacityValue;
+    if (Object.keys(patch).length === 0) return setError("Nothing to save yet — change a field first.");
+
+    setError(null);
     setIsSaving(true);
     try {
-      const updated = await kitchenProfileApi.update({
-        name: name.trim(),
-        tagline: tagline.trim() || undefined,
-        description: description.trim() || undefined,
-        logoUrl: logoUrl || undefined,
-        contactPhone: contactPhone.trim() || undefined,
-        prepTimeMins: Number(prepTimeMins) || undefined,
-        opensAt,
-        closesAt,
-        specialities,
-        capacity: capacity ? Number(capacity) : undefined,
-      });
+      const updated = await kitchenProfileApi.update(patch);
       setProfile(updated);
       setSaved(true);
     } catch (err) {
@@ -105,7 +127,7 @@ export default function ProfilePage() {
 
   const handleAddSpeciality = () => {
     const value = specialityInput.trim();
-    if (!value || specialities.includes(value) || specialities.length >= 10) {
+    if (!value || specialities.includes(value) || specialities.length >= MAX_SPECIALITIES) {
       setSpecialityInput("");
       return;
     }
@@ -245,20 +267,28 @@ export default function ProfilePage() {
           </Field>
 
           <Field label="Kitchen name">
-            <TextInput value={name} onChange={(e) => setName(e.target.value)} />
+            <TextInput value={name} onChange={(e) => setName(e.target.value)} maxLength={80} />
           </Field>
           <Field label="Tagline">
-            <TextInput value={tagline} onChange={(e) => setTagline(e.target.value)} />
+            <TextInput value={tagline} onChange={(e) => setTagline(e.target.value)} maxLength={120} placeholder="e.g. Home-style North Indian meals" />
           </Field>
           <Field label="Description">
-            <TextArea rows={3} value={description} onChange={(e) => setDescription(e.target.value)} />
+            <TextArea rows={3} value={description} onChange={(e) => setDescription(e.target.value)} maxLength={1000} placeholder="Tell customers what makes your kitchen special" />
           </Field>
-          <Field label="Contact phone">
-            <TextInput value={contactPhone} onChange={(e) => setContactPhone(e.target.value)} placeholder="+919876543210" />
+          <Field label="Contact number">
+            <div className="flex items-center gap-2">
+              <span className="shrink-0 rounded-xl bg-slate-100 px-3.5 py-3 text-sm font-bold text-slate-500">+91</span>
+              <TextInput
+                inputMode="numeric"
+                value={contactPhone}
+                onChange={(e) => setContactPhone(e.target.value.replace(/\D/g, "").slice(0, 10))}
+                placeholder="98765 43210"
+              />
+            </div>
           </Field>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <Field label="Prep time (mins)">
-              <TextInput inputMode="numeric" value={prepTimeMins} onChange={(e) => setPrepTimeMins(e.target.value.replace(/\D/g, ""))} />
+              <TextInput inputMode="numeric" value={prepTimeMins} onChange={(e) => setPrepTimeMins(e.target.value.replace(/\D/g, "").slice(0, 3))} />
             </Field>
             <Field label="Opens at">
               <TextInput type="time" value={opensAt} onChange={(e) => setOpensAt(e.target.value)} />
@@ -290,9 +320,10 @@ export default function ProfilePage() {
                   }
                 }}
                 placeholder="e.g. North Indian, Chinese"
-                disabled={specialities.length >= 10}
+                disabled={specialities.length >= MAX_SPECIALITIES}
+                maxLength={40}
               />
-              <Button variant="outline" className="!py-3 !px-4 shrink-0" onClick={handleAddSpeciality} disabled={specialities.length >= 10}>
+              <Button variant="outline" className="!py-3 !px-4 shrink-0" onClick={handleAddSpeciality} disabled={specialities.length >= MAX_SPECIALITIES}>
                 Add
               </Button>
             </div>

@@ -79,12 +79,16 @@ export default function SuggestionHistoryPage() {
         </div>
       </div>
 
-      {error ? <p className="text-xs font-semibold text-red-600 mb-4">{error}</p> : null}
+      {error && items.length > 0 ? <p className="text-xs font-semibold text-red-600 mb-4">{error}</p> : null}
 
       {isLoading ? (
         <div className="flex items-center justify-center py-24">
           <Spinner className="w-8 h-8 text-[#087F78]" />
         </div>
+      ) : items.length === 0 && error ? (
+        <Card>
+          <EmptyState title="Couldn't load history" description={error} action={<Button onClick={() => load(tab, query)}>Retry</Button>} />
+        </Card>
       ) : items.length === 0 ? (
         <Card>
           <EmptyState

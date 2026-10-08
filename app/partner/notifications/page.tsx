@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Bell, Check, ClipboardList, Megaphone, RefreshCcw, Sparkles, Wallet } from "lucide-react";
 import { ApiError, kitchenOrdersApi, notificationsApi } from "../../../lib/kitchenApi";
 import type { KitchenNotification, NotificationCategory } from "../../../lib/types";
@@ -19,6 +20,18 @@ const CATEGORY_ICON: Record<NotificationCategory, React.ComponentType<{ size?: n
   REEL: Sparkles,
   GENERAL: Megaphone,
 };
+
+/** Where tapping a notification should land — mirrors the app's Notifications screen. */
+function destinationFor(notif: KitchenNotification): string | null {
+  const data = notif.data;
+  const orderId = typeof data?.orderId === "string" ? data.orderId : null;
+  const subscriptionId = typeof data?.subscriptionId === "string" ? data.subscriptionId : null;
+  if (subscriptionId) return `/partner/subscriptions/${subscriptionId}`;
+  if (data?.type === "SUGGESTIONS_READY") return "/partner/ads/insights";
+  if (orderId && data?.action === "ACCEPT_ORDER") return "/partner/orders";
+  if (orderId) return `/partner/orders/${orderId}/chat`;
+  return null;
+}
 
 function dayBucket(iso: string): "Today" | "Yesterday" | "Earlier" {
   const date = new Date(iso);
@@ -46,6 +59,7 @@ function groupByDay(items: KitchenNotification[]) {
 }
 
 export default function NotificationsPage() {
+  const router = useRouter();
   const [category, setCategory] = useState<NotificationCategory | undefined>(undefined);
   const [items, setItems] = useState<KitchenNotification[]>([]);
   const [page, setPage] = useState(1);
@@ -80,6 +94,8 @@ export default function NotificationsPage() {
   }, [category]);
 
   const handleTap = async (notif: KitchenNotification) => {
+    const destination = destinationFor(notif);
+    if (destination) router.push(destination);
     if (notif.isRead) return;
     setItems((prev) => prev.map((n) => (n.id === notif.id ? { ...n, isRead: true } : n)));
     setUnreadCount((c) => Math.max(0, c - 1));

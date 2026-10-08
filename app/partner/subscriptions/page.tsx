@@ -293,7 +293,7 @@ function SubscriberCard({
       <div className="flex items-center justify-between mt-1">
         <p className="text-sm font-extrabold text-slate-900">₹{sub.pricePerCycle.toLocaleString("en-IN")}</p>
         <a href={`tel:${sub.customer.phone}`} className="inline-flex items-center gap-1 text-[11px] font-bold text-slate-400">
-          <Phone size={10} /> Call
+          <Phone size={10} /> Call customer
         </a>
       </div>
 

@@ -97,25 +97,44 @@ export function setOnSessionExpired(handler: (() => void) | null) {
 // the "losing" call fails with 401 and would otherwise wipe out the tokens
 // the "winning" call just wrote. Sharing one in-flight promise means every
 // concurrent caller awaits the same refresh instead of racing.
-let refreshPromise: Promise<KitchenTokenPair | null> | null = null;
+//
+// `rejected` = the server said the refresh token is dead (or there is none): the
+// session is genuinely over. `unreachable` = network failure, timeout or 5xx: that
+// says nothing about the session, so the partner must NOT be logged out over it.
+type RefreshOutcome = { kind: "ok"; tokens: KitchenTokenPair } | { kind: "rejected" } | { kind: "unreachable" };
 
-async function refreshTokens(): Promise<KitchenTokenPair | null> {
+let refreshPromise: Promise<RefreshOutcome> | null = null;
+
+const REFRESH_TIMEOUT_MS = 15_000;
+
+async function refreshTokens(): Promise<RefreshOutcome> {
   if (refreshPromise) return refreshPromise;
 
-  refreshPromise = (async () => {
+  refreshPromise = (async (): Promise<RefreshOutcome> => {
     const current = readTokens();
-    if (!current) return null;
+    if (!current) return { kind: "rejected" };
 
-    const res = await fetch(`${BASE_URL}/api/v1/partner/auth/token/refresh`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ refreshToken: current.refreshToken }),
-    });
-    if (!res.ok) return null;
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), REFRESH_TIMEOUT_MS);
+    try {
+      const res = await fetch(`${BASE_URL}/api/v1/partner/auth/token/refresh`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ refreshToken: current.refreshToken }),
+        signal: controller.signal,
+      });
+      if (res.status >= 500) return { kind: "unreachable" };
+      if (!res.ok) return { kind: "rejected" };
 
-    const body: ApiEnvelope<KitchenTokenPair> = await res.json();
-    writeTokens(body.data);
-    return body.data;
+      const body: ApiEnvelope<KitchenTokenPair> = await res.json();
+      if (!body?.data?.accessToken) return { kind: "rejected" };
+      writeTokens(body.data);
+      return { kind: "ok", tokens: body.data };
+    } catch {
+      return { kind: "unreachable" };
+    } finally {
+      clearTimeout(timeout);
+    }
   })();
 
   try {
@@ -130,6 +149,18 @@ interface RequestOptions {
   body?: unknown;
   skipAuth?: boolean;
   isRetry?: boolean;
+}
+
+/**
+ * Prefers the specific per-field reasons over the generic "Validation failed"
+ * the backend sends alongside them, so the form can say what to fix.
+ */
+function errorMessage(envelope: { message?: string; errors?: unknown } | null, status: number): string {
+  if (Array.isArray(envelope?.errors) && envelope.errors.length > 0) {
+    return envelope.errors.filter((e): e is string => typeof e === "string").slice(0, 2).join(". ") || "Something went wrong, please try again";
+  }
+  if (typeof envelope?.message === "string" && envelope.message) return envelope.message;
+  return status >= 500 ? "Something went wrong on our side. Please try again." : "Something went wrong, please try again";
 }
 
 async function request<T>(path: string, options: RequestOptions = {}): Promise<T> {
@@ -148,21 +179,19 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
 
   if (res.status === 401 && !skipAuth && !isRetry) {
     const refreshed = await refreshTokens();
-    if (refreshed) return request<T>(path, { ...options, isRetry: true });
+    if (refreshed.kind === "ok") return request<T>(path, { ...options, isRetry: true });
+    if (refreshed.kind === "unreachable") {
+      throw new ApiError(0, "Can't reach FreshBhoj right now. Check your connection and try again.");
+    }
     writeTokens(null);
     onSessionExpired?.();
     throw new ApiError(401, 'Your session expired — please log in again');
   }
 
-  const envelope: ApiEnvelope<T> & { message: string } = await res.json().catch(() => ({
-    success: false,
-    statusCode: res.status,
-    message: 'Something went wrong, please try again',
-    data: null as T,
-  }));
+  const envelope: (ApiEnvelope<T> & { errors?: unknown }) | null = await res.json().catch(() => null);
 
-  if (!res.ok || !envelope.success) {
-    throw new ApiError(res.status, envelope.message || 'Something went wrong, please try again');
+  if (!res.ok || !envelope?.success) {
+    throw new ApiError(res.status, errorMessage(envelope, res.status));
   }
 
   return envelope.data;
@@ -272,6 +301,7 @@ export const kitchenProfileApi = {
 export interface UpsertMealCustomizationOptionInput {
   name: string;
   priceDelta: number;
+  isDefault?: boolean;
 }
 
 export interface UpsertMealCustomizationGroupInput {
@@ -308,13 +338,36 @@ export interface UpsertMealInput {
   customizationGroups?: UpsertMealCustomizationGroupInput[];
 }
 
+/**
+ * The menu read model echoes `id`s on customization groups/options, but the write
+ * DTOs are strict (`forbidNonWhitelisted`) — sending an `id` back is a 400.
+ * Whatever the caller hands in, only the whitelisted fields go out.
+ */
+function toMealPayload<T extends Partial<UpsertMealInput>>(input: T): T {
+  if (!input.customizationGroups) return input;
+  return {
+    ...input,
+    customizationGroups: input.customizationGroups.map((group) => ({
+      name: group.name,
+      isRequired: group.isRequired,
+      minSelect: group.minSelect,
+      maxSelect: group.maxSelect,
+      options: group.options.map((option) => ({
+        name: option.name,
+        priceDelta: option.priceDelta,
+        ...(option.isDefault !== undefined ? { isDefault: option.isDefault } : {}),
+      })),
+    })),
+  };
+}
+
 export const kitchenMenuApi = {
   list: (includeUnavailable = true) =>
     request<MealDetail[]>(`/partner/menu?includeUnavailable=${includeUnavailable}`),
   get: (id: string) => request<MealDetail>(`/partner/menu/${id}`),
-  create: (input: UpsertMealInput) => request<MealDetail>('/partner/menu', { method: 'POST', body: input }),
+  create: (input: UpsertMealInput) => request<MealDetail>('/partner/menu', { method: 'POST', body: toMealPayload(input) }),
   update: (id: string, input: Partial<UpsertMealInput>) =>
-    request<MealDetail>(`/partner/menu/${id}`, { method: 'PATCH', body: input }),
+    request<MealDetail>(`/partner/menu/${id}`, { method: 'PATCH', body: toMealPayload(input) }),
   setAvailability: (id: string, isAvailable: boolean) =>
     request<{ id: string; isAvailable: boolean }>(`/partner/menu/${id}/availability`, {
       method: 'PATCH',
@@ -384,8 +437,17 @@ export const fssaiAssistanceApi = {
 
 // ── Upload ────────────────────────────────────────────────────────────────
 
+const MAX_UPLOAD_BYTES = 20 * 1024 * 1024;
+
 export const kitchenUploadApi = {
   upload: (file: File, purpose: string) => {
+    // The backend rejects anything over 20 MB — fail fast with a readable message
+    // instead of uploading for a while and then getting a 400.
+    if (file.size > MAX_UPLOAD_BYTES) {
+      return Promise.reject(
+        new ApiError(413, `That file is too large (${Math.round(file.size / 1024 / 1024)} MB). Please pick one under 20 MB.`),
+      );
+    }
     const form = new FormData();
     form.append('file', file);
     form.append('purpose', purpose);

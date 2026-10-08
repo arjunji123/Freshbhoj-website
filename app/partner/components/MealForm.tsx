@@ -19,11 +19,19 @@ const SLOTS: MealSlot[] = ["BREAKFAST", "LUNCH", "DINNER", "SNACKS"];
 const GOAL_TAGS: GoalTag[] = ["HIGH_PROTEIN", "LOW_CALORIE", "WEIGHT_LOSS", "MUSCLE_GAIN", "HEALTHY_LIFESTYLE"];
 const MAX_GROUPS = 6;
 const MAX_OPTIONS_PER_GROUP = 20;
+const MAX_PHOTOS = 6;
+// Mirrors the backend's UpsertMealDto limits.
+const MAX_NAME = 80;
+const MAX_DESCRIPTION = 500;
+const MAX_GROUP_NAME = 40;
+const MAX_OPTION_NAME = 60;
 
 interface LocalOption {
   localId: string;
   name: string;
   priceDelta: string;
+  /** Carried through unchanged from the saved dish so an edit does not silently drop it. */
+  isDefault?: boolean;
 }
 
 interface LocalGroup {
@@ -61,7 +69,7 @@ export default function MealForm({ initial, submitLabel, onSubmit }: MealFormPro
   const [foodType, setFoodType] = useState<FoodType>(initial?.foodType ?? "VEG");
   const [isJainAvailable, setIsJainAvailable] = useState(initial?.isJainAvailable ?? false);
   const jainEligible = foodType === "VEG" || foodType === "VEGAN";
-  const [cuisineSlug, setCuisineSlug] = useState("");
+  const [cuisineSlug, setCuisineSlug] = useState(initial?.cuisineSlug ?? "");
   const [cuisines, setCuisines] = useState<Cuisine[]>([]);
   const [cuisinesFailed, setCuisinesFailed] = useState(false);
   const [isLoadingCuisines, setIsLoadingCuisines] = useState(true);
@@ -72,13 +80,13 @@ export default function MealForm({ initial, submitLabel, onSubmit }: MealFormPro
       isRequired: g.isRequired,
       minSelect: String(g.minSelect),
       maxSelect: String(g.maxSelect),
-      options: g.options.map((o) => ({ localId: nextLocalId(), name: o.name, priceDelta: String(o.priceDelta) })),
+      options: g.options.map((o) => ({ localId: nextLocalId(), name: o.name, priceDelta: String(o.priceDelta), isDefault: o.isDefault })),
     })),
   );
   const [slots, setSlots] = useState<MealSlot[]>(initial?.slots ?? []);
   const [goalTags, setGoalTags] = useState<GoalTag[]>(initial?.goalTags ?? []);
-  const [calories, setCalories] = useState(initial?.nutrition ? String(initial.nutrition.calories) : "");
-  const [proteinG, setProteinG] = useState(initial?.nutrition ? String(initial.nutrition.proteinG) : "");
+  const [calories, setCalories] = useState(initial?.nutrition?.calories != null ? String(initial.nutrition.calories) : "");
+  const [proteinG, setProteinG] = useState(initial?.nutrition?.proteinG != null ? String(initial.nutrition.proteinG) : "");
   const [carbsG, setCarbsG] = useState(initial?.nutrition?.carbsG ? String(initial.nutrition.carbsG) : "");
   const [fatG, setFatG] = useState(initial?.nutrition?.fatG ? String(initial.nutrition.fatG) : "");
   const [fiberG, setFiberG] = useState(initial?.nutrition?.fiberG ? String(initial.nutrition.fiberG) : "");
@@ -151,10 +159,15 @@ export default function MealForm({ initial, submitLabel, onSubmit }: MealFormPro
     );
 
   const handleUploadImage = async (file: File) => {
+    if (images.length >= MAX_PHOTOS) {
+      setError(`You can add up to ${MAX_PHOTOS} photos per dish.`);
+      return;
+    }
+    setError(null);
     setIsUploading(true);
     try {
       const { url } = await kitchenUploadApi.upload(file, "MENU_IMAGE");
-      setImages((prev) => [...prev, url].slice(0, 6));
+      setImages((prev) => [...prev, url].slice(0, MAX_PHOTOS));
     } catch (err) {
       setError(err instanceof ApiError ? err.message : "Could not upload image");
     } finally {
@@ -201,12 +214,43 @@ export default function MealForm({ initial, submitLabel, onSubmit }: MealFormPro
         maxSelect: Number(g.maxSelect) || 1,
         options: g.options
           .filter((o) => o.name.trim().length > 0)
-          .map((o) => ({ name: o.name.trim(), priceDelta: Number(o.priceDelta) || 0 })),
-      }))
-      .filter((g) => g.options.length > 0);
+          .map((o) => ({
+            name: o.name.trim(),
+            priceDelta: Number(o.priceDelta) || 0,
+            ...(o.isDefault !== undefined ? { isDefault: o.isDefault } : {}),
+          })),
+      }));
+
+  /** Returns the first thing the backend DTO would reject, in plain words — or null when the form is fine. */
+  const validate = (customizationGroups: UpsertMealCustomizationGroupInput[]): string | null => {
+    if (name.trim().length < 3) return "The dish name needs to be at least 3 characters.";
+    if (images.length === 0) return "Add at least one photo of the dish.";
+    const priceValue = Number(price);
+    if (!price.trim() || !Number.isInteger(priceValue) || priceValue < 1) {
+      return "Enter the price as a whole number of rupees, e.g. 199.";
+    }
+    if (mrp.trim() && (!Number.isInteger(Number(mrp)) || Number(mrp) < 1)) {
+      return "Enter the MRP as a whole number of rupees, or leave it blank.";
+    }
+    if (prepTimeMins.trim()) {
+      const prep = Number(prepTimeMins);
+      if (!Number.isInteger(prep) || prep < 1 || prep > 180) return "Prep time must be a whole number of minutes between 1 and 180.";
+    }
+    const badGroup = customizationGroups.find((g) => g.options.length === 0 || g.maxSelect < 1 || g.minSelect > g.maxSelect);
+    if (badGroup) {
+      return `Check the "${badGroup.name}" customization: each group needs at least one option, a max of 1 or more, and a min that is not above the max.`;
+    }
+    return null;
+  };
 
   const handleSubmit = async () => {
     setError(null);
+    const customizationGroups = buildCustomizationGroups();
+    const problem = validate(customizationGroups);
+    if (problem) {
+      setError(problem);
+      return;
+    }
     setIsSaving(true);
     try {
       await onSubmit({
@@ -236,7 +280,8 @@ export default function MealForm({ initial, submitLabel, onSubmit }: MealFormPro
           .filter(Boolean),
         prepTimeMins: Number(prepTimeMins) || 25,
         isAvailable,
-        customizationGroups: buildCustomizationGroups(),
+        // Always sent (even empty): on edit the backend replaces all groups, so [] is how removing every group sticks.
+        customizationGroups,
       });
     } catch (err) {
       setError(err instanceof ApiError ? err.message : "Could not save the dish, please try again");
@@ -248,11 +293,11 @@ export default function MealForm({ initial, submitLabel, onSubmit }: MealFormPro
   return (
     <div className="flex flex-col gap-6">
       <Field label="Dish name">
-        <TextInput value={name} onChange={(e) => setName(e.target.value)} placeholder="Paneer Butter Masala" />
+        <TextInput value={name} onChange={(e) => setName(e.target.value)} placeholder="Paneer Butter Masala" maxLength={MAX_NAME} />
       </Field>
 
       <Field label="Description">
-        <TextArea rows={3} value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Creamy tomato gravy, cottage cheese, butter — describe it well, the AI assist reads this too" />
+        <TextArea rows={3} maxLength={MAX_DESCRIPTION} value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Creamy tomato gravy, cottage cheese, butter — describe it well, the AI assist reads this too" />
       </Field>
 
       <Field label="Photos">
@@ -262,6 +307,8 @@ export default function MealForm({ initial, submitLabel, onSubmit }: MealFormPro
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={url} alt="Dish" className="w-full h-full object-cover" />
               <button
+                type="button"
+                aria-label="Remove photo"
                 onClick={() => setImages((prev) => prev.filter((u) => u !== url))}
                 className="absolute top-1 right-1 w-5 h-5 rounded-full bg-black/60 text-white flex items-center justify-center"
               >
@@ -269,13 +316,25 @@ export default function MealForm({ initial, submitLabel, onSubmit }: MealFormPro
               </button>
             </div>
           ))}
-          {images.length < 6 ? (
+          {images.length < MAX_PHOTOS ? (
             <label className="w-20 h-20 rounded-xl border-2 border-dashed border-slate-200 flex items-center justify-center cursor-pointer text-xs font-bold text-slate-400 hover:border-[#087F78]/30 hover:text-[#087F78] transition-colors">
               {isUploading ? "…" : "+ Add"}
-              <input type="file" accept="image/*" className="hidden" onChange={(e) => e.target.files?.[0] && handleUploadImage(e.target.files[0])} />
+              <input
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  e.target.value = "";
+                  if (file) handleUploadImage(file);
+                }}
+              />
             </label>
           ) : null}
         </div>
+        <p className="text-[11px] font-semibold text-slate-400 mt-2">
+          {images.length >= MAX_PHOTOS ? `Photo limit reached (${MAX_PHOTOS})` : `${images.length} of ${MAX_PHOTOS} added · up to 20 MB each`}
+        </p>
         <Link href="/partner/menu/upload-guide" className="inline-flex items-center gap-1 text-xs font-bold text-[#087F78] mt-2">
           See upload tips <ArrowRight size={11} />
         </Link>
@@ -314,18 +373,22 @@ export default function MealForm({ initial, submitLabel, onSubmit }: MealFormPro
           </div>
         </Field>
 
-        <Field label="Cuisine">
+        <Field label="Cuisine (optional)">
           {cuisinesFailed ? (
             <TextInput value={cuisineSlug} onChange={(e) => setCuisineSlug(e.target.value)} placeholder="e.g. thali (cuisine slug)" />
+          ) : isLoadingCuisines ? (
+            <p className="text-xs font-semibold text-slate-400 py-2.5">Loading cuisines…</p>
           ) : (
-            <Select value={cuisineSlug} onChange={(e) => setCuisineSlug(e.target.value)} disabled={isLoadingCuisines}>
-              <option value="">{isLoadingCuisines ? "Loading…" : "Select a cuisine (optional)"}</option>
+            <div className="flex flex-wrap gap-2">
               {cuisines.map((c) => (
-                <option key={c.id} value={c.slug}>
-                  {c.name}
-                </option>
+                <ChipToggle
+                  key={c.id}
+                  label={c.name}
+                  isActive={cuisineSlug === c.slug}
+                  onClick={() => setCuisineSlug((current) => (current === c.slug ? "" : c.slug))}
+                />
               ))}
-            </Select>
+            </div>
           )}
         </Field>
       </div>
@@ -348,9 +411,11 @@ export default function MealForm({ initial, submitLabel, onSubmit }: MealFormPro
                   value={group.name}
                   onChange={(e) => updateGroup(group.localId, { name: e.target.value })}
                   placeholder="Group name, e.g. Spice Level"
+                  maxLength={MAX_GROUP_NAME}
                   className="flex-1 min-w-0"
                 />
                 <button
+                  type="button"
                   onClick={() => removeGroup(group.localId)}
                   className="w-10 h-10 shrink-0 rounded-xl bg-slate-100 text-slate-400 hover:bg-red-50 hover:text-red-600 flex items-center justify-center transition-colors"
                   aria-label="Remove group"
@@ -395,6 +460,7 @@ export default function MealForm({ initial, submitLabel, onSubmit }: MealFormPro
                       value={option.name}
                       onChange={(e) => updateOption(group.localId, option.localId, { name: e.target.value })}
                       placeholder="Option name, e.g. Extra Spicy"
+                      maxLength={MAX_OPTION_NAME}
                       aria-label="Option name"
                       className="flex-1 min-w-0"
                     />
@@ -408,6 +474,7 @@ export default function MealForm({ initial, submitLabel, onSubmit }: MealFormPro
                       />
                     </div>
                     <button
+                      type="button"
                       onClick={() => removeOption(group.localId, option.localId)}
                       className="w-9 h-9 shrink-0 rounded-xl bg-slate-100 text-slate-400 hover:bg-red-50 hover:text-red-600 flex items-center justify-center transition-colors"
                       aria-label="Remove option"
@@ -418,6 +485,7 @@ export default function MealForm({ initial, submitLabel, onSubmit }: MealFormPro
                 ))}
                 {group.options.length < MAX_OPTIONS_PER_GROUP ? (
                   <button
+                    type="button"
                     onClick={() => addOption(group.localId)}
                     className="inline-flex items-center gap-1.5 self-start text-xs font-bold text-[#087F78] mt-1"
                   >
@@ -429,6 +497,7 @@ export default function MealForm({ initial, submitLabel, onSubmit }: MealFormPro
           ))}
           {groups.length < MAX_GROUPS ? (
             <button
+              type="button"
               onClick={addGroup}
               className="inline-flex items-center justify-center gap-1.5 rounded-xl px-4 py-3 text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200 self-start transition-colors"
             >

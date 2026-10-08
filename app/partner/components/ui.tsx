@@ -296,6 +296,7 @@ export function ConfirmDialog({
   description,
   confirmLabel = "Confirm",
   isLoading,
+  extra,
   onConfirm,
   onCancel,
 }: {
@@ -304,6 +305,8 @@ export function ConfirmDialog({
   description?: string;
   confirmLabel?: string;
   isLoading?: boolean;
+  /** Optional content between the description and the buttons — e.g. an inline error with a follow-up link. */
+  extra?: ReactNode;
   onConfirm: () => void;
   onCancel: () => void;
 }) {
@@ -316,7 +319,8 @@ export function ConfirmDialog({
         onClick={(e) => e.stopPropagation()}
       >
         <h3 className="text-lg font-extrabold text-slate-900 mb-2">{title}</h3>
-        {description ? <p className="text-sm text-slate-500 mb-6">{description}</p> : <div className="mb-4" />}
+        {description ? <p className={`text-sm text-slate-500 ${extra ? "mb-3" : "mb-6"}`}>{description}</p> : <div className="mb-4" />}
+        {extra ? <div className="mb-6">{extra}</div> : null}
         <div className="flex gap-3">
           <Button variant="ghost" className="flex-1 justify-center bg-slate-100" onClick={onCancel} disabled={isLoading}>
             Cancel

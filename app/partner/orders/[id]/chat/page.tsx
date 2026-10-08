@@ -154,6 +154,7 @@ export default function OrderChatPage() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Type a message…"
+            maxLength={500}
             disabled={Boolean(sendingKey)}
             className="flex-1 rounded-xl px-4 py-3 text-sm font-medium text-slate-900 input-gradient-focus placeholder:text-slate-400 disabled:opacity-60"
           />

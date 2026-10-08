@@ -59,12 +59,16 @@ export default function BhojAiPage() {
     if (!trimmed || isSending) return;
     setError(null);
     setInput("");
-    setMessages((prev) => [...prev, { id: `local-${Date.now()}`, role: "USER", text: trimmed, card: null }]);
+    const userMessageId = `local-${Date.now()}`;
+    setMessages((prev) => [...prev, { id: userMessageId, role: "USER", text: trimmed, card: null }]);
     setIsSending(true);
     try {
       const res = await bhojaiApi.sendMessage(trimmed);
       setMessages((prev) => [...prev, { id: `local-${Date.now()}-reply`, role: "MODEL", text: res.message, card: res.card }]);
     } catch (err) {
+      // Take the failed message back out of the thread and give the text back to the partner to resend.
+      setMessages((prev) => prev.filter((m) => m.id !== userMessageId));
+      setInput((current) => current || trimmed);
       setError(err instanceof ApiError ? err.message : "BhojAI couldn't reply, please try again");
     } finally {
       setIsSending(false);
@@ -135,6 +139,7 @@ export default function BhojAiPage() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Ask BhojAI anything…"
+            maxLength={2000}
             disabled={isSending}
             className="flex-1 rounded-xl px-4 py-3 text-sm font-medium text-slate-900 input-gradient-focus placeholder:text-slate-400 disabled:opacity-60"
           />
