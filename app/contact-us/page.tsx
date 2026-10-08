@@ -128,15 +128,12 @@ export default function ContactUs() {
       <Script src="https://assets.calendly.com/assets/external/widget.js" strategy="lazyOnload" />
 
       {/* ── Hero ── */}
-      <header className="relative overflow-hidden bg-gradient-to-b from-[#EFFAF8] via-white to-white pt-32 md:pt-40 pb-16 md:pb-24">
+      <header className="relative overflow-hidden bg-gradient-to-b from-[#EFFAF8] via-white to-white pt-28 md:pt-32 pb-12 md:pb-16">
         <div className="pointer-events-none absolute inset-0 opacity-50 [background-image:radial-gradient(#087F78_1px,transparent_1px)] [background-size:28px_28px] [mask-image:radial-gradient(ellipse_at_top,black,transparent_70%)]" />
         <div className="pointer-events-none absolute -top-24 -left-24 w-[420px] h-[420px] rounded-full bg-[#1DB9A0]/25 blur-[110px] animate-[drift_14s_ease-in-out_infinite]" />
         <div className="pointer-events-none absolute top-10 -right-24 w-[380px] h-[380px] rounded-full bg-[#FFC21A]/20 blur-[110px] animate-[drift_18s_ease-in-out_infinite_reverse]" />
 
         <div className="relative max-w-5xl mx-auto px-6 text-center">
-          <span className="inline-flex items-center gap-2 rounded-full bg-white border border-[#087F78]/15 shadow-sm px-5 py-2 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-[#087F78] mb-8">
-            <span className="w-2 h-2 rounded-full bg-[#1DB9A0] animate-pulse" /> We usually reply in 2–4 hours
-          </span>
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold text-[#0D1B1E] leading-[1.02] mb-6">
             Let&apos;s{" "}
             <span className="inline-block pr-[0.14em] -mr-[0.14em]" style={{ ...gradientText, fontFamily: "var(--font-instrument), Georgia, serif", fontStyle: "italic", fontWeight: 400 }}>talk</span>
