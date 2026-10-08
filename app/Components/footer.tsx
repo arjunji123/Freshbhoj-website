@@ -6,9 +6,12 @@ import Link from "next/link";
 export default function Footer() {
   return (
     <footer
-      className="w-full overflow-hidden bg-[#0D1B1E] border-t border-white/5"
+      className="relative w-full overflow-hidden bg-[#0D1B1E]"
     >
-      <div className="w-full max-w-7xl mx-auto px-6 py-16 lg:py-24 flex flex-col items-center">
+      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[#1DB9A0] to-transparent" />
+      <div className="pointer-events-none absolute -top-32 left-1/2 -translate-x-1/2 w-[700px] h-[260px] rounded-full bg-[#087F78]/25 blur-[110px]" />
+      <div className="pointer-events-none absolute -bottom-24 -right-16 w-[320px] h-[320px] rounded-full bg-[#FFC21A]/10 blur-[110px]" />
+      <div className="relative w-full max-w-7xl mx-auto px-6 py-16 lg:py-24 flex flex-col items-center">
 
         {/* Logo */}
         <div className="mb-12 transition-transform hover:scale-110 duration-500 flex justify-center w-full">
@@ -83,10 +86,11 @@ export default function Footer() {
             className="text-white text-2xl md:text-3xl lg:text-5xl mb-12 italic leading-tight opacity-90 transition-all hover:opacity-100 duration-500"
             style={{ fontFamily: "'Playfair Display', serif" }}
           >
-            "Your Feed is Now Your Menu."
+            &ldquo;Your Feed is Now{" "}
+            <span className="bg-gradient-to-r from-[#5EE6D0] to-[#FFC21A] bg-clip-text text-transparent">Your Menu.</span>&rdquo;
           </h4>
 
-          <div className="w-full max-w-xs h-px bg-gradient-to-r from-transparent via-white/20 to-transparent mb-10" />
+          <div className="w-full max-w-xs h-px bg-gradient-to-r from-transparent via-[#1DB9A0] to-transparent mb-10" />
 
           <div className="flex flex-col md:flex-row items-center gap-4 md:gap-8 opacity-40">
             <p className="text-slate-500 font-bold text-[10px] uppercase tracking-[0.4em]">

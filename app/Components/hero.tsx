@@ -3,9 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import dynamic from "next/dynamic";
 
-const HeroScene = dynamic(() => import("./HeroScene"), { ssr: false });
 
 const Hero = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -65,7 +63,6 @@ const Hero = () => {
         background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)",
       }}
     >
-      <HeroScene />
       {/* ── Navbar ── */}
       <nav
         className={`w-full fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${scrolled ? "backdrop-blur-xl bg-white/40 shadow-lg border-b border-white/20" : "bg-transparent"
@@ -239,9 +236,6 @@ const Hero = () => {
               India&apos;s First <br className="md:hidden" /> <span className="text-[#FFC21A]">Reel–Based</span> <br />
               Food <br className="md:hidden" /> Discovery
             </h1>
-            <div className="md:hidden absolute top-[-10%] right-[-16%] w-8 h-8 animate-float drop-shadow-[0_4px_12px_rgba(0,0,0,0.2)] z-20">
-              <Image src="/blink_logo_hero.svg" alt="icon" width={32} height={32} className="w-full h-auto" />
-            </div>
           </div>
 
           <p className="text-white/90 font-medium text-base md:text-lg lg:text-xl leading-relaxed max-w-2xl lg:max-w-xl">
@@ -280,26 +274,6 @@ const Hero = () => {
         </div>
 
         <div className="relative flex justify-center lg:justify-end w-full lg:w-[45%]">
-          <div className="absolute left-[-5%] top-[15%] w-[8%] z-20 hidden md:block animate-float drop-shadow-xl">
-            <Image
-              src="/blink_logo_hero.svg"
-              alt="Icon"
-              width={40}
-              height={40}
-              className="w-full h-auto"
-            />
-          </div>
-
-          <div className="absolute left-[-2%] md:left-auto md:right-[-5%] bottom-[10%] md:bottom-[20%] w-[12%] md:w-[8%] z-20 animate-float drop-shadow-xl" style={{ animationDelay: '1.5s' }}>
-            <Image
-              src="/leaf_blink.svg"
-              alt="Leaf Icon"
-              width={40}
-              height={40}
-              className="w-full h-auto"
-            />
-          </div>
-
           <div className="relative w-full max-w-[340px] md:max-w-[420px] lg:max-w-[480px] aspect-[9/18.5] drop-shadow-[0_35px_35px_rgba(0,0,0,0.3)]">
             <Image
               src="/phone_image1.png"

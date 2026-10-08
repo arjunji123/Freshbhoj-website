@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Eye, TrendingUp, CalendarClock, X, Check } from "lucide-react";
+import { Eye, TrendingUp, CalendarClock, Check } from "lucide-react";
 
 const ITEMS = [
   {
@@ -74,12 +74,12 @@ export default function ProblemFix() {
         </div>
 
         <div
-          className="grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-4 lg:gap-6"
+          className="grid grid-cols-1 lg:grid-cols-[400px_1fr] gap-4 lg:gap-6 items-stretch"
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
         >
-          {/* Tabs */}
-          <div className="flex lg:flex-col gap-3 overflow-x-auto lg:overflow-visible pb-1 -mx-6 px-6 lg:mx-0 lg:px-0 snap-x">
+          {/* Left: the problems — stretches to the full height of the fix panel */}
+          <div className="flex lg:flex-col gap-3 lg:gap-4 overflow-x-auto lg:overflow-visible pb-1 -mx-6 px-6 lg:mx-0 lg:px-0 snap-x">
             {ITEMS.map((it, i) => {
               const Icon = it.icon;
               const on = i === active;
@@ -87,19 +87,24 @@ export default function ProblemFix() {
                 <button
                   key={it.tab}
                   onClick={() => setActive(i)}
-                  className={`relative snap-start shrink-0 lg:shrink text-left rounded-2xl lg:rounded-3xl px-5 py-4 lg:p-6 border transition-all duration-300 overflow-hidden min-w-[220px] lg:min-w-0 ${
-                    on ? "bg-[#0D1B1E] border-[#0D1B1E] text-white shadow-xl" : "bg-[#F3F8F8] border-slate-100 text-[#0D1B1E] hover:bg-white hover:shadow-md"
+                  aria-pressed={on}
+                  className={`group relative snap-start shrink-0 lg:shrink lg:flex-1 text-left rounded-3xl p-5 lg:p-7 border transition-all duration-300 overflow-hidden w-[280px] lg:w-auto flex flex-col justify-center ${
+                    on
+                      ? "bg-[#0D1B1E] border-[#0D1B1E] text-white shadow-2xl lg:scale-[1.02]"
+                      : "bg-[#F3F8F8] border-slate-200/70 text-[#0D1B1E] hover:bg-white hover:shadow-lg hover:-translate-y-0.5"
                   }`}
                 >
-                  <div className="flex items-center gap-3">
-                    <span className={`w-10 h-10 rounded-xl flex items-center justify-center ${on ? "bg-[#FFC21A] text-[#0D1B1E]" : "bg-white text-[#087F78]"}`}>
-                      <Icon size={18} strokeWidth={2.4} />
+                  <div className="flex items-center justify-between mb-3">
+                    <span className={`inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest ${on ? "text-[#FFC21A]" : "text-slate-400"}`}>
+                      <span className={`w-9 h-9 rounded-xl flex items-center justify-center ${on ? "bg-[#FFC21A] text-[#0D1B1E]" : "bg-white text-[#087F78] shadow-sm"}`}>
+                        <Icon size={18} strokeWidth={2.4} />
+                      </span>
+                      Problem 0{i + 1}
                     </span>
-                    <div>
-                      <span className={`block text-[10px] font-bold uppercase tracking-widest ${on ? "text-white/60" : "text-slate-400"}`}>Problem 0{i + 1}</span>
-                      <span className="block font-extrabold text-base lg:text-lg leading-tight">{it.tab}</span>
-                    </div>
+                    <span className={`text-4xl font-extrabold leading-none transition-colors ${on ? "text-white/15" : "text-slate-200"}`}>0{i + 1}</span>
                   </div>
+                  <span className="block font-extrabold text-xl lg:text-2xl leading-tight mb-2">{it.problem}</span>
+                  <span className={`block text-sm leading-relaxed ${on ? "text-white/65" : "text-slate-500"}`}>{it.problemText}</span>
                   {on && !paused && inView ? (
                     <span key={active} className="absolute left-0 bottom-0 h-1 w-full origin-left bg-[#FFC21A]" style={{ animation: `fb-progress ${DURATION}ms linear forwards` }} />
                   ) : null}
@@ -108,35 +113,35 @@ export default function ProblemFix() {
             })}
           </div>
 
-          {/* Panel */}
-          <div key={active} className="relative rounded-[2rem] lg:rounded-[2.5rem] overflow-hidden bg-gradient-to-br from-[#14ADA0] via-[#087F78] to-[#0B4F6C] text-white p-6 md:p-10 lg:p-12 grid grid-cols-1 md:grid-cols-[1.1fr_0.9fr] gap-8 items-center min-h-[460px] animate-[fadeUp_0.5s_ease-out]">
-            <div className="pointer-events-none absolute -top-24 -right-24 w-72 h-72 rounded-full bg-[#FFC21A]/25 blur-3xl" />
-            <div className="relative z-10">
-              <div className="flex items-start gap-3 rounded-2xl bg-black/20 backdrop-blur px-4 py-3 mb-6">
-                <span className="mt-0.5 w-6 h-6 shrink-0 rounded-full bg-white/15 flex items-center justify-center"><X size={14} /></span>
-                <div>
-                  <p className="text-[10px] font-bold uppercase tracking-widest text-white/60">The problem</p>
-                  <p className="font-bold text-sm md:text-base">{cur.problem}</p>
-                  <p className="text-white/70 text-xs md:text-sm leading-relaxed mt-1">{cur.problemText}</p>
-                </div>
-              </div>
+          {/* Right: the fix */}
+          <div key={active} className="relative rounded-[2rem] lg:rounded-[2.5rem] overflow-hidden bg-gradient-to-br from-[#14ADA0] via-[#087F78] to-[#0B4F6C] text-white p-6 md:p-10 lg:p-12 flex flex-col animate-[fadeUp_0.5s_ease-out]">
+            <div className="pointer-events-none absolute -top-24 -right-24 w-80 h-80 rounded-full bg-[#FFC21A]/25 blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-32 -left-20 w-72 h-72 rounded-full bg-[#5EE6D0]/20 blur-3xl" />
 
-              <div className="flex items-center gap-2 mb-3">
-                <span className="w-6 h-6 rounded-full bg-[#FFC21A] text-[#0D1B1E] flex items-center justify-center"><Check size={14} strokeWidth={3} /></span>
-                <span className="text-[10px] font-bold uppercase tracking-widest text-[#FFC21A]">The FreshBhoj fix</span>
-              </div>
-              <h3 className="text-3xl lg:text-4xl font-extrabold tracking-tight leading-tight mb-3">{cur.fix}</h3>
-              <p className="text-white/85 text-base lg:text-lg leading-relaxed mb-6">{cur.fixText}</p>
-              <ul className="flex flex-wrap gap-2">
-                {cur.points.map((p) => (
-                  <li key={p} className="rounded-full bg-white/15 border border-white/20 px-4 py-2 text-xs md:text-sm font-semibold">{p}</li>
-                ))}
-              </ul>
+            <div className="relative z-10 flex flex-wrap items-center gap-3 mb-8">
+              <span className="inline-flex items-center gap-2 rounded-full bg-[#FFC21A] text-[#0D1B1E] px-4 py-1.5 text-[10px] font-bold uppercase tracking-widest">
+                <Check size={12} strokeWidth={3} /> The FreshBhoj fix
+              </span>
+              <span className="text-white/70 text-xs md:text-sm font-medium">for “{cur.problem}”</span>
             </div>
 
-            <div className="relative z-10 flex justify-center">
-              <div className={`relative w-full drop-shadow-2xl ${cur.portrait ? "max-w-[190px] aspect-[9/16]" : "max-w-[380px] aspect-[1.3/1]"}`}>
-                <Image src={cur.img} alt={cur.fix} fill className="object-contain" />
+            <div className="relative z-10 flex-1 grid grid-cols-1 md:grid-cols-[1.1fr_0.9fr] gap-8 items-center">
+              <div>
+                <h3 className="text-3xl lg:text-5xl font-extrabold tracking-tight leading-[1.1] mb-4">{cur.fix}</h3>
+                <p className="text-white/85 text-base lg:text-lg leading-relaxed mb-8">{cur.fixText}</p>
+                <ul className="flex flex-col gap-3">
+                  {cur.points.map((p) => (
+                    <li key={p} className="flex items-center gap-3 font-semibold text-sm md:text-base">
+                      <span className="w-6 h-6 shrink-0 rounded-full bg-white/20 flex items-center justify-center"><Check size={14} strokeWidth={3} /></span>
+                      {p}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="flex justify-center">
+                <div className={`relative w-full drop-shadow-2xl ${cur.portrait ? "max-w-[200px] aspect-[9/16]" : "max-w-[400px] aspect-[1.3/1]"}`}>
+                  <Image src={cur.img} alt={cur.fix} fill className="object-contain" />
+                </div>
               </div>
             </div>
           </div>

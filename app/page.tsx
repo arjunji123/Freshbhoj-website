@@ -1,4 +1,4 @@
-import { Hero, Marquee, ProblemFix, VerifiedKitchens, Features, EmpoweringKitchen, PreRegistration, Footer } from "./Components";
+import { Hero, Marquee, ProblemFix, VerifiedKitchens, Features, PreRegistration, Footer } from "./Components";
 
 export default function Home() {
   return (
@@ -8,7 +8,6 @@ export default function Home() {
       <ProblemFix />
       <VerifiedKitchens />
       <Features />
-      <EmpoweringKitchen />
       <PreRegistration />
       <Footer />
     </main>
