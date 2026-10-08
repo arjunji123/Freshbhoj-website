@@ -64,9 +64,9 @@ export default function VerifiedKitchens() {
       >
         {/* Left: story + timeline */}
         <div>
-          <div className="inline-flex items-center gap-2 rounded-full pl-2 pr-5 py-2 mb-8 bg-white border border-[#1E7BD8]/20 shadow-sm">
-            <span className="w-7 h-7 rounded-full bg-[#1E7BD8] text-white flex items-center justify-center"><BadgeCheck size={16} /></span>
-            <span className="text-[10px] lg:text-xs font-bold uppercase tracking-[0.2em] text-[#1E7BD8]">FreshBhoj Verified</span>
+          <div className="inline-flex items-center gap-2 rounded-full pl-2 pr-5 py-2 mb-8 bg-white border border-[#087F78]/15 shadow-sm">
+            <span className="w-7 h-7 rounded-full text-white flex items-center justify-center" style={{ background: "linear-gradient(135deg,#14ADA0,#0B4F6C)" }}><BadgeCheck size={16} /></span>
+            <span className="text-[10px] lg:text-xs font-bold uppercase tracking-[0.2em] text-[#087F78]">FreshBhoj Verified</span>
           </div>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#0D1B1E] mb-6 leading-[1.05] tracking-tight">
             Trust you can{" "}
