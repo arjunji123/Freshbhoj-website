@@ -57,7 +57,7 @@ export default function PremiumPricingPage() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-24">
-        <Spinner className="w-8 h-8 text-[#BA2121]" />
+        <Spinner className="w-8 h-8 text-[#0A8068]" />
       </div>
     );
   }
@@ -95,14 +95,14 @@ export default function PremiumPricingPage() {
             <div key={catalogTier.tier} className="relative">
               {catalogTier.isMostPopular ? (
                 <div
-                  className="absolute -top-3 left-1/2 -translate-x-1/2 z-10 text-white text-[10px] font-extrabold uppercase tracking-wide px-4 py-1.5 rounded-full shadow-[0_10px_25px_-8px_rgba(186,33,33,0.5)]"
+                  className="absolute -top-3 left-1/2 -translate-x-1/2 z-10 text-white text-[10px] font-extrabold uppercase tracking-wide px-4 py-1.5 rounded-full shadow-[0_10px_25px_-8px_rgba(10,128,104,0.5)]"
                   style={GRADIENT_BG}
                 >
                   Most Popular
                 </div>
               ) : null}
               <Card
-                className={`!p-6 h-full flex flex-col ${catalogTier.isMostPopular ? "border-2 !border-[#BA2121]" : ""}`}
+                className={`!p-6 h-full flex flex-col ${catalogTier.isMostPopular ? "border-2 !border-[#0A8068]" : ""}`}
               >
                 <div className="mb-4">
                   <p className="text-sm font-extrabold text-slate-900">{TIER_LABEL[catalogTier.tier]}</p>

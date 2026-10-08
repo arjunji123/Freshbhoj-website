@@ -20,7 +20,7 @@ export default function FreshBhojFix() {
   }, []);
 
   // Common styles
-  const badgeClasses = "inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6 font-sans font-bold text-[10px] lg:text-xs uppercase tracking-widest bg-[#C41717]/10";
+  const badgeClasses = "inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6 font-sans font-bold text-[10px] lg:text-xs uppercase tracking-widest bg-[#0A8068]/10";
 
   // Interactive Mouse Effect for CTA Card
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -73,7 +73,7 @@ export default function FreshBhojFix() {
           {/* Card 1: Visual-First Discovery */}
           <div
             id="visual-first"
-            className={`flex flex-col lg:flex-row items-center  bg-[#F8F6F6] rounded-[2.5rem] lg:rounded-[3.5rem] p-8 lg:p-16 transition-all duration-1000 ease-out border border-slate-100 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] group
+            className={`flex flex-col lg:flex-row items-center  bg-[#F4F8F6] rounded-[2.5rem] lg:rounded-[3.5rem] p-8 lg:p-16 transition-all duration-1000 ease-out border border-slate-100 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] group
             ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}
           >
             <div className="w-full lg:w-[45%] flex justify-center mb-10 lg:mb-0 ">
@@ -92,7 +92,7 @@ export default function FreshBhojFix() {
                 <span
                   className="inline-block"
                   style={{
-                    background: "linear-gradient(169.21deg, #FF6B6B 9%, #BA2121 77%, #670000 100%)",
+                    background: "linear-gradient(169.21deg, #16B088 9%, #0A8068 77%, #074A5C 100%)",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
                     backgroundClip: "text"
@@ -104,7 +104,7 @@ export default function FreshBhojFix() {
               <h3
                 className="font-extrabold mb-6 text-3xl lg:text-5xl leading-tight tracking-tight inline-block"
                 style={{
-                  background: "linear-gradient(169.21deg, #FF6B6B 9%, #BA2121 77%, #670000 100%)",
+                  background: "linear-gradient(169.21deg, #16B088 9%, #0A8068 77%, #074A5C 100%)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text"
@@ -113,7 +113,7 @@ export default function FreshBhojFix() {
                 THE FIX: Visual–First Discovery
               </h3>
               <p className="mb-10 text-slate-500 text-base md:text-lg lg:text-xl leading-relaxed max-w-xl mx-auto lg:mx-0">
-                Traditional apps fail the street food sector. Our immersive Reels solve choice paralysis by providing authentic, high-definition visual discovery. Users see exactly how their food is prepared.
+                Traditional apps rely on static photos and long menus. Our immersive Reels solve choice paralysis by providing authentic, high-definition visual discovery. Users see exactly how their food is prepared.
               </p>
               <div className="flex flex-wrap gap-6 justify-center lg:justify-start">
                 <div className="flex items-center gap-3 text-[#0F172A] text-sm lg:text-base">
@@ -131,7 +131,7 @@ export default function FreshBhojFix() {
           {/* Card 2: Creator-Led Growth */}
           <div
             id="creator-growth"
-            className={`flex flex-col-reverse lg:flex-row items-center  bg-[#F8F6F6] rounded-[2.5rem] lg:rounded-[3.5rem] p-8 lg:p-16 transition-all duration-1000 ease-out border border-slate-100 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] group delay-200
+            className={`flex flex-col-reverse lg:flex-row items-center  bg-[#F4F8F6] rounded-[2.5rem] lg:rounded-[3.5rem] p-8 lg:p-16 transition-all duration-1000 ease-out border border-slate-100 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] group delay-200
             ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}
           >
             <div className="w-full lg:w-[55%] lg:pr-16 text-center lg:text-left mt-10 lg:mt-0">
@@ -140,7 +140,7 @@ export default function FreshBhojFix() {
                 <span
                   className="inline-block"
                   style={{
-                    background: "linear-gradient(169.21deg, #FF6B6B 9%, #BA2121 77%, #670000 100%)",
+                    background: "linear-gradient(169.21deg, #16B088 9%, #0A8068 77%, #074A5C 100%)",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
                     backgroundClip: "text"
@@ -152,7 +152,7 @@ export default function FreshBhojFix() {
               <h3
                 className="font-extrabold mb-6 text-3xl lg:text-5xl leading-tight tracking-tight inline-block"
                 style={{
-                  background: "linear-gradient(169.21deg, #FF6B6B 9%, #BA2121 77%, #670000 100%)",
+                  background: "linear-gradient(169.21deg, #16B088 9%, #0A8068 77%, #074A5C 100%)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text"
@@ -161,7 +161,7 @@ export default function FreshBhojFix() {
                 THE FIX: Creator–Led Growth
               </h3>
               <p className="text-slate-500 text-base md:text-lg lg:text-xl leading-relaxed mb-10 max-w-xl mx-auto lg:mx-0">
-                We empower local vendors to transition from cooks to ‘Food Creators.’ We help them build brand equity and direct–to–consumer relationships through performance data.
+                We help every food seller grow from a menu listing into a ‘Food Creator’ brand. We help them build brand equity and direct–to–consumer relationships through performance data.
               </p>
               <div className="grid grid-cols-2 gap-4 max-w-md mx-auto lg:mx-0">
                 <div className="bg-slate-50 p-6 rounded-3xl border border-slate-100 transition-all group-hover:bg-white group-hover:shadow-lg">
@@ -173,7 +173,7 @@ export default function FreshBhojFix() {
                   <span
                     className="text-3xl font-extrabold inline-block"
                     style={{
-                      background: "linear-gradient(169.21deg, #FF6B6B 9%, #BA2121 77%, #670000 100%)",
+                      background: "linear-gradient(169.21deg, #16B088 9%, #0A8068 77%, #074A5C 100%)",
                       WebkitBackgroundClip: "text",
                       WebkitTextFillColor: "transparent",
                       backgroundClip: "text"
@@ -199,7 +199,7 @@ export default function FreshBhojFix() {
           {/* Card 3: AI-Smart Subscriptions */}
           <div
             id="ai-subscriptions"
-            className={`flex flex-col lg:flex-row items-center bg-[#F8F6F6] rounded-[2.5rem] lg:rounded-[3.5rem] p-8 lg:p-16 transition-all duration-1000 ease-out border border-slate-100 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] group delay-400
+            className={`flex flex-col lg:flex-row items-center bg-[#F4F8F6] rounded-[2.5rem] lg:rounded-[3.5rem] p-8 lg:p-16 transition-all duration-1000 ease-out border border-slate-100 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] group delay-400
             ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}
           >
             <div className="w-full lg:w-[45%] flex justify-center mb-10 lg:mb-0">
@@ -218,7 +218,7 @@ export default function FreshBhojFix() {
                 <span
                   className="inline-block"
                   style={{
-                    background: "linear-gradient(169.21deg, #FF6B6B 9%, #BA2121 77%, #670000 100%)",
+                    background: "linear-gradient(169.21deg, #16B088 9%, #0A8068 77%, #074A5C 100%)",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
                     backgroundClip: "text"
@@ -230,7 +230,7 @@ export default function FreshBhojFix() {
               <h3
                 className="font-extrabold mb-6 text-3xl lg:text-5xl leading-tight tracking-tight inline-block"
                 style={{
-                  background: "linear-gradient(169.21deg, #FF6B6B 9%, #BA2121 77%, #670000 100%)",
+                  background: "linear-gradient(169.21deg, #16B088 9%, #0A8068 77%, #074A5C 100%)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text"
@@ -241,7 +241,7 @@ export default function FreshBhojFix() {
               <p className="text-slate-500 text-base md:text-lg lg:text-xl leading-relaxed mb-10 max-w-xl mx-auto lg:mx-0">
                 Say goodbye to manual meal planning. Our AI-driven subscription model automates 30-day meal plans based on individual data, dietary needs, and budget.
               </p>
-              {/* <a href="#" className="inline-flex items-center gap-2 text-[#BA2121] font-bold hover:gap-4 transition-all text-base lg:text-lg uppercase tracking-widest">
+              {/* <a href="#" className="inline-flex items-center gap-2 text-[#0A8068] font-bold hover:gap-4 transition-all text-base lg:text-lg uppercase tracking-widest">
                 Explore AI Logic <span>→</span>
               </a> */}
             </div>
@@ -261,14 +261,14 @@ export default function FreshBhojFix() {
               className={`pointer-events-none absolute inset-0 transition-opacity duration-300 z-[1] ${hovering && !onButton ? "opacity-100" : "opacity-0"}`}
               style={{
                 background: `
-                  radial-gradient(450px circle at ${mousePos.x}px ${mousePos.y}px, rgba(186, 33, 33, 0.35), transparent 70%),
-                  radial-gradient(200px circle at ${mousePos.x}px ${mousePos.y}px, rgba(255, 107, 107, 0.2), transparent 50%)
+                  radial-gradient(450px circle at ${mousePos.x}px ${mousePos.y}px, rgba(10,128,104, 0.35), transparent 70%),
+                  radial-gradient(200px circle at ${mousePos.x}px ${mousePos.y}px, rgba(60,207,155, 0.2), transparent 50%)
                 `
               }}
             />
 
             {/* Background elements (Fixed) */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-[#BA2121] opacity-20 blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2 pointer-events-none z-0" />
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[#0A8068] opacity-20 blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2 pointer-events-none z-0" />
             <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500 opacity-10 blur-[100px] rounded-full translate-y-1/2 -translate-x-1/2 pointer-events-none z-0" />
 
             {/* Content with high Z-index */}
@@ -286,7 +286,7 @@ export default function FreshBhojFix() {
                   onMouseLeave={() => setOnButton(false)}
                   className="relative z-30 inline-flex items-center justify-center px-10 py-5 text-white font-bold rounded-3xl transition-all hover:scale-110 active:scale-95"
                   style={{
-                    background: "linear-gradient(169.21deg, #FF6B6B 9%, #BA2121 77%, #670000 100%)",
+                    background: "linear-gradient(169.21deg, #16B088 9%, #0A8068 77%, #074A5C 100%)",
                   }}
                 >
                   Request Pitch Deck

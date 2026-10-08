@@ -8,28 +8,28 @@ import { Sparkles, ClipboardList, Radio, LineChart } from "lucide-react";
 /* ─── Card data ──────────────────────────────────────────────── */
 const KITCHEN_TYPES = [
   {
-    iconSrc: "/tiffin.svg",
-    iconAlt: "Authentic Tiffin Services icon",
-    title: "Authentic Tiffin\nServices",
-    description: "Home-cooked daily meals, curated nutrition, and flexible monthly plans for busy professionals.",
+    iconSrc: "/cloud-kitchen.svg",
+    iconAlt: "Open to every food business icon",
+    title: "Open to Every\nFood Business",
+    description: "Restaurants, dhabas, cafés, bakeries, cloud kitchens, home kitchens — if you cook great food, you can sell on FreshBhoj.",
   },
   {
-    iconSrc: "/cloud-kitchen.svg",
-    iconAlt: "Cloud Kitchens and Restaurants icon",
-    title: "Cloud Kitchens &\nRestaurants",
-    description: "Professional culinary expertise meets delivery-optimized operations for consistent gourmet quality.",
+    iconSrc: "/shield-check.svg",
+    iconAlt: "Verified by FreshBhoj icon",
+    title: "Verified\nin Person",
+    description: "Our team visits and inspects kitchens in person. Verified kitchens earn a badge and are shown separately to customers.",
   },
   {
     iconSrc: "/street-vendor.svg",
-    iconAlt: "Iconic Street Vendors icon",
-    title: "Iconic Street\nVendors",
-    description: "Hidden \"thele wale\" gems and legacy street food stalls, strictly verified for hygiene and quality.",
+    iconAlt: "Reels icon",
+    title: "Food Reels\nThat Sell",
+    description: "Show your dishes in short videos and stories so customers can see exactly what they are ordering.",
   },
   {
     iconSrc: "/homestyle-thalis.svg",
-    iconAlt: "Homestyle Thalis icon",
-    title: "Homestyle Thalis",
-    description: "Complete, wholesome, and nutritious platters prepared by passionate local chefs using heirloom recipes.",
+    iconAlt: "Subscriptions icon",
+    title: "Subscriptions &\nRepeat Orders",
+    description: "Offer daily and weekly plans so happy customers keep coming back, without paying for ads every time.",
   },
 ] as const;
 
@@ -74,7 +74,7 @@ export default function EmpoweringKitchen() {
   return (
     <section
       ref={sectionRef}
-      className="w-full relative overflow-hidden font-sans py-16 lg:py-28 bg-[#F8F6F6]"
+      className="w-full relative overflow-hidden font-sans py-16 lg:py-28 bg-[#F4F8F6]"
     >
       <div className="w-full max-w-7xl mx-auto px-6">
 
@@ -87,7 +87,7 @@ export default function EmpoweringKitchen() {
           `}
         >
           {/* Pill Label */}
-          <div className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 mb-8 bg-[#BA2121]/10 border border-[#BA2121]/20">
+          <div className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 mb-8 bg-[#0A8068]/10 border border-[#0A8068]/20">
             <div className="relative w-4 h-4">
               <Image
                 src="/star-circle.svg"
@@ -96,28 +96,28 @@ export default function EmpoweringKitchen() {
                 alt="location"
               />
             </div>
-            <span className="text-[10px] lg:text-xs font-bold uppercase tracking-[0.2em] text-[#BA2121]" style={{
-              background: "linear-gradient(169.21deg, #FF6B6B 9%, #BA2121 77%, #670000 100%)",
+            <span className="text-[10px] lg:text-xs font-bold uppercase tracking-[0.2em] text-[#0A8068]" style={{
+              background: "linear-gradient(169.21deg, #16B088 9%, #0A8068 77%, #074A5C 100%)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text"
             }}>
-              Local Food Ecosystem
+              Food Marketplace
             </span>
           </div>
 
           <h2 className="text-4xl md:text-5xl lg:text-7xl font-extrabold text-[#0F172A] mb-8 leading-tight lg:max-w-none tracking-tight">
-            Empowering Every <span className="text-[#BA2121]" style={{
-              background: "linear-gradient(169.21deg, #FF6B6B 9%, #BA2121 77%, #670000 100%)",
+            Built for Every <span className="text-[#0A8068]" style={{
+              background: "linear-gradient(169.21deg, #16B088 9%, #0A8068 77%, #074A5C 100%)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text"
-            }}>Local Kitchen</span>
+            }}>Food Business</span>
           </h2>
 
           <p className="font-medium text-center text-slate-500 text-base md:text-xl leading-relaxed max-w-2xl lg:max-w-4xl">
-            Every kind of food business is welcome — home kitchens, cloud kitchens, restaurants, <br className="hidden lg:block" />
-            cafes, tiffin services and street vendors alike. What we verify is the food itself: every dish is checked for nutrition and hygiene before it reaches you.
+            Anyone who makes good food can sell on FreshBhoj. <br className="hidden lg:block" />
+            Kitchens that we verify in person get a Verified badge and are shown separately, so customers always know who they can trust.
           </p>
         </div>
 
@@ -150,7 +150,7 @@ export default function EmpoweringKitchen() {
 
               {/* Header & Paragraph Group */}
               <div>
-                <h3 className="text-[#0F172A] font-extrabold text-2xl lg:text-2xl mb-4 leading-tight tracking-tight whitespace-pre-line group-hover:text-[#BA2121] transition-colors">
+                <h3 className="text-[#0F172A] font-extrabold text-2xl lg:text-2xl mb-4 leading-tight tracking-tight whitespace-pre-line group-hover:text-[#0A8068] transition-colors">
                   {title}
                 </h3>
                 <p className="text-slate-500 font-medium text-sm lg:text-base leading-relaxed">
@@ -169,7 +169,7 @@ export default function EmpoweringKitchen() {
             ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-20"}
           `}
         >
-          <p className="text-center text-xs font-bold uppercase tracking-[0.2em] text-[#BA2121] mb-3">
+          <p className="text-center text-xs font-bold uppercase tracking-[0.2em] text-[#0A8068] mb-3">
             Built for kitchens, not just aggregators
           </p>
           <h3 className="text-2xl md:text-4xl font-extrabold text-[#0F172A] text-center mb-10 tracking-tight">
@@ -178,8 +178,8 @@ export default function EmpoweringKitchen() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
             {PARTNER_FEATURES.map(({ icon: Icon, title, description }) => (
               <div key={title} className="flex flex-col items-start">
-                <div className="w-11 h-11 rounded-2xl bg-[#BA2121]/10 flex items-center justify-center mb-4">
-                  <Icon size={18} className="text-[#BA2121]" strokeWidth={2.2} />
+                <div className="w-11 h-11 rounded-2xl bg-[#0A8068]/10 flex items-center justify-center mb-4">
+                  <Icon size={18} className="text-[#0A8068]" strokeWidth={2.2} />
                 </div>
                 <h4 className="text-base font-extrabold text-[#0F172A] mb-2">{title}</h4>
                 <p className="text-sm text-slate-500 leading-relaxed">{description}</p>
@@ -198,7 +198,7 @@ export default function EmpoweringKitchen() {
           <div className="flex flex-col sm:flex-row items-center gap-4">
             <Link
               href="/partner/login"
-              className="group relative inline-flex items-center justify-center gap-4 px-12 py-5 bg-hero-gradient text-white font-semibold text-lg lg:text-xl rounded-3xl shadow-[0_15px_30px_-5px_rgba(186,33,33,0.3)] transition-all hover:scale-105"
+              className="group relative inline-flex items-center justify-center gap-4 px-12 py-5 bg-hero-gradient text-white font-semibold text-lg lg:text-xl rounded-3xl shadow-[0_15px_30px_-5px_rgba(10,128,104,0.3)] transition-all hover:scale-105"
             >
               <span>Register Your Kitchen</span>
               <div className="relative w-6 h-6">
@@ -212,7 +212,7 @@ export default function EmpoweringKitchen() {
             </Link>
             <Link
               href="/partner/login"
-              className="inline-flex items-center justify-center px-10 py-5 border-2 border-[#BA2121]/20 text-[#BA2121] font-semibold text-lg lg:text-xl rounded-3xl transition-all hover:bg-[#BA2121]/5 hover:scale-105"
+              className="inline-flex items-center justify-center px-10 py-5 border-2 border-[#0A8068]/20 text-[#0A8068] font-semibold text-lg lg:text-xl rounded-3xl transition-all hover:bg-[#0A8068]/5 hover:scale-105"
             >
               Already a partner? Log in
             </Link>

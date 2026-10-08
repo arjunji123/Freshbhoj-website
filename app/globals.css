@@ -4,10 +4,18 @@
     --breakpoint-3xl: 2560px;
     --breakpoint-4k: 3840px;
     --font-sans: "Plus Jakarta Sans", sans-serif;
+
+    /* FreshBhoj brand: leaf-green -> emerald -> deep ocean teal, marigold accent, blue for "Verified" */
+    --color-brand-300: #16B088;
+    --color-brand-600: #0A8068;
+    --color-brand-900: #074A5C;
+    --color-brand-50: #F0FAF6;
+    --color-marigold: #FFB020;
+    --color-verified: #1E7BD8;
 }
 
 @utility bg-hero-gradient {
-    background: linear-gradient(169.21deg, #FF6B6B 8.65%, #BA2121 77.4%, #670000 100%);
+    background: linear-gradient(169.21deg, #0FA07A 8.65%, #0A8068 77.4%, #074A5C 100%);
 }
 
 /* Guard against accidental horizontal scroll (e.g. absolute glows, transforms) */
@@ -41,7 +49,7 @@ body {
 
 .input-gradient-focus:hover {
     border-color: #E2E8F0;
-    box-shadow: 0 6px 15px -3px rgba(186, 33, 33, 0.08), inset 0 2px 4px rgba(0, 0, 0, 0.02);
+    box-shadow: 0 6px 15px -3px rgba(10,128,104, 0.08), inset 0 2px 4px rgba(0, 0, 0, 0.02);
     transform: translateY(-1px);
 }
 
@@ -51,8 +59,8 @@ select.input-gradient-focus:focus {
     outline: none !important;
     border: 2px solid transparent !important;
     background: linear-gradient(white, white) padding-box,
-        linear-gradient(169.21deg, #FF6B6B 8.65%, #BA2121 77.4%, #670000 100%) border-box !important;
-    box-shadow: 0 0 0 4px rgba(186, 33, 33, 0.1), 0 20px 40px -10px rgba(186, 33, 33, 0.25), inset 0 2px 4px rgba(0, 0, 0, 0.02) !important;
+        linear-gradient(169.21deg, #0FA07A 8.65%, #0A8068 77.4%, #074A5C 100%) border-box !important;
+    box-shadow: 0 0 0 4px rgba(10,128,104, 0.1), 0 20px 40px -10px rgba(10,128,104, 0.25), inset 0 2px 4px rgba(0, 0, 0, 0.02) !important;
     transform: translateY(-2px);
 }
 

@@ -17,18 +17,18 @@ import {
 import { Navbar, Footer } from "../Components";
 
 const gradientText = {
-  background: "linear-gradient(169.21deg, #FF6B6B 9%, #BA2121 77%, #670000 100%)",
+  background: "linear-gradient(169.21deg, #16B088 9%, #0A8068 77%, #074A5C 100%)",
   WebkitBackgroundClip: "text" as const,
   WebkitTextFillColor: "transparent" as const,
   backgroundClip: "text" as const,
 };
 
 const gradientBg = {
-  background: "linear-gradient(169.21deg, #FF6B6B 9%, #BA2121 77%, #670000 100%)",
+  background: "linear-gradient(169.21deg, #16B088 9%, #0A8068 77%, #074A5C 100%)",
 };
 
 const contactUsInputBorder =
-  "bg-slate-50 border border-slate-200/80 hover:border-slate-300 focus:bg-white focus:border-[#BA2121]/20 focus:ring-4 focus:ring-[#BA2121]/5 outline-none transition-all placeholder:text-slate-300";
+  "bg-slate-50 border border-slate-200/80 hover:border-slate-300 focus:bg-white focus:border-[#0A8068]/20 focus:ring-4 focus:ring-[#0A8068]/5 outline-none transition-all placeholder:text-slate-300";
 
 const scrollToTop = () => {
   // Smooth scrolling can cause "fixed" navbar flicker on some mobile browsers.
@@ -316,7 +316,7 @@ function PreRegisterContent() {
     scrollFormIntoView();
   };
 
-  const vendorTypes = ["Home Kitchen", "Tiffin Service", "Cloud Kitchen", "Street Food", "Restaurant", "Cafe",];
+  const vendorTypes = ["Restaurant", "Cafe", "Dhaba", "Cloud Kitchen", "Home Kitchen", "Bakery & Sweets", "Street Food", "Other"];
   const priceRanges = ["₹50 - ₹100", "₹100 - ₹200", "₹200 - ₹350", "₹350+"];
   const serviceTimings = ["Breakfast (7am - 11am)", "Lunch (12pm - 4pm)", "Dinner (7pm - 11pm)"];
 
@@ -326,14 +326,14 @@ function PreRegisterContent() {
 
       <main className="flex-1 w-full max-w-7xl mx-auto px-6 py-12 md:py-20 pt-32 md:pt-32 relative">
         {/* Subtle background accents (keeps page from looking flat) */}
-        <div className="pointer-events-none absolute -top-20 right-[-140px] w-[420px] h-[420px] bg-[#BA2121]/[0.06] blur-[90px] rounded-full" />
-        <div className="pointer-events-none absolute top-[420px] left-[-160px] w-[520px] h-[520px] bg-[#FF6B6B]/[0.05] blur-[110px] rounded-full" />
+        <div className="pointer-events-none absolute -top-20 right-[-140px] w-[420px] h-[420px] bg-[#0A8068]/[0.06] blur-[90px] rounded-full" />
+        <div className="pointer-events-none absolute top-[420px] left-[-160px] w-[520px] h-[520px] bg-[#16B088]/[0.05] blur-[110px] rounded-full" />
         <div className="pointer-events-none absolute bottom-[-120px] right-[-180px] w-[560px] h-[560px] bg-slate-900/[0.03] blur-[130px] rounded-full" />
 
         {/* Header Section */}
         <div className="text-center max-w-4xl mx-auto mb-10 md:mb-16 px-4">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur border border-slate-200 shadow-sm mb-4 md:mb-6">
-            <span className="w-2 h-2 rounded-full bg-[#BA2121]" />
+            <span className="w-2 h-2 rounded-full bg-[#0A8068]" />
             <span className="text-[10px] md:text-[11px] font-extrabold tracking-[0.2em] md:tracking-[0.24em] uppercase text-slate-600">
               Early access waitlist
             </span>
@@ -349,7 +349,7 @@ function PreRegisterContent() {
 
         {/* User Type Switcher */}
         <div className="flex justify-center mb-10 md:mb-16 px-4">
-          <div className="relative bg-white/70 backdrop-blur-xl p-1.5 rounded-full flex w-full max-w-[480px] shadow-[0_20px_50px_-20px_rgba(186,33,33,0.15)] border border-white/50 overflow-hidden ring-1 ring-black/[0.03]">
+          <div className="relative bg-white/70 backdrop-blur-xl p-1.5 rounded-full flex w-full max-w-[480px] shadow-[0_20px_50px_-20px_rgba(10,128,104,0.15)] border border-white/50 overflow-hidden ring-1 ring-black/[0.03]">
             {/* Sliding Background Indicator */}
             {userType && (
               <div
@@ -364,10 +364,10 @@ function PreRegisterContent() {
               type="button"
               className={`relative flex-1 py-4 px-4 rounded-full font-bold text-sm md:text-base transition-all duration-300 flex items-center justify-center gap-3 z-10 cursor-pointer select-none focus:outline-none ${userType === "foodie"
                 ? "text-white shadow-lg"
-                : "text-slate-500 hover:text-[#BA2121] hover:bg-white/50"
+                : "text-slate-500 hover:text-[#0A8068] hover:bg-white/50"
                 }`}
             >
-              <UtensilsCrossed className={`w-5 h-5 transition-colors ${userType === "foodie" ? "text-white" : "text-[#BA2121]/60"}`} />
+              <UtensilsCrossed className={`w-5 h-5 transition-colors ${userType === "foodie" ? "text-white" : "text-[#0A8068]/60"}`} />
               I am a Foodie
             </button>
 
@@ -376,10 +376,10 @@ function PreRegisterContent() {
               type="button"
               className={`relative flex-1 py-4 px-4 rounded-full font-bold text-sm md:text-base transition-all duration-300 flex items-center justify-center gap-3 z-10 cursor-pointer select-none focus:outline-none ${userType === "kitchen"
                 ? "text-white shadow-lg"
-                : "text-slate-500 hover:text-[#BA2121] hover:bg-white/50"
+                : "text-slate-500 hover:text-[#0A8068] hover:bg-white/50"
                 }`}
             >
-              <div className={`transition-colors ${userType === "kitchen" ? "text-white" : "text-[#BA2121]/60"}`}>
+              <div className={`transition-colors ${userType === "kitchen" ? "text-white" : "text-[#0A8068]/60"}`}>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
                   <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                   <polyline points="9 22 9 12 15 12 15 22"></polyline>
@@ -394,8 +394,8 @@ function PreRegisterContent() {
           /* Success Screen */
           <div className="max-w-2xl mx-auto py-12 md:py-20 px-6 text-center animate-in fade-in zoom-in duration-1000">
             <div className="relative w-32 h-32 mx-auto mb-10">
-              <div className="absolute inset-0 bg-[#BA2121]/10 rounded-[3rem] animate-ping duration-[3s]" />
-              <div className="relative w-full h-full bg-white rounded-[2.5rem] shadow-xl border border-[#BA2121]/10 flex items-center justify-center shadow-[#BA2121]/5">
+              <div className="absolute inset-0 bg-[#0A8068]/10 rounded-[3rem] animate-ping duration-[3s]" />
+              <div className="relative w-full h-full bg-white rounded-[2.5rem] shadow-xl border border-[#0A8068]/10 flex items-center justify-center shadow-[#0A8068]/5">
                 <Image src="/select.svg" alt="Success" width={60} height={60} />
               </div>
               <div className="absolute -top-2 -right-2 bg-white p-2 rounded-xl shadow-lg border border-slate-50 animate-bounce">
@@ -409,13 +409,13 @@ function PreRegisterContent() {
             <p className="text-lg text-slate-500 mb-12 leading-relaxed max-w-lg mx-auto">
               {userType === "kitchen"
                 ? "Thank you for sharing your journey with us. Our team will review your kitchen details and get back to you within 48 hours."
-                : "Welcome to the future of home-style dining! We've saved your spot and will notify you as soon as we launch in your city."}
+                : "Welcome to the future of fresh food discovery! We've saved your spot and will notify you as soon as we launch in your city."}
             </p>
 
             <div className="space-y-4">
               <Link
                 href="/"
-                className="inline-flex items-center justify-center px-12 py-5 rounded-3xl text-white font-bold text-lg shadow-[0_20px_40px_-10px_rgba(186,33,33,0.3)] hover:scale-[1.05] active:scale-95 transition-all"
+                className="inline-flex items-center justify-center px-12 py-5 rounded-3xl text-white font-bold text-lg shadow-[0_20px_40px_-10px_rgba(10,128,104,0.3)] hover:scale-[1.05] active:scale-95 transition-all"
                 style={gradientBg}
               >
                 Go Back Home <ChevronRight className="ml-2 w-5 h-5" />
@@ -432,7 +432,7 @@ function PreRegisterContent() {
                       href={social.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-12 h-12 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center hover:bg-[#BA2121]/5 hover:border-[#BA2121]/20 transition-all group"
+                      className="w-12 h-12 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center hover:bg-[#0A8068]/5 hover:border-[#0A8068]/20 transition-all group"
                     >
                       <Image
                         src={social.src}
@@ -451,10 +451,10 @@ function PreRegisterContent() {
           /* Foodie Registration Flow */
           <div ref={formTopRef} className="max-w-4xl mx-auto relative scroll-mt-28 md:scroll-mt-32">
             {/* Background Accent Gradients */}
-            <div className="absolute top-0 right-0 w-96 h-96 bg-[#BA2121] opacity-[0.03] blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2 pointer-events-none" />
-            <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#FF6B6B] opacity-[0.03] blur-[100px] rounded-full translate-y-1/2 -translate-x-1/2 pointer-events-none" />
+            <div className="absolute top-0 right-0 w-96 h-96 bg-[#0A8068] opacity-[0.03] blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#16B088] opacity-[0.03] blur-[100px] rounded-full translate-y-1/2 -translate-x-1/2 pointer-events-none" />
 
-            <div className="relative bg-white/90 backdrop-blur-2xl rounded-[2.5rem] border border-[#BA2121]/15 shadow-[0_40px_90px_-35px_rgba(186,33,33,0.28)] overflow-hidden mb-12 ring-1 ring-white/60">
+            <div className="relative bg-white/90 backdrop-blur-2xl rounded-[2.5rem] border border-[#0A8068]/15 shadow-[0_40px_90px_-35px_rgba(10,128,104,0.28)] overflow-hidden mb-12 ring-1 ring-white/60">
               <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white to-transparent opacity-80" />
               {/* Stepper Header */}
               <div className="p-8 md:p-10 border-b border-slate-50">
@@ -487,7 +487,7 @@ function PreRegisterContent() {
                     {/* Personal Information */}
                     <div>
                       <div className="flex items-center gap-3 mb-8">
-                        <div className="w-10 h-10 rounded-xl bg-[#FFF5F5] flex items-center justify-center">
+                        <div className="w-10 h-10 rounded-xl bg-[#F0FAF6] flex items-center justify-center">
                           <Image src="/personal.svg" alt="Personal" width={20} height={20} />
                         </div>
                         <h3 className="text-lg font-semibold text-[#0F172A]">Personal Information</h3>
@@ -588,7 +588,7 @@ function PreRegisterContent() {
                     {/* About Yourself */}
                     <div>
                       <div className="flex items-center gap-3 mb-8">
-                        <div className="w-10 h-10 rounded-xl bg-[#FFF5F5] flex items-center justify-center">
+                        <div className="w-10 h-10 rounded-xl bg-[#F0FAF6] flex items-center justify-center">
                           <Image src="/about-yourself.svg" alt="About" width={20} height={20} />
                         </div>
                         <h3 className="text-lg font-semibold text-[#0F172A]">Tell us about yourself</h3>
@@ -601,7 +601,7 @@ function PreRegisterContent() {
                               key={item}
                               onClick={() => setFoodieData({ ...foodieData, aboutSelf: item })}
                               className={`px-6 py-3 rounded-full font-semibold text-sm transition-all border-2 ${foodieData.aboutSelf === item
-                                ? "border-[#BA2121] bg-[#FFF5F5]"
+                                ? "border-[#0A8068] bg-[#F0FAF6]"
                                 : "border-slate-100 text-slate-500 hover:border-slate-200"
                                 }`}
                               style={foodieData.aboutSelf === item ? gradientText : {}}
@@ -621,7 +621,7 @@ function PreRegisterContent() {
                       <button
                         onClick={nextStep}
                         disabled={!isFoodieStep1Valid}
-                        className={`w-full py-5 rounded-3xl text-white font-semibold text-xl shadow-[0_15px_30px_-5px_rgba(186,33,33,0.3)] transition-all flex items-center justify-center gap-3 group ${!isFoodieStep1Valid ? "opacity-50 cursor-not-allowed bg-slate-300 shadow-none scale-100" : "hover:scale-[1.02] active:scale-95"}`}
+                        className={`w-full py-5 rounded-3xl text-white font-semibold text-xl shadow-[0_15px_30px_-5px_rgba(10,128,104,0.3)] transition-all flex items-center justify-center gap-3 group ${!isFoodieStep1Valid ? "opacity-50 cursor-not-allowed bg-slate-300 shadow-none scale-100" : "hover:scale-[1.02] active:scale-95"}`}
                         style={isFoodieStep1Valid ? gradientBg : {}}
                       >
                         Next Step <ChevronRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
@@ -633,7 +633,7 @@ function PreRegisterContent() {
                     {/* Taste Section */}
                     <div className="animate-in fade-in slide-in-from-right-10 duration-500">
                       <div className="flex items-center gap-3 mb-8">
-                        <div className="w-10 h-10 rounded-xl bg-[#FFF5F5] flex items-center justify-center">
+                        <div className="w-10 h-10 rounded-xl bg-[#F0FAF6] flex items-center justify-center">
                           <Image src="/taste.svg" alt="Taste" width={20} height={20} />
                         </div>
                         <h3 className="text-lg font-semibold text-[#0F172A]">Tell us your taste</h3>
@@ -652,7 +652,7 @@ function PreRegisterContent() {
                                 key={pref.id}
                                 onClick={() => setFoodieData({ ...foodieData, foodPreference: pref.id })}
                                 className={`p-6 rounded-[1.5rem] border-2 transition-all flex flex-col items-center gap-4 text-center ${foodieData.foodPreference === pref.id
-                                  ? "border-[#BA2121] bg-[#BA2121]/5 shadow-md shadow-[#BA2121]/5"
+                                  ? "border-[#0A8068] bg-[#0A8068]/5 shadow-md shadow-[#0A8068]/5"
                                   : "border-slate-100 bg-white hover:border-slate-200"
                                   }`}
                               >
@@ -670,10 +670,10 @@ function PreRegisterContent() {
                           <label className="block text-sm font-semibold text-[#0F172A] ml-1 mb-6">Looking for</label>
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             {[
-                              { id: "Daily Tiffin", icon: "/daily-tiffin.svg" },
+                              { id: "Daily Meals", icon: "/daily-tiffin.svg" },
                               { id: "Occasional", icon: "/occasional.svg" },
-                              { id: "Street Food", icon: "/street-food.svg" },
-                              { id: "Home-Style", icon: "/home.svg" }
+                              { id: "Restaurants & Dhabas", icon: "/street-food.svg" },
+                              { id: "Verified Kitchens", icon: "/home.svg" }
                             ].map((item) => (
                               <button
                                 key={item.id}
@@ -684,7 +684,7 @@ function PreRegisterContent() {
                                   setFoodieData({ ...foodieData, lookingFor: newLooking });
                                 }}
                                 className={`px-6 py-4 rounded-2xl font-semibold text-sm transition-all border-2 flex items-center justify-between ${foodieData.lookingFor.includes(item.id)
-                                  ? "border-[#BA2121] bg-[#BA2121]/5 shadow-sm shadow-[#BA2121]/5"
+                                  ? "border-[#0A8068] bg-[#0A8068]/5 shadow-sm shadow-[#0A8068]/5"
                                   : "border-slate-100 text-slate-500 hover:border-slate-200 bg-white"
                                   }`}
                               >
@@ -733,7 +733,7 @@ function PreRegisterContent() {
                         <button
                           onClick={handleFoodieSubmit}
                           disabled={isSubmitting || !isFoodieStep2Valid}
-                          className={`w-full md:flex-1 py-4 md:py-5 rounded-3xl text-white font-semibold text-lg md:text-xl shadow-[0_15px_30px_-5px_rgba(186,33,33,0.3)] transition-all flex items-center justify-center gap-2 md:gap-3 ${isSubmitting || !isFoodieStep2Valid ? "opacity-50 cursor-not-allowed bg-slate-300 shadow-none scale-100" : "hover:scale-[1.02] active:scale-95"}`}
+                          className={`w-full md:flex-1 py-4 md:py-5 rounded-3xl text-white font-semibold text-lg md:text-xl shadow-[0_15px_30px_-5px_rgba(10,128,104,0.3)] transition-all flex items-center justify-center gap-2 md:gap-3 ${isSubmitting || !isFoodieStep2Valid ? "opacity-50 cursor-not-allowed bg-slate-300 shadow-none scale-100" : "hover:scale-[1.02] active:scale-95"}`}
                           style={!isSubmitting && isFoodieStep2Valid ? gradientBg : {}}
                         >
                           {isSubmitting ? (
@@ -756,10 +756,10 @@ function PreRegisterContent() {
           /* Kitchen Registration Flow */
           <div ref={formTopRef} className="max-w-4xl mx-auto relative scroll-mt-28 md:scroll-mt-32">
             {/* Background Accent Gradients */}
-            <div className="absolute top-0 right-0 w-96 h-96 bg-[#BA2121] opacity-[0.03] blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2 pointer-events-none" />
-            <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#FF6B6B] opacity-[0.03] blur-[100px] rounded-full translate-y-1/2 -translate-x-1/2 pointer-events-none" />
+            <div className="absolute top-0 right-0 w-96 h-96 bg-[#0A8068] opacity-[0.03] blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#16B088] opacity-[0.03] blur-[100px] rounded-full translate-y-1/2 -translate-x-1/2 pointer-events-none" />
 
-            <div className="relative bg-white/90 backdrop-blur-2xl rounded-[2.5rem] border border-[#BA2121]/15 shadow-[0_40px_90px_-35px_rgba(186,33,33,0.28)] overflow-hidden mb-12 ring-1 ring-white/60">
+            <div className="relative bg-white/90 backdrop-blur-2xl rounded-[2.5rem] border border-[#0A8068]/15 shadow-[0_40px_90px_-35px_rgba(10,128,104,0.28)] overflow-hidden mb-12 ring-1 ring-white/60">
               <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white to-transparent opacity-80" />
               {/* Stepper Header */}
               <div className="p-8 md:p-10 border-b border-slate-50">
@@ -794,7 +794,7 @@ function PreRegisterContent() {
                     {/* Basic Details Section */}
                     <div>
                       <div className="flex items-center gap-3 mb-8">
-                        <div className="w-10 h-10 rounded-xl bg-[#FFF5F5] flex items-center justify-center">
+                        <div className="w-10 h-10 rounded-xl bg-[#F0FAF6] flex items-center justify-center">
                           <Image src="/basic-details.svg" alt="Basic Details" width={20} height={20} />                        </div>
                         <h3 className="text-lg font-semibold text-[#0F172A]">Basic Details</h3>
                       </div>
@@ -851,8 +851,8 @@ function PreRegisterContent() {
                     {/* Food & Operations Section */}
                     <div>
                       <div className="flex items-center gap-3 mb-8">
-                        <div className="w-10 h-10 rounded-xl bg-[#FFF5F5] flex items-center justify-center">
-                          <UtensilsCrossed className="w-5 h-5" style={{ color: "#BA2121" }} />
+                        <div className="w-10 h-10 rounded-xl bg-[#F0FAF6] flex items-center justify-center">
+                          <UtensilsCrossed className="w-5 h-5" style={{ color: "#0A8068" }} />
                         </div>
                         <h3 className="text-lg font-semibold  text-[#0F172A]">Food & Operations</h3>
                       </div>
@@ -867,7 +867,7 @@ function PreRegisterContent() {
                                 key={type}
                                 onClick={() => setFormData({ ...formData, vendorType: type })}
                                 className={`px-6 py-3 rounded-full font-semibold text-sm transition-all duration-300 border-2 ${formData.vendorType === type
-                                  ? "border-[#BA2121] bg-[#FFF5F5]"
+                                  ? "border-[#0A8068] bg-[#F0FAF6]"
                                   : "border-slate-100 text-slate-500 hover:border-slate-200"
                                   }`}
                                 style={formData.vendorType === type ? gradientText : {}}
@@ -887,7 +887,7 @@ function PreRegisterContent() {
                                 key={range}
                                 onClick={() => setFormData({ ...formData, priceRange: range })}
                                 className={`px-6 py-3 rounded-full font-semibold text-sm transition-all duration-300 border-2 ${formData.priceRange === range
-                                  ? "border-[#BA2121] bg-[#FFF5F5]"
+                                  ? "border-[#0A8068] bg-[#F0FAF6]"
                                   : "border-slate-100 text-slate-500 hover:border-slate-200"
                                   }`}
                                 style={formData.priceRange === range ? gradientText : {}}
@@ -944,7 +944,7 @@ function PreRegisterContent() {
                       <button
                         onClick={nextStep}
                         disabled={!isKitchenStep1Valid}
-                        className={`w-full py-5 rounded-3xl text-white font-semibold text-xl shadow-[0_15px_30px_-5px_rgba(186,33,33,0.3)] transition-all flex items-center justify-center gap-3 group ${!isKitchenStep1Valid ? "opacity-50 cursor-not-allowed bg-slate-300 shadow-none scale-100" : "hover:scale-[1.02] active:scale-95"}`}
+                        className={`w-full py-5 rounded-3xl text-white font-semibold text-xl shadow-[0_15px_30px_-5px_rgba(10,128,104,0.3)] transition-all flex items-center justify-center gap-3 group ${!isKitchenStep1Valid ? "opacity-50 cursor-not-allowed bg-slate-300 shadow-none scale-100" : "hover:scale-[1.02] active:scale-95"}`}
                         style={isKitchenStep1Valid ? gradientBg : {}}
                       >
                         Next Step <ChevronRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
@@ -960,8 +960,8 @@ function PreRegisterContent() {
                     {/* Legal & Hygiene Section */}
                     <div>
                       <div className="flex items-center gap-3 mb-8">
-                        <div className="w-10 h-10 rounded-xl bg-[#FFF5F5] flex items-center justify-center">
-                          <ShieldCheck className="w-5 h-5" style={{ color: "#BA2121" }} />
+                        <div className="w-10 h-10 rounded-xl bg-[#F0FAF6] flex items-center justify-center">
+                          <ShieldCheck className="w-5 h-5" style={{ color: "#0A8068" }} />
                         </div>
                         <h3 className="text-lg font-semibold  text-[#0F172A]">Legal & Hygiene</h3>
                       </div>
@@ -969,7 +969,7 @@ function PreRegisterContent() {
                         <button
                           onClick={() => setFormData({ ...formData, fssaiStatus: "registered" })}
                           className={`w-full p-6 rounded-[1.5rem] border-2 transition-all flex items-center gap-5 text-left ${formData.fssaiStatus === "registered"
-                            ? "border-[#BA2121]/50 bg-[#FFF5F5]"
+                            ? "border-[#0A8068]/50 bg-[#F0FAF6]"
                             : "border-slate-100 hover:border-slate-200"
                             }`}
                         >
@@ -988,7 +988,7 @@ function PreRegisterContent() {
                         <button
                           onClick={() => setFormData({ ...formData, fssaiStatus: "applying" })}
                           className={`w-full p-6 rounded-[1.5rem] border-2 transition-all flex items-center gap-5 text-left ${formData.fssaiStatus === "applying"
-                            ? "border-[#BA2121]/50 bg-[#FFF5F5]"
+                            ? "border-[#0A8068]/50 bg-[#F0FAF6]"
                             : "border-slate-100 hover:border-slate-200"
                             }`}
                         >
@@ -1032,8 +1032,8 @@ function PreRegisterContent() {
                     {/* Delivery & Availability */}
                     <div>
                       <div className="flex items-center gap-3 mb-8">
-                        <div className="w-10 h-10 rounded-xl bg-[#FFF5F5] flex items-center justify-center">
-                          <Truck className="w-5 h-5" style={{ color: "#BA2121" }} />
+                        <div className="w-10 h-10 rounded-xl bg-[#F0FAF6] flex items-center justify-center">
+                          <Truck className="w-5 h-5" style={{ color: "#0A8068" }} />
                         </div>
                         <h3 className="text-lg font-semibold  text-[#0F172A]">Delivery & Availability</h3>
                       </div>
@@ -1043,7 +1043,7 @@ function PreRegisterContent() {
                           <button
                             onClick={() => setFormData({ ...formData, deliveryMethod: "self" })}
                             className={`relative p-7 rounded-[2rem] border-2 transition-all flex flex-col items-start gap-4 text-left ${formData.deliveryMethod === "self"
-                              ? "border-[#BA2121] bg-[#BA2121]/5 shadow-md shadow-[#BA2121]/5"
+                              ? "border-[#0A8068] bg-[#0A8068]/5 shadow-md shadow-[#0A8068]/5"
                               : "border-slate-100 bg-white hover:border-slate-200"
                               }`}
                           >
@@ -1066,7 +1066,7 @@ function PreRegisterContent() {
                           <button
                             onClick={() => setFormData({ ...formData, deliveryMethod: "freshbhoj" })}
                             className={`relative p-7 rounded-[2rem] border-2 transition-all flex flex-col items-start gap-4 text-left ${formData.deliveryMethod === "freshbhoj"
-                              ? "border-[#BA2121] bg-[#BA2121]/5 shadow-md shadow-[#BA2121]/5"
+                              ? "border-[#0A8068] bg-[#0A8068]/5 shadow-md shadow-[#0A8068]/5"
                               : "border-slate-100 bg-white hover:border-slate-200"
                               }`}
                           >
@@ -1103,7 +1103,7 @@ function PreRegisterContent() {
                                   setFormData({ ...formData, timings: newTimings });
                                 }}
                                 className={`px-6 py-3 rounded-full font-semibold  text-sm border-2 transition-all flex items-center gap-3 ${isSelected
-                                  ? "border-[#BA2121] bg-[#FFF5F5]"
+                                  ? "border-[#0A8068] bg-[#F0FAF6]"
                                   : "border-slate-100 text-slate-500 hover:border-slate-200"
                                   }`}
                                 style={isSelected ? gradientText : {}}
@@ -1124,13 +1124,13 @@ function PreRegisterContent() {
                     {/* FreshBhoj Advantage */}
                     <div className="space-y-8">
                       <div className="flex items-center gap-4">
-                        <div className="w-1.5 h-8 bg-[#BA2121] rounded-full"></div>
+                        <div className="w-1.5 h-8 bg-[#0A8068] rounded-full"></div>
                         <h3 className="text-2xl font-semibold text-[#0F172A]">The FreshBhoj Advantage</h3>
                       </div>
 
-                      <div className="bg-[#BA2121]/[0.03] border border-[#BA2121]/10 rounded-[2rem] p-6 md:p-8 space-y-6">
+                      <div className="bg-[#0A8068]/[0.03] border border-[#0A8068]/10 rounded-[2rem] p-6 md:p-8 space-y-6">
                         <div className="flex flex-col md:flex-row gap-5">
-                          <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm border border-[#BA2121]/5">
+                          <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm border border-[#0A8068]/5">
                             <Image src="/camera.svg" alt="Camera" width={24} height={24} />
                           </div>
                           <div className="space-y-1">
@@ -1156,7 +1156,7 @@ function PreRegisterContent() {
                           <button
                             onClick={() => setFormData({ ...formData, visualStorytelling: "no" })}
                             className={`py-4 rounded-2xl font-semibold text-base transition-all duration-300 border flex items-center justify-center gap-3 ${formData.visualStorytelling === "no"
-                              ? "bg-[#FFF5F5] text-[#BA2121] border-[#BA2121]/30 shadow-sm"
+                              ? "bg-[#F0FAF6] text-[#0A8068] border-[#0A8068]/30 shadow-sm"
                               : "bg-white text-slate-500 border-slate-100 hover:border-slate-200"
                               }`}
                           >
@@ -1196,7 +1196,7 @@ function PreRegisterContent() {
                         <button
                           onClick={handleKitchenSubmit}
                           disabled={isSubmitting || !isKitchenStep2Valid}
-                          className={`w-full md:flex-1 py-4 md:py-5 rounded-3xl text-white font-semibold text-lg md:text-xl shadow-[0_15px_30px_-5px_rgba(186,33,33,0.3)] transition-all flex items-center justify-center gap-2 md:gap-3 ${isSubmitting || !isKitchenStep2Valid ? "opacity-50 cursor-not-allowed bg-slate-300 shadow-none scale-100" : "hover:scale-[1.02] active:scale-95"}`}
+                          className={`w-full md:flex-1 py-4 md:py-5 rounded-3xl text-white font-semibold text-lg md:text-xl shadow-[0_15px_30px_-5px_rgba(10,128,104,0.3)] transition-all flex items-center justify-center gap-2 md:gap-3 ${isSubmitting || !isKitchenStep2Valid ? "opacity-50 cursor-not-allowed bg-slate-300 shadow-none scale-100" : "hover:scale-[1.02] active:scale-95"}`}
                           style={!isSubmitting && isKitchenStep2Valid ? gradientBg : {}}
                         >
                           {isSubmitting ? (
@@ -1228,7 +1228,7 @@ function PreRegisterContent() {
                 {
                   icon: "/community-growth.svg",
                   title: "Community Growth",
-                  desc: "Join a network of 5000+ home chefs and foodies."
+                  desc: "Join a network of 5000+ kitchens and foodies."
                 }
               ].map((card) => (
                 <div key={card.title} className="bg-white/90 backdrop-blur p-8 rounded-[2rem] border border-slate-200/70 shadow-[0_18px_40px_-20px_rgba(15,23,42,0.22)] flex flex-col items-center text-center group hover:bg-white transition-all duration-500 hover:-translate-y-1">
@@ -1252,7 +1252,7 @@ export default function PreRegister() {
   return (
     <Suspense fallback={
       <div className="min-h-screen bg-[#FDFCFB] flex items-center justify-center">
-        <div className="w-12 h-12 border-4 border-[#BA2121]/20 border-t-[#BA2121] rounded-full animate-spin" />
+        <div className="w-12 h-12 border-4 border-[#0A8068]/20 border-t-[#0A8068] rounded-full animate-spin" />
       </div>
     }>
       <PreRegisterContent />

@@ -1,4 +1,4 @@
-import { Hero, WhyFoodDelivery, FreshBhojFix, EmpoweringKitchen, PreRegistration, Footer } from "./Components";
+import { Hero, WhyFoodDelivery, FreshBhojFix, EmpoweringKitchen, VerifiedKitchens, PreRegistration, Footer } from "./Components";
 
 export default function Home() {
   return (
@@ -6,6 +6,7 @@ export default function Home() {
       <Hero />
       <WhyFoodDelivery />  
       <EmpoweringKitchen />
+      <VerifiedKitchens />
       <FreshBhojFix />
       <PreRegistration />
       <Footer />

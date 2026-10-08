@@ -43,7 +43,7 @@ export default function EditMealPage() {
       <Card>
         {isLoading ? (
           <div className="flex items-center justify-center py-16">
-            <Spinner className="w-6 h-6 text-[#BA2121]" />
+            <Spinner className="w-6 h-6 text-[#0A8068]" />
           </div>
         ) : meal ? (
           <MealForm

@@ -45,21 +45,21 @@ const Hero = () => {
   }, [menuOpen]);
 
   const gradientTextStyle = {
-    background: "linear-gradient(169.21deg, #FF6B6B 9%, #BA2121 77%, #670000 100%)",
+    background: "linear-gradient(169.21deg, #16B088 9%, #0A8068 77%, #074A5C 100%)",
     WebkitBackgroundClip: "text" as const,
     WebkitTextFillColor: "transparent" as const,
     backgroundClip: "text" as const,
   };
 
   const gradientBgStyle = {
-    background: "linear-gradient(169.21deg, #FF6B6B 9%, #BA2121 77%, #670000 100%)",
+    background: "linear-gradient(169.21deg, #16B088 9%, #0A8068 77%, #074A5C 100%)",
   };
 
   return (
     <section
       className="lg:min-h-screen w-full flex flex-col font-sans overflow-x-hidden relative"
       style={{
-        background: "linear-gradient(169.21deg, #FF6B6B 9%, #BA2121 77%, #670000 100%)",
+        background: "linear-gradient(169.21deg, #16B088 9%, #0A8068 77%, #074A5C 100%)",
       }}
     >
       {/* ── Navbar ── */}
@@ -86,26 +86,26 @@ const Hero = () => {
             <Link
               href="/"
               className={`font-bold text-sm lg:text-base px-6 py-2.5 rounded-full transition-all duration-300 ${scrolled ? "text-white shadow-lg" : "text-white"}`}
-              style={scrolled ? gradientBgStyle : { background: 'white', color: '#BA2121' }}
+              style={scrolled ? gradientBgStyle : { background: 'white', color: '#0A8068' }}
             >
               Home
             </Link>
             <Link
               href="/pre-register"
-              className={`font-bold text-sm lg:text-base px-8 py-2.5 rounded-full transition-all duration-300 ${scrolled ? "text-[#BA2121] bg-white border border-slate-100" : "text-white border border-white/30 hover:bg-white hover:text-[#BA2121]"}`}
+              className={`font-bold text-sm lg:text-base px-8 py-2.5 rounded-full transition-all duration-300 ${scrolled ? "text-[#0A8068] bg-white border border-slate-100" : "text-white border border-white/30 hover:bg-white hover:text-[#0A8068]"}`}
               style={scrolled ? {} : {}}
             >
               Pre-Register
             </Link>
             <Link
               href="/contact-us"
-              className={`font-bold text-sm lg:text-base px-6 py-2 rounded-full transition-all duration-300 ${scrolled ? "text-slate-600 hover:text-[#BA2121]" : "text-white hover:bg-white hover:text-[#BA2121]"}`}
+              className={`font-bold text-sm lg:text-base px-6 py-2 rounded-full transition-all duration-300 ${scrolled ? "text-slate-600 hover:text-[#0A8068]" : "text-white hover:bg-white hover:text-[#0A8068]"}`}
             >
               Contact us
             </Link>
             <Link
               href="/partner/login"
-              className={`font-bold text-sm lg:text-base px-6 py-2.5 rounded-full border transition-all duration-300 ${scrolled ? "text-[#BA2121] border-[#BA2121]/30 hover:bg-[#BA2121]/5" : "text-white border-white/40 hover:bg-white/10"}`}
+              className={`font-bold text-sm lg:text-base px-6 py-2.5 rounded-full border transition-all duration-300 ${scrolled ? "text-[#0A8068] border-[#0A8068]/30 hover:bg-[#0A8068]/5" : "text-white border-white/40 hover:bg-white/10"}`}
             >
               Partner Login
             </Link>
@@ -124,15 +124,15 @@ const Hero = () => {
             <span className="sr-only">Menu</span>
             <span className="relative w-6 h-5">
               <span
-                className={`absolute left-0 top-0 block w-6 h-[2.5px] rounded-full transition-all duration-300 ${(scrolled || menuOpen) ? "bg-[#BA2121]" : "bg-white"
+                className={`absolute left-0 top-0 block w-6 h-[2.5px] rounded-full transition-all duration-300 ${(scrolled || menuOpen) ? "bg-[#0A8068]" : "bg-white"
                   } ${menuOpen ? "translate-y-[9px] rotate-45" : "opacity-95"}`}
               />
               <span
-                className={`absolute left-0 top-1/2 -translate-y-1/2 block w-6 h-[2.5px] rounded-full transition-all duration-300 ${(scrolled || menuOpen) ? "bg-[#BA2121]" : "bg-white"
+                className={`absolute left-0 top-1/2 -translate-y-1/2 block w-6 h-[2.5px] rounded-full transition-all duration-300 ${(scrolled || menuOpen) ? "bg-[#0A8068]" : "bg-white"
                   } ${menuOpen ? "opacity-0 scale-90" : "opacity-95"}`}
               />
               <span
-                className={`absolute left-0 bottom-0 block w-6 h-[2.5px] rounded-full transition-all duration-300 ${(scrolled || menuOpen) ? "bg-[#BA2121]" : "bg-white"
+                className={`absolute left-0 bottom-0 block w-6 h-[2.5px] rounded-full transition-all duration-300 ${(scrolled || menuOpen) ? "bg-[#0A8068]" : "bg-white"
                   } ${menuOpen ? "-translate-y-[9px] -rotate-45" : "opacity-95"}`}
               />
             </span>
@@ -149,7 +149,7 @@ const Hero = () => {
           <div className="w-full flex flex-col gap-3">
             <Link
               href="/"
-              className="text-lg font-bold py-3.5 w-full text-center transition-all active:scale-95 text-white shadow-md shadow-[#BA2121]/20 rounded-full"
+              className="text-lg font-bold py-3.5 w-full text-center transition-all active:scale-95 text-white shadow-md shadow-[#0A8068]/20 rounded-full"
               style={gradientBgStyle}
               onClick={() => setMenuOpen(false)}
             >
@@ -176,7 +176,7 @@ const Hero = () => {
 
             <Link
               href="/partner/login"
-              className="text-lg font-bold py-3.5 w-full text-center transition-all active:scale-95 rounded-full border-2 border-[#BA2121]/20 text-[#BA2121]"
+              className="text-lg font-bold py-3.5 w-full text-center transition-all active:scale-95 rounded-full border-2 border-[#0A8068]/20 text-[#0A8068]"
               onClick={() => setMenuOpen(false)}
             >
               Partner Login
@@ -185,7 +185,7 @@ const Hero = () => {
 
           {/* Quote */}
           <div className="mt-4 px-6 text-center">
-            <p className="text-[#BA2121] italic text-sm font-medium opacity-80">
+            <p className="text-[#0A8068] italic text-sm font-medium opacity-80">
               &ldquo;India&apos;s first reel-based food discovery — taste the purity.&rdquo;
             </p>
           </div>
@@ -194,7 +194,7 @@ const Hero = () => {
           <div className="flex items-center gap-4 mt-2">
             <Link
               href="/privacy-policy"
-              className="text-gray-500 text-xs font-semibold hover:text-[#BA2121] transition-colors"
+              className="text-gray-500 text-xs font-semibold hover:text-[#0A8068] transition-colors"
               onClick={() => setMenuOpen(false)}
             >
               Privacy Policy
@@ -202,7 +202,7 @@ const Hero = () => {
             <span className="w-1.5 h-1.5 rounded-full bg-gray-300" />
             <Link
               href="/terms-of-service"
-              className="text-gray-500 text-xs font-semibold hover:text-[#BA2121] transition-colors"
+              className="text-gray-500 text-xs font-semibold hover:text-[#0A8068] transition-colors"
               onClick={() => setMenuOpen(false)}
             >
               Terms of Service
@@ -232,7 +232,7 @@ const Hero = () => {
 
           <div className="relative">
             <h1 className="font-extrabold text-white text-5xl md:text-6xl lg:text-[5.5vw] xl:text-[4.5rem] leading-[1.1] tracking-[-0.02em]">
-              India&apos;s First <br className="md:hidden" /> <span className="text-[#333333]">Reel–Based</span> <br />
+              India&apos;s First <br className="md:hidden" /> <span className="text-[#FFD166]">Reel–Based</span> <br />
               Food <br className="md:hidden" /> Discovery
             </h1>
             <div className="md:hidden absolute top-[-10%] right-[-16%] w-8 h-8 animate-float drop-shadow-[0_4px_12px_rgba(0,0,0,0.2)] z-20">

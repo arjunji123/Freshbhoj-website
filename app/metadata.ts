@@ -6,7 +6,7 @@ export const metadata: Metadata = {
         template: "%s | FreshBhoj",
     },
     description:
-        "Discover food through reels. Watch, explore kitchens, and order instantly with FreshBhoj – India’s first reel-based food discovery platform.",
+        "Discover food through reels. Watch, explore in-person verified kitchens and restaurants, and order instantly with FreshBhoj – India’s first reel-based food discovery platform.",
 
     metadataBase: new URL("https://freshbhoj.com"),
 

@@ -95,7 +95,7 @@ export default function MenuPage() {
 
       {isLoading ? (
         <div className="flex items-center justify-center py-24">
-          <Spinner className="w-8 h-8 text-[#BA2121]" />
+          <Spinner className="w-8 h-8 text-[#0A8068]" />
         </div>
       ) : meals.length === 0 ? (
         <Card>
@@ -149,7 +149,7 @@ export default function MenuPage() {
                 <button
                   onClick={() => handleToggle(meal)}
                   disabled={busyId === meal.id}
-                  className="text-xs font-bold text-slate-500 hover:text-[#BA2121] px-2 disabled:opacity-50"
+                  className="text-xs font-bold text-slate-500 hover:text-[#0A8068] px-2 disabled:opacity-50"
                 >
                   {meal.isAvailable ? "Pause" : "Publish"}
                 </button>

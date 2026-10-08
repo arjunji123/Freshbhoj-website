@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Navbar, Footer } from "../Components";
 
 const gradientStyle = {
-  background: "linear-gradient(169.21deg, #FF6B6B 9%, #BA2121 77%, #670000 100%)",
+  background: "linear-gradient(169.21deg, #16B088 9%, #0A8068 77%, #074A5C 100%)",
   WebkitBackgroundClip: "text" as const,
   WebkitTextFillColor: "transparent" as const,
   backgroundClip: "text" as const,
@@ -96,11 +96,11 @@ export default function DeleteAccountPage() {
 
       <div className="w-full pt-28 md:pt-28 pb-8 md:pb-16 border-b border-slate-100">
         <div className="w-full max-w-3xl mx-auto px-6">
-          <div className="flex items-center gap-2 bg-[#FFF5F5] rounded-full px-4 py-1.5 w-fit mb-4">
+          <div className="flex items-center gap-2 bg-[#F0FAF6] rounded-full px-4 py-1.5 w-fit mb-4">
             <div className="relative w-3.5 h-3.5">
               <Image src="/legal.svg" alt="legal" fill className="object-contain" />
             </div>
-            <span className="text-[#BA2121] text-[10px] font-bold uppercase tracking-[0.2em]">Account</span>
+            <span className="text-[#0A8068] text-[10px] font-bold uppercase tracking-[0.2em]">Account</span>
           </div>
           <h1 className="font-extrabold text-4xl md:text-6xl leading-tight tracking-tight mb-4">
             Delete your <span style={gradientStyle}>FreshBhoj</span> account
@@ -118,7 +118,7 @@ export default function DeleteAccountPage() {
             <ul className="space-y-2.5">
               {DELETED_ITEMS.map((item) => (
                 <li key={item} className="flex gap-2.5 text-sm text-slate-600">
-                  <span className="text-[#BA2121] font-bold mt-0.5">&#10005;</span>
+                  <span className="text-[#0A8068] font-bold mt-0.5">&#10005;</span>
                   {item}
                 </li>
               ))}
@@ -137,7 +137,7 @@ export default function DeleteAccountPage() {
           </div>
         </div>
 
-        <div className="bg-[#FFF9F9] border border-[#FFE0E0] rounded-3xl p-6 md:p-10 max-w-xl mx-auto">
+        <div className="bg-[#F6FCF9] border border-[#CFEFE1] rounded-3xl p-6 md:p-10 max-w-xl mx-auto">
           {step === "phone" ? (
             <>
               <h3 className="font-extrabold text-xl mb-1.5 text-slate-900">Step 1 — Verify it&apos;s you</h3>

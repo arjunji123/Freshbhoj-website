@@ -102,7 +102,7 @@ export default function DashboardPage() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-24">
-        <Spinner className="w-8 h-8 text-[#BA2121]" />
+        <Spinner className="w-8 h-8 text-[#0A8068]" />
       </div>
     );
   }
@@ -145,7 +145,7 @@ export default function DashboardPage() {
             >
               <Bell size={18} />
               {unreadCount > 0 ? (
-                <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-white text-[#BA2121] text-[10px] font-extrabold flex items-center justify-center">
+                <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-white text-[#0A8068] text-[10px] font-extrabold flex items-center justify-center">
                   {unreadCount > 9 ? "9+" : unreadCount}
                 </span>
               ) : null}
@@ -223,7 +223,7 @@ export default function DashboardPage() {
         <Card className="lg:col-span-2 !p-0 overflow-hidden">
           <div className="flex items-center justify-between px-6 pt-6 pb-4">
             <h3 className="text-base font-extrabold text-slate-900">Live orders</h3>
-            <Link href="/partner/orders" className="inline-flex items-center gap-1 text-xs font-bold text-[#BA2121]">
+            <Link href="/partner/orders" className="inline-flex items-center gap-1 text-xs font-bold text-[#0A8068]">
               View board <ArrowRight size={13} />
             </Link>
           </div>
@@ -283,7 +283,7 @@ export default function DashboardPage() {
           <Card className="!p-5 flex-1">
             <div className="flex items-center justify-between mb-3">
               <p className="text-xs font-bold text-slate-400 uppercase tracking-wide">Your stories</p>
-              <Link href="/partner/stories" className="text-[11px] font-bold text-[#BA2121]">
+              <Link href="/partner/stories" className="text-[11px] font-bold text-[#0A8068]">
                 Manage
               </Link>
             </div>
@@ -293,7 +293,7 @@ export default function DashboardPage() {
               <div className="flex gap-2 overflow-x-auto pb-1">
                 {stories.slice(0, 6).map((story) => (
                   <div key={story.id} className="shrink-0 w-16">
-                    <div className="w-16 h-16 rounded-2xl bg-slate-100 overflow-hidden border-2 border-[#BA2121]/20">
+                    <div className="w-16 h-16 rounded-2xl bg-slate-100 overflow-hidden border-2 border-[#0A8068]/20">
                       {story.thumbnailUrl || story.mediaType === "IMAGE" ? (
                         // eslint-disable-next-line @next/next/no-img-element
                         <img src={story.thumbnailUrl ?? story.mediaUrl} alt="" className="w-full h-full object-cover" />
@@ -341,7 +341,7 @@ function RevenueTrendChart({ data }: { data: DashboardSummary["weeklyRevenue"] }
           <p className="text-xs font-bold text-slate-400 uppercase tracking-wide">Last 7 days</p>
           <h3 className="text-base font-extrabold text-slate-900">Revenue trend</h3>
         </div>
-        <div className="w-9 h-9 rounded-xl bg-[#BA2121]/10 text-[#BA2121] flex items-center justify-center">
+        <div className="w-9 h-9 rounded-xl bg-[#0A8068]/10 text-[#0A8068] flex items-center justify-center">
           <TrendingUp size={16} />
         </div>
       </div>
@@ -355,22 +355,22 @@ function RevenueTrendChart({ data }: { data: DashboardSummary["weeklyRevenue"] }
             <LineChart data={chartData} margin={{ top: 8, right: 12, bottom: 0, left: 0 }}>
               <defs>
                 <linearGradient id="revenueLineStroke" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%" stopColor="#FF6B6B" />
-                  <stop offset="100%" stopColor="#BA2121" />
+                  <stop offset="0%" stopColor="#16B088" />
+                  <stop offset="100%" stopColor="#0A8068" />
                 </linearGradient>
               </defs>
               <CartesianGrid vertical={false} stroke="#F1F5F9" />
               <XAxis dataKey="label" axisLine={false} tickLine={false} tick={{ fontSize: 11, fontWeight: 700, fill: "#94A3B8" }} />
               <YAxis hide />
-              <Tooltip cursor={{ stroke: "#BA2121", strokeWidth: 1, strokeDasharray: "3 3" }} content={<RevenueTooltip />} />
+              <Tooltip cursor={{ stroke: "#0A8068", strokeWidth: 1, strokeDasharray: "3 3" }} content={<RevenueTooltip />} />
               <Line
                 type="monotone"
                 dataKey="revenue"
                 stroke="url(#revenueLineStroke)"
                 strokeWidth={2.5}
                 strokeLinecap="round"
-                dot={{ r: 3, fill: "#BA2121", strokeWidth: 0 }}
-                activeDot={{ r: 5, fill: "#BA2121", stroke: "#fff", strokeWidth: 2 }}
+                dot={{ r: 3, fill: "#0A8068", strokeWidth: 0 }}
+                activeDot={{ r: 5, fill: "#0A8068", stroke: "#fff", strokeWidth: 2 }}
               />
             </LineChart>
           </ResponsiveContainer>
@@ -412,7 +412,7 @@ function StatCard({
 }) {
   return (
     <Card className="!p-5">
-      <div className={`w-9 h-9 rounded-xl flex items-center justify-center mb-3 ${accent ? "text-white" : "bg-[#BA2121]/10 text-[#BA2121]"}`} style={accent ? GRADIENT_BG : undefined}>
+      <div className={`w-9 h-9 rounded-xl flex items-center justify-center mb-3 ${accent ? "text-white" : "bg-[#0A8068]/10 text-[#0A8068]"}`} style={accent ? GRADIENT_BG : undefined}>
         <Icon size={16} />
       </div>
       <p className="text-2xl font-extrabold text-slate-900">{value}</p>
@@ -434,9 +434,9 @@ function QuickAction({
   return (
     <Link
       href={href}
-      className="flex items-center gap-3 bg-white rounded-2xl border border-slate-100 shadow-[0_4px_20px_-8px_rgba(0,0,0,0.06)] px-4 py-3.5 hover:border-[#BA2121]/30 hover:-translate-y-0.5 transition-all"
+      className="flex items-center gap-3 bg-white rounded-2xl border border-slate-100 shadow-[0_4px_20px_-8px_rgba(0,0,0,0.06)] px-4 py-3.5 hover:border-[#0A8068]/30 hover:-translate-y-0.5 transition-all"
     >
-      <div className="w-8 h-8 rounded-lg bg-[#BA2121]/10 flex items-center justify-center text-[#BA2121] shrink-0">
+      <div className="w-8 h-8 rounded-lg bg-[#0A8068]/10 flex items-center justify-center text-[#0A8068] shrink-0">
         <Icon size={15} />
       </div>
       <span className="text-xs font-bold text-slate-700">{label}</span>

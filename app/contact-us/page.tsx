@@ -28,14 +28,14 @@ declare global {
 }
 
 const gradientText = {
-  background: "linear-gradient(169.21deg, #FF6B6B 9%, #BA2121 77%, #670000 100%)",
+  background: "linear-gradient(169.21deg, #16B088 9%, #0A8068 77%, #074A5C 100%)",
   WebkitBackgroundClip: "text" as const,
   WebkitTextFillColor: "transparent" as const,
   backgroundClip: "text" as const,
 };
 
 const gradientBg = {
-  background: "linear-gradient(169.21deg, #FF6B6B 9%, #BA2121 77%, #670000 100%)",
+  background: "linear-gradient(169.21deg, #16B088 9%, #0A8068 77%, #074A5C 100%)",
 };
 
 export default function ContactUs() {
@@ -114,7 +114,7 @@ export default function ContactUs() {
         {/* Premium Meeting Card - Click to Flow */}
         <div className="w-full max-w-5xl bg-white rounded-[1.5rem] md:rounded-[2.5rem] p-6 md:p-16 shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-slate-50 flex flex-col lg:flex-row items-center gap-10 lg:gap-20 relative overflow-hidden mb-20">
           {/* Subtle Background Glow */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-[#BA2121] opacity-[0.03] blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2" />
+          <div className="absolute top-0 right-0 w-64 h-64 bg-[#0A8068] opacity-[0.03] blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2" />
 
           {/* Left Content */}
           <div className="flex-1 flex flex-col items-start text-left z-10">
@@ -135,7 +135,7 @@ export default function ContactUs() {
                   window.open('https://calendly.com/singhnarukaarjun/30min', '_blank');
                 }
               }}
-              className="group flex items-center gap-3 px-6 md:px-10 py-5 rounded-2xl text-white text-lg md:text-xl transition-all hover:scale-105 active:scale-95 shadow-[0_20px_40px_rgba(186,33,33,0.2)] cursor-pointer whitespace-nowrap"
+              className="group flex items-center gap-3 px-6 md:px-10 py-5 rounded-2xl text-white text-lg md:text-xl transition-all hover:scale-105 active:scale-95 shadow-[0_20px_40px_rgba(10,128,104,0.2)] cursor-pointer whitespace-nowrap"
               style={gradientBg}
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 animate-bounce-slow flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
@@ -154,7 +154,7 @@ export default function ContactUs() {
                 <div
                   className="absolute inset-8"
                   style={{
-                    background: "linear-gradient(169.21deg, #FF6B6B 9%, #BA2121 77%, #670000 100%)",
+                    background: "linear-gradient(169.21deg, #16B088 9%, #0A8068 77%, #074A5C 100%)",
                   }}
                 />
 
@@ -170,7 +170,7 @@ export default function ContactUs() {
                 />
 
                 {/* Hover Effect Light Overlay */}
-                <div className="absolute inset-0 bg-[#BA2121] opacity-0 group-hover:opacity-5 transition-opacity duration-500 rounded-[1.5rem] z-20" />
+                <div className="absolute inset-0 bg-[#0A8068] opacity-0 group-hover:opacity-5 transition-opacity duration-500 rounded-[1.5rem] z-20" />
               </div>
 
               {/* FreshBhoj Logo & Action Text */}
@@ -186,7 +186,7 @@ export default function ContactUs() {
               </div>
             </div>
             {/* Background Glow */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-r from-[#FF6B6B]/10 to-[#BA2121]/5 blur-[60px] -z-10" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-r from-[#16B088]/10 to-[#0A8068]/5 blur-[60px] -z-10" />
           </div>
         </div>
         {/* Combined Contact & Message Section */}
@@ -199,44 +199,44 @@ export default function ContactUs() {
             <div className="space-y-6 mb-12">
               {/* Email Card */}
               <div className="bg-white border border-slate-100 rounded-[2rem] p-6 flex items-center gap-6 shadow-sm hover:shadow-md transition-all group">
-                <div className="w-14 h-14 rounded-2xl bg-[#FFF5F5] relative flex items-center justify-center flex-shrink-0 overflow-hidden transition-all group-hover:scale-105 shadow-inner">
+                <div className="w-14 h-14 rounded-2xl bg-[#F0FAF6] relative flex items-center justify-center flex-shrink-0 overflow-hidden transition-all group-hover:scale-105 shadow-inner">
                   <div
                     className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                     style={gradientBg}
                   />
-                  <Mail className="w-6 h-6 text-[#BA2121] transition-colors group-hover:text-white relative z-10" />
+                  <Mail className="w-6 h-6 text-[#0A8068] transition-colors group-hover:text-white relative z-10" />
                 </div>
                 <div className="flex flex-col">
                   <span className="text-sm font-bold text-[#0F172A]">Email Us</span>
-                  <a href="mailto:arjun@freshbhoj.com" className="text-slate-500 text-sm hover:text-[#BA2121] transition-colors">arjun@freshbhoj.com</a>
+                  <a href="mailto:arjun@freshbhoj.com" className="text-slate-500 text-sm hover:text-[#0A8068] transition-colors">arjun@freshbhoj.com</a>
                   <p className="text-[11px] text-slate-400 mt-1">Expected reply: 2-4 hours</p>
                 </div>
               </div>
 
               {/* LinkedIn Card */}
               <div className="bg-white border border-slate-100 rounded-[2rem] p-6 flex items-center gap-6 shadow-sm hover:shadow-md transition-all group">
-                <div className="w-14 h-14 rounded-2xl bg-[#FFF5F5] relative flex items-center justify-center flex-shrink-0 overflow-hidden transition-all group-hover:scale-105 shadow-inner">
+                <div className="w-14 h-14 rounded-2xl bg-[#F0FAF6] relative flex items-center justify-center flex-shrink-0 overflow-hidden transition-all group-hover:scale-105 shadow-inner">
                   <div
                     className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                     style={gradientBg}
                   />
-                  <Linkedin className="w-6 h-6 text-[#BA2121] transition-colors group-hover:text-white relative z-10" />
+                  <Linkedin className="w-6 h-6 text-[#0A8068] transition-colors group-hover:text-white relative z-10" />
                 </div>
                 <div className="flex flex-col">
                   <span className="text-sm font-bold text-[#0F172A]">LinkedIn</span>
-                  <a href="https://www.linkedin.com/in/arjun-singh-naruka/" target="_blank" rel="noopener noreferrer" className="text-slate-500 text-sm hover:text-[#BA2121] transition-colors">Arjun Singh Naruka</a>
+                  <a href="https://www.linkedin.com/in/arjun-singh-naruka/" target="_blank" rel="noopener noreferrer" className="text-slate-500 text-sm hover:text-[#0A8068] transition-colors">Arjun Singh Naruka</a>
                   <p className="text-[11px] text-slate-400 mt-1">Connect for Partnerships</p>
                 </div>
               </div>
 
               {/* WhatsApp Card */}
               <div className="bg-white border border-slate-100 rounded-[2rem] p-6 flex items-center gap-6 shadow-sm hover:shadow-md transition-all group">
-                <div className="w-14 h-14 rounded-2xl bg-[#FFF5F5] relative flex items-center justify-center flex-shrink-0 overflow-hidden transition-all group-hover:scale-105 shadow-inner">
+                <div className="w-14 h-14 rounded-2xl bg-[#F0FAF6] relative flex items-center justify-center flex-shrink-0 overflow-hidden transition-all group-hover:scale-105 shadow-inner">
                   <div
                     className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                     style={gradientBg}
                   />
-                  <div className="relative w-6 h-6 transition-all group-hover:brightness-0 group-hover:invert text-[#BA2121] z-10">
+                  <div className="relative w-6 h-6 transition-all group-hover:brightness-0 group-hover:invert text-[#0A8068] z-10">
                     <svg xmlns="http://www.w3.org/2000/svg" className="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                     </svg>
@@ -244,7 +244,7 @@ export default function ContactUs() {
                 </div>
                 <div className="flex flex-col">
                   <span className="text-sm font-bold text-[#0F172A]">WhatsApp/Call</span>
-                  <a href="https://wa.me/918058318556" target="_blank" rel="noopener noreferrer" className="text-slate-500 text-sm hover:text-[#BA2121] transition-colors">+91 80583 18556</a>
+                  <a href="https://wa.me/918058318556" target="_blank" rel="noopener noreferrer" className="text-slate-500 text-sm hover:text-[#0A8068] transition-colors">+91 80583 18556</a>
                   <p className="text-[11px] text-slate-400 mt-1">Mon - Sat: 9am - 7pm</p>
                 </div>
               </div>
@@ -264,7 +264,7 @@ export default function ContactUs() {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="relative w-12 h-12 rounded-full flex items-center justify-center bg-white border border-slate-100 text-[#BA2121] shadow-sm transition-all duration-500 overflow-hidden group/social"
+                    className="relative w-12 h-12 rounded-full flex items-center justify-center bg-white border border-slate-100 text-[#0A8068] shadow-sm transition-all duration-500 overflow-hidden group/social"
                   >
                     {/* Gradient Hover Layer */}
                     <div
@@ -284,8 +284,8 @@ export default function ContactUs() {
           <div className="relative order-1 lg:order-2">
             {msgSubmitted ? (
               <div className="bg-white rounded-[2.5rem] p-12 shadow-xl border border-slate-50 text-center h-full flex flex-col items-center justify-center min-h-[500px] animate-in zoom-in duration-500">
-                <div className="w-24 h-24 bg-[#FFF5F5] rounded-[2rem] flex items-center justify-center mb-8 shadow-sm">
-                  <Send className="w-10 h-10 text-[#BA2121]" />
+                <div className="w-24 h-24 bg-[#F0FAF6] rounded-[2rem] flex items-center justify-center mb-8 shadow-sm">
+                  <Send className="w-10 h-10 text-[#0A8068]" />
                 </div>
                 <h3 className="text-3xl font-bold text-[#0F172A] mb-4">Message Sent!</h3>
                 <p className="text-slate-500 mb-10 max-w-xs">We&apos;ve received your message and will get back to you shortly.</p>
@@ -309,7 +309,7 @@ export default function ContactUs() {
                         type="text"
                         placeholder="John Doe"
                         required
-                        className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-slate-200/80 hover:border-slate-300 focus:bg-white focus:border-[#BA2121]/20 focus:ring-4 focus:ring-[#BA2121]/5 outline-none transition-all placeholder:text-slate-300"
+                        className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-slate-200/80 hover:border-slate-300 focus:bg-white focus:border-[#0A8068]/20 focus:ring-4 focus:ring-[#0A8068]/5 outline-none transition-all placeholder:text-slate-300"
                         value={msgData.name}
                         onChange={(e) => setMsgData({ ...msgData, name: e.target.value })}
                         disabled={isSubmitting}
@@ -321,7 +321,7 @@ export default function ContactUs() {
                         type="email"
                         placeholder="john@example.com"
                         required
-                        className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-slate-200/80 hover:border-slate-300 focus:bg-white focus:border-[#BA2121]/20 focus:ring-4 focus:ring-[#BA2121]/5 outline-none transition-all placeholder:text-slate-300"
+                        className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-slate-200/80 hover:border-slate-300 focus:bg-white focus:border-[#0A8068]/20 focus:ring-4 focus:ring-[#0A8068]/5 outline-none transition-all placeholder:text-slate-300"
                         value={msgData.email}
                         onChange={(e) => setMsgData({ ...msgData, email: e.target.value })}
                         disabled={isSubmitting}
@@ -334,7 +334,7 @@ export default function ContactUs() {
                     <div className="relative">
                       <select
                         required
-                        className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-transparent focus:bg-white focus:border-[#BA2121]/20 focus:ring-4 focus:ring-[#BA2121]/5 outline-none transition-all appearance-none text-slate-600"
+                        className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-transparent focus:bg-white focus:border-[#0A8068]/20 focus:ring-4 focus:ring-[#0A8068]/5 outline-none transition-all appearance-none text-slate-600"
                         value={msgData.subject}
                         onChange={(e) => setMsgData({ ...msgData, subject: e.target.value })}
                         disabled={isSubmitting}
@@ -355,7 +355,7 @@ export default function ContactUs() {
                       placeholder="Tell us how we can help..."
                       required
                       rows={5}
-                      className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-slate-200/80 hover:border-slate-300 focus:bg-white focus:border-[#BA2121]/20 focus:ring-4 focus:ring-[#BA2121]/5 outline-none transition-all resize-none placeholder:text-slate-300"
+                      className="w-full px-6 py-4 rounded-2xl bg-slate-50 border border-slate-200/80 hover:border-slate-300 focus:bg-white focus:border-[#0A8068]/20 focus:ring-4 focus:ring-[#0A8068]/5 outline-none transition-all resize-none placeholder:text-slate-300"
                       value={msgData.message}
                       onChange={(e) => setMsgData({ ...msgData, message: e.target.value })}
                       disabled={isSubmitting}
@@ -375,8 +375,8 @@ export default function ContactUs() {
                   >
                     <div
                       className={`mt-1 w-6 h-6 rounded-full border-2 flex-shrink-0 flex items-center justify-center transition-all duration-500 relative overflow-hidden ${msgData.agreed
-                        ? 'border-transparent shadow-lg shadow-[#BA2121]/20'
-                        : 'border-slate-200 bg-slate-50 group-hover/check:border-[#BA2121]/50'
+                        ? 'border-transparent shadow-lg shadow-[#0A8068]/20'
+                        : 'border-slate-200 bg-slate-50 group-hover/check:border-[#0A8068]/50'
                         }`}
                     >
                       {/* Perfect Internal Gradient Circle */}
@@ -394,7 +394,7 @@ export default function ContactUs() {
                     </div>
                     <div className="flex-1">
                       <p className="text-[13px] text-slate-500 leading-relaxed font-medium select-none">
-                        I agree to the <Link href="/privacy-policy" className="text-[#BA2121] font-bold hover:underline" onClick={(e) => e.stopPropagation()}>Privacy Policy</Link> and allow FreshBhoj to contact me regarding this inquiry.
+                        I agree to the <Link href="/privacy-policy" className="text-[#0A8068] font-bold hover:underline" onClick={(e) => e.stopPropagation()}>Privacy Policy</Link> and allow FreshBhoj to contact me regarding this inquiry.
                       </p>
                     </div>
                   </button>
@@ -402,7 +402,7 @@ export default function ContactUs() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className={`w-full py-4 md:py-5 rounded-xl md:rounded-2xl text-white font-bold text-base md:text-lg shadow-[0_20px_40px_-10px_rgba(186,33,33,0.3)] hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-3 ${isSubmitting ? "opacity-70 cursor-not-allowed" : ""}`}
+                    className={`w-full py-4 md:py-5 rounded-xl md:rounded-2xl text-white font-bold text-base md:text-lg shadow-[0_20px_40px_-10px_rgba(10,128,104,0.3)] hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-3 ${isSubmitting ? "opacity-70 cursor-not-allowed" : ""}`}
                     style={gradientBg}
                   >
                     {isSubmitting ? "Sending..." : "Send Message"} <Send className={`w-4 md:w-5 h-4 md:h-5 ${isSubmitting ? "animate-pulse" : ""}`} />

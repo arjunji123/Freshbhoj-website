@@ -115,7 +115,7 @@ export default function PartnerShell({ children }: { children: React.ReactNode }
   );
 
   return (
-    <div className="min-h-screen w-full bg-[#F8F6F6] font-sans flex">
+    <div className="min-h-screen w-full bg-[#F4F8F6] font-sans flex">
       {/* Desktop sidebar */}
       <aside className="hidden lg:flex flex-col w-64 shrink-0 bg-white border-r border-slate-100 p-6">
         <Link href="/partner/dashboard" className="mb-8">

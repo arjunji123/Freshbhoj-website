@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Navbar, Footer } from "../Components";
 
 const gradientStyle = {
-  background: "linear-gradient(169.21deg, #FF6B6B 9%, #BA2121 77%, #670000 100%)",
+  background: "linear-gradient(169.21deg, #16B088 9%, #0A8068 77%, #074A5C 100%)",
   WebkitBackgroundClip: "text" as const,
   WebkitTextFillColor: "transparent" as const,
   backgroundClip: "text" as const,
@@ -62,11 +62,11 @@ export default function TermsOfService() {
       {/* Hero Header */}
       <div className="w-full pt-28 md:pt-28 pb-4 md:pb-4">
         <div className="w-full max-w-5xl mx-auto px-6">
-          <div className="flex items-center gap-2 bg-[#FFF5F5] border border-[#FFEAEA] rounded-full px-4 py-1.5 w-fit mb-4">
+          <div className="flex items-center gap-2 bg-[#F0FAF6] border border-[#DDF4EA] rounded-full px-4 py-1.5 w-fit mb-4">
             <div className="relative w-3.5 h-3.5">
               <Image src="/legal.svg" alt="legal" fill className="object-contain" />
             </div>
-            <span className="text-[#BA2121] text-[10px] font-bold uppercase tracking-[0.2em]">
+            <span className="text-[#0A8068] text-[10px] font-bold uppercase tracking-[0.2em]">
               Legal Documentation
             </span>
           </div>
@@ -75,7 +75,7 @@ export default function TermsOfService() {
             <span
               className="inline-block"
               style={{
-                background: "linear-gradient(169.21deg, #FF6B6B 9%, #BA2121 77%, #670000 100%)",
+                background: "linear-gradient(169.21deg, #16B088 9%, #0A8068 77%, #074A5C 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
@@ -128,7 +128,7 @@ export default function TermsOfService() {
                       <span
                         className="mt-2 w-1.5 h-1.5 rounded-full flex-shrink-0"
                         style={{
-                          background: "linear-gradient(169.21deg, #FF6B6B 9%, #BA2121 77%, #670000 100%)",
+                          background: "linear-gradient(169.21deg, #16B088 9%, #0A8068 77%, #074A5C 100%)",
                         }}
                       />
                       {item}
@@ -141,7 +141,7 @@ export default function TermsOfService() {
         </div>
 
         {/* Contact CTA */}
-        <div className="mt-12 rounded-2xl bg-[#FFF5F5] border border-slate-100 p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="mt-12 rounded-2xl bg-[#F0FAF6] border border-slate-100 p-8 flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
             <h3 className="text-[#0F172A] font-extrabold text-lg md:text-xl mb-1">
               Questions about our Terms?
@@ -154,7 +154,7 @@ export default function TermsOfService() {
             href="mailto:legal@freshbhoj.com"
             className="inline-flex items-center gap-3 px-8 py-4 text-white font-bold rounded-xl transition-all hover:scale-105 active:scale-95 shadow-lg whitespace-nowrap"
             style={{
-              background: "linear-gradient(169.21deg, #FF6B6B 9%, #BA2121 77%, #670000 100%)",
+              background: "linear-gradient(169.21deg, #16B088 9%, #0A8068 77%, #074A5C 100%)",
             }}
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>

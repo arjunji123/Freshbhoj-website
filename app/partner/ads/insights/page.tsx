@@ -183,7 +183,7 @@ export default function AiInsightsPage() {
 
       {isLoading ? (
         <div className="flex items-center justify-center py-24">
-          <Spinner className="w-8 h-8 text-[#BA2121]" />
+          <Spinner className="w-8 h-8 text-[#0A8068]" />
         </div>
       ) : suggestions.length === 0 ? (
         <Card>

@@ -68,7 +68,7 @@ export function DocumentsForm({ onSaved, documents }: { onSaved: () => Promise<v
           {type === "FSSAI" && !hasFssai ? (
             <Link
               href="/partner/fssai-assistance"
-              className="shrink-0 inline-flex items-center gap-1.5 rounded-xl px-4 py-2.5 text-xs font-bold bg-[#BA2121]/10 text-[#BA2121] hover:bg-[#BA2121]/15 transition-colors"
+              className="shrink-0 inline-flex items-center gap-1.5 rounded-xl px-4 py-2.5 text-xs font-bold bg-[#0A8068]/10 text-[#0A8068] hover:bg-[#0A8068]/15 transition-colors"
             >
               <ShieldCheck size={13} />
               Get / Upload

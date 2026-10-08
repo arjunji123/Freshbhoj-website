@@ -8,12 +8,12 @@ const PROBLEMS = [
   {
     iconSrc: "/overwhelming.svg",
     iconAlt: "Overwhelming choice icon",
-    iconTint: "bg-red-50",
+    iconTint: "bg-emerald-50",
     title: "Overwhelming Choice",
     description:
       "Static images and text descriptions don't tell the real story. 70% of users spend 15+ minutes just deciding what to eat.",
     fix: "THE FIX: Visual first discovery",
-    fixColor: "text-[#BA2121]",
+    fixColor: "text-[#0A8068]",
     fixHref: "#visual-first",
   },
   {
@@ -22,7 +22,7 @@ const PROBLEMS = [
     iconTint: "bg-amber-50",
     title: "Invisible Kitchens",
     description:
-      "Amazing local home-chefs and boutique kitchens are buried under high advertising costs of big platforms.",
+      "Great food sellers, big and small, are buried under the high advertising costs of big platforms.",
     fix: "THE FIX: Creator-led growth",
     fixColor: "text-amber-600",
     fixHref: "#creator-growth",
@@ -75,7 +75,7 @@ export default function WhyFoodDelivery() {
             <p
               className="inline-block text-xs md:text-sm font-bold tracking-[0.2em] uppercase"
               style={{
-                background: "linear-gradient(169.21deg, #FF6B6B 9%, #BA2121 77%, #670000 100%)",
+                background: "linear-gradient(169.21deg, #16B088 9%, #0A8068 77%, #074A5C 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text"

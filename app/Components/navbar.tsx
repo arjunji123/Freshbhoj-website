@@ -37,13 +37,13 @@ const Navbar = () => {
   ].includes(pathname);
 
   const gradientStyle = {
-    background: "linear-gradient(169.21deg, #FF6B6B 9%, #BA2121 77%, #670000 100%)",
+    background: "linear-gradient(169.21deg, #16B088 9%, #0A8068 77%, #074A5C 100%)",
     WebkitBackgroundClip: "text" as const,
     WebkitTextFillColor: "transparent" as const,
     backgroundClip: "text" as const,
   };
 
-  const activeBgGradient = "linear-gradient(169.21deg, #FF6B6B 9%, #BA2121 77%, #670000 100%)";
+  const activeBgGradient = "linear-gradient(169.21deg, #16B088 9%, #0A8068 77%, #074A5C 100%)";
 
   const getLinkStyle = (path: string) => {
     const isActive = pathname === path;
@@ -109,7 +109,7 @@ const Navbar = () => {
 
           <Link
             href="/partner/login"
-            className="font-bold text-sm lg:text-base px-6 py-2.5 rounded-full border-2 border-[#BA2121]/20 text-[#BA2121] transition-all duration-300 hover:scale-105 active:scale-95 hover:bg-[#BA2121]/5"
+            className="font-bold text-sm lg:text-base px-6 py-2.5 rounded-full border-2 border-[#0A8068]/20 text-[#0A8068] transition-all duration-300 hover:scale-105 active:scale-95 hover:bg-[#0A8068]/5"
           >
             Partner Login
           </Link>
@@ -129,17 +129,17 @@ const Navbar = () => {
           <span className="sr-only">Menu</span>
           <span className="relative w-6 h-5">
             <span
-              className={`absolute left-0 top-0 block w-6 h-[2.5px] rounded-full bg-[#BA2121] transition-all duration-300 ${
+              className={`absolute left-0 top-0 block w-6 h-[2.5px] rounded-full bg-[#0A8068] transition-all duration-300 ${
                 menuOpen ? "translate-y-[9px] rotate-45" : "opacity-90"
               }`}
             />
             <span
-              className={`absolute left-0 top-1/2 -translate-y-1/2 block w-6 h-[2.5px] rounded-full bg-[#BA2121] transition-all duration-300 ${
+              className={`absolute left-0 top-1/2 -translate-y-1/2 block w-6 h-[2.5px] rounded-full bg-[#0A8068] transition-all duration-300 ${
                 menuOpen ? "opacity-0 scale-90" : "opacity-90"
               }`}
             />
             <span
-              className={`absolute left-0 bottom-0 block w-6 h-[2.5px] rounded-full bg-[#BA2121] transition-all duration-300 ${
+              className={`absolute left-0 bottom-0 block w-6 h-[2.5px] rounded-full bg-[#0A8068] transition-all duration-300 ${
                 menuOpen ? "-translate-y-[9px] -rotate-45" : "opacity-90"
               }`}
             />
@@ -156,7 +156,7 @@ const Navbar = () => {
         <div className="w-full flex flex-col gap-3 mt-6">
           <Link
             href="/"
-            className={`text-lg font-bold py-3.5 w-full text-center transition-all active:scale-95 ${pathname === "/" ? "text-white shadow-md shadow-[#BA2121]/20" : ""}`}
+            className={`text-lg font-bold py-3.5 w-full text-center transition-all active:scale-95 ${pathname === "/" ? "text-white shadow-md shadow-[#0A8068]/20" : ""}`}
             style={getLinkStyle("/")}
             onClick={() => setMenuOpen(false)}
           >
@@ -165,7 +165,7 @@ const Navbar = () => {
           
           <Link
             href="/pre-register"
-            className={`text-lg font-bold py-3.5 w-full text-center transition-all active:scale-95 ${pathname === "/pre-register" ? "text-white shadow-md shadow-[#BA2121]/20" : ""}`}
+            className={`text-lg font-bold py-3.5 w-full text-center transition-all active:scale-95 ${pathname === "/pre-register" ? "text-white shadow-md shadow-[#0A8068]/20" : ""}`}
             style={getLinkStyle("/pre-register")}
             onClick={() => setMenuOpen(false)}
           >
@@ -174,7 +174,7 @@ const Navbar = () => {
           
           <Link
             href="/contact-us"
-            className={`text-lg font-bold py-3.5 w-full text-center transition-all active:scale-95 ${pathname === "/contact-us" ? "text-white shadow-md shadow-[#BA2121]/20" : ""}`}
+            className={`text-lg font-bold py-3.5 w-full text-center transition-all active:scale-95 ${pathname === "/contact-us" ? "text-white shadow-md shadow-[#0A8068]/20" : ""}`}
             style={getLinkStyle("/contact-us")}
             onClick={() => setMenuOpen(false)}
           >
@@ -183,7 +183,7 @@ const Navbar = () => {
 
           <Link
             href="/partner/login"
-            className="text-lg font-bold py-3.5 w-full text-center rounded-full border-2 border-[#BA2121]/20 text-[#BA2121] transition-all active:scale-95"
+            className="text-lg font-bold py-3.5 w-full text-center rounded-full border-2 border-[#0A8068]/20 text-[#0A8068] transition-all active:scale-95"
             onClick={() => setMenuOpen(false)}
           >
             Partner Login
@@ -192,7 +192,7 @@ const Navbar = () => {
 
         {/* Distinguishing Fact/Quote */}
         <div className="mt-4 px-6 text-center">
-            <p className="text-[#BA2121] italic text-sm font-medium opacity-80">
+            <p className="text-[#0A8068] italic text-sm font-medium opacity-80">
                 &ldquo;India&apos;s first reel-based food discovery — taste the purity.&rdquo;
             </p>
         </div>
@@ -201,7 +201,7 @@ const Navbar = () => {
         <div className="flex items-center gap-4 mt-2">
             <Link 
                 href="/privacy-policy" 
-                className="text-gray-500 text-xs font-semibold hover:text-[#BA2121] transition-colors"
+                className="text-gray-500 text-xs font-semibold hover:text-[#0A8068] transition-colors"
                 onClick={() => setMenuOpen(false)}
             >
                 Privacy Policy
@@ -209,7 +209,7 @@ const Navbar = () => {
             <span className="w-1.5 h-1.5 rounded-full bg-gray-300" />
             <Link 
                 href="/terms-of-service" 
-                className="text-gray-500 text-xs font-semibold hover:text-[#BA2121] transition-colors"
+                className="text-gray-500 text-xs font-semibold hover:text-[#0A8068] transition-colors"
                 onClick={() => setMenuOpen(false)}
             >
                 Terms of Service

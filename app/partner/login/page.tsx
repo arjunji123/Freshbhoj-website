@@ -68,7 +68,7 @@ export default function PartnerLoginPage() {
   };
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-[#F8F6F6] font-sans px-6 py-12">
+    <div className="min-h-screen w-full flex items-center justify-center bg-[#F4F8F6] font-sans px-6 py-12">
       <div className="w-full max-w-md">
         <div className="flex flex-col items-center mb-8">
           <Link href="/">
@@ -80,8 +80,8 @@ export default function PartnerLoginPage() {
               className="h-9 w-auto object-contain mb-6"
             />
           </Link>
-          <div className="w-14 h-14 rounded-2xl bg-[#BA2121]/10 flex items-center justify-center mb-4">
-            <ChefHat size={26} color="#BA2121" strokeWidth={2} />
+          <div className="w-14 h-14 rounded-2xl bg-[#0A8068]/10 flex items-center justify-center mb-4">
+            <ChefHat size={26} color="#0A8068" strokeWidth={2} />
           </div>
           <h1 className="text-2xl font-extrabold text-slate-900 text-center">
             <span style={GRADIENT_TEXT}>Partner</span> Portal
@@ -91,7 +91,7 @@ export default function PartnerLoginPage() {
           </p>
         </div>
 
-        <div className="bg-white rounded-3xl border border-slate-100 shadow-[0_20px_50px_-20px_rgba(186,33,33,0.15)] p-8">
+        <div className="bg-white rounded-3xl border border-slate-100 shadow-[0_20px_50px_-20px_rgba(10,128,104,0.15)] p-8">
           {stage === "phone" ? (
             <div className="flex flex-col gap-5">
               <Field label="Phone number" error={error}>
@@ -138,7 +138,7 @@ export default function PartnerLoginPage() {
                 type="button"
                 onClick={handleSendOtp}
                 disabled={cooldown > 0 || isSending}
-                className="text-xs font-bold text-slate-400 hover:text-[#BA2121] disabled:hover:text-slate-400 transition-colors"
+                className="text-xs font-bold text-slate-400 hover:text-[#0A8068] disabled:hover:text-slate-400 transition-colors"
               >
                 {cooldown > 0 ? `Resend OTP in ${cooldown}s` : "Resend OTP"}
               </button>

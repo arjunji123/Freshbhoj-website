@@ -38,7 +38,7 @@ export default function Footer() {
               {link.label}
               <span
                 className="absolute -bottom-1 left-0 w-0 h-px transition-all group-hover:w-full"
-                style={{ background: "linear-gradient(169.21deg, #FF6B6B 9%, #BA2121 77%, #670000 100%)" }}
+                style={{ background: "linear-gradient(169.21deg, #16B088 9%, #0A8068 77%, #074A5C 100%)" }}
               />
             </Link>
           ))}
@@ -62,7 +62,7 @@ export default function Footer() {
               {/* Gradient Hover Layer */}
               <div
                 className="absolute inset-0 opacity-0 group-hover/social:opacity-100 transition-opacity duration-300"
-                style={{ background: "linear-gradient(169.21deg, #FF6B6B 9%, #BA2121 77%, #670000 100%)" }}
+                style={{ background: "linear-gradient(169.21deg, #16B088 9%, #0A8068 77%, #074A5C 100%)" }}
               />
 
               <div className="relative w-5 h-5 brightness-0 invert z-10">

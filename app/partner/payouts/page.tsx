@@ -81,7 +81,7 @@ export default function PayoutsPage() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-24">
-        <Spinner className="w-8 h-8 text-[#BA2121]" />
+        <Spinner className="w-8 h-8 text-[#0A8068]" />
       </div>
     );
   }
@@ -102,7 +102,7 @@ export default function PayoutsPage() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
         <Card className="!p-5">
-          <div className="w-9 h-9 rounded-xl bg-[#BA2121]/10 text-[#BA2121] flex items-center justify-center mb-3">
+          <div className="w-9 h-9 rounded-xl bg-[#0A8068]/10 text-[#0A8068] flex items-center justify-center mb-3">
             <IndianRupee size={16} />
           </div>
           <p className="text-2xl font-extrabold text-slate-900">₹{summary.totalEarnings.toLocaleString("en-IN")}</p>

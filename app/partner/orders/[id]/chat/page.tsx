@@ -88,7 +88,7 @@ export default function OrderChatPage() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-24">
-        <Spinner className="w-8 h-8 text-[#BA2121]" />
+        <Spinner className="w-8 h-8 text-[#0A8068]" />
       </div>
     );
   }
@@ -107,7 +107,7 @@ export default function OrderChatPage() {
         {order ? (
           <a
             href={`tel:${order.customer.phone}`}
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-[#BA2121] shrink-0"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0A8068] shrink-0"
           >
             <Phone size={13} /> {order.customer.phone}
           </a>
@@ -136,7 +136,7 @@ export default function OrderChatPage() {
               key={q.label}
               onClick={() => send(q.body, q.advanceToStatus, q.label)}
               disabled={Boolean(sendingKey)}
-              className="px-3.5 py-2 rounded-full text-xs font-bold bg-[#BA2121]/10 text-[#BA2121] hover:bg-[#BA2121]/15 transition-colors disabled:opacity-50"
+              className="px-3.5 py-2 rounded-full text-xs font-bold bg-[#0A8068]/10 text-[#0A8068] hover:bg-[#0A8068]/15 transition-colors disabled:opacity-50"
             >
               {sendingKey === q.label ? <Spinner className="w-3 h-3 inline-block" /> : q.label}
             </button>

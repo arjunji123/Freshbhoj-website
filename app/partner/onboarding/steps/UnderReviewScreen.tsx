@@ -36,7 +36,7 @@ export function UnderReviewScreen() {
   ];
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-[#F8F6F6] font-sans px-6 py-12">
+    <div className="min-h-screen w-full flex items-center justify-center bg-[#F4F8F6] font-sans px-6 py-12">
       <div className="max-w-md w-full text-center">
         <div className="w-16 h-16 rounded-2xl bg-amber-50 flex items-center justify-center mx-auto mb-6">
           <Clock size={28} className="text-amber-500" />

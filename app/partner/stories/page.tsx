@@ -96,7 +96,7 @@ export default function StoriesPage() {
 
       {isLoading ? (
         <div className="flex items-center justify-center py-24">
-          <Spinner className="w-8 h-8 text-[#BA2121]" />
+          <Spinner className="w-8 h-8 text-[#0A8068]" />
         </div>
       ) : activeStories.length === 0 ? (
         <Card>
@@ -275,7 +275,7 @@ function ComposeStory({ meals, onPublished }: { meals: MealDetail[]; onPublished
             </button>
           </div>
         ) : (
-          <label className="flex flex-col items-center justify-center w-32 h-44 rounded-xl border-2 border-dashed border-slate-200 cursor-pointer text-xs font-bold text-slate-400 hover:border-[#BA2121]/30 hover:text-[#BA2121] transition-colors">
+          <label className="flex flex-col items-center justify-center w-32 h-44 rounded-xl border-2 border-dashed border-slate-200 cursor-pointer text-xs font-bold text-slate-400 hover:border-[#0A8068]/30 hover:text-[#0A8068] transition-colors">
             <Plus size={20} className="mb-1" />
             Add media
             <input type="file" accept="image/*,video/*" className="hidden" onChange={(e) => handlePickFile(e.target.files?.[0] ?? null)} />

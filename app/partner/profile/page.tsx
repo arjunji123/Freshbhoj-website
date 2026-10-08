@@ -157,7 +157,7 @@ export default function ProfilePage() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-24">
-        <Spinner className="w-8 h-8 text-[#BA2121]" />
+        <Spinner className="w-8 h-8 text-[#0A8068]" />
       </div>
     );
   }
@@ -190,9 +190,9 @@ export default function ProfilePage() {
       />
 
       <Link href="/partner/timings" className="block max-w-2xl mb-4">
-        <Card className="!p-4 hover:border-[#BA2121]/20 transition-colors">
+        <Card className="!p-4 hover:border-[#0A8068]/20 transition-colors">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#BA2121]/10 text-[#BA2121] flex items-center justify-center shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-[#0A8068]/10 text-[#0A8068] flex items-center justify-center shrink-0">
               <Clock size={18} />
             </div>
             <div className="flex-1 min-w-0">
@@ -271,7 +271,7 @@ export default function ProfilePage() {
           <Field label="Specialities">
             <div className="flex flex-wrap gap-2 mb-2">
               {specialities.map((s) => (
-                <span key={s} className="inline-flex items-center gap-1.5 rounded-full bg-[#BA2121]/10 text-[#BA2121] px-3 py-1.5 text-xs font-bold">
+                <span key={s} className="inline-flex items-center gap-1.5 rounded-full bg-[#0A8068]/10 text-[#0A8068] px-3 py-1.5 text-xs font-bold">
                   {s}
                   <button onClick={() => setSpecialities((prev) => prev.filter((x) => x !== s))} aria-label={`Remove ${s}`}>
                     <X size={11} />
@@ -289,7 +289,7 @@ export default function ProfilePage() {
                     handleAddSpeciality();
                   }
                 }}
-                placeholder="e.g. North Indian, Home-style"
+                placeholder="e.g. North Indian, Chinese"
                 disabled={specialities.length >= 10}
               />
               <Button variant="outline" className="!py-3 !px-4 shrink-0" onClick={handleAddSpeciality} disabled={specialities.length >= 10}>

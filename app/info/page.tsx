@@ -89,17 +89,18 @@ export default function InfoPage() {
             <h2>What Is FreshBhoj?</h2>
             <p>
               FreshBhoj is a food-ordering app that connects two kinds of people:{" "}
-              <strong>customers</strong> who want fresh, home-style food delivered to them, and{" "}
-              <strong>kitchen partners</strong> — home cooks, cloud kitchens, tiffin services and
-              restaurants alike — who want an easy way to sell their food to far more people than
+              <strong>customers</strong> who want fresh, trustworthy food delivered to them, and{" "}
+              <strong>kitchen partners</strong> — any food business, big or small —
+              who want an easy way to sell their food to far more people than
               they could reach on their own.
             </p>
             <p>
-              Think of it like this: a talented home cook who makes great food for 10 regular
-              customers a month, purely by word of mouth, now gets a real shop-front — an app
-              where hundreds of nearby customers can discover their food, order it, pay for it,
-              and come back for more, without the cook ever having to build a website, hire a
-              delivery team, or figure out digital marketing.
+              Think of it like this: a talented kitchen that serves a few regular customers purely
+              by word of mouth now gets a real shop-front — an app where hundreds of nearby
+              customers can discover its food, order it, pay for it, and come back for more,
+              without having to build a website or figure out digital marketing. Kitchens that
+              our team has visited and verified in person carry a Verified badge and are shown
+              separately, so customers know exactly who they can trust.
             </p>
             <p>FreshBhoj exists as three connected pieces:</p>
             <ul>
@@ -134,7 +135,7 @@ export default function InfoPage() {
             <div className={styles.cardGrid}>
               <div className={styles.card}>
                 <b>Nearby kitchens &amp; dishes</b>
-                <span>The app shows kitchens and meals close to the customer&apos;s location first, since a home-style kitchen typically only delivers within a few kilometres.</span>
+                <span>The app shows kitchens and meals close to the customer&apos;s location first, since fresh food is best delivered within a few kilometres.</span>
               </div>
               <div className={styles.card}>
                 <b>Trending Near You</b>
@@ -274,7 +275,7 @@ export default function InfoPage() {
             <span className={styles.partTag}>Part 2</span>
             <h2>For Kitchen Partners</h2>
             <p className={styles.partSub}>
-              For a home cook or a small kitchen, being good at cooking has never automatically
+              For any kitchen, being good at cooking has never automatically
               meant being good at running a business. FreshBhoj is built to remove that second
               job.
             </p>
@@ -506,13 +507,13 @@ export default function InfoPage() {
             <h3>Why This Works for Everyone</h3>
             <p>
               For a <strong>customer</strong>, FreshBhoj is a trustworthy way to eat real,
-              home-style food — with actual nutrition numbers instead of guesswork, verified
+              fresh food — with actual nutrition numbers instead of guesswork, verified
               kitchens instead of anonymous listings, and a schedule that fits their life, whether
               that&apos;s a one-off order tonight or a hands-off weekly subscription. Referring a
               friend puts real money back in their pocket.
             </p>
             <p>
-              For a <strong>kitchen partner</strong> — very often a home cook or a small operation
+              For a <strong>kitchen partner</strong> — often a small operation
               with no marketing budget at all — FreshBhoj turns &quot;being good at cooking&quot;
               into an actual, growing business. Customers are found for them. Payments and payouts
               are handled for them. And when they&apos;re ready to grow further, there are real
@@ -533,7 +534,7 @@ export default function InfoPage() {
       <footer className={styles.footer}>
         <div className={styles.wrap}>
           <div className={styles.footerWordmark}>FreshBhoj</div>
-          <p>Fresh, home-style food — for the people who order it, and the kitchens who cook it.</p>
+          <p>Fresh, trusted food — for the people who order it, and the kitchens who cook it.</p>
         </div>
       </footer>
     </div>

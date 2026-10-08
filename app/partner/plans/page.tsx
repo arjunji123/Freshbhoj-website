@@ -107,7 +107,7 @@ export default function PlansPage() {
 
       {isLoading ? (
         <div className="flex items-center justify-center py-24">
-          <Spinner className="w-8 h-8 text-[#BA2121]" />
+          <Spinner className="w-8 h-8 text-[#0A8068]" />
         </div>
       ) : plans.length === 0 ? (
         <Card>
@@ -167,7 +167,7 @@ function PlanCard({
           type="button"
           onClick={onEdit}
           aria-label="Edit plan"
-          className="w-8 h-8 shrink-0 rounded-lg bg-slate-100 text-slate-400 hover:bg-[#BA2121]/10 hover:text-[#BA2121] flex items-center justify-center transition-colors"
+          className="w-8 h-8 shrink-0 rounded-lg bg-slate-100 text-slate-400 hover:bg-[#0A8068]/10 hover:text-[#0A8068] flex items-center justify-center transition-colors"
         >
           <Pencil size={13} />
         </button>
@@ -224,7 +224,7 @@ function ChipToggle({ label, isActive, onClick }: { label: string; isActive: boo
       type="button"
       onClick={onClick}
       className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-colors ${
-        isActive ? "bg-[#BA2121] text-white" : "bg-slate-100 text-slate-500 hover:bg-slate-200"
+        isActive ? "bg-[#0A8068] text-white" : "bg-slate-100 text-slate-500 hover:bg-slate-200"
       }`}
     >
       {label}
@@ -382,7 +382,7 @@ function PlanFormSheet({
                 type="button"
                 onClick={() => setForm((f) => ({ ...f, billingCycle: cycle }))}
                 className={`flex-1 rounded-xl px-3 py-3 text-xs font-bold transition-colors ${
-                  form.billingCycle === cycle ? "bg-[#BA2121] text-white" : "bg-slate-100 text-slate-500"
+                  form.billingCycle === cycle ? "bg-[#0A8068] text-white" : "bg-slate-100 text-slate-500"
                 }`}
               >
                 {BILLING_LABEL[cycle]}
