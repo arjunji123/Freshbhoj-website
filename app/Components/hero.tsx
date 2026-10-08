@@ -227,7 +227,7 @@ const Hero = () => {
           <div className="flex items-center gap-2 bg-white/10 border border-white/30 rounded-full px-4 py-2 w-fit backdrop-blur-sm">
             <span className="w-2 h-2 rounded-full bg-green-400" />
             <span className="text-white font-bold text-[10px] lg:text-xs uppercase tracking-widest">
-              JOINING THE REVOLUTION
+              Early access is open
             </span>
           </div>
 

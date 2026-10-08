@@ -2,15 +2,32 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useRef, type MouseEvent } from "react";
 
 export default function Footer() {
+  const ref = useRef<HTMLElement>(null);
+  const onMove = (e: MouseEvent<HTMLElement>) => {
+    const r = ref.current?.getBoundingClientRect();
+    if (!r) return;
+    ref.current!.style.setProperty("--mx", `${e.clientX - r.left}px`);
+    ref.current!.style.setProperty("--my", `${e.clientY - r.top}px`);
+  };
   return (
     <footer
-      className="relative w-full overflow-hidden bg-[#0D1B1E]"
+      ref={ref}
+      onMouseMove={onMove}
+      className="group/footer relative w-full overflow-hidden bg-[#0D1B1E]"
     >
       <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[#1DB9A0] to-transparent" />
-      <div className="pointer-events-none absolute -top-32 left-1/2 -translate-x-1/2 w-[700px] h-[260px] rounded-full bg-[#087F78]/25 blur-[110px]" />
-      <div className="pointer-events-none absolute -bottom-24 -right-16 w-[320px] h-[320px] rounded-full bg-[#FFC21A]/10 blur-[110px]" />
+      {/* ambient drifting glows (always on) */}
+      <div className="pointer-events-none absolute -top-32 left-[15%] w-[520px] h-[320px] rounded-full bg-[#087F78]/30 blur-[110px] animate-[drift_14s_ease-in-out_infinite]" />
+      <div className="pointer-events-none absolute top-1/3 -right-20 w-[360px] h-[360px] rounded-full bg-[#FFC21A]/15 blur-[110px] animate-[drift_18s_ease-in-out_infinite_reverse]" />
+      <div className="pointer-events-none absolute -bottom-32 left-1/3 w-[420px] h-[300px] rounded-full bg-[#0B4F6C]/50 blur-[110px] animate-[drift_16s_ease-in-out_infinite]" />
+      {/* cursor spotlight */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-0 group-hover/footer:opacity-100 transition-opacity duration-500"
+        style={{ background: "radial-gradient(420px circle at var(--mx,50%) var(--my,50%), rgba(29,185,160,0.22), rgba(255,194,26,0.07) 45%, transparent 70%)" }}
+      />
       <div className="relative w-full max-w-7xl mx-auto px-6 py-16 lg:py-24 flex flex-col items-center">
 
         {/* Logo */}
@@ -60,22 +77,15 @@ export default function Footer() {
               href={social.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="relative w-12 h-12 flex items-center justify-center rounded-full bg-white/5 border border-white/10 transition-all hover:-translate-y-1 shadow-lg overflow-hidden group/social"
+              aria-label={social.alt}
+              className="group/social relative w-12 h-12 rounded-full p-px bg-[linear-gradient(135deg,#5EE6D0,rgba(255,255,255,0.08)_45%,#FFC21A)] shadow-[0_0_18px_-4px_rgba(29,185,160,0.55)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_34px_2px_rgba(29,185,160,0.75)]"
             >
-              {/* Gradient Hover Layer */}
-              <div
-                className="absolute inset-0 opacity-0 group-hover/social:opacity-100 transition-opacity duration-300"
-                style={{ background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)" }}
-              />
-
-              <div className="relative w-5 h-5 brightness-0 invert z-10">
-                <Image
-                  src={social.src}
-                  alt={social.alt}
-                  fill
-                  className="object-contain"
-                />
-              </div>
+              <span className="relative flex w-full h-full items-center justify-center rounded-full bg-[#0D1B1E] overflow-hidden">
+                <span className="absolute inset-0 opacity-0 group-hover/social:opacity-100 transition-opacity duration-300 bg-[linear-gradient(135deg,#1DB9A0,#087F78_55%,#0B4F6C)]" />
+                <span className="relative z-10 w-5 h-5 brightness-0 invert">
+                  <Image src={social.src} alt="" fill className="object-contain" />
+                </span>
+              </span>
             </a>
           ))}
         </div>

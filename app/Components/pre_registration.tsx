@@ -64,7 +64,7 @@ export default function PreRegistration() {
                 backgroundClip: "text"
               }}
             >
-              JOIN THE REVOLUTION
+              Limited early spots
             </p>
           </div>
           <h2
