@@ -1,14 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState, type ClipboardEvent, type KeyboardEvent } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { ChefHat } from "lucide-react";
+import { ArrowLeft, BadgeCheck, Banknote, Clapperboard, Percent, ShieldCheck, Smartphone, Star, TrendingUp } from "lucide-react";
 import { kitchenAuthApi } from "../../../lib/kitchenApi";
 import { ApiError } from "../../../lib/kitchenApi";
 import { useKitchenAuth } from "../../../lib/KitchenAuthProvider";
-import { Button, Field, GRADIENT_TEXT, TextInput } from "../components/ui";
+import { Spinner } from "../components/ui";
 
 type Stage = "phone" | "otp";
 
@@ -37,6 +37,36 @@ export default function PartnerLoginPage() {
 
   const canSendOtp = phoneDigits.replace(/\D/g, "").length === 10 && !isSending && cooldown === 0;
   const canVerify = otp.length >= 4 && !isVerifying;
+
+  const boxes = useRef<(HTMLInputElement | null)[]>([]);
+  const setDigit = (i: number, v: string) => {
+    const d = v.replace(/\D/g, "");
+    if (!d) return;
+    const arr = otp.padEnd(6, " ").split("");
+    arr[i] = d[0];
+    setOtp(arr.join("").replace(/ /g, "").slice(0, 6));
+    if (i < 5) boxes.current[i + 1]?.focus();
+  };
+  const onBoxKey = (i: number, e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Backspace") {
+      e.preventDefault();
+      if (otp[i]) setOtp(otp.slice(0, i) + otp.slice(i + 1));
+      else if (i > 0) {
+        setOtp(otp.slice(0, i - 1) + otp.slice(i));
+        boxes.current[i - 1]?.focus();
+      }
+    } else if (e.key === "Enter" && canVerify) {
+      handleVerify();
+    } else if (e.key === "ArrowLeft" && i > 0) boxes.current[i - 1]?.focus();
+    else if (e.key === "ArrowRight" && i < 5) boxes.current[i + 1]?.focus();
+  };
+  const onBoxPaste = (e: ClipboardEvent<HTMLInputElement>) => {
+    const d = e.clipboardData.getData("text").replace(/\D/g, "").slice(0, 6);
+    if (!d) return;
+    e.preventDefault();
+    setOtp(d);
+    boxes.current[Math.min(d.length, 5)]?.focus();
+  };
 
   const handleSendOtp = async () => {
     setError(null);
@@ -67,85 +97,205 @@ export default function PartnerLoginPage() {
     }
   };
 
+  const BENEFITS = [
+    { icon: Percent, title: "0% commission", text: "For your first 3 months." },
+    { icon: Clapperboard, title: "Free Reels & Stories", text: "Show your food, get found nearby." },
+    { icon: BadgeCheck, title: "Verified badge", text: "Earn customer trust after an in-person visit." },
+    { icon: Banknote, title: "Simple payouts", text: "Track earnings, withdraw to your bank." },
+  ];
+
+  const phoneReady = phoneDigits.replace(/\D/g, "").length === 10;
+
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-[#F3F8F8] font-sans px-6 py-12">
-      <div className="w-full max-w-md">
-        <div className="flex flex-col items-center mb-8">
-          <Link href="/">
-            <Image
-              src="/freshbhoj-red-new.svg"
-              alt="FreshBhoj"
-              width={160}
-              height={44}
-              className="h-9 w-auto object-contain mb-6"
-            />
+    <div className="min-h-screen w-full grid lg:grid-cols-[1.05fr_1fr] font-sans bg-white">
+      {/* ── Brand panel ── */}
+      <aside className="relative overflow-hidden text-white bg-[linear-gradient(160deg,#14ADA0_0%,#087F78_45%,#0B4F6C_100%)] px-6 py-8 lg:px-14 lg:py-14 flex flex-col">
+        <div className="pointer-events-none absolute -top-24 -left-20 w-96 h-96 rounded-full bg-[#5EE6D0]/30 blur-3xl animate-[drift_14s_ease-in-out_infinite]" />
+        <div className="pointer-events-none absolute -bottom-32 -right-16 w-[28rem] h-[28rem] rounded-full bg-white/15 blur-3xl animate-[drift_18s_ease-in-out_infinite_reverse]" />
+        <div className="pointer-events-none absolute inset-0 opacity-[0.12] [background-image:radial-gradient(#fff_1px,transparent_1px)] [background-size:26px_26px] [mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)]" />
+
+        <div className="relative flex items-center justify-between">
+          <Link href="/" aria-label="FreshBhoj home">
+            <Image src="/FreshBhoj.svg" alt="FreshBhoj" width={160} height={44} className="h-9 w-auto object-contain" priority />
           </Link>
-          <div className="w-14 h-14 rounded-2xl bg-[#087F78]/10 flex items-center justify-center mb-4">
-            <ChefHat size={26} color="#087F78" strokeWidth={2} />
-          </div>
-          <h1 className="text-2xl font-extrabold text-slate-900 text-center">
-            <span style={GRADIENT_TEXT}>Partner</span> Portal
-          </h1>
-          <p className="text-sm text-slate-500 text-center mt-1.5">
-            For kitchens running their business on FreshBhoj
-          </p>
+          <Link href="/" className="lg:hidden text-sm font-semibold text-white/80 hover:text-white">← Home</Link>
         </div>
 
-        <div className="bg-white rounded-3xl border border-slate-100 shadow-[0_20px_50px_-20px_rgba(8,127,120,0.15)] p-8">
+        <div className="relative my-8 lg:my-auto lg:py-10">
+          <span className="inline-flex items-center gap-2 rounded-full bg-white/15 border border-white/25 backdrop-blur px-4 py-2 text-[10px] lg:text-xs font-bold uppercase tracking-[0.2em] mb-6">
+            <span className="w-2 h-2 rounded-full bg-[#FFC21A] animate-pulse" /> Partner Portal
+          </span>
+          <h1 className="text-4xl md:text-5xl xl:text-6xl font-extrabold leading-[1.05] mb-5">
+            Your kitchen.
+            <br />
+            Their next{" "}
+            <span className="text-[#FFC21A]" style={{ fontFamily: "var(--font-instrument), Georgia, serif", fontStyle: "italic", fontWeight: 400 }}>
+              favourite order.
+            </span>
+          </h1>
+          <p className="text-white/80 text-base lg:text-lg max-w-lg leading-relaxed">
+            Restaurant, dhaba, café, bakery, cloud or home kitchen. If you cook great food, FreshBhoj helps you sell it.
+          </p>
+
+          <ul className="hidden sm:grid grid-cols-2 gap-3 mt-9 max-w-xl">
+            {BENEFITS.map(({ icon: Icon, title, text }) => (
+              <li key={title} className="rounded-2xl bg-white/10 border border-white/15 backdrop-blur p-4 hover:bg-white/15 transition-colors">
+                <span className="w-9 h-9 rounded-xl bg-white/15 flex items-center justify-center mb-3"><Icon size={18} /></span>
+                <p className="font-bold text-sm">{title}</p>
+                <p className="text-white/70 text-xs leading-relaxed mt-0.5">{text}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* floating dashboard preview */}
+        <div className="relative hidden lg:flex items-center gap-3">
+          <div className="rounded-2xl bg-white text-[#0D1B1E] px-4 py-3 shadow-2xl flex items-center gap-3 animate-[float_5s_ease-in-out_infinite]">
+            <span className="w-10 h-10 rounded-xl bg-[#087F78]/10 text-[#087F78] flex items-center justify-center"><TrendingUp size={18} /></span>
+            <div>
+              <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Today</p>
+              <p className="text-sm font-extrabold whitespace-nowrap">12 orders · ₹4,860</p>
+            </div>
+          </div>
+          <div className="rounded-2xl bg-white text-[#0D1B1E] px-4 py-3 shadow-2xl flex items-center gap-3 animate-[float_6s_ease-in-out_infinite]" style={{ animationDelay: "1s" }}>
+            <span className="w-10 h-10 rounded-xl bg-[#FFC21A]/20 text-[#F59E0B] flex items-center justify-center"><Star size={18} className="fill-current" /></span>
+            <div>
+              <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Rating</p>
+              <p className="text-sm font-extrabold whitespace-nowrap">4.8 ★ Verified</p>
+            </div>
+          </div>
+          <p className="text-[10px] text-white/50 ml-1">Sample dashboard preview</p>
+        </div>
+      </aside>
+
+      {/* ── Form panel ── */}
+      <main className="relative flex items-center justify-center px-6 py-12 lg:py-16 bg-[#F3F8F8] lg:bg-white">
+        <Link href="/" className="hidden lg:inline-flex absolute top-8 left-8 items-center gap-2 text-sm font-semibold text-slate-400 hover:text-[#087F78] transition-colors">
+          <ArrowLeft size={16} /> Back to home
+        </Link>
+
+        <div className="w-full max-w-md">
+          {/* steps */}
+          <div className="flex items-center gap-3 mb-8">
+            {["Phone", "Verify"].map((label, i) => {
+              const done = (stage === "otp" && i === 0);
+              const on = (stage === "phone" && i === 0) || (stage === "otp" && i === 1);
+              return (
+                <div key={label} className="flex items-center gap-3 flex-1 last:flex-none">
+                  <span className={`w-8 h-8 rounded-full text-xs font-bold flex items-center justify-center transition-all ${done || on ? "text-white shadow-lg shadow-[#087F78]/30" : "bg-slate-100 text-slate-400"}`} style={done || on ? { background: "linear-gradient(135deg,#1DB9A0,#0B4F6C)" } : undefined}>
+                    {done ? "✓" : i + 1}
+                  </span>
+                  <span className={`text-sm font-bold ${on || done ? "text-[#0D1B1E]" : "text-slate-400"}`}>{label}</span>
+                  {i === 0 ? <span className={`flex-1 h-0.5 rounded-full transition-colors ${stage === "otp" ? "bg-[#087F78]" : "bg-slate-200"}`} /> : null}
+                </div>
+              );
+            })}
+          </div>
+
+          <h2 className="text-3xl md:text-4xl font-extrabold text-[#0D1B1E] mb-2">
+            {stage === "phone" ? "Welcome 👋" : "Enter the code"}
+          </h2>
+          <p className="text-slate-500 mb-8">
+            {stage === "phone" ? (
+              "Log in or register your kitchen with just your phone number. No password needed."
+            ) : (
+              <>We sent a code to <span className="font-bold text-[#0D1B1E]">+91 {phoneDigits}</span>.{" "}
+                <button type="button" onClick={() => { setStage("phone"); setOtp(""); setError(null); }} className="text-[#087F78] font-bold hover:underline">Change</button>
+              </>
+            )}
+          </p>
+
           {stage === "phone" ? (
-            <div className="flex flex-col gap-5">
-              <Field label="Phone number" error={error}>
-                <div className="flex gap-2">
-                  <div className="flex items-center px-4 rounded-xl bg-slate-50 border border-slate-200/80 text-sm font-bold text-slate-700">
-                    +91
-                  </div>
-                  <TextInput
+            <form onSubmit={(e) => { e.preventDefault(); if (canSendOtp) handleSendOtp(); }} className="flex flex-col gap-5">
+              <div>
+                <label htmlFor="phone" className="block text-xs font-bold uppercase tracking-widest text-[#0D1B1E] mb-3 ml-1">Phone number</label>
+                <div className={`flex items-center rounded-2xl bg-white border-2 transition-all focus-within:border-[#087F78] focus-within:ring-4 focus-within:ring-[#087F78]/10 ${error ? "border-red-300" : "border-slate-200"}`}>
+                  <span className="flex items-center gap-2 pl-4 pr-3 py-4 border-r border-slate-200 font-bold text-[#0D1B1E]">
+                    <Smartphone size={18} className="text-[#087F78]" /> +91
+                  </span>
+                  <input
+                    id="phone"
                     value={phoneDigits}
                     onChange={(e) => setPhoneDigits(e.target.value.replace(/\D/g, "").slice(0, 10))}
                     placeholder="98765 43210"
                     inputMode="numeric"
+                    autoComplete="tel-national"
                     autoFocus
+                    className="flex-1 min-w-0 px-4 py-4 text-lg font-semibold tracking-wide bg-transparent outline-none placeholder:text-slate-300 placeholder:font-medium"
                   />
+                  {phoneReady ? <BadgeCheck size={20} className="text-[#087F78] mr-4 shrink-0" /> : null}
                 </div>
-              </Field>
-              <Button onClick={handleSendOtp} disabled={!canSendOtp} loading={isSending}>
-                Send OTP
-              </Button>
-            </div>
+                {error ? <p role="alert" className="text-sm font-semibold text-red-600 mt-2 ml-1">{error}</p> : null}
+              </div>
+
+              <button
+                type="submit"
+                disabled={!canSendOtp}
+                className="w-full py-4 rounded-2xl text-white font-bold text-lg flex items-center justify-center gap-2 shadow-[0_20px_40px_-12px_rgba(8,127,120,0.55)] transition-all enabled:hover:scale-[1.01] enabled:active:scale-[0.99] disabled:opacity-50 disabled:shadow-none disabled:cursor-not-allowed"
+                style={{ background: "linear-gradient(135deg,#14ADA0,#087F78 55%,#0B4F6C)" }}
+              >
+                {isSending ? <Spinner /> : null} Send OTP
+              </button>
+            </form>
           ) : (
             <div className="flex flex-col gap-5">
+              {devOtp ? <p className="text-xs text-amber-600 font-semibold -mt-4">Dev mode OTP: {devOtp}</p> : null}
               <div>
-                <p className="text-sm text-slate-600">
-                  Code sent to <span className="font-bold text-slate-900">+91 {phoneDigits}</span>
-                </p>
-                {devOtp ? (
-                  <p className="text-xs text-amber-600 font-semibold mt-1">Dev mode OTP: {devOtp}</p>
-                ) : null}
+                <div className="flex gap-2 sm:gap-3 justify-between" onPaste={onBoxPaste}>
+                  {Array.from({ length: 6 }).map((_, i) => (
+                    <input
+                      key={i}
+                      ref={(el) => { boxes.current[i] = el; }}
+                      value={otp[i] ?? ""}
+                      onChange={(e) => setDigit(i, e.target.value)}
+                      onKeyDown={(e) => onBoxKey(i, e)}
+                      onFocus={(e) => e.target.select()}
+                      inputMode="numeric"
+                      autoComplete={i === 0 ? "one-time-code" : "off"}
+                      autoFocus={i === 0}
+                      maxLength={1}
+                      aria-label={`Digit ${i + 1}`}
+                      className={`w-full aspect-[4/5] max-w-[56px] text-center text-2xl font-extrabold rounded-2xl bg-white border-2 outline-none transition-all text-[#0D1B1E] focus:border-[#087F78] focus:ring-4 focus:ring-[#087F78]/10 ${otp[i] ? "border-[#087F78]/60 bg-[#EFFAF8]" : error ? "border-red-300" : "border-slate-200"}`}
+                    />
+                  ))}
+                </div>
+                {error ? <p role="alert" className="text-sm font-semibold text-red-600 mt-3 ml-1">{error}</p> : null}
               </div>
-              <Field label="Enter OTP" error={error}>
-                <TextInput
-                  value={otp}
-                  onChange={(e) => setOtp(e.target.value.replace(/\D/g, "").slice(0, 6))}
-                  placeholder="123456"
-                  inputMode="numeric"
-                  autoFocus
-                />
-              </Field>
-              <Button onClick={handleVerify} disabled={!canVerify} loading={isVerifying}>
-                Verify &amp; continue
-              </Button>
+
+              <button
+                type="button"
+                onClick={handleVerify}
+                disabled={!canVerify}
+                className="w-full py-4 rounded-2xl text-white font-bold text-lg flex items-center justify-center gap-2 shadow-[0_20px_40px_-12px_rgba(8,127,120,0.55)] transition-all enabled:hover:scale-[1.01] enabled:active:scale-[0.99] disabled:opacity-50 disabled:shadow-none disabled:cursor-not-allowed"
+                style={{ background: "linear-gradient(135deg,#14ADA0,#087F78 55%,#0B4F6C)" }}
+              >
+                {isVerifying ? <Spinner /> : null} Verify &amp; continue
+              </button>
+
               <button
                 type="button"
                 onClick={handleSendOtp}
                 disabled={cooldown > 0 || isSending}
-                className="text-xs font-bold text-slate-400 hover:text-[#087F78] disabled:hover:text-slate-400 transition-colors"
+                className="text-sm font-bold text-[#087F78] hover:underline disabled:text-slate-400 disabled:no-underline"
               >
                 {cooldown > 0 ? `Resend OTP in ${cooldown}s` : "Resend OTP"}
               </button>
             </div>
           )}
+
+          <div className="mt-10 flex items-start gap-3 rounded-2xl bg-[#EFFAF8] border border-[#087F78]/10 p-4">
+            <ShieldCheck size={20} className="text-[#087F78] shrink-0 mt-0.5" />
+            <p className="text-xs text-slate-500 leading-relaxed">
+              New here? The same login creates your kitchen account. By continuing you agree to our{" "}
+              <Link href="/terms-of-service" className="font-bold text-[#087F78] hover:underline">Terms</Link> and{" "}
+              <Link href="/privacy-policy" className="font-bold text-[#087F78] hover:underline">Privacy Policy</Link>.
+            </p>
+          </div>
+          <p className="text-center text-sm text-slate-400 mt-6">
+            Need help? <Link href="/contact-us" className="font-bold text-[#087F78] hover:underline">Contact us</Link>
+          </p>
         </div>
-      </div>
+      </main>
     </div>
   );
 }
