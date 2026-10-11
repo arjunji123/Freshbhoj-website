@@ -133,7 +133,7 @@ function PreRegisterContent() {
     // Map UI values to API expected strings
     const mappedAbout = foodieData.aboutSelf.toUpperCase();
     const mappedTaste = foodieData.foodPreference === "veg" ? "VEG" : foodieData.foodPreference === "non-veg" ? "NON_VEG" : "BOTH";
-    const mappedLooking = foodieData.lookingFor[0]?.toUpperCase().replace(/[\s-]/g, "_") || "";
+    const mappedLooking = LOOKING_FOR_API[foodieData.lookingFor[0]] ?? "";
 
     const payload = {
       role: "USER",
@@ -604,6 +604,14 @@ function PreRegisterContent() {
     </div>
   );
 }
+
+/** UI label -> value the waitlist API accepts (`lookingFor` enum on the backend). */
+const LOOKING_FOR_API: Record<string, string> = {
+  "Daily Meals": "DAILY_TIFFIN",
+  "Occasional": "OCCASIONAL",
+  "Restaurants & Dhabas": "STREET_FOOD",
+  "Verified Kitchens": "HOME_STYLE",
+};
 
 export default function PreRegister() {
   return (
