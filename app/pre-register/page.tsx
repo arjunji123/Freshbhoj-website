@@ -10,6 +10,11 @@ import {
   CheckCircle2,
   Sparkles,
   ChevronDown,
+  Wallet,
+  Clapperboard,
+  Truck,
+  BellRing,
+  type LucideIcon,
 } from "lucide-react";
 import { Navbar, Footer } from "../Components";
 
@@ -35,6 +40,13 @@ const scrollToTop = () => {
 };
 
 type StateItem = { name: string };
+
+const BENEFITS: { icon: LucideIcon; title: string; text: string }[] = [
+  { icon: Wallet, title: "₹100 Wallet Credit", text: "Added to your wallet, ready for your first order." },
+  { icon: Clapperboard, title: "Early Access to Top Reels", text: "Watch the best-rated food reels before everyone else." },
+  { icon: Truck, title: "30 Days Free Delivery", text: "Zero delivery fee for your first 30 days." },
+  { icon: BellRing, title: "Launch Notification", text: "We'll notify you the moment the app goes live in your city." },
+];
 
 // Curated Major Cities Data to avoid "villages/small towns"
 const CITY_DATA: Record<string, string[]> = {
@@ -250,47 +262,35 @@ function PreRegisterContent() {
               </div>
             </div>
 
-            <h2 className="text-4xl font-bold text-[#0D1B1E] mb-6">
+            <h2 className="text-4xl font-bold text-[#0D1B1E] mb-4">
               You&apos;re on the list!
             </h2>
-            <p className="text-lg text-slate-500 mb-12 leading-relaxed max-w-lg mx-auto">
-              Welcome to the future of fresh food discovery! We&apos;ve saved your spot and will notify you as soon as we launch in your city.
+            <p className="text-lg text-slate-500 mb-10 leading-relaxed max-w-lg mx-auto">
+              We&apos;ve saved your spot. You&apos;ll be <span className="font-bold text-[#087F78]">notified as soon as the app launches</span> in your city.
             </p>
 
-            <div className="space-y-4">
-              <Link
-                href="/"
-                className="inline-flex items-center justify-center px-12 py-5 rounded-3xl text-white font-bold text-lg shadow-[0_20px_40px_-10px_rgba(8,127,120,0.3)] hover:scale-[1.05] active:scale-95 transition-all"
-                style={gradientBg}
-              >
-                Go Back Home <ChevronRight className="ml-2 w-5 h-5" />
-              </Link>
-              <div className="block pt-12">
-                <div className="flex gap-4">
-                  {[
-                    { src: "/insta.svg", alt: "Instagram", href: "https://www.instagram.com/freshbhoj" },
-                    { src: "/whatsapp.svg", alt: "WhatsApp", href: "https://wa.me/918058318556" },
-                    { src: "/x.svg", alt: "X", href: "https://x.com/freshbhoj" },
-                  ].map((social) => (
-                    <a
-                      key={social.alt}
-                      href={social.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-12 h-12 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center hover:bg-[#087F78]/5 hover:border-[#087F78]/20 transition-all group"
-                    >
-                      <Image
-                        src={social.src}
-                        alt={social.alt}
-                        width={20}
-                        height={20}
-                        className="object-contain brightness-0 opacity-40 group-hover:opacity-100 group-hover:invert transition-all"
-                      />
-                    </a>
-                  ))}
-                </div>
-              </div>
+            <div className="text-left rounded-3xl border border-[#087F78]/15 bg-[#EFFAF8] p-6 md:p-8 mb-10">
+              <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-[#087F78] mb-5">Your early member benefits</p>
+              <ul className="space-y-4">
+                {BENEFITS.map(({ icon: Icon, title, text }) => (
+                  <li key={title} className="flex items-start gap-4">
+                    <span className="w-10 h-10 shrink-0 rounded-xl bg-white text-[#087F78] shadow-sm flex items-center justify-center"><Icon size={18} /></span>
+                    <div>
+                      <p className="font-bold text-[#0D1B1E] leading-tight">{title}</p>
+                      <p className="text-sm text-slate-500 mt-0.5">{text}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
             </div>
+
+            <Link
+              href="/"
+              className="inline-flex items-center justify-center px-12 py-5 rounded-3xl text-white font-bold text-lg shadow-[0_20px_40px_-10px_rgba(8,127,120,0.3)] hover:scale-[1.05] active:scale-95 transition-all"
+              style={gradientBg}
+            >
+              Go Back Home <ChevronRight className="ml-2 w-5 h-5" />
+            </Link>
           </div>
         ) : userType === "foodie" ? (
           /* Foodie Registration Flow */
@@ -298,6 +298,24 @@ function PreRegisterContent() {
             {/* Background Accent Gradients */}
             <div className="absolute top-0 right-0 w-96 h-96 bg-[#087F78] opacity-[0.03] blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2 pointer-events-none" />
             <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#1DB9A0] opacity-[0.03] blur-[100px] rounded-full translate-y-1/2 -translate-x-1/2 pointer-events-none" />
+
+            {/* Benefits shown while registering */}
+            <div className="relative mb-8 rounded-3xl border border-[#087F78]/15 bg-[#EFFAF8] p-5 md:p-6">
+              <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-[#087F78] mb-4 text-center">
+                What you get for pre-registering
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {BENEFITS.map(({ icon: Icon, title, text }) => (
+                  <div key={title} className="flex items-start gap-3 rounded-2xl bg-white px-4 py-3 shadow-sm">
+                    <span className="w-9 h-9 shrink-0 rounded-xl bg-[#EFFAF8] text-[#087F78] flex items-center justify-center"><Icon size={16} /></span>
+                    <div>
+                      <p className="font-bold text-sm text-[#0D1B1E] leading-tight">{title}</p>
+                      <p className="text-xs text-slate-500 mt-0.5">{text}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
 
             <div className="relative bg-white/90 backdrop-blur-2xl rounded-[2.5rem] border border-[#087F78]/15 shadow-[0_40px_90px_-35px_rgba(8,127,120,0.28)] overflow-hidden mb-12 ring-1 ring-white/60">
               <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white to-transparent opacity-80" />
@@ -560,7 +578,7 @@ function PreRegisterContent() {
                         ) : (
                           <div className="w-6 h-6 rounded-full border-2 border-slate-300 bg-slate-50 shadow-sm flex-shrink-0" />
                         )}
-                        Notify me when FreshBhoj launches in my city
+                        Notify me when the FreshBhoj app launches in my city
                       </button>
                     </div>
 

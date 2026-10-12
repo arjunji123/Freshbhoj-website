@@ -2,16 +2,17 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { ArrowUpRight, Clapperboard, Megaphone, Percent, ShoppingBag, Sparkles, Truck, UtensilsCrossed, Wallet, Check, type LucideIcon } from "lucide-react";
+import { ArrowUpRight, Clapperboard, Megaphone, Percent, ShoppingBag, Sparkles, Truck, UtensilsCrossed, Wallet, Check, BellRing, type LucideIcon } from "lucide-react";
 
 const accent = { fontFamily: "var(--font-instrument), Georgia, serif", fontStyle: "italic" as const, fontWeight: 400 };
 
 type Perk = { icon: LucideIcon; text: string };
 
 const FOODIE_PERKS: Perk[] = [
-  { icon: Wallet, text: "Flat ₹500 Wallet Credit" },
+  { icon: Wallet, text: "Flat ₹100 Wallet Credit" },
   { icon: Clapperboard, text: "Early Access to Top Rated Reels" },
   { icon: Truck, text: "Exclusive 30-day Free Delivery" },
+  { icon: BellRing, text: "Notified the moment the app launches" },
 ];
 
 const KITCHEN_PERKS: Perk[] = [
@@ -72,7 +73,7 @@ export default function PreRegistration() {
               </span>
             </div>
             <div className="relative mb-8">
-              <p className="text-7xl lg:text-8xl font-extrabold leading-none bg-gradient-to-br from-[#1DB9A0] to-[#0B4F6C] bg-clip-text text-transparent">₹500</p>
+              <p className="text-7xl lg:text-8xl font-extrabold leading-none bg-gradient-to-br from-[#1DB9A0] to-[#0B4F6C] bg-clip-text text-transparent">₹100</p>
               <p className="text-slate-500 font-semibold mt-2">wallet credit for early members</p>
             </div>
             <ul className="relative flex flex-col gap-3 mb-10">
