@@ -76,8 +76,8 @@ const SplashScreen = () => {
         </div>
 
         {/* Bottom Text/Tagline Reveal */}
-        <div className="overflow-hidden mb-3">
-          <p className="font-deva italic text-[#087F78] text-2xl md:text-4xl animate-text-slide-up">
+        <div className="overflow-hidden pt-4 pb-2 mb-1">
+          <p className="font-deva italic leading-[1.6] text-[#087F78] text-2xl md:text-4xl animate-text-slide-up">
             स्वाद भी, भरोसा भी।
           </p>
         </div>
