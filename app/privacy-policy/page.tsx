@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { Navbar, Footer } from "../Components";
+import { Deva } from "../Components/desi";
 
 const gradientStyle = {
   background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)",
@@ -85,7 +86,7 @@ export default function PrivacyPolicy() {
               <Image src="/legal.svg" alt="legal" fill className="object-contain" />
             </div>
             <span className="text-[#087F78] text-[10px] font-bold uppercase tracking-[0.2em]">
-              Legal
+              Legal <Deva className="normal-case tracking-normal text-sm">· कानूनी</Deva>
             </span>
           </div>
           <h1 className="font-extrabold text-5xl md:text-6xl lg:text-7xl leading-tight tracking-tight mb-4">
@@ -102,6 +103,10 @@ export default function PrivacyPolicy() {
               Policy
             </span>
           </h1>
+          <p className="text-slate-600 text-base md:text-lg max-w-2xl mb-3">
+            <Deva className="text-[#087F78] text-xl md:text-2xl italic">आपकी privacy, हमारी ज़िम्मेदारी।</Deva>{" "}
+            Neeche poori policy English me hai — jo bhi lete hain, kyun lete hain, sab saaf likha hai.
+          </p>
           <p className="text-slate-400 text-sm font-medium">
             Last Updated: March 17, 2026
           </p>

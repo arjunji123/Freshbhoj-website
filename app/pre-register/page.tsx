@@ -17,6 +17,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { Navbar, Footer } from "../Components";
+import { Deva } from "../Components/desi";
 
 const gradientText = {
   background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)",
@@ -42,10 +43,10 @@ const scrollToTop = () => {
 type StateItem = { name: string };
 
 const BENEFITS: { icon: LucideIcon; title: string; text: string }[] = [
-  { icon: Wallet, title: "₹100 Wallet Credit", text: "Added to your wallet, ready for your first order." },
-  { icon: Clapperboard, title: "Early Access to Top Reels", text: "Watch the best-rated food reels before everyone else." },
-  { icon: Truck, title: "30 Days Free Delivery", text: "Zero delivery fee for your first 30 days." },
-  { icon: BellRing, title: "Launch Notification", text: "We'll notify you the moment the app goes live in your city." },
+  { icon: Wallet, title: "₹100 Wallet Credit", text: "Seedha wallet me, pehle order ke liye taiyaar." },
+  { icon: Clapperboard, title: "Top Reels ka Early Access", text: "Sabse best-rated food reels, sabse pehle aap dekho." },
+  { icon: Truck, title: "30 Din Free Delivery", text: "Pehle 30 din delivery fee bilkul zero." },
+  { icon: BellRing, title: "Launch ki Khabar", text: "Aapke shehar me app live hote hi hum turant bata denge." },
 ];
 
 // Curated Major Cities Data to avoid "villages/small towns"
@@ -237,15 +238,15 @@ function PreRegisterContent() {
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur border border-slate-200 shadow-sm mb-4 md:mb-6">
             <span className="w-2 h-2 rounded-full bg-[#087F78]" />
             <span className="text-[10px] md:text-[11px] font-extrabold tracking-[0.2em] md:tracking-[0.24em] uppercase text-slate-600">
-              Early access waitlist
+              Early access waitlist · <Deva className="normal-case tracking-normal text-sm text-[#087F78]">इंतज़ार ख़त्म</Deva>
             </span>
           </div>
           <h1 className="text-3xl md:text-6xl lg:text-7xl font-extrabold text-[#0D1B1E] leading-[1.1] mb-4 md:mb-6 tracking-tight">
-            Join the <span style={gradientText}>Community</span>
+            Judo hamari <span style={gradientText}><Deva className="italic">FreshBhoj बिरादरी</Deva></span> se
           </h1>
           <p className="text-slate-500 text-base md:text-xl font-medium max-w-2xl mx-auto leading-relaxed">
-            Pre-register now to get early access and exclusive launch benefits <br className="hidden md:block" />
-            across the FreshBhoj platform.
+            Abhi pre-register karo aur pao early access aur launch ke khaas benefits <br className="hidden md:block" />
+            poore FreshBhoj platform par.
           </p>
         </div>
 
@@ -263,14 +264,14 @@ function PreRegisterContent() {
             </div>
 
             <h2 className="text-4xl font-bold text-[#0D1B1E] mb-4">
-              You&apos;re on the list!
+              Aap list me hain! <Deva className="text-[#087F78]">शाबाश</Deva>
             </h2>
             <p className="text-lg text-slate-500 mb-10 leading-relaxed max-w-lg mx-auto">
-              We&apos;ve saved your spot. You&apos;ll be <span className="font-bold text-[#087F78]">notified as soon as the app launches</span> in your city.
+              Aapki jagah pakki ho gayi. Aapke shehar me <span className="font-bold text-[#087F78]">app launch hote hi aapko khabar mil jayegi</span>.
             </p>
 
             <div className="text-left rounded-3xl border border-[#087F78]/15 bg-[#EFFAF8] p-6 md:p-8 mb-10">
-              <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-[#087F78] mb-5">Your early member benefits</p>
+              <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-[#087F78] mb-5">Aapke early member benefits</p>
               <ul className="space-y-4">
                 {BENEFITS.map(({ icon: Icon, title, text }) => (
                   <li key={title} className="flex items-start gap-4">
@@ -289,7 +290,7 @@ function PreRegisterContent() {
               className="inline-flex items-center justify-center px-12 py-5 rounded-3xl text-white font-bold text-lg shadow-[0_20px_40px_-10px_rgba(8,127,120,0.3)] hover:scale-[1.05] active:scale-95 transition-all"
               style={gradientBg}
             >
-              Go Back Home <ChevronRight className="ml-2 w-5 h-5" />
+              Wapas Home <ChevronRight className="ml-2 w-5 h-5" />
             </Link>
           </div>
         ) : userType === "foodie" ? (
@@ -302,7 +303,7 @@ function PreRegisterContent() {
             {/* Benefits shown while registering */}
             <div className="relative mb-8 rounded-3xl border border-[#087F78]/15 bg-[#EFFAF8] p-5 md:p-6">
               <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-[#087F78] mb-4 text-center">
-                What you get for pre-registering
+                Pre-register karne par kya milega
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {BENEFITS.map(({ icon: Icon, title, text }) => (
@@ -323,7 +324,7 @@ function PreRegisterContent() {
               <div className="p-8 md:p-10 border-b border-slate-50">
                 <div className="mb-6">
                   <h2 className="text-xl font-semibold text-[#0D1B1E]">
-                    {step === 1 ? "Start your foodie journey" : "Tell us your preferences"}
+                    {step === 1 ? "Foodie safar shuru karo" : "Apni pasand batao"}
                   </h2>
                 </div>
                 {/* Progress Bar */}
@@ -338,9 +339,9 @@ function PreRegisterContent() {
                 </div>
                 <div className="flex justify-between items-center mt-3">
                   <p className="text-sm text-slate-400">
-                    {step === 1 ? "Basic Information" : "Customizing Experience"}
+                    {step === 1 ? "Basic jaankari" : "Aapke hisaab se experience"}
                   </p>
-                  <span className="font-semibold text-sm" style={gradientText}>Step {step} of 2</span>
+                  <span className="font-semibold text-sm" style={gradientText}>Step {step} / 2</span>
                 </div>
               </div>
 
@@ -353,14 +354,14 @@ function PreRegisterContent() {
                         <div className="w-10 h-10 rounded-xl bg-[#EFFAF8] flex items-center justify-center">
                           <Image src="/personal.svg" alt="Personal" width={20} height={20} />
                         </div>
-                        <h3 className="text-lg font-semibold text-[#0D1B1E]">Personal Information</h3>
+                        <h3 className="text-lg font-semibold text-[#0D1B1E]">Aapki jaankari</h3>
                       </div>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
                         <div>
-                          <label className="block text-sm font-semibold text-[#0D1B1E] ml-1 mb-4">Full Name</label>
+                          <label className="block text-sm font-semibold text-[#0D1B1E] ml-1 mb-4">Poora Naam</label>
                           <input
                             type="text"
-                            placeholder="John Doe"
+                            placeholder="Aapka naam"
                             className={`w-full px-6 py-4 rounded-full ${contactUsInputBorder}`}
                             value={foodieData.fullName}
                             onChange={(e) => setFoodieData({ ...foodieData, fullName: e.target.value })}
@@ -454,10 +455,10 @@ function PreRegisterContent() {
                         <div className="w-10 h-10 rounded-xl bg-[#EFFAF8] flex items-center justify-center">
                           <Image src="/about-yourself.svg" alt="About" width={20} height={20} />
                         </div>
-                        <h3 className="text-lg font-semibold text-[#0D1B1E]">Tell us about yourself</h3>
+                        <h3 className="text-lg font-semibold text-[#0D1B1E]">Apne baare me batao</h3>
                       </div>
                       <div className="space-y-4">
-                        <label className="block text-sm font-semibold text-[#0D1B1E] ml-1 mb-4">Who are you?</label>
+                        <label className="block text-sm font-semibold text-[#0D1B1E] ml-1 mb-4">Aap kaun hain?</label>
                         <div className="flex flex-wrap gap-3">
                           {["Student", "Professional", "Family", "Other"].map((item) => (
                             <button
@@ -487,7 +488,7 @@ function PreRegisterContent() {
                         className={`w-full py-5 rounded-3xl text-white font-semibold text-xl shadow-[0_15px_30px_-5px_rgba(8,127,120,0.3)] transition-all flex items-center justify-center gap-3 group ${!isFoodieStep1Valid ? "opacity-50 cursor-not-allowed bg-slate-300 shadow-none scale-100" : "hover:scale-[1.02] active:scale-95"}`}
                         style={isFoodieStep1Valid ? gradientBg : {}}
                       >
-                        Next Step <ChevronRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+                        Agla Step <ChevronRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
                       </button>
                     </div>
                   </>
@@ -504,7 +505,7 @@ function PreRegisterContent() {
 
                       <div className="space-y-10">
                         <div>
-                          <label className="block text-sm font-semibold text-[#0D1B1E] ml-1 mb-6">Food Preference</label>
+                          <label className="block text-sm font-semibold text-[#0D1B1E] ml-1 mb-6">Khane ki pasand</label>
                           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                             {[
                               { id: "veg", label: "Veg", icon: "/veg.svg" },
@@ -530,7 +531,7 @@ function PreRegisterContent() {
                         </div>
 
                         <div>
-                          <label className="block text-sm font-semibold text-[#0D1B1E] ml-1 mb-6">Looking for</label>
+                          <label className="block text-sm font-semibold text-[#0D1B1E] ml-1 mb-6">Aap kya dhoondh rahe hain?</label>
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             {[
                               { id: "Daily Meals", icon: "/daily-tiffin.svg" },
@@ -578,7 +579,7 @@ function PreRegisterContent() {
                         ) : (
                           <div className="w-6 h-6 rounded-full border-2 border-slate-300 bg-slate-50 shadow-sm flex-shrink-0" />
                         )}
-                        Notify me when the FreshBhoj app launches in my city
+                        Mere shehar me FreshBhoj app launch ho to mujhe batao
                       </button>
                     </div>
 
@@ -591,7 +592,7 @@ function PreRegisterContent() {
                           disabled={isSubmitting}
                           className="w-full md:w-auto flex items-center justify-center md:justify-start gap-2 text-slate-500 font-semibold text-sm hover:text-[#0D1B1E] transition-colors whitespace-nowrap py-3 md:py-0 rounded-2xl md:rounded-none bg-slate-50 md:bg-transparent border border-slate-200/70 md:border-0"
                         >
-                          <ChevronLeft className="w-5 h-5" /> Back
+                          <ChevronLeft className="w-5 h-5" /> Peeche
                         </button>
                         <button
                           onClick={handleFoodieSubmit}
@@ -600,14 +601,14 @@ function PreRegisterContent() {
                           style={!isSubmitting && isFoodieStep2Valid ? gradientBg : {}}
                         >
                           {isSubmitting ? (
-                            <>Joining... <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" /></>
+                            <>Judh rahe hain... <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" /></>
                           ) : (
-                            <>Join Waitlist <CheckCircle2 className="w-5 md:w-6 h-5 md:h-6" /></>
+                            <>Waitlist Join Karo <CheckCircle2 className="w-5 md:w-6 h-5 md:h-6" /></>
                           )}
                         </button>
                       </div>
                       <p className="text-xs text-slate-400 text-center">
-                        By joining, you agree to our Terms of Service and Privacy Policy.
+                        Join karke aap hamare Terms of Service aur Privacy Policy se sehmat hote hain.
                       </p>
                     </div>
                   </>

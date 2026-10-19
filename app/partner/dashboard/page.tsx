@@ -44,9 +44,9 @@ const KITCHEN_STATUS_LABEL: Record<KitchenProfile["status"], string> = {
 
 function greeting() {
   const h = new Date().getHours();
-  if (h < 12) return "Good morning";
-  if (h < 17) return "Good afternoon";
-  return "Good evening";
+  if (h < 12) return "Suprabhat · सुप्रभात";
+  if (h < 17) return "Namaste · नमस्ते";
+  return "Shubh sandhya · शुभ संध्या";
 }
 
 export default function DashboardPage() {
@@ -129,7 +129,7 @@ export default function DashboardPage() {
         <div className="absolute -right-4 bottom-[-3rem] w-32 h-32 rounded-full bg-white/10" />
         <div className="relative flex flex-wrap items-center justify-between gap-4">
           <div>
-            <p className="text-sm font-semibold text-white/80">{greeting()},</p>
+            <p className="text-sm font-semibold text-white/85">{greeting()},</p>
             <div className="flex items-center gap-2 flex-wrap">
               <h1 className="text-2xl lg:text-3xl font-extrabold tracking-tight">{profile?.name ?? "your kitchen"}</h1>
               {profile?.isVerified ? <BadgeCheck size={22} className="text-white shrink-0" /> : null}
@@ -156,8 +156,8 @@ export default function DashboardPage() {
             <Toggle
               checked={summary.isAcceptingOrders}
               onChange={handleToggleAccepting}
-              onLabel="Taking orders"
-              offLabel="Paused"
+              onLabel="Orders chalu"
+              offLabel="Rukke hue"
               disabled={isToggling}
               className="bg-white/15 backdrop-blur-sm hover:bg-white/25 rounded-2xl px-4 py-3"
             />

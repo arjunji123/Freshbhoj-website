@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Navbar, Footer } from "../Components";
+import { Deva } from "../Components/desi";
 
 const gradientStyle = {
   background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)",
@@ -100,13 +101,13 @@ export default function DeleteAccountPage() {
             <div className="relative w-3.5 h-3.5">
               <Image src="/legal.svg" alt="legal" fill className="object-contain" />
             </div>
-            <span className="text-[#087F78] text-[10px] font-bold uppercase tracking-[0.2em]">Account</span>
+            <span className="text-[#087F78] text-[10px] font-bold uppercase tracking-[0.2em]">Account <Deva className="normal-case tracking-normal text-sm">· खाता</Deva></span>
           </div>
           <h1 className="font-extrabold text-4xl md:text-6xl leading-tight tracking-tight mb-4">
-            Delete your <span style={gradientStyle}>FreshBhoj</span> account
+            Apna <span style={gradientStyle}>FreshBhoj</span> account <Deva className="italic">हटाएँ</Deva>
           </h1>
           <p className="text-slate-500 text-lg max-w-xl">
-            You can permanently delete your FreshBhoj account and personal data right here — no app install, no login required, just your phone number.
+            Apna FreshBhoj account aur personal data yahin se hamesha ke liye delete kar sakte hain — na app install karna, na login; bas aapka phone number chahiye.
           </p>
         </div>
       </div>
@@ -114,7 +115,7 @@ export default function DeleteAccountPage() {
       <div className="w-full max-w-3xl mx-auto px-6 py-12 md:py-16 flex-1">
         <div className="grid md:grid-cols-2 gap-10 mb-14">
           <div>
-            <h2 className="font-extrabold text-lg mb-3 text-slate-900">What gets deleted</h2>
+            <h2 className="font-extrabold text-lg mb-3 text-slate-900">Kya-kya delete hoga</h2>
             <ul className="space-y-2.5">
               {DELETED_ITEMS.map((item) => (
                 <li key={item} className="flex gap-2.5 text-sm text-slate-600">
@@ -125,7 +126,7 @@ export default function DeleteAccountPage() {
             </ul>
           </div>
           <div>
-            <h2 className="font-extrabold text-lg mb-3 text-slate-900">What we keep, and why</h2>
+            <h2 className="font-extrabold text-lg mb-3 text-slate-900">Kya rakhna padta hai, aur kyun</h2>
             <ul className="space-y-2.5">
               {RETAINED_ITEMS.map((item) => (
                 <li key={item} className="flex gap-2.5 text-sm text-slate-600">

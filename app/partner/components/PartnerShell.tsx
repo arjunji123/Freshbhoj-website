@@ -33,11 +33,11 @@ import { GRADIENT_BG } from "./ui";
 // Profile would bounce it straight back to /partner/onboarding.
 const NAV_SECTIONS = [
   {
-    title: "Overview",
+    title: "Overview", hi: "एक नज़र",
     items: [{ href: "/partner/dashboard", label: "Dashboard", icon: LayoutDashboard, requiresActive: true }],
   },
   {
-    title: "Operations",
+    title: "Operations", hi: "काम-काज",
     items: [
       { href: "/partner/orders", label: "Orders", icon: ClipboardList, requiresActive: true },
       { href: "/partner/menu", label: "Menu", icon: UtensilsCrossed, requiresActive: false },
@@ -45,7 +45,7 @@ const NAV_SECTIONS = [
     ],
   },
   {
-    title: "Grow",
+    title: "Grow", hi: "तरक्की",
     items: [
       { href: "/partner/stories", label: "Stories", icon: Sparkles, requiresActive: false },
       { href: "/partner/reels", label: "Reels", icon: Clapperboard, requiresActive: true },
@@ -55,7 +55,7 @@ const NAV_SECTIONS = [
     ],
   },
   {
-    title: "Account",
+    title: "Account", hi: "खाता",
     items: [
       { href: "/partner/bhojai", label: "BhojAI", icon: MessageCircle, requiresActive: false },
       { href: "/partner/notifications", label: "Notifications", icon: Bell, requiresActive: true },
@@ -77,7 +77,7 @@ export default function PartnerShell({ children }: { children: React.ReactNode }
     <nav className="flex flex-col gap-4">
       {NAV_SECTIONS.map((section) => (
         <div key={section.title} className="flex flex-col gap-1.5">
-          <p className="px-4 text-[11px] font-extrabold text-slate-300 uppercase tracking-wider">{section.title}</p>
+          <p className="px-4 flex items-baseline gap-2 text-[11px] font-extrabold text-slate-300 uppercase tracking-wider">{section.title}<span className="font-deva normal-case tracking-normal text-sm text-[#087F78]/60">{section.hi}</span></p>
           {section.items.map(({ href, label, icon: Icon, requiresActive }) => {
             const isLocked = Boolean(isPreApproval) && requiresActive;
             const isActive = pathname === href || pathname?.startsWith(`${href}/`);
@@ -129,7 +129,7 @@ export default function PartnerShell({ children }: { children: React.ReactNode }
           className="mt-auto flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition-colors"
         >
           <LogOut size={18} strokeWidth={2.2} />
-          Log out
+          Log out · बाहर
         </button>
       </aside>
 
@@ -164,8 +164,8 @@ export default function PartnerShell({ children }: { children: React.ReactNode }
               href="/partner/onboarding"
               className="flex items-center justify-between gap-3 rounded-2xl bg-amber-50 text-amber-700 text-xs font-bold px-4 py-3 mb-6"
             >
-              <span>Your application isn&apos;t approved yet — add your menu now, then continue onboarding to submit.</span>
-              <span className="shrink-0">Continue setup →</span>
+              <span>Aapki application abhi approve nahi hui — abhi menu add karo, phir onboarding poori karke submit karo.</span>
+              <span className="shrink-0">Setup jaari rakho →</span>
             </Link>
           ) : null}
           {children}

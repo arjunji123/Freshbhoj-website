@@ -23,6 +23,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { Navbar, Footer } from "../Components";
+import { Deva, Eyebrow, Torana } from "../Components/desi";
 
 declare global {
   interface Window {
@@ -33,18 +34,25 @@ declare global {
 const SUBJECTS = ["Customer Support", "Kitchen Onboarding", "Partnership Inquiry", "Other"] as const;
 
 const INTENTS: { icon: LucideIcon; subject: (typeof SUBJECTS)[number]; title: string; text: string; tone: string }[] = [
-  { icon: Headphones, subject: "Customer Support", title: "I'm a customer", text: "Orders, account or app questions.", tone: "from-[#1DB9A0] to-[#087F78]" },
-  { icon: ChefHat, subject: "Kitchen Onboarding", title: "I run a kitchen", text: "Register, get verified, start selling.", tone: "from-[#FFC21A] to-[#F59E0B]" },
-  { icon: Handshake, subject: "Partnership Inquiry", title: "Partner or invest", text: "Collaborations, press and investors.", tone: "from-[#5EA8FF] to-[#1E7BD8]" },
-  { icon: Sparkles, subject: "Other", title: "Something else", text: "Feedback, ideas, or just hello.", tone: "from-[#0B4F6C] to-[#087F78]" },
+  { icon: Headphones, subject: "Customer Support", title: "Main customer hoon", text: "Order, account ya app ke sawaal.", tone: "from-[#1DB9A0] to-[#087F78]" },
+  { icon: ChefHat, subject: "Kitchen Onboarding", title: "Mera kitchen hai", text: "Register karo, verify karwao, bechna shuru.", tone: "from-[#FFC21A] to-[#F59E0B]" },
+  { icon: Handshake, subject: "Partnership Inquiry", title: "Partner / Invest", text: "Collaboration, press aur investors.", tone: "from-[#5EA8FF] to-[#1E7BD8]" },
+  { icon: Sparkles, subject: "Other", title: "Kuch aur", text: "Feedback, idea, ya bas hello.", tone: "from-[#0B4F6C] to-[#087F78]" },
 ];
 
 const FAQS = [
-  { q: "How do I register my kitchen?", a: "Open the Partner Portal, log in with your phone number (OTP) and complete the onboarding steps. Any food business can apply: restaurant, dhaba, café, bakery, cloud or home kitchen." },
-  { q: "What does 'Verified' mean?", a: "A FreshBhoj team member visits the kitchen in person and checks hygiene and licences. Kitchens that pass get a Verified badge and are shown in their own section." },
-  { q: "When does the app launch in my city?", a: "We're rolling out city by city. Pre-register as a foodie and we'll notify you the moment we reach your city." },
-  { q: "How fast will you reply?", a: "Usually within 2–4 hours on working days. For anything urgent, WhatsApp is quickest." },
+  { q: "Apna kitchen register kaise karun?", a: "Partner Portal kholo, phone number (OTP) se login karo aur onboarding steps pure karo. Koi bhi food business apply kar sakta hai: restaurant, dhaba, café, bakery, cloud ya home kitchen." },
+  { q: "'Verified' ka matlab kya hai?", a: "FreshBhoj ki team kitchen pe khud jaakar safai aur licence check karti hai. Pass hone wale kitchens ko Verified badge milta hai aur woh apne alag section me dikhte hain." },
+  { q: "Mere shehar me app kab aayega?", a: "Hum shehar-shehar launch kar rahe hain. Foodie ke roop me pre-register karo, jaise hi aapke shehar me aayenge, turant bata denge." },
+  { q: "Jawab kitni jaldi milega?", a: "Aam taur par working days me 2–4 ghante me. Urgent ho to WhatsApp sabse tez hai." },
 ] as const;
+
+const SUBJECT_LABEL: Record<(typeof SUBJECTS)[number], string> = {
+  "Customer Support": "Customer Support",
+  "Kitchen Onboarding": "Kitchen Onboarding",
+  "Partnership Inquiry": "Partnership",
+  Other: "Kuch aur",
+};
 
 const gradientText = {
   background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)",
@@ -73,11 +81,11 @@ export default function ContactUs() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!msgData.subject) {
-      setError("Please choose what this is about");
+      setError("Pehle chuno ki baat kis baare me hai");
       return;
     }
     if (!msgData.agreed) {
-      setError("Please agree to the Privacy Policy");
+      setError("Pehle Privacy Policy se sehmat ho jaiye");
       return;
     }
 
@@ -129,18 +137,20 @@ export default function ContactUs() {
 
       {/* ── Hero ── */}
       <header className="relative overflow-hidden bg-gradient-to-b from-[#EFFAF8] via-white to-white pt-28 md:pt-32 pb-12 md:pb-16">
+        <div className="pointer-events-none absolute inset-0 jaali-light [mask-image:linear-gradient(to_bottom,black,transparent_85%)]" />
         <div className="pointer-events-none absolute inset-0 opacity-50 [background-image:radial-gradient(#087F78_1px,transparent_1px)] [background-size:28px_28px] [mask-image:radial-gradient(ellipse_at_top,black,transparent_70%)]" />
         <div className="pointer-events-none absolute -top-24 -left-24 w-[420px] h-[420px] rounded-full bg-[#1DB9A0]/25 blur-[110px] animate-[drift_14s_ease-in-out_infinite]" />
         <div className="pointer-events-none absolute top-10 -right-24 w-[380px] h-[380px] rounded-full bg-[#FFC21A]/20 blur-[110px] animate-[drift_18s_ease-in-out_infinite_reverse]" />
 
         <div className="relative max-w-5xl mx-auto px-6 text-center">
+          <Eyebrow en="Contact us" hi="हम सुन रहे हैं" className="mb-5" />
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold text-[#0D1B1E] leading-[1.02] mb-6">
             Let&apos;s{" "}
-            <span className="inline-block pr-[0.14em] -mr-[0.14em]" style={{ ...gradientText, fontFamily: "var(--font-instrument), Georgia, serif", fontStyle: "italic", fontWeight: 400 }}>talk</span>
+            <span className="inline-block pr-[0.14em] -mr-[0.14em]" style={gradientText}><Deva className="italic">बात करें</Deva></span>
             .
           </h1>
           <p className="text-slate-500 text-lg md:text-2xl font-medium max-w-2xl mx-auto leading-relaxed">
-            Customer, kitchen owner, partner or just curious? Pick what fits and we&apos;ll point you to the right person.
+            Customer ho, kitchen owner, partner, ya bas curious? Jo sahi lage woh chuno — hum aapko sahi insaan tak pahucha denge.
           </p>
         </div>
       </header>
@@ -166,7 +176,7 @@ export default function ContactUs() {
                 <h3 className="relative text-xl font-extrabold text-[#0D1B1E] mb-1.5">{title}</h3>
                 <p className="relative text-slate-500 text-sm leading-relaxed mb-5">{text}</p>
                 <span className="relative inline-flex items-center gap-1 text-sm font-bold text-[#087F78]">
-                  {on ? "Selected" : "Write to us"} <ArrowUpRight size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                  {on ? "Chun liya" : "Humein likho"} <ArrowUpRight size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 </span>
               </button>
             );
@@ -186,20 +196,20 @@ export default function ContactUs() {
                       <Check size={44} strokeWidth={3} />
                     </span>
                   </div>
-                  <h3 className="text-3xl md:text-4xl font-extrabold text-[#0D1B1E] mb-3">Message sent!</h3>
-                  <p className="text-slate-500 mb-8 max-w-sm">Thanks for reaching out. We&apos;ve got your message and will reply to your email shortly.</p>
+                  <h3 className="text-3xl md:text-4xl font-extrabold text-[#0D1B1E] mb-3">Message bhej diya! <Deva className="text-[#087F78]">धन्यवाद</Deva></h3>
+                  <p className="text-slate-500 mb-8 max-w-sm">Shukriya sampark karne ke liye. Aapka message mil gaya hai, hum jaldi hi aapke email pe jawab denge.</p>
                   <button onClick={() => setMsgSubmitted(false)} className="px-8 py-4 rounded-full font-bold text-white hover:scale-105 transition-transform" style={gradientBg}>
-                    Send another message
+                    Ek aur message bhejo
                   </button>
                 </div>
               ) : (
                 <>
-                  <h2 className="text-3xl md:text-4xl font-extrabold text-[#0D1B1E] mb-2">Send us a message</h2>
-                  <p className="text-slate-500 mb-8">Tell us a little and we&apos;ll take it from there.</p>
+                  <h2 className="text-3xl md:text-4xl font-extrabold text-[#0D1B1E] mb-2">Humein <Deva className="italic text-[#087F78]">संदेश</Deva> bhejo</h2>
+                  <p className="text-slate-500 mb-8">Thoda sa batao, baaki hum sambhal lenge.</p>
 
                   <form className="space-y-5" onSubmit={handleSubmit}>
                     <div>
-                      <label className="block text-xs font-bold text-[#0D1B1E] uppercase tracking-widest mb-3 ml-1">What is this about?</label>
+                      <label className="block text-xs font-bold text-[#0D1B1E] uppercase tracking-widest mb-3 ml-1">Baat kis baare me hai?</label>
                       <div className="flex flex-wrap gap-2">
                         {SUBJECTS.map((sub) => (
                           <button
@@ -211,7 +221,7 @@ export default function ContactUs() {
                             }`}
                             style={msgData.subject === sub ? gradientBg : undefined}
                           >
-                            {sub}
+                            {SUBJECT_LABEL[sub]}
                           </button>
                         ))}
                       </div>
@@ -219,8 +229,8 @@ export default function ContactUs() {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                       <div>
-                        <label className="block text-xs font-bold text-[#0D1B1E] uppercase tracking-widest mb-3 ml-1">Your name</label>
-                        <input type="text" placeholder="Your full name" required className={inputCls} value={msgData.name} onChange={(e) => setMsgData({ ...msgData, name: e.target.value })} disabled={isSubmitting} />
+                        <label className="block text-xs font-bold text-[#0D1B1E] uppercase tracking-widest mb-3 ml-1">Aapka naam</label>
+                        <input type="text" placeholder="Poora naam" required className={inputCls} value={msgData.name} onChange={(e) => setMsgData({ ...msgData, name: e.target.value })} disabled={isSubmitting} />
                       </div>
                       <div>
                         <label className="block text-xs font-bold text-[#0D1B1E] uppercase tracking-widest mb-3 ml-1">Email</label>
@@ -229,8 +239,8 @@ export default function ContactUs() {
                     </div>
 
                     <div>
-                      <label className="block text-xs font-bold text-[#0D1B1E] uppercase tracking-widest mb-3 ml-1">Message</label>
-                      <textarea placeholder="Tell us how we can help..." required rows={5} className={`${inputCls} resize-none`} value={msgData.message} onChange={(e) => setMsgData({ ...msgData, message: e.target.value })} disabled={isSubmitting} />
+                      <label className="block text-xs font-bold text-[#0D1B1E] uppercase tracking-widest mb-3 ml-1">Message / संदेश</label>
+                      <textarea placeholder="Batao, hum kaise madad kar sakte hain..." required rows={5} className={`${inputCls} resize-none`} value={msgData.message} onChange={(e) => setMsgData({ ...msgData, message: e.target.value })} disabled={isSubmitting} />
                     </div>
 
                     {error && (
@@ -245,9 +255,9 @@ export default function ContactUs() {
                         <Check className={`relative w-3.5 h-3.5 text-white transition-transform ${msgData.agreed ? "scale-100" : "scale-0"}`} strokeWidth={4} />
                       </span>
                       <span className="text-[13px] text-slate-500 leading-relaxed select-none">
-                        I agree to the{" "}
+                        Main{" "}
                         <Link href="/privacy-policy" className="text-[#087F78] font-bold hover:underline" onClick={(e) => e.stopPropagation()}>Privacy Policy</Link>{" "}
-                        and allow FreshBhoj to contact me about this inquiry.
+                        se sehmat hoon aur FreshBhoj ko is sawaal ke baare me mujhse sampark karne ki ijaazat deta/deti hoon.
                       </span>
                     </button>
 
@@ -257,7 +267,7 @@ export default function ContactUs() {
                       className={`group/send w-full py-5 rounded-2xl text-white font-bold text-lg shadow-[0_20px_40px_-12px_rgba(8,127,120,0.5)] hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-3 ${isSubmitting ? "opacity-70 cursor-not-allowed" : ""}`}
                       style={gradientBg}
                     >
-                      {isSubmitting ? "Sending..." : "Send message"}
+                      {isSubmitting ? "Bhej rahe hain..." : "Message bhejo"}
                       <Send className={`w-5 h-5 transition-transform group-hover/send:translate-x-1 group-hover/send:-translate-y-0.5 ${isSubmitting ? "animate-pulse" : ""}`} />
                     </button>
                   </form>
@@ -268,10 +278,10 @@ export default function ContactUs() {
 
           {/* Channels */}
           <div className="flex flex-col gap-4">
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-slate-400">Prefer another way?</p>
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-slate-400">Koi aur tareeka pasand hai?</p>
             {[
-              { icon: <MessageCircle size={22} />, label: "WhatsApp / Call", value: "+91 80583 18556", sub: "Mon – Sat · 9am – 7pm", href: "https://wa.me/918058318556", tag: "Fastest" },
-              { icon: <Mail size={22} />, label: "Email", value: "arjun@freshbhoj.com", sub: "Reply in 2–4 hours", href: "mailto:arjun@freshbhoj.com" },
+              { icon: <MessageCircle size={22} />, label: "WhatsApp / Call", value: "+91 80583 18556", sub: "Somvar – Shanivar · 9am – 7pm", href: "https://wa.me/918058318556", tag: "Sabse tez" },
+              { icon: <Mail size={22} />, label: "Email", value: "arjun@freshbhoj.com", sub: "2–4 ghante me jawab", href: "mailto:arjun@freshbhoj.com" },
               { icon: <Linkedin size={22} />, label: "LinkedIn", value: "Arjun Singh Naruka", sub: "Partnerships & press", href: "https://www.linkedin.com/in/arjun-singh-naruka/" },
             ].map((c) => (
               <a
@@ -298,7 +308,7 @@ export default function ContactUs() {
             ))}
 
             <div className="mt-4">
-              <p className="text-xs font-bold uppercase tracking-[0.2em] text-slate-400 mb-4">Follow our journey</p>
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-slate-400 mb-4">Hamara safar follow karo</p>
               <div className="flex gap-3">
                 {[
                   { icon: <Instagram className="w-5 h-5" />, href: "https://www.instagram.com/freshbhoj", label: "Instagram" },
@@ -325,10 +335,10 @@ export default function ContactUs() {
         {/* ── FAQ ── */}
         <section className="max-w-3xl mx-auto mb-20 md:mb-28">
           <div className="text-center mb-10">
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#087F78] mb-3">Quick answers</p>
+            <Eyebrow en="Quick answers" hi="सवाल-जवाब" className="mb-3" />
             <h2 className="text-4xl md:text-5xl font-extrabold text-[#0D1B1E]">
-              Maybe we already{" "}
-              <span className="inline-block pr-[0.14em] -mr-[0.14em]" style={{ ...gradientText, fontFamily: "var(--font-instrument), Georgia, serif", fontStyle: "italic", fontWeight: 400 }}>answered it</span>
+              Shayad hum pehle hi{" "}
+              <span className="inline-block pr-[0.14em] -mr-[0.14em]" style={gradientText}><Deva className="italic">जवाब दे चुके हैं</Deva></span>
             </h2>
           </div>
           <div className="flex flex-col gap-3">
@@ -359,14 +369,14 @@ export default function ContactUs() {
           <div className="pointer-events-none absolute -bottom-28 right-0 w-96 h-96 rounded-full bg-white/15 blur-3xl animate-[drift_18s_ease-in-out_infinite_reverse]" />
           <div className="relative flex-1 text-center lg:text-left">
             <span className="inline-flex items-center gap-2 rounded-full bg-white/15 border border-white/25 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.2em] mb-6">
-              <CalendarDays size={14} /> 30-minute call
+              <CalendarDays size={14} /> 30 minute ki call
             </span>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-[1.05] mb-5">
-              Talk to the{" "}
-              <span className="text-[#FFC21A]" style={{ fontFamily: "var(--font-instrument), Georgia, serif", fontStyle: "italic", fontWeight: 400 }}>founders</span>
+              Founders se{" "}
+              <Deva className="text-[#FFC21A] italic">सीधी बात</Deva>
             </h2>
             <p className="text-white/80 text-base md:text-lg max-w-xl mx-auto lg:mx-0 mb-8 leading-relaxed">
-              Partnership, roadmap or a bigger idea? Book a direct session with our founding team.
+              Partnership, roadmap ya koi bada idea? Hamari founding team ke saath seedha session book karo.
             </p>
             <button
               onClick={() => {
@@ -375,7 +385,7 @@ export default function ContactUs() {
               }}
               className="inline-flex items-center gap-3 rounded-full bg-[#FFC21A] text-[#0D1B1E] font-bold px-8 py-4 text-lg hover:scale-105 active:scale-95 transition-transform shadow-xl"
             >
-              Book a time <ArrowUpRight size={20} />
+              Time book karo <ArrowUpRight size={20} />
             </button>
           </div>
 
@@ -398,7 +408,7 @@ export default function ContactUs() {
               </div>
               <div className="mt-4 flex items-center gap-3 w-full">
                 <div className="h-px flex-1 bg-slate-200" />
-                <p className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.3em] whitespace-nowrap">Scan to schedule</p>
+                <p className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.3em] whitespace-nowrap">Scan karo, time lo</p>
                 <div className="h-px flex-1 bg-slate-200" />
               </div>
             </div>

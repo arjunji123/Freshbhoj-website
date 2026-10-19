@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRef, type PointerEvent } from "react";
 import { ArrowUpRight, BadgeCheck, Leaf, Truck, ShieldCheck, Flame, CalendarSync } from "lucide-react";
 import Navbar from "./navbar";
+import { Deva } from "./desi";
 
 const serif = { fontFamily: "var(--font-instrument), Georgia, serif", fontStyle: "italic" as const, fontWeight: 400 };
 
@@ -54,7 +55,7 @@ const Hero = () => {
         <div className="w-full lg:w-[52%] flex flex-col items-start text-left">
           <div className="inline-flex items-center gap-3 rounded-full bg-white/12 border border-white/25 backdrop-blur-md pl-2 pr-4 py-1.5 mb-7">
             <span className="rounded-full bg-[#FFC21A] text-[#0D1B1E] px-3 py-1 text-[10px] font-extrabold uppercase tracking-widest">New</span>
-            <span className="text-white text-xs lg:text-sm font-bold">Early access is open</span>
+            <span className="text-white text-xs lg:text-sm font-bold">Early access khul gaya hai <Deva className="text-[#FFC21A] text-base">— aaiye!</Deva></span>
           </div>
 
           <h1 className="font-extrabold text-white text-[2.9rem] sm:text-6xl lg:text-[3.9vw] xl:text-[4.7rem] leading-[1.02] tracking-[-0.03em] mb-5">
@@ -70,8 +71,12 @@ const Hero = () => {
             Food Discovery
           </h1>
 
+          <p className="font-deva italic text-[#FFE08A] text-3xl sm:text-4xl lg:text-[2.6vw] xl:text-5xl leading-tight mb-5 -mt-1">
+            देखो, परखो, फिर खाओ।
+          </p>
+
           <p className="text-white/85 text-base md:text-lg lg:text-xl leading-relaxed max-w-xl mb-7">
-            Watch it being made, check the nutrition, order in one tap. Fresh food from kitchens we verify in person.
+            Dekho kaise ban raha hai, nutrition check karo, aur ek tap me order karo. Taaza khana — un kitchens se jinhe hum khud jaake verify karte hain.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto mb-7">
@@ -88,7 +93,7 @@ const Hero = () => {
               href="/partner/login"
               className="inline-flex items-center justify-center h-14 px-8 rounded-full border border-white/40 bg-white/10 backdrop-blur-md text-white font-bold text-base lg:text-lg hover:bg-white/20 hover:scale-[1.03] active:scale-95 transition-all"
             >
-              Register Your Kitchen
+              Apna Kitchen Register Karo
             </Link>
           </div>
 
@@ -99,15 +104,15 @@ const Hero = () => {
               </div>
               <p className="text-white/85 text-sm font-medium leading-tight">
                 <span className="block text-white font-extrabold text-base">2,500+</span>
-                foodies on the waitlist
+                foodies waitlist me hain
               </p>
             </div>
             <span className="hidden sm:block w-px h-10 bg-white/25" />
             <ul className="flex flex-wrap gap-2">
               {[
                 { icon: ShieldCheck, t: "Verified kitchens" },
-                { icon: Leaf, t: "Real nutrition" },
-                { icon: CalendarSync, t: "Flexible plans" },
+                { icon: Leaf, t: "Sachchi nutrition" },
+                { icon: CalendarSync, t: "Apni marzi ke plans" },
               ].map(({ icon: Icon, t }) => (
                 <li key={t} className="inline-flex items-center gap-1.5 rounded-full bg-white/10 border border-white/20 px-3 py-1.5 text-xs font-semibold text-white/90">
                   <Icon size={13} className="text-[#FFC21A]" /> {t}
@@ -133,7 +138,7 @@ const Hero = () => {
                 <span className="w-10 h-10 rounded-xl bg-[#1E7BD8]/10 text-[#1E7BD8] flex items-center justify-center"><BadgeCheck size={20} /></span>
                 <span className="leading-tight">
                   <span className="block text-xs font-extrabold text-[#0D1B1E]">Verified kitchen</span>
-                  <span className="block text-[10px] text-slate-500">Inspected in person</span>
+                  <span className="block text-[10px] text-slate-500">Khud jaake check kiya</span>
                 </span>
               </div>
             </div>
@@ -143,7 +148,7 @@ const Hero = () => {
                 <span className="w-10 h-10 rounded-xl bg-[#FFC21A]/20 text-[#F59E0B] flex items-center justify-center"><Flame size={20} /></span>
                 <span className="leading-tight">
                   <span className="block text-xs font-extrabold text-[#0D1B1E]">420 kcal · 18g protein</span>
-                  <span className="block text-[10px] text-slate-500">On every dish</span>
+                  <span className="block text-[10px] text-slate-500">Har dish pe, seedha</span>
                 </span>
               </div>
             </div>
@@ -152,7 +157,7 @@ const Hero = () => {
               <div className="rounded-2xl bg-white/90 backdrop-blur-xl px-4 py-3 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.4)] w-[190px]">
                 <div className="flex items-center gap-2 mb-2">
                   <span className="w-8 h-8 rounded-lg bg-[#087F78]/10 text-[#087F78] flex items-center justify-center"><Truck size={16} /></span>
-                  <span className="text-xs font-extrabold text-[#0D1B1E]">Out for delivery</span>
+                  <span className="text-xs font-extrabold text-[#0D1B1E]">Raste me hai</span>
                 </div>
                 <div className="h-1.5 rounded-full bg-slate-200 overflow-hidden">
                   <span className="block h-full w-[72%] rounded-full" style={{ background: "linear-gradient(90deg,#1DB9A0,#FFC21A)" }} />

@@ -117,14 +117,14 @@ export default function PartnerLoginPage() {
 
         <div className="relative mt-6 lg:mt-5">
           <span className="inline-flex items-center gap-2 rounded-full bg-white/15 border border-white/25 backdrop-blur px-4 py-2 text-[10px] lg:text-xs font-bold uppercase tracking-[0.2em] mb-3">
-            <span className="w-2 h-2 rounded-full bg-[#FFC21A] animate-pulse" /> Partner Portal · Sample preview
+            <span className="w-2 h-2 rounded-full bg-[#FFC21A] animate-pulse" /> Partner Portal · Sample preview · <span className="font-deva normal-case tracking-normal text-sm text-[#FFE08A]">साझेदार</span>
           </span>
           <h1 className="text-3xl md:text-4xl xl:text-[2.6rem] font-extrabold leading-[1.08] mb-2">
-            Your kitchen&apos;s{" "}
-            <span className="text-[#FFC21A]" style={{ fontFamily: "var(--font-instrument), Georgia, serif", fontStyle: "italic", fontWeight: 400 }}>command centre.</span>
+            Aapke kitchen ka{" "}
+            <span className="text-[#FFC21A] font-deva italic">कमांड सेंटर।</span>
           </h1>
           <p className="text-white/80 text-sm lg:text-base max-w-xl leading-relaxed">
-            Orders, menu, Reels, ads and payouts in one dashboard. This is what you get after you log in. The numbers below are sample data.
+            Orders, menu, Reels, ads aur payouts — sab ek dashboard me. Login ke baad aapko yahi milega. Neeche ke numbers sirf sample hain.
           </p>
         </div>
 
@@ -134,9 +134,9 @@ export default function PartnerLoginPage() {
         </div>
 
         <div className="relative mt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <p className="text-xs text-white/70 max-w-xs">Sample data shown, not a real kitchen. Want a walkthrough before you sign up?</p>
+          <p className="text-xs text-white/70 max-w-xs">Yeh sample data hai, asli kitchen nahi. Sign up se pehle walkthrough chahiye?</p>
           <Link href="/contact-us" className="inline-flex items-center justify-center gap-2 rounded-full bg-white text-[#0D1B1E] font-bold px-7 py-3.5 hover:scale-105 active:scale-95 transition-transform shadow-xl">
-            Contact us <ArrowUpRight size={18} />
+            Humse baat karo <ArrowUpRight size={18} />
           </Link>
         </div>
       </aside>
@@ -144,7 +144,7 @@ export default function PartnerLoginPage() {
       {/* ── Form panel ── */}
       <main className="relative flex items-center justify-center px-6 py-12 lg:py-6 lg:h-screen lg:overflow-y-auto bg-[#F3F8F8] lg:bg-white">
         <Link href="/" className="hidden lg:inline-flex absolute top-8 left-8 items-center gap-2 text-sm font-semibold text-slate-400 hover:text-[#087F78] transition-colors">
-          <ArrowLeft size={16} /> Back to home
+          <ArrowLeft size={16} /> Home pe wapas
         </Link>
 
         <div className="w-full max-w-md">
@@ -166,14 +166,14 @@ export default function PartnerLoginPage() {
           </div>
 
           <h2 className="text-3xl md:text-4xl font-extrabold text-[#0D1B1E] mb-2">
-            {stage === "phone" ? "Welcome 👋" : "Enter the code"}
+            {stage === "phone" ? <>Swagat hai <span className="font-deva italic text-[#087F78]">नमस्ते 🙏</span></> : "Code daalo"}
           </h2>
           <p className="text-slate-500 mb-8">
             {stage === "phone" ? (
-              "Log in or register your kitchen with just your phone number. No password needed."
+              "Sirf phone number se login karo ya apna kitchen register karo. Password ki zaroorat nahi."
             ) : (
-              <>We sent a code to <span className="font-bold text-[#0D1B1E]">+91 {phoneDigits}</span>.{" "}
-                <button type="button" onClick={() => { setStage("phone"); setOtp(""); setError(null); }} className="text-[#087F78] font-bold hover:underline">Change</button>
+              <>Humne code bheja hai <span className="font-bold text-[#0D1B1E]">+91 {phoneDigits}</span>.{" "}
+                <button type="button" onClick={() => { setStage("phone"); setOtp(""); setError(null); }} className="text-[#087F78] font-bold hover:underline">Badlo</button>
               </>
             )}
           </p>
@@ -181,7 +181,7 @@ export default function PartnerLoginPage() {
           {stage === "phone" ? (
             <form onSubmit={(e) => { e.preventDefault(); if (canSendOtp) handleSendOtp(); }} className="flex flex-col gap-5">
               <div>
-                <label htmlFor="phone" className="block text-xs font-bold uppercase tracking-widest text-[#0D1B1E] mb-3 ml-1">Phone number</label>
+                <label htmlFor="phone" className="block text-xs font-bold uppercase tracking-widest text-[#0D1B1E] mb-3 ml-1">Phone number / फ़ोन नंबर</label>
                 <div className={`flex items-center rounded-2xl bg-white border-2 transition-all focus-within:border-[#087F78] focus-within:ring-4 focus-within:ring-[#087F78]/10 ${error ? "border-red-300" : "border-slate-200"}`}>
                   <span className="flex items-center gap-2 pl-4 pr-3 py-4 border-r border-slate-200 font-bold text-[#0D1B1E]">
                     <Smartphone size={18} className="text-[#087F78]" /> +91
@@ -242,7 +242,7 @@ export default function PartnerLoginPage() {
                 className="w-full py-4 rounded-2xl text-white font-bold text-lg flex items-center justify-center gap-2 shadow-[0_20px_40px_-12px_rgba(8,127,120,0.55)] transition-all enabled:hover:scale-[1.01] enabled:active:scale-[0.99] disabled:opacity-50 disabled:shadow-none disabled:cursor-not-allowed"
                 style={{ background: "linear-gradient(135deg,#14ADA0,#087F78 55%,#0B4F6C)" }}
               >
-                {isVerifying ? <Spinner /> : null} Verify &amp; continue
+                {isVerifying ? <Spinner /> : null} Verify karke aage badho
               </button>
 
               <button
@@ -251,7 +251,7 @@ export default function PartnerLoginPage() {
                 disabled={cooldown > 0 || isSending}
                 className="text-sm font-bold text-[#087F78] hover:underline disabled:text-slate-400 disabled:no-underline"
               >
-                {cooldown > 0 ? `Resend OTP in ${cooldown}s` : "Resend OTP"}
+                {cooldown > 0 ? `${cooldown}s me OTP dobara bhej sakte hain` : "OTP dobara bhejo"}
               </button>
             </div>
           )}
@@ -259,13 +259,13 @@ export default function PartnerLoginPage() {
           <div className="mt-7 flex items-start gap-3 rounded-2xl bg-[#EFFAF8] border border-[#087F78]/10 p-4">
             <ShieldCheck size={20} className="text-[#087F78] shrink-0 mt-0.5" />
             <p className="text-xs text-slate-500 leading-relaxed">
-              New here? The same login creates your kitchen account. By continuing you agree to our{" "}
+              Naye hain? Isi login se aapka kitchen account ban jayega. Aage badhkar aap hamare{" "}
               <Link href="/terms-of-service" className="font-bold text-[#087F78] hover:underline">Terms</Link> and{" "}
-              <Link href="/privacy-policy" className="font-bold text-[#087F78] hover:underline">Privacy Policy</Link>.
+              <Link href="/privacy-policy" className="font-bold text-[#087F78] hover:underline">Privacy Policy</Link> se sehmat hote hain.
             </p>
           </div>
           <p className="text-center text-sm text-slate-400 mt-4">
-            Need help? <Link href="/contact-us" className="font-bold text-[#087F78] hover:underline">Contact us</Link>
+            Madad chahiye? <Link href="/contact-us" className="font-bold text-[#087F78] hover:underline">Humse baat karo</Link>
           </p>
         </div>
       </main>

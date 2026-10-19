@@ -54,6 +54,8 @@ const SplashScreen = () => {
     >
       <div className="relative flex flex-col items-center justify-center">
         
+        {/* Torana across the top, like a doorway to a thali */}
+        <div className="fixed top-0 inset-x-0 torana pointer-events-none" aria-hidden />
         {/* Elegant Backdrop Glow */}
         <div className="absolute w-[300px] h-[300px] bg-gradient-to-r from-[#1DB9A0]/10 via-[#087F78]/5 to-transparent rounded-full blur-[60px] animate-pulse-slow" />
 
@@ -74,6 +76,11 @@ const SplashScreen = () => {
         </div>
 
         {/* Bottom Text/Tagline Reveal */}
+        <div className="overflow-hidden mb-3">
+          <p className="font-deva italic text-[#087F78] text-2xl md:text-4xl animate-text-slide-up">
+            स्वाद भी, भरोसा भी।
+          </p>
+        </div>
         <div className="overflow-hidden mb-10">
           <p className="text-[#333333]/60 font-medium tracking-[0.4em] uppercase text-[9px] md:text-xs animate-text-slide-up">
             India&apos;s First Reel-Based Food Discovery

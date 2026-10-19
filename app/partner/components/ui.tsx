@@ -476,11 +476,23 @@ export function RangeSlider({
   );
 }
 
+/** Hindi word shown beside a page title: keeps the portal bilingual without touching every page. */
+const TITLE_HI: Record<string, string> = {
+  Dashboard: "डैशबोर्ड", Orders: "ऑर्डर", Menu: "मेन्यू", Timings: "समय", Stories: "कहानियाँ", Reels: "रील्स",
+  Ads: "विज्ञापन", Subscribers: "ग्राहक", "Subscription Plans": "प्लान", Wallet: "बटुआ", Payouts: "भुगतान",
+  Notifications: "सूचनाएँ", "Kitchen Profile": "रसोई की पहचान", "Kitchen Premium": "प्रीमियम", "Add a dish": "नई थाली",
+  "Edit dish": "थाली बदलो", "FSSAI Licence": "लाइसेंस", "AI Powered Analysis": "BhojAI सलाह", "Suggestion History": "पुरानी सलाह",
+};
+
 export function PageHeader({ title, subtitle, action }: { title: string; subtitle?: string; action?: ReactNode }) {
+  const hi = TITLE_HI[title];
   return (
     <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-3 mb-8">
       <div className="min-w-[14rem] flex-1">
-        <h1 className="text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight">{title}</h1>
+        <h1 className="text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight">
+          {title}
+          {hi ? <span className="font-deva italic text-[#087F78] text-xl lg:text-2xl ml-3 align-baseline">· {hi}</span> : null}
+        </h1>
         {subtitle ? <p className="text-sm text-slate-500 mt-1">{subtitle}</p> : null}
       </div>
       {action}

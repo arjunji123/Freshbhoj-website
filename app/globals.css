@@ -3,7 +3,8 @@
 @theme {
     --breakpoint-3xl: 2560px;
     --breakpoint-4k: 3840px;
-    --font-sans: var(--font-jakarta), "Plus Jakarta Sans", sans-serif;
+    --font-sans: var(--font-jakarta), "Plus Jakarta Sans", var(--font-hind), sans-serif;
+    --font-deva: var(--font-deva), var(--font-hind), Georgia, serif;
     --font-display: var(--font-bricolage), var(--font-jakarta), sans-serif;
     --font-serif: var(--font-instrument), Georgia, serif;
 
@@ -97,7 +98,7 @@ select.input-gradient-focus:focus {
 
 /* Display font for headings; body stays Plus Jakarta Sans */
 h1, h2, h3 {
-    font-family: var(--font-bricolage), var(--font-jakarta), sans-serif;
+    font-family: var(--font-bricolage), var(--font-jakarta), var(--font-hind), sans-serif;
     letter-spacing: -0.02em;
 }
 
@@ -108,3 +109,56 @@ h1, h2, h3 {
 
 html { scroll-behavior: smooth; }
 section[id] { scroll-margin-top: 96px; }
+
+
+/* ───────── Desi-modern kit: Hinglish accents, torana bunting, jaali lattice ───────── */
+
+/* Devanagari accent words (and Hinglish phrases) in the display serif */
+.font-deva {
+    font-family: var(--font-deva), var(--font-hind), Georgia, serif;
+    font-weight: 400;
+    letter-spacing: 0;
+}
+
+/* Torana: a string of pennants (teal / marigold / aqua) hanging from the top edge of a section */
+.torana {
+    height: 30px;
+    background-repeat: repeat-x;
+    background-size: 108px 30px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='108' height='30' viewBox='0 0 108 30'%3E%3Cpath d='M0 1.5H108' stroke='%23FFC21A' stroke-width='2'/%3E%3Cpath d='M3 2L33 2L18 28Z' fill='%23087F78'/%3E%3Cpath d='M39 2L69 2L54 28Z' fill='%23FFC21A'/%3E%3Cpath d='M75 2L105 2L90 28Z' fill='%231DB9A0'/%3E%3Ccircle cx='18' cy='9' r='2.2' fill='%23FFC21A'/%3E%3Ccircle cx='54' cy='9' r='2.2' fill='%23087F78'/%3E%3Ccircle cx='90' cy='9' r='2.2' fill='%23FFFFFF'/%3E%3C/svg%3E");
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+/* Jaali: carved-lattice tile, quiet enough to sit behind text */
+.jaali-light {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64' fill='none' stroke='%23087F78' stroke-opacity='.16' stroke-width='1.2'%3E%3Cpath d='M32 4L60 32L32 60L4 32Z'/%3E%3Ccircle cx='32' cy='32' r='9'/%3E%3Cpath d='M32 23V41M23 32H41'/%3E%3Ccircle cx='0' cy='0' r='9'/%3E%3Ccircle cx='64' cy='0' r='9'/%3E%3Ccircle cx='0' cy='64' r='9'/%3E%3Ccircle cx='64' cy='64' r='9'/%3E%3C/svg%3E");
+    background-size: 64px 64px;
+}
+.jaali-dark {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64' fill='none' stroke='%23FFFFFF' stroke-opacity='.09' stroke-width='1.2'%3E%3Cpath d='M32 4L60 32L32 60L4 32Z'/%3E%3Ccircle cx='32' cy='32' r='9'/%3E%3Cpath d='M32 23V41M23 32H41'/%3E%3Ccircle cx='0' cy='0' r='9'/%3E%3Ccircle cx='64' cy='0' r='9'/%3E%3Ccircle cx='0' cy='64' r='9'/%3E%3Ccircle cx='64' cy='64' r='9'/%3E%3C/svg%3E");
+    background-size: 64px 64px;
+}
+
+/* Marigold garland (genda phool) divider */
+.garland {
+    height: 14px;
+    background-repeat: repeat-x;
+    background-size: 28px 14px;
+    background-position: center;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='14' viewBox='0 0 28 14'%3E%3Ccircle cx='7' cy='7' r='5' fill='%23FFC21A'/%3E%3Ccircle cx='7' cy='7' r='2' fill='%23F59E0B'/%3E%3Ccircle cx='21' cy='7' r='3.5' fill='%231DB9A0'/%3E%3C/svg%3E");
+    mask-image: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent);
+}
+
+/* Soft sway for hanging things (torana, tags) */
+@keyframes sway {
+    0%, 100% { transform: rotate(-1.2deg); }
+    50% { transform: rotate(1.2deg); }
+}
+.animate-sway { animation: sway 5s ease-in-out infinite; transform-origin: top center; }
+
+/* Stamp / chhaap: slightly tilted bilingual label */
+.chhaap { transform: rotate(-3deg); }
+
+@media (prefers-reduced-motion: reduce) {
+    .animate-sway { animation: none; }
+}

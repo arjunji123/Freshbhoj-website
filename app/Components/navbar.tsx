@@ -7,11 +7,11 @@ import { usePathname } from "next/navigation";
 import { ArrowUpRight, X } from "lucide-react";
 
 const LINKS = [
-  { label: "Home", href: "/" },
-  { label: "How it works", href: "/#problem-fix" },
-  { label: "Verified", href: "/#verified" },
-  { label: "Features", href: "/#features" },
-  { label: "Contact", href: "/contact-us" },
+  { label: "Home", hi: "घर", href: "/" },
+  { label: "Kaise chalta hai", hi: "कैसे चलता है", href: "/#problem-fix" },
+  { label: "Verified", hi: "भरोसा", href: "/#verified" },
+  { label: "Features", hi: "खासियतें", href: "/#features" },
+  { label: "Contact", hi: "बात करें", href: "/contact-us" },
 ] as const;
 
 const Navbar = () => {
@@ -139,11 +139,15 @@ const Navbar = () => {
                 }`}
                 style={{ transitionDelay: menuOpen ? `${i * 30}ms` : "0ms" }}
               >
-                {l.label}
+                <span className="flex items-baseline gap-3">
+                  {l.label}
+                  <span className="font-deva text-lg text-[#087F78]/70">{l.hi}</span>
+                </span>
                 <ArrowUpRight size={18} className="text-slate-300" />
               </Link>
             ))}
           </nav>
+          <div className="torana h-[22px] bg-[length:81px_22px] mb-5 opacity-90" aria-hidden />
           <div className="grid grid-cols-2 gap-3">
             <Link href="/partner/login" onClick={() => setMenuOpen(false)} className="text-center rounded-full border-2 border-[#087F78]/25 text-[#087F78] font-bold py-3.5">
               Partner Login

@@ -3,42 +3,43 @@
 import { useEffect, useRef, useState } from "react";
 import { Eye, TrendingUp, CalendarClock, Check, ArrowRight, X } from "lucide-react";
 import { FeedMock, GrowthMock, SubsMock } from "./fix_mocks";
+import { Deva, Eyebrow, Torana } from "./desi";
 
 const ITEMS = [
   {
     icon: Eye,
     tab: "Too many choices",
     problem: "Overwhelming choice",
-    problemText: "Static photos and long menus don't tell the real story. 70% of people spend 15+ minutes just deciding what to eat.",
+    problemText: "Photos aur lambe menus asli kahani nahi batate. 70% log sirf yeh decide karne me 15+ minute laga dete hain ki aaj khana kya hai.",
     fix: "Visual-first discovery",
-    fixText: "Short Reels show the dish being made, so you see exactly what you're ordering before you tap order.",
-    points: ["65% faster ordering", "Trust-based browsing", "Real nutrition on every dish"],
-    before: "Scroll long menus, guess from photos, 15+ minutes to decide.",
-    after: "Watch a short reel, see the nutrition, order in one tap.",
+    fixText: "Chhoti Reels me dish banti dikhti hai — order karne se pehle hi pata hota hai ki plate me kya aayega.",
+    points: ["65% faster ordering", "Bharose wali browsing", "Har dish pe sachchi nutrition"],
+    before: "Lamba menu scroll karo, photo dekhke andaza lagao, 15+ minute lag jao.",
+    after: "Chhoti reel dekho, nutrition dekho, ek tap me order.",
     Mock: FeedMock,
   },
   {
     icon: TrendingUp,
     tab: "Hidden kitchens",
     problem: "Invisible kitchens",
-    problemText: "Great food sellers, big and small, get buried under the high advertising costs of big platforms.",
+    problemText: "Badhiya khana banane wale — chhote ho ya bade — badi platforms ke mehenge ads ke neeche dab jaate hain.",
     fix: "Creator-led growth",
-    fixText: "Every kitchen becomes a ‘Food Creator’ brand with Reels, Stories and performance data to grow direct customers.",
-    points: ["Free Reels & Stories", "Built-in Boost ads + AI tips", "Target 3x growth"],
-    before: "Buried under big-platform ads. Nobody finds a small kitchen.",
-    after: "Free Reels & Stories plus AI tips put you in front of nearby customers.",
+    fixText: "Har kitchen ban jaata hai ek ‘Food Creator’ brand — Reels, Stories aur performance data ke saath, taaki apne customers khud badhein.",
+    points: ["Free Reels & Stories", "Boost ads + AI tips, andar hi", "3x growth ka target"],
+    before: "Bade platform ke ads me dabe hue. Chhote kitchen ko koi dhoondhta hi nahi.",
+    after: "Free Reels & Stories aur AI tips — aas-paas ke customers tak seedha pahunch.",
     Mock: GrowthMock,
   },
   {
     icon: CalendarClock,
     tab: "Rigid subscriptions",
     problem: "Broken subscriptions",
-    problemText: "Meal plans today are rigid and uninspiring. People want flexibility, variety and a way to see what's cooking.",
+    problemText: "Aaj ke meal plans ekdum rigid aur boring hain. Log chahte hain flexibility, variety, aur yeh dekhna ki aaj kya pak raha hai.",
     fix: "AI-smart subscriptions",
-    fixText: "Pick a kitchen's plan or build your own. AI-assisted 30-day plans match your diet, days and budget.",
-    points: ["Swap tomorrow's meal", "Pause / skip any day", "Diet & budget aware"],
-    before: "Fixed plans. Can't change a dish, can't skip a day.",
-    after: "Swap tomorrow's meal, skip or pause any day, AI plans the rest.",
+    fixText: "Kitchen ka plan lo ya apna khud banao. AI ke 30-day plans aapki diet, din aur budget ke hisaab se.",
+    points: ["Kal ka meal badlo", "Kisi bhi din pause / skip", "Diet aur budget ka dhyaan"],
+    before: "Fixed plan. Na dish badal sakte, na koi din skip.",
+    after: "Kal ka meal badlo, koi bhi din skip ya pause karo, baaki AI sambhal lega.",
     Mock: SubsMock,
   },
 ] as const;
@@ -66,12 +67,14 @@ export default function ProblemFix() {
   const cur = ITEMS[active];
 
   return (
-    <section ref={ref} id="problem-fix" className="w-full font-sans py-16 lg:py-28 bg-white">
-      <div className="max-w-7xl mx-auto px-6">
+    <section ref={ref} id="problem-fix" className="relative w-full font-sans pt-24 pb-16 lg:pt-32 lg:pb-28 bg-white overflow-hidden">
+      <Torana />
+      <div className="pointer-events-none absolute inset-0 jaali-light [mask-image:linear-gradient(to_bottom,black,transparent_40%)]" />
+      <div className="relative max-w-7xl mx-auto px-6">
         <div className="text-center mb-10 lg:mb-14">
-          <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#087F78] mb-4">The reality check</p>
+          <Eyebrow en="The reality check" hi="सच्चाई" className="mb-4" />
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#0D1B1E] tracking-tight leading-tight">
-            Food delivery is broken. <span className="inline-block pr-[0.14em] -mr-[0.14em] bg-gradient-to-r from-[#1DB9A0] to-[#0B4F6C] bg-clip-text text-transparent"><span style={{ fontFamily: "var(--font-instrument), Georgia, serif", fontStyle: "italic", fontWeight: 400 }}>We fixed it.</span></span>
+            Food delivery is broken. <span className="inline-block pr-[0.14em] -mr-[0.14em] bg-gradient-to-r from-[#1DB9A0] to-[#0B4F6C] bg-clip-text text-transparent"><Deva className="italic">हमने fix कर दिया।</Deva></span>
           </h2>
         </div>
 
@@ -101,7 +104,7 @@ export default function ProblemFix() {
                       <span className={`w-9 h-9 rounded-xl flex items-center justify-center ${on ? "bg-gradient-to-br from-[#1DB9A0] to-[#0B4F6C] text-white" : "bg-white text-[#087F78] shadow-sm"}`}>
                         <Icon size={18} strokeWidth={2.4} />
                       </span>
-                      Problem 0{i + 1}
+                      Problem 0{i + 1} <Deva className="text-sm normal-case tracking-normal">· समस्या</Deva>
                     </span>
                     <span className={`text-4xl font-extrabold leading-none transition-colors ${on ? "text-[#087F78]/20" : "text-slate-300/70"}`}>0{i + 1}</span>
                   </div>
@@ -122,9 +125,9 @@ export default function ProblemFix() {
 
             <div className="relative z-10 flex flex-wrap items-center gap-3 mb-8">
               <span className="inline-flex items-center gap-2 rounded-full bg-[#FFC21A] text-[#0D1B1E] px-4 py-1.5 text-[10px] font-bold uppercase tracking-widest">
-                <Check size={12} strokeWidth={3} /> The FreshBhoj fix
+                <Check size={12} strokeWidth={3} /> FreshBhoj ka fix
               </span>
-              <span className="text-white/70 text-xs md:text-sm font-medium">for “{cur.problem}”</span>
+              <span className="text-white/80 text-xs md:text-sm font-medium"><Deva className="text-[#FFE08A] text-lg">समाधान</Deva> · “{cur.problem}” ka</span>
             </div>
 
             <div className="relative z-10 flex-1 grid grid-cols-1 xl:grid-cols-[1fr_auto] gap-10 items-center">
@@ -134,12 +137,12 @@ export default function ProblemFix() {
 
                 <div className="grid grid-cols-1 gap-2 mb-6">
                   <div className="rounded-2xl bg-black/20 border border-white/10 p-4">
-                    <p className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-white/60 mb-1.5"><X size={12} /> Before</p>
+                    <p className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-white/60 mb-1.5"><X size={12} /> Pehle</p>
                     <p className="text-sm text-white/80 leading-snug">{cur.before}</p>
                   </div>
                   <span className="flex items-center justify-center text-[#FFC21A] -my-0.5"><ArrowRight size={18} className="rotate-90" /></span>
                   <div className="rounded-2xl bg-white text-[#0D1B1E] p-4 shadow-xl">
-                    <p className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-[#087F78] mb-1.5"><Check size={12} strokeWidth={3} /> With FreshBhoj</p>
+                    <p className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-[#087F78] mb-1.5"><Check size={12} strokeWidth={3} /> Ab, FreshBhoj ke saath</p>
                     <p className="text-sm font-semibold leading-snug">{cur.after}</p>
                   </div>
                 </div>

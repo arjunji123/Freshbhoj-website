@@ -5,38 +5,39 @@ import {
   MapPin, Clapperboard, SlidersHorizontal, Truck, CalendarSync, Wallet, Leaf, BadgeCheck, MessagesSquare,
   ListOrdered, Sparkles, Megaphone, Repeat, Banknote, FileCheck2, Crown, Timer, type LucideIcon,
 } from "lucide-react";
+import { Deva, Eyebrow, Torana } from "./desi";
 
 type Feature = { icon: LucideIcon; title: string; text: string; big?: boolean; chips?: string[] };
 
 const CUSTOMER: Feature[] = [
-  { icon: Clapperboard, title: "Reels & Stories", text: "Watch real videos of the dish being made, then order the exact thing you just watched. Follow your favourite kitchens for daily specials.", big: true, chips: ["Reels", "Stories", "Follow kitchens"] },
-  { icon: MapPin, title: "Nearby & Trending", text: "Kitchens and dishes close to you first, ranked by real orders and ratings — never paid placement." },
-  { icon: Leaf, title: "Nutrition on every dish", text: "Calories, protein and a health score, plus Veg / Non-veg / Vegan / Egg and Jain-friendly tags." },
-  { icon: BadgeCheck, title: "Verified kitchens", text: "Kitchens we have visited in person carry a Verified badge and get their own section." },
-  { icon: SlidersHorizontal, title: "Smart search", text: "Filter by cuisine, diet, or goals like “High Protein” and “Low Calorie”." },
-  { icon: Truck, title: "Live order tracking", text: "Placed → Accepted → Preparing → Out for Delivery → Delivered, always visible." },
-  { icon: MessagesSquare, title: "Order chat", text: "Message the kitchen about your exact order and get a real answer." },
-  { icon: CalendarSync, title: "Flexible subscriptions", text: "Take a kitchen's plan or build your own. Swap tomorrow's meal, pause or skip any day.", big: true, chips: ["Kitchen plans", "Build your own", "Swap meal", "Pause"] },
-  { icon: Wallet, title: "Wallet & FreshBhoj Coins", text: "Pay with UPI, cards, wallet or cash, and earn coins with Refer & Earn." },
-  { icon: Repeat, title: "Favourites & reorder", text: "Save dishes and kitchens, and reorder any past meal in one tap." },
+  { icon: Clapperboard, title: "Reels & Stories", text: "Dish banti hui dekho, phir wahi dish order karo jo abhi dekhi. Apne favourite kitchens ko follow karo — roz ke specials seedha feed me.", big: true, chips: ["Reels", "Stories", "Kitchen follow karo"] },
+  { icon: MapPin, title: "Aas-paas & Trending", text: "Paas ke kitchens aur dishes pehle — real orders aur ratings se rank, paise dekar nahi." },
+  { icon: Leaf, title: "Har dish pe nutrition", text: "Calories, protein aur health score — saath me Veg / Non-veg / Vegan / Egg aur Jain-friendly tags." },
+  { icon: BadgeCheck, title: "Verified kitchens", text: "Jin kitchens ko hum khud visit kar chuke hain, unhe milta hai Verified badge aur apna alag section." },
+  { icon: SlidersHorizontal, title: "Smart search", text: "Cuisine, diet ya goal se filter karo — jaise “High Protein” aur “Low Calorie”." },
+  { icon: Truck, title: "Live order tracking", text: "Placed → Accepted → Preparing → Out for Delivery → Delivered — sab kuch live, har waqt." },
+  { icon: MessagesSquare, title: "Order chat", text: "Apne order ke baare me kitchen se seedha baat karo, asli jawab pao." },
+  { icon: CalendarSync, title: "Flexible subscriptions", text: "Kitchen ka plan lo ya apna banao. Kal ka meal badlo, koi bhi din pause ya skip karo.", big: true, chips: ["Kitchen plans", "Apna plan", "Meal badlo", "Pause"] },
+  { icon: Wallet, title: "Wallet & FreshBhoj Coins", text: "UPI, card, wallet ya cash — jaise chahe pay karo, aur Refer & Earn se coins kamao." },
+  { icon: Repeat, title: "Favourites & reorder", text: "Pasandida dishes aur kitchens save karo, purana meal ek tap me dobara mangao." },
 ];
 
 const KITCHEN: Feature[] = [
-  { icon: ListOrdered, title: "Live order dashboard", text: "Accept, prepare and hand off orders from one screen. Track today's revenue, ratings and followers at a glance.", big: true, chips: ["Placed", "Accepted", "Preparing", "Out for delivery"] },
-  { icon: Sparkles, title: "AI nutrition insights", text: "Type a dish and AI estimates calories, protein and a health score for your menu." },
-  { icon: Clapperboard, title: "Reels & Stories", text: "Post short videos and today's special to nearby customers — free marketing." },
-  { icon: Megaphone, title: "Boost ads + BhojAI", text: "Set a daily budget to reach more people. BhojAI reviews performance and suggests what to do next.", big: true, chips: ["Daily budget", "AI suggestions", "Insights"] },
-  { icon: Repeat, title: "Subscription plans", text: "Design your own meal plans and turn first-time buyers into regulars." },
-  { icon: Banknote, title: "Wallet & payouts", text: "See earnings instantly and withdraw to your bank, with one clear transaction history." },
-  { icon: FileCheck2, title: "FSSAI assistance", text: "No licence yet? We can help file it for you." },
-  { icon: Timer, title: "Hours & pause control", text: "Set timings and holidays, or pause new orders without going offline." },
-  { icon: Crown, title: "Premium tools", text: "Optional upgrades for more visibility and deeper insights." },
-  { icon: MessagesSquare, title: "Order chat", text: "Talk to a customer about their exact order, right inside the app." },
+  { icon: ListOrdered, title: "Live order dashboard", text: "Order accept karo, banao aur handover — sab ek screen se. Aaj ki kamai, ratings aur followers ek nazar me.", big: true, chips: ["Placed", "Accepted", "Ban raha hai", "Out for delivery"] },
+  { icon: Sparkles, title: "AI nutrition insights", text: "Dish ka naam likho, AI calories, protein aur health score nikaal deta hai — poore menu ke liye." },
+  { icon: Clapperboard, title: "Reels & Stories", text: "Chhoti videos aur aaj ka special aas-paas ke customers ko dikhao — marketing free me." },
+  { icon: Megaphone, title: "Boost ads + BhojAI", text: "Daily budget set karo aur zyada logon tak pahucho. BhojAI performance dekhke batata hai aage kya karna hai.", big: true, chips: ["Daily budget", "AI salah", "Insights"] },
+  { icon: Repeat, title: "Subscription plans", text: "Apne meal plans banao aur pehli baar wale customer ko pakka grahak bana lo." },
+  { icon: Banknote, title: "Wallet & payouts", text: "Kamai turant dekho aur seedha bank me nikalo — ek saaf transaction history ke saath." },
+  { icon: FileCheck2, title: "FSSAI assistance", text: "Licence abhi nahi hai? Hum file karwane me madad karenge." },
+  { icon: Timer, title: "Timing & pause control", text: "Timings aur chhutti set karo, ya offline hue bina naye orders pause karo." },
+  { icon: Crown, title: "Premium tools", text: "Zyada visibility aur gehre insights ke liye optional upgrades." },
+  { icon: MessagesSquare, title: "Order chat", text: "Customer se unke order ke baare me baat karo, app ke andar hi." },
 ];
 
 const COPY = {
-  customer: { title: "Eat what you can see.", sub: "Watch it being made, check the nutrition, trust the kitchen, then order — all in one app." },
-  kitchen: { title: "Run your whole kitchen.", sub: "Orders, menu, marketing, subscriptions and payouts — everything you need, in your pocket." },
+  customer: { title: "Jo dikhe, wahi khao.", sub: "Banta hua dekho, nutrition check karo, kitchen pe bharosa karo, phir order — sab ek app me." },
+  kitchen: { title: "Poora kitchen, aapki jeb me.", sub: "Orders, menu, marketing, subscriptions aur payouts — jo bhi chahiye, sab ek jagah." },
 } as const;
 
 function spotlight(e: MouseEvent<HTMLDivElement>) {
@@ -50,15 +51,17 @@ export default function Features() {
   const list = tab === "customer" ? CUSTOMER : KITCHEN;
 
   return (
-    <section id="features" className="relative w-full font-sans py-16 lg:py-28 bg-[#0D1B1E] text-white overflow-hidden">
+    <section id="features" className="relative w-full font-sans pt-24 pb-16 lg:pt-32 lg:pb-28 bg-[#0D1B1E] text-white overflow-hidden">
+      <Torana />
+      <div className="pointer-events-none absolute inset-0 jaali-dark [mask-image:radial-gradient(ellipse_at_top,black,transparent_70%)]" />
       <div className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[500px] rounded-full bg-[#087F78]/30 blur-[140px]" />
       <div className="pointer-events-none absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full bg-[#FFC21A]/10 blur-[120px]" />
 
       <div className="relative max-w-7xl mx-auto px-6">
         <div className="text-center mb-10 lg:mb-14">
-          <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#FFC21A] mb-4">Everything inside FreshBhoj</p>
+          <Eyebrow en="Everything inside FreshBhoj" hi="सब कुछ यहीं" tone="dark" className="mb-4" />
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight mb-4">
-            One platform. <span className="bg-gradient-to-r from-[#5EE6D0] to-[#FFC21A] bg-clip-text text-transparent">Both sides of the plate.</span>
+            One platform. <span className="inline-block pr-[0.14em] -mr-[0.14em] bg-gradient-to-r from-[#5EE6D0] to-[#FFC21A] bg-clip-text text-transparent"><Deva className="italic">थाली के दोनों side।</Deva></span>
           </h2>
           <p key={tab} className="text-white/60 text-base md:text-lg max-w-xl mx-auto mb-8 animate-[fadeUp_0.4s_ease-out]">
             <span className="text-white font-bold">{COPY[tab].title}</span> {COPY[tab].sub}
@@ -74,7 +77,7 @@ export default function Features() {
                 onClick={() => setTab(t)}
                 className={`relative z-10 px-6 md:px-10 py-3 rounded-full text-sm font-bold transition-colors ${tab === t ? "text-[#0D1B1E]" : "text-white/70 hover:text-white"}`}
               >
-                {t === "customer" ? "For Customers" : "For Kitchens"}
+                {t === "customer" ? "Customers ke liye" : "Kitchens ke liye"}
               </button>
             ))}
           </div>
