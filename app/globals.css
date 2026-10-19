@@ -118,6 +118,10 @@ section[id] { scroll-margin-top: 96px; }
     font-family: var(--font-deva), var(--font-hind), Georgia, serif;
     font-weight: 400;
     letter-spacing: 0;
+    /* Matras (ि ी े ै ं) rise above the headline's tight line-height; without this,
+       gradient text (background-clip: text) crops them at the top of the line box. */
+    line-height: 1.5;
+    padding-top: 0.12em;
 }
 
 /* Torana: a string of pennants (teal / marigold / aqua) hanging from the top edge of a section */
