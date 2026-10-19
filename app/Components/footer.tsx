@@ -91,13 +91,13 @@ export default function Footer() {
 
           <div className="w-full max-w-xs h-px bg-gradient-to-r from-transparent via-[#1DB9A0] to-transparent mb-10" />
 
-          <div className="flex flex-col md:flex-row items-center gap-4 md:gap-8 opacity-40">
-            <p className="text-slate-500 font-bold text-[10px] uppercase tracking-[0.4em]">
-              FreshBhoj AI Platforms © 2026
+          <div className="flex flex-col md:flex-row items-center gap-2 md:gap-6 text-center">
+            <p className="text-white/80 text-sm font-medium">
+              &copy; 2026 FreshBhoj AI Platforms. All rights reserved.
             </p>
-            <span className="hidden md:block w-1 h-1 rounded-full bg-white/30" />
-            <p className="text-slate-500 font-bold text-[10px] uppercase tracking-[0.4em]">
-              Banaya gaya ♥ se, India ke liye
+            <span className="hidden md:block w-1 h-1 rounded-full bg-[#FFC21A]" />
+            <p className="text-white/80 text-sm font-medium">
+              Banaya gaya <span className="text-[#FFC21A]">&hearts;</span> se, India ke liye
             </p>
           </div>
         </div>
