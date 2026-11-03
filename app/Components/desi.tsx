@@ -16,13 +16,17 @@ export function Garland({ className = "" }: { className?: string }) {
 }
 
 /** Small bilingual section label: "THE REALITY CHECK · सच्चाई". */
-export function Eyebrow({ en, hi, tone = "light", className = "" }: { en: string; hi: string; tone?: "light" | "dark"; className?: string }) {
+export function Eyebrow({ en, hi, tone = "light", className = "" }: { en: string; hi?: string; tone?: "light" | "dark"; className?: string }) {
   const dark = tone === "dark";
   return (
     <p className={`inline-flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.2em] ${dark ? "text-[#FFC21A]" : "text-[#087F78]"} ${className}`}>
       {en}
-      <span className={`w-1.5 h-1.5 rounded-full ${dark ? "bg-white/50" : "bg-[#FFC21A]"}`} />
-      <span className="font-deva normal-case tracking-normal text-base md:text-lg leading-none">{hi}</span>
+      {hi ? (
+        <>
+          <span className={`w-1.5 h-1.5 rounded-full ${dark ? "bg-white/50" : "bg-[#FFC21A]"}`} />
+          <span className="font-deva normal-case tracking-normal text-base md:text-lg leading-none">{hi}</span>
+        </>
+      ) : null}
     </p>
   );
 }

@@ -17,7 +17,6 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { Navbar, Footer } from "../Components";
-import { Deva } from "../Components/desi";
 
 const gradientText = {
   background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)",
@@ -43,10 +42,10 @@ const scrollToTop = () => {
 type StateItem = { name: string };
 
 const BENEFITS: { icon: LucideIcon; title: string; text: string }[] = [
-  { icon: Wallet, title: "₹100 Wallet Credit", text: "Seedha wallet me, pehle order ke liye taiyaar." },
-  { icon: Clapperboard, title: "Top Reels ka Early Access", text: "Sabse best-rated food reels, sabse pehle aap dekho." },
-  { icon: Truck, title: "30 Din Free Delivery", text: "Pehle 30 din delivery fee bilkul zero." },
-  { icon: BellRing, title: "Launch ki Khabar", text: "Aapke shehar me app live hote hi hum turant bata denge." },
+  { icon: Wallet, title: "₹100 Wallet Credit", text: "Credited straight to your wallet, ready for your first order." },
+  { icon: Clapperboard, title: "Early Access to Top Reels", text: "See the best-rated food reels before anyone else." },
+  { icon: Truck, title: "30 Din Free Delivery", text: "Zero delivery fees for your first 30 days." },
+  { icon: BellRing, title: "Launch Updates", text: "We'll notify you the moment the app goes live in your city." },
 ];
 
 // Curated Major Cities Data to avoid "villages/small towns"
@@ -238,15 +237,15 @@ function PreRegisterContent() {
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur border border-slate-200 shadow-sm mb-4 md:mb-6">
             <span className="w-2 h-2 rounded-full bg-[#087F78]" />
             <span className="text-[10px] md:text-[11px] font-extrabold tracking-[0.2em] md:tracking-[0.24em] uppercase text-slate-600">
-              Early access waitlist · <Deva className="normal-case tracking-normal text-sm text-[#087F78]">इंतज़ार ख़त्म</Deva>
+              Early access waitlist
             </span>
           </div>
           <h1 className="text-3xl md:text-6xl lg:text-7xl font-extrabold text-[#0D1B1E] leading-[1.1] mb-4 md:mb-6 tracking-tight">
-            Judo hamari <span style={gradientText}><Deva className="italic">FreshBhoj बिरादरी</Deva></span> se
+            Join the <span style={gradientText}><span className="italic" style={{ fontFamily: "var(--font-instrument), Georgia, serif" }}>FreshBhoj family</span></span>
           </h1>
           <p className="text-slate-500 text-base md:text-xl font-medium max-w-2xl mx-auto leading-relaxed">
-            Abhi pre-register karo aur pao early access aur launch ke khaas benefits <br className="hidden md:block" />
-            poore FreshBhoj platform par.
+            Pre-register now for early access and exclusive launch benefits <br className="hidden md:block" />
+            across the FreshBhoj platform.
           </p>
         </div>
 
@@ -264,14 +263,14 @@ function PreRegisterContent() {
             </div>
 
             <h2 className="text-4xl font-bold text-[#0D1B1E] mb-4">
-              Aap list me hain! <Deva className="text-[#087F78]">शाबाश</Deva>
+              You're on the list!
             </h2>
             <p className="text-lg text-slate-500 mb-10 leading-relaxed max-w-lg mx-auto">
-              Aapki jagah pakki ho gayi. Aapke shehar me <span className="font-bold text-[#087F78]">app launch hote hi aapko khabar mil jayegi</span>.
+              Your spot is secured. <span className="font-bold text-[#087F78]">We'll let you know as soon as the app launches</span> in your city.
             </p>
 
             <div className="text-left rounded-3xl border border-[#087F78]/15 bg-[#EFFAF8] p-6 md:p-8 mb-10">
-              <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-[#087F78] mb-5">Aapke early member benefits</p>
+              <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-[#087F78] mb-5">Your early member benefits</p>
               <ul className="space-y-4">
                 {BENEFITS.map(({ icon: Icon, title, text }) => (
                   <li key={title} className="flex items-start gap-4">
@@ -303,7 +302,7 @@ function PreRegisterContent() {
             {/* Benefits shown while registering */}
             <div className="relative mb-8 rounded-3xl border border-[#087F78]/15 bg-[#EFFAF8] p-5 md:p-6">
               <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-[#087F78] mb-4 text-center">
-                Pre-register karne par kya milega
+                What you get for pre-registering
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {BENEFITS.map(({ icon: Icon, title, text }) => (
@@ -324,7 +323,7 @@ function PreRegisterContent() {
               <div className="p-8 md:p-10 border-b border-slate-50">
                 <div className="mb-6">
                   <h2 className="text-xl font-semibold text-[#0D1B1E]">
-                    {step === 1 ? "Foodie safar shuru karo" : "Apni pasand batao"}
+                    {step === 1 ? "Start your foodie journey" : "Tell us your tastes"}
                   </h2>
                 </div>
                 {/* Progress Bar */}
@@ -339,7 +338,7 @@ function PreRegisterContent() {
                 </div>
                 <div className="flex justify-between items-center mt-3">
                   <p className="text-sm text-slate-400">
-                    {step === 1 ? "Basic jaankari" : "Aapke hisaab se experience"}
+                    {step === 1 ? "The basics" : "An experience built around you"}
                   </p>
                   <span className="font-semibold text-sm" style={gradientText}>Step {step} / 2</span>
                 </div>
@@ -455,10 +454,10 @@ function PreRegisterContent() {
                         <div className="w-10 h-10 rounded-xl bg-[#EFFAF8] flex items-center justify-center">
                           <Image src="/about-yourself.svg" alt="About" width={20} height={20} />
                         </div>
-                        <h3 className="text-lg font-semibold text-[#0D1B1E]">Apne baare me batao</h3>
+                        <h3 className="text-lg font-semibold text-[#0D1B1E]">About you</h3>
                       </div>
                       <div className="space-y-4">
-                        <label className="block text-sm font-semibold text-[#0D1B1E] ml-1 mb-4">Aap kaun hain?</label>
+                        <label className="block text-sm font-semibold text-[#0D1B1E] ml-1 mb-4">Who are you?</label>
                         <div className="flex flex-wrap gap-3">
                           {["Student", "Professional", "Family", "Other"].map((item) => (
                             <button
@@ -505,7 +504,7 @@ function PreRegisterContent() {
 
                       <div className="space-y-10">
                         <div>
-                          <label className="block text-sm font-semibold text-[#0D1B1E] ml-1 mb-6">Khane ki pasand</label>
+                          <label className="block text-sm font-semibold text-[#0D1B1E] ml-1 mb-6">Food preference</label>
                           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                             {[
                               { id: "veg", label: "Veg", icon: "/veg.svg" },
@@ -531,7 +530,7 @@ function PreRegisterContent() {
                         </div>
 
                         <div>
-                          <label className="block text-sm font-semibold text-[#0D1B1E] ml-1 mb-6">Aap kya dhoondh rahe hain?</label>
+                          <label className="block text-sm font-semibold text-[#0D1B1E] ml-1 mb-6">What are you looking for?</label>
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             {[
                               { id: "Daily Meals", icon: "/daily-tiffin.svg" },
@@ -579,7 +578,7 @@ function PreRegisterContent() {
                         ) : (
                           <div className="w-6 h-6 rounded-full border-2 border-slate-300 bg-slate-50 shadow-sm flex-shrink-0" />
                         )}
-                        Mere shehar me FreshBhoj app launch ho to mujhe batao
+                        Notify me when FreshBhoj launches in my city
                       </button>
                     </div>
 
@@ -601,14 +600,14 @@ function PreRegisterContent() {
                           style={!isSubmitting && isFoodieStep2Valid ? gradientBg : {}}
                         >
                           {isSubmitting ? (
-                            <>Judh rahe hain... <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" /></>
+                            <>Joining... <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" /></>
                           ) : (
                             <>Waitlist Join Karo <CheckCircle2 className="w-5 md:w-6 h-5 md:h-6" /></>
                           )}
                         </button>
                       </div>
                       <p className="text-xs text-slate-400 text-center">
-                        Join karke aap hamare Terms of Service aur Privacy Policy se sehmat hote hain.
+                        By joining, you agree to our Terms of Service and Privacy Policy.
                       </p>
                     </div>
                   </>

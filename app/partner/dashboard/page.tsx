@@ -44,9 +44,9 @@ const KITCHEN_STATUS_LABEL: Record<KitchenProfile["status"], string> = {
 
 function greeting() {
   const h = new Date().getHours();
-  if (h < 12) return "Suprabhat · सुप्रभात";
-  if (h < 17) return "Namaste · नमस्ते";
-  return "Shubh sandhya · शुभ संध्या";
+  if (h < 12) return "Good morning";
+  if (h < 17) return "Good afternoon";
+  return "Good evening";
 }
 
 export default function DashboardPage() {

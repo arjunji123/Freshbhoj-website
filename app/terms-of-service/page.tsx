@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { Navbar, Footer } from "../Components";
-import { Deva } from "../Components/desi";
 
 const gradientStyle = {
   background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)",
@@ -68,7 +67,7 @@ export default function TermsOfService() {
               <Image src="/legal.svg" alt="legal" fill className="object-contain" />
             </div>
             <span className="text-[#087F78] text-[10px] font-bold uppercase tracking-[0.2em]">
-              Legal Documentation <Deva className="normal-case tracking-normal text-sm">· नियम-शर्तें</Deva>
+              Legal Documentation
             </span>
           </div>
           <h1 className="font-extrabold text-5xl md:text-6xl lg:text-7xl leading-tight tracking-tight mb-4">
@@ -86,8 +85,7 @@ export default function TermsOfService() {
             </span>
           </h1>
           <p className="text-slate-600 text-base md:text-lg max-w-2xl mb-3">
-            <Deva className="text-[#087F78] text-xl md:text-2xl italic">साफ़ बात, सीधी बात।</Deva>{" "}
-            FreshBhoj use karne se pehle yeh terms padh lijiye — neeche poora text English me hai.
+            Please read these terms before using FreshBhoj. Plain language, no surprises.
           </p>
           <p className="text-slate-400 text-sm font-medium">
             Last Updated: March 17, 2026

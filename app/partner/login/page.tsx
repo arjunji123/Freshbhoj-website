@@ -117,14 +117,14 @@ export default function PartnerLoginPage() {
 
         <div className="relative mt-6 lg:mt-5">
           <span className="inline-flex items-center gap-2 rounded-full bg-white/15 border border-white/25 backdrop-blur px-4 py-2 text-[10px] lg:text-xs font-bold uppercase tracking-[0.2em] mb-3">
-            <span className="w-2 h-2 rounded-full bg-[#FFC21A] animate-pulse" /> Partner Portal · Sample preview · <span className="font-deva normal-case tracking-normal text-sm text-[#FFE08A]">साझेदार</span>
+            <span className="w-2 h-2 rounded-full bg-[#FFC21A] animate-pulse" /> Partner Portal · Sample preview
           </span>
           <h1 className="text-3xl md:text-4xl xl:text-[2.6rem] font-extrabold leading-[1.08] mb-2">
-            Aapke kitchen ka{" "}
-            <span className="text-[#FFC21A] font-deva italic">कमांड सेंटर।</span>
+            Your kitchen's{" "}
+            <span className="text-[#FFC21A] italic" style={{ fontFamily: "var(--font-instrument), Georgia, serif" }}>command centre.</span>
           </h1>
           <p className="text-white/80 text-sm lg:text-base max-w-xl leading-relaxed">
-            Orders, menu, Reels, ads aur payouts — sab ek dashboard me. Login ke baad aapko yahi milega. Neeche ke numbers sirf sample hain.
+            Orders, menu, Reels, ads and payouts in one dashboard. This is what you get after logging in. The numbers below are samples.
           </p>
         </div>
 
@@ -134,9 +134,9 @@ export default function PartnerLoginPage() {
         </div>
 
         <div className="relative mt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <p className="text-xs text-white/70 max-w-xs">Yeh sample data hai, asli kitchen nahi. Sign up se pehle walkthrough chahiye?</p>
+          <p className="text-xs text-white/70 max-w-xs">This is sample data, not a real kitchen. Want a walkthrough before you sign up?</p>
           <Link href="/contact-us" className="inline-flex items-center justify-center gap-2 rounded-full bg-white text-[#0D1B1E] font-bold px-7 py-3.5 hover:scale-105 active:scale-95 transition-transform shadow-xl">
-            Humse baat karo <ArrowUpRight size={18} />
+            Talk to us <ArrowUpRight size={18} />
           </Link>
         </div>
       </aside>
@@ -166,14 +166,14 @@ export default function PartnerLoginPage() {
           </div>
 
           <h2 className="text-3xl md:text-4xl font-extrabold text-[#0D1B1E] mb-2">
-            {stage === "phone" ? <>Swagat hai <span className="font-deva italic text-[#087F78]">नमस्ते 🙏</span></> : "Code daalo"}
+            {stage === "phone" ? <>Welcome <span className="font-deva italic text-[#087F78]">नमस्ते 🙏</span></> : "Enter your code"}
           </h2>
           <p className="text-slate-500 mb-8">
             {stage === "phone" ? (
-              "Sirf phone number se login karo ya apna kitchen register karo. Password ki zaroorat nahi."
+              "Log in or register your kitchen with just your phone number. No password needed."
             ) : (
-              <>Humne code bheja hai <span className="font-bold text-[#0D1B1E]">+91 {phoneDigits}</span>.{" "}
-                <button type="button" onClick={() => { setStage("phone"); setOtp(""); setError(null); }} className="text-[#087F78] font-bold hover:underline">Badlo</button>
+              <>We sent a code to <span className="font-bold text-[#0D1B1E]">+91 {phoneDigits}</span>.{" "}
+                <button type="button" onClick={() => { setStage("phone"); setOtp(""); setError(null); }} className="text-[#087F78] font-bold hover:underline">Change</button>
               </>
             )}
           </p>
@@ -242,7 +242,7 @@ export default function PartnerLoginPage() {
                 className="w-full py-4 rounded-2xl text-white font-bold text-lg flex items-center justify-center gap-2 shadow-[0_20px_40px_-12px_rgba(8,127,120,0.55)] transition-all enabled:hover:scale-[1.01] enabled:active:scale-[0.99] disabled:opacity-50 disabled:shadow-none disabled:cursor-not-allowed"
                 style={{ background: "linear-gradient(135deg,#14ADA0,#087F78 55%,#0B4F6C)" }}
               >
-                {isVerifying ? <Spinner /> : null} Verify karke aage badho
+                {isVerifying ? <Spinner /> : null} Verify and continue
               </button>
 
               <button
@@ -251,7 +251,7 @@ export default function PartnerLoginPage() {
                 disabled={cooldown > 0 || isSending}
                 className="text-sm font-bold text-[#087F78] hover:underline disabled:text-slate-400 disabled:no-underline"
               >
-                {cooldown > 0 ? `${cooldown}s me OTP dobara bhej sakte hain` : "OTP dobara bhejo"}
+                {cooldown > 0 ? `Resend OTP in ${cooldown}s` : "Resend OTP"}
               </button>
             </div>
           )}
@@ -259,13 +259,13 @@ export default function PartnerLoginPage() {
           <div className="mt-7 flex items-start gap-3 rounded-2xl bg-[#EFFAF8] border border-[#087F78]/10 p-4">
             <ShieldCheck size={20} className="text-[#087F78] shrink-0 mt-0.5" />
             <p className="text-xs text-slate-500 leading-relaxed">
-              Naye hain? Isi login se aapka kitchen account ban jayega. Aage badhkar aap hamare{" "}
+              New here? Logging in creates your kitchen account. By continuing, you agree to our{" "}
               <Link href="/terms-of-service" className="font-bold text-[#087F78] hover:underline">Terms</Link> and{" "}
-              <Link href="/privacy-policy" className="font-bold text-[#087F78] hover:underline">Privacy Policy</Link> se sehmat hote hain.
+              <Link href="/privacy-policy" className="font-bold text-[#087F78] hover:underline">Privacy Policy</Link>.
             </p>
           </div>
           <p className="text-center text-sm text-slate-400 mt-4">
-            Madad chahiye? <Link href="/contact-us" className="font-bold text-[#087F78] hover:underline">Humse baat karo</Link>
+            Need help? <Link href="/contact-us" className="font-bold text-[#087F78] hover:underline">Talk to us</Link>
           </p>
         </div>
       </main>

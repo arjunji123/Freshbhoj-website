@@ -36,7 +36,7 @@ export default function Footer() {
           {[
             { label: "Privacy Policy", href: "/privacy-policy" },
             { label: "Terms of Service", href: "/terms-of-service" },
-            { label: "Contact Us · बात करें", href: "/contact-us" },
+            { label: "Contact Us", href: "/contact-us" },
           ].map((link) => (
             <Link
               key={link.label}
@@ -97,7 +97,7 @@ export default function Footer() {
             </p>
             <span className="hidden md:block w-1 h-1 rounded-full bg-[#FFC21A]" />
             <p className="text-white/80 text-sm font-medium">
-              Banaya gaya <span className="text-[#FFC21A]">&hearts;</span> se, India ke liye
+              Made with <span className="text-[#FFC21A]">&hearts;</span> in India
             </p>
           </div>
         </div>

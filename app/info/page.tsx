@@ -61,13 +61,13 @@ export default function InfoPage() {
               {theme === "dark" ? "Light mode" : "Dark mode"}
             </button>
           </div>
-          <h1>How FreshBhoj Works <span style={{ fontFamily: "var(--font-deva), Georgia, serif", fontStyle: "italic", fontWeight: 400 }}>· कैसे काम करता है</span></h1>
+          <h1>How FreshBhoj Works</h1>
           <p className={styles.lede}>
-            Seedhi-saadi bhasha me poori guide — un logon ke liye jo khana mangate hain, aur un kitchens ke liye jo pakate hain. (Detail English me hai.)
+            A plain-language guide for the people who order food and the kitchens that cook it.
           </p>
           <div className={styles.pillRow}>
-            <span className={styles.pill}>Customers ke liye</span>
-            <span className={styles.pill}>Kitchen Partners ke liye</span>
+            <span className={styles.pill}>For Customers</span>
+            <span className={styles.pill}>For Kitchen Partners</span>
             <span className={styles.pill}>Business Model</span>
           </div>
         </div>

@@ -33,7 +33,7 @@ export default function PublicKitchenPage() {
   if (error || !kitchen) {
     return (
       <div className="min-h-screen w-full flex flex-col items-center justify-center bg-[#F3F8F8] px-6 text-center">
-        <h1 className="text-lg font-extrabold text-slate-900 mb-2">Kitchen nahi mila <span className="font-deva text-[#087F78]">· कहीं खो गया?</span></h1>
+        <h1 className="text-lg font-extrabold text-slate-900 mb-2">Kitchen not found</h1>
         <p className="text-sm text-slate-500">{error ?? "This kitchen page doesn't exist or is no longer available."}</p>
       </div>
     );
@@ -68,7 +68,7 @@ export default function PublicKitchenPage() {
           {kitchen.tagline ? <p className="text-sm text-slate-500 mb-3">{kitchen.tagline}</p> : null}
 
           <div className="flex items-center gap-2 flex-wrap mb-4">
-            <Badge tone={kitchen.isOpenNow ? "success" : "neutral"}>{kitchen.isOpenNow ? "Abhi khula hai" : "Band hai"}</Badge>
+            <Badge tone={kitchen.isOpenNow ? "success" : "neutral"}>{kitchen.isOpenNow ? "Open now" : "Closed"}</Badge>
             {kitchen.rating > 0 ? (
               <span className="inline-flex items-center gap-1 text-xs font-bold text-slate-600 bg-slate-100 rounded-full px-3 py-1">
                 <Star size={11} className="text-amber-400 fill-amber-400" />
