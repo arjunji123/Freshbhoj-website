@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import {
   ArrowUpRight, Target, Calculator, SlidersHorizontal, UtensilsCrossed, BadgeCheck, Gauge, Droplets,
-  CalendarSync, Leaf, Check, Plus, type LucideIcon,
+  CalendarSync, Plus, type LucideIcon,
 } from "lucide-react";
 import { Navbar, Footer } from "../Components";
 import FitCalculator from "./FitCalculator";
@@ -40,15 +40,15 @@ const STEPS = [
   { n: "03", icon: UtensilsCrossed, title: "Order meals that fit", text: "Every meal shows its macros, so you can hit your numbers without the guesswork." },
 ] as const;
 
-const FEATURES: { icon: LucideIcon; title: string; text: string; big?: boolean; chips?: string[] }[] = [
-  { icon: Target, title: "Goal picker", text: "Choose Muscle gain, Fat loss or Stay balanced. Your targets, filters and picks follow your goal.", big: true, chips: ["Muscle gain", "Fat loss", "Stay balanced"] },
+const FEATURES: { icon: LucideIcon; title: string; text: string; big?: boolean }[] = [
+  { icon: Target, title: "Goal picker", text: "Choose Muscle gain, Fat loss or Stay balanced. Your targets, filters and picks follow your goal.", big: true },
   { icon: Calculator, title: "Personal daily target", text: "A calorie and protein target built from your own body and activity." },
-  { icon: SlidersHorizontal, title: "Macro filters", text: "Narrow the menu in one tap.", chips: ["High protein 30g+", "Under 400 kcal", "Veg only"] },
-  { icon: UtensilsCrossed, title: "Macro-counted meals", text: "Calories, protein, carbs and fat on every card. No hunting for numbers.", big: true, chips: ["kcal", "Protein", "Carbs", "Fat"] },
+  { icon: SlidersHorizontal, title: "Macro filters", text: "Narrow the menu in one tap." },
+  { icon: UtensilsCrossed, title: "Macro-counted meals", text: "Calories, protein, carbs and fat on every card. No hunting for numbers.", big: true },
   { icon: BadgeCheck, title: "BhojFit kitchens", text: "Kitchens ranked by protein, so the best high-protein food is at the top." },
   { icon: Gauge, title: "Live cart meter", text: "See how your cart adds up against your daily target before you pay." },
   { icon: Droplets, title: "Hydration tracker", text: "Log your water through the day and stay on track." },
-  { icon: CalendarSync, title: "Weekly BhojFit meal plans", text: "Subscribe to a week of meals planned around your goal. Pause or skip any day.", big: true, chips: ["Weekly plans", "Pause anytime", "Skip a day"] },
+  { icon: CalendarSync, title: "Weekly BhojFit meal plans", text: "Subscribe to a week of meals planned around your goal. Pause or skip any day.", big: true },
 ];
 
 const FAQ = [
@@ -91,8 +91,6 @@ function SampleCard() {
           <span className="absolute -right-6 -bottom-10 w-44 h-44 rounded-full bg-white/10" />
           <span className="absolute right-10 top-6 w-20 h-20 rounded-full bg-[#FFC21A]/90" />
           <span className="absolute right-[4.4rem] top-[3.1rem] w-28 h-28 rounded-full border-[10px] border-white/90 bg-[#EFFAF8]" />
-          <span className="absolute left-5 top-5 rounded-full bg-[#FFC21A] text-[#0D1B1E] px-3 py-1 text-[10px] font-extrabold uppercase tracking-widest">High protein</span>
-          <span className="absolute left-5 bottom-4 inline-flex items-center gap-1 rounded-full bg-white/90 text-[#087F78] px-2.5 py-1 text-[10px] font-extrabold"><Leaf size={11} /> Veg</span>
         </div>
         <div className="p-5">
           <div className="flex items-start justify-between gap-3 mb-4">
@@ -144,21 +142,17 @@ export default function FitPage() {
       {/* Hero */}
       <section className="relative overflow-hidden bg-[#0D1B1E] text-white pt-32 pb-20 lg:pt-40 lg:pb-28">
         <div className="pointer-events-none absolute -top-40 -left-24 w-[640px] h-[640px] rounded-full bg-[#087F78]/50 blur-[130px] animate-[drift_16s_ease-in-out_infinite]" />
-        <div className="pointer-events-none absolute bottom-0 right-0 w-[460px] h-[460px] rounded-full bg-[#FFC21A]/15 blur-[130px]" />
         <div className="pointer-events-none absolute inset-0 opacity-[0.14] [background-image:radial-gradient(#fff_1px,transparent_1px)] [background-size:30px_30px] [mask-image:radial-gradient(ellipse_at_center,black_20%,transparent_75%)]" />
         <div className="relative max-w-7xl mx-auto px-6 grid lg:grid-cols-[1.1fr_0.9fr] gap-14 lg:gap-8 items-center">
           <div>
-            <span className="inline-flex items-center gap-3 rounded-full bg-white/10 border border-white/20 pl-2 pr-4 py-1.5 mb-7">
-              <span className="rounded-full bg-[#FFC21A] text-[#0D1B1E] px-3 py-1 text-[10px] font-extrabold uppercase tracking-widest">New</span>
-              <span className="text-xs lg:text-sm font-bold">BhojFit</span>
-            </span>
             <h1 className="font-extrabold text-5xl sm:text-6xl lg:text-7xl leading-[1.02] tracking-[-0.03em] mb-6">
+              <span className="sr-only">BhojFit: </span>
               Eat for the goal<br />you are <Accent>training for.</Accent>
             </h1>
             <p className="text-white/80 text-lg lg:text-xl leading-relaxed max-w-xl mb-8">
-              BhojFit is a dedicated space in the FreshBhoj app for people who train, stay active or simply want to eat well. Know your daily target, see the macros on every meal and order from verified kitchens.
+              BhojFit is the part of the FreshBhoj app for people who train or simply want to eat well. Know your daily target, see the macros on every meal and order from verified kitchens.
             </p>
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-8">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
               <Link
                 href="/pre-register?type=foodie"
                 className="group inline-flex items-center justify-center gap-3 h-14 pl-8 pr-2 rounded-full bg-white text-[#0D1B1E] font-extrabold text-base lg:text-lg shadow-[0_20px_50px_-15px_rgba(0,0,0,0.6)] hover:scale-[1.03] active:scale-95 transition-transform"
@@ -175,13 +169,6 @@ export default function FitPage() {
                 Try the calculator
               </a>
             </div>
-            <ul className="flex flex-wrap gap-2">
-              {["High protein 30g+", "Under 400 kcal", "Veg only"].map((t) => (
-                <li key={t} className="inline-flex items-center gap-1.5 rounded-full bg-white/10 border border-white/15 px-3.5 py-1.5 text-xs font-semibold text-white/90">
-                  <Check size={13} className="text-[#FFC21A]" /> {t}
-                </li>
-              ))}
-            </ul>
           </div>
           <SampleCard />
         </div>
@@ -191,9 +178,8 @@ export default function FitPage() {
       <section id="how-it-works" className="relative py-20 lg:py-28">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center max-w-2xl mx-auto mb-12 lg:mb-16">
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#087F78] mb-4">How it works</p>
             <h2 className="text-4xl md:text-5xl font-extrabold text-[#0D1B1E] leading-tight">
-              Three steps to <span className="inline-block pr-[0.14em] -mr-[0.14em] bg-gradient-to-r from-[#1DB9A0] via-[#087F78] to-[#0B4F6C] bg-clip-text text-transparent"><span style={serif}>meals that fit.</span></span>
+              How BhojFit works: three steps to <span className="inline-block pr-[0.14em] -mr-[0.14em] bg-gradient-to-r from-[#1DB9A0] via-[#087F78] to-[#0B4F6C] bg-clip-text text-transparent"><span style={serif}>meals that fit.</span></span>
             </h2>
           </div>
           <ol className="grid md:grid-cols-3 gap-5 lg:gap-6">
@@ -214,13 +200,12 @@ export default function FitPage() {
         <div className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[480px] rounded-full bg-[#087F78]/30 blur-[140px]" />
         <div className="relative max-w-7xl mx-auto px-6">
           <div className="text-center max-w-2xl mx-auto mb-12 lg:mb-16">
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#FFC21A] mb-4">What is inside BhojFit</p>
             <h2 className="text-4xl md:text-5xl font-extrabold leading-tight">
               Everything you need to <Accent>eat on target.</Accent>
             </h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5">
-            {FEATURES.map(({ icon: Icon, title, text, big, chips }) => (
+            {FEATURES.map(({ icon: Icon, title, text, big }) => (
               <div
                 key={title}
                 className={`group relative rounded-3xl p-6 lg:p-7 border border-white/10 transition-all duration-300 hover:-translate-y-1 hover:border-[#5EE6D0]/40 ${
@@ -232,13 +217,6 @@ export default function FitPage() {
                 </div>
                 <h3 className="font-extrabold text-lg lg:text-xl mb-2">{title}</h3>
                 <p className="text-white/65 text-sm lg:text-base leading-relaxed">{text}</p>
-                {chips ? (
-                  <div className="flex flex-wrap gap-2 mt-5">
-                    {chips.map((c) => (
-                      <span key={c} className="rounded-full bg-white/10 border border-white/15 px-3 py-1 text-xs font-semibold text-white/85">{c}</span>
-                    ))}
-                  </div>
-                ) : null}
               </div>
             ))}
           </div>
@@ -249,7 +227,6 @@ export default function FitPage() {
       <section id="target" className="py-20 lg:py-28">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center max-w-2xl mx-auto mb-10 lg:mb-14">
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#087F78] mb-4">Daily target calculator</p>
             <h2 className="text-4xl md:text-5xl font-extrabold text-[#0D1B1E] leading-tight mb-4">
               Know your numbers in{" "}
               <span className="inline-block pr-[0.14em] -mr-[0.14em] bg-gradient-to-r from-[#1DB9A0] via-[#087F78] to-[#0B4F6C] bg-clip-text text-transparent"><span style={serif}>ten seconds.</span></span>
@@ -264,7 +241,6 @@ export default function FitPage() {
       <section id="faq" className="pb-20 lg:pb-28">
         <div className="max-w-3xl mx-auto px-6">
           <div className="text-center mb-10">
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#087F78] mb-4">FAQ</p>
             <h2 className="text-4xl md:text-5xl font-extrabold text-[#0D1B1E] leading-tight">Good to know</h2>
           </div>
           <div className="grid gap-3">
@@ -284,7 +260,6 @@ export default function FitPage() {
       {/* Closing CTA */}
       <section className="px-6 pb-20 lg:pb-28">
         <div className="relative max-w-6xl mx-auto overflow-hidden rounded-[2.5rem] lg:rounded-[3.5rem] bg-[linear-gradient(150deg,#14ADA0_0%,#087F78_45%,#0B4F6C_100%)] text-white text-center px-6 py-14 lg:py-20">
-          <div className="pointer-events-none absolute -top-24 -right-16 w-80 h-80 rounded-full bg-[#FFC21A]/25 blur-[100px]" />
           <h2 className="relative text-4xl md:text-6xl font-extrabold leading-[1.05] mb-4">
             Your goal. Your meals. <span className="text-[#FFC21A]" style={serif}>Your target.</span>
           </h2>

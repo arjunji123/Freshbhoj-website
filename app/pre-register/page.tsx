@@ -229,23 +229,14 @@ function PreRegisterContent() {
       <main className="flex-1 w-full max-w-7xl mx-auto px-6 py-12 md:py-20 pt-36 md:pt-40 relative">
         {/* Subtle background accents (keeps page from looking flat) */}
         <div className="pointer-events-none absolute -top-20 right-[-140px] w-[420px] h-[420px] bg-[#087F78]/[0.06] blur-[90px] rounded-full" />
-        <div className="pointer-events-none absolute top-[420px] left-[-160px] w-[520px] h-[520px] bg-[#1DB9A0]/[0.05] blur-[110px] rounded-full" />
-        <div className="pointer-events-none absolute bottom-[-120px] right-[-180px] w-[560px] h-[560px] bg-slate-900/[0.03] blur-[130px] rounded-full" />
 
         {/* Header Section */}
         <div className="text-center max-w-4xl mx-auto mb-10 md:mb-16 px-4">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur border border-slate-200 shadow-sm mb-4 md:mb-6">
-            <span className="w-2 h-2 rounded-full bg-[#087F78]" />
-            <span className="text-[10px] md:text-[11px] font-extrabold tracking-[0.2em] md:tracking-[0.24em] uppercase text-slate-600">
-              Early access waitlist
-            </span>
-          </div>
           <h1 className="text-3xl md:text-6xl lg:text-7xl font-extrabold text-[#0D1B1E] leading-[1.1] mb-4 md:mb-6 tracking-tight">
             Join the <span style={gradientText}><span className="italic" style={{ fontFamily: "var(--font-instrument), Georgia, serif" }}>FreshBhoj family</span></span>
           </h1>
           <p className="text-slate-500 text-base md:text-xl font-medium max-w-2xl mx-auto leading-relaxed">
-            Pre-register now for early access and exclusive launch benefits <br className="hidden md:block" />
-            across the FreshBhoj platform.
+Pre-register now for early access and launch benefits across FreshBhoj.
           </p>
         </div>
 
@@ -270,7 +261,7 @@ function PreRegisterContent() {
             </p>
 
             <div className="text-left rounded-3xl border border-[#087F78]/15 bg-[#EFFAF8] p-6 md:p-8 mb-10">
-              <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-[#087F78] mb-5">Your early member benefits</p>
+              <h3 className="text-lg font-bold text-[#0D1B1E] mb-5">Your early member benefits</h3>
               <ul className="space-y-4">
                 {BENEFITS.map(({ icon: Icon, title, text }) => (
                   <li key={title} className="flex items-start gap-4">
@@ -289,33 +280,12 @@ function PreRegisterContent() {
               className="inline-flex items-center justify-center px-12 py-5 rounded-3xl text-white font-bold text-lg shadow-[0_20px_40px_-10px_rgba(8,127,120,0.3)] hover:scale-[1.05] active:scale-95 transition-all"
               style={gradientBg}
             >
-              Wapas Home <ChevronRight className="ml-2 w-5 h-5" />
+              Back to Home <ChevronRight className="ml-2 w-5 h-5" />
             </Link>
           </div>
         ) : userType === "foodie" ? (
           /* Foodie Registration Flow */
           <div ref={formTopRef} className="max-w-4xl mx-auto relative scroll-mt-28 md:scroll-mt-32">
-            {/* Background Accent Gradients */}
-            <div className="absolute top-0 right-0 w-96 h-96 bg-[#087F78] opacity-[0.03] blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2 pointer-events-none" />
-            <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#1DB9A0] opacity-[0.03] blur-[100px] rounded-full translate-y-1/2 -translate-x-1/2 pointer-events-none" />
-
-            {/* Benefits shown while registering */}
-            <div className="relative mb-8 rounded-3xl border border-[#087F78]/15 bg-[#EFFAF8] p-5 md:p-6">
-              <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-[#087F78] mb-4 text-center">
-                What you get for pre-registering
-              </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {BENEFITS.map(({ icon: Icon, title, text }) => (
-                  <div key={title} className="flex items-start gap-3 rounded-2xl bg-white px-4 py-3 shadow-sm">
-                    <span className="w-9 h-9 shrink-0 rounded-xl bg-[#EFFAF8] text-[#087F78] flex items-center justify-center"><Icon size={16} /></span>
-                    <div>
-                      <p className="font-bold text-sm text-[#0D1B1E] leading-tight">{title}</p>
-                      <p className="text-xs text-slate-500 mt-0.5">{text}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
 
             <div className="relative bg-white/90 backdrop-blur-2xl rounded-[2.5rem] border border-[#087F78]/15 shadow-[0_40px_90px_-35px_rgba(8,127,120,0.28)] overflow-hidden mb-12 ring-1 ring-white/60">
               <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white to-transparent opacity-80" />
@@ -353,14 +323,14 @@ function PreRegisterContent() {
                         <div className="w-10 h-10 rounded-xl bg-[#EFFAF8] flex items-center justify-center">
                           <Image src="/personal.svg" alt="Personal" width={20} height={20} />
                         </div>
-                        <h3 className="text-lg font-semibold text-[#0D1B1E]">Aapki jaankari</h3>
+                        <h3 className="text-lg font-semibold text-[#0D1B1E]">Your details</h3>
                       </div>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
                         <div>
-                          <label className="block text-sm font-semibold text-[#0D1B1E] ml-1 mb-4">Poora Naam</label>
+                          <label className="block text-sm font-semibold text-[#0D1B1E] ml-1 mb-4">Full name</label>
                           <input
                             type="text"
-                            placeholder="Aapka naam"
+                            placeholder="Your full name"
                             className={`w-full px-6 py-4 rounded-full ${contactUsInputBorder}`}
                             value={foodieData.fullName}
                             onChange={(e) => setFoodieData({ ...foodieData, fullName: e.target.value })}

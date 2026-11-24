@@ -8,9 +8,8 @@ import { ArrowUpRight, X } from "lucide-react";
 
 const LINKS = [
   { label: "Home", href: "/" },
-  { label: "How it works", href: "/#problem-fix" },
+  { label: "What you get", href: "/#features" },
   { label: "Verified", href: "/#verified" },
-  { label: "Features", href: "/#features" },
   { label: "BhojFit", href: "/bhojfit" },
   { label: "Contact", href: "/contact-us" },
 ] as const;

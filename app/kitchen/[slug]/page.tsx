@@ -70,7 +70,7 @@ export default function PublicKitchenPage() {
           <div className="flex items-center gap-2 flex-wrap mb-4">
             <Badge tone={kitchen.isOpenNow ? "success" : "neutral"}>{kitchen.isOpenNow ? "Open now" : "Closed"}</Badge>
             {kitchen.rating > 0 ? (
-              <span className="inline-flex items-center gap-1 text-xs font-bold text-slate-600 bg-slate-100 rounded-full px-3 py-1">
+              <span className="inline-flex items-center gap-1 text-sm font-bold text-slate-600">
                 <Star size={11} className="text-amber-400 fill-amber-400" />
                 {kitchen.rating.toFixed(1)} ({kitchen.ratingCount})
               </span>
@@ -94,11 +94,11 @@ export default function PublicKitchenPage() {
 
           <div className="flex items-center gap-4 mt-5 pt-4 border-t border-slate-100 text-xs text-slate-400 font-semibold">
             <span>{kitchen.followerCount} followers</span>
-            <span>{kitchen.prepTimeMins} min me taiyaar</span>
+            <span>{kitchen.prepTimeMins} min prep time</span>
           </div>
         </div>
 
-        <p className="text-center text-xs text-slate-400 mt-6">Powered by FreshBhoj · <span className="font-deva text-sm text-[#087F78]">स्वाद भी, भरोसा भी</span></p>
+        <p className="text-center text-xs text-slate-400 mt-6">Powered by FreshBhoj</p>
       </div>
     </div>
   );

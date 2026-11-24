@@ -105,7 +105,6 @@ export default function PartnerLoginPage() {
       {/* ── Brand panel ── */}
       <aside className="relative overflow-hidden text-white bg-[linear-gradient(160deg,#14ADA0_0%,#087F78_45%,#0B4F6C_100%)] px-6 py-8 lg:px-10 xl:px-12 lg:py-7 flex flex-col lg:h-screen lg:min-h-0">
         <div className="pointer-events-none absolute -top-24 -left-20 w-96 h-96 rounded-full bg-[#5EE6D0]/30 blur-3xl animate-[drift_14s_ease-in-out_infinite]" />
-        <div className="pointer-events-none absolute -bottom-32 -right-16 w-[28rem] h-[28rem] rounded-full bg-white/15 blur-3xl animate-[drift_18s_ease-in-out_infinite_reverse]" />
         <div className="pointer-events-none absolute inset-0 opacity-[0.12] [background-image:radial-gradient(#fff_1px,transparent_1px)] [background-size:26px_26px] [mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)]" />
 
         <div className="relative flex items-center justify-between">
@@ -116,9 +115,6 @@ export default function PartnerLoginPage() {
         </div>
 
         <div className="relative mt-6 lg:mt-5">
-          <span className="inline-flex items-center gap-2 rounded-full bg-white/15 border border-white/25 backdrop-blur px-4 py-2 text-[10px] lg:text-xs font-bold uppercase tracking-[0.2em] mb-3">
-            <span className="w-2 h-2 rounded-full bg-[#FFC21A] animate-pulse" /> Partner Portal · Sample preview
-          </span>
           <h1 className="text-3xl md:text-4xl xl:text-[2.6rem] font-extrabold leading-[1.08] mb-2">
             Your kitchen's{" "}
             <span className="text-[#FFC21A] italic" style={{ fontFamily: "var(--font-instrument), Georgia, serif" }}>command centre.</span>
@@ -144,7 +140,7 @@ export default function PartnerLoginPage() {
       {/* ── Form panel ── */}
       <main className="relative flex items-center justify-center px-6 py-12 lg:py-6 lg:h-screen lg:overflow-y-auto bg-[#F3F8F8] lg:bg-white">
         <Link href="/" className="hidden lg:inline-flex absolute top-8 left-8 items-center gap-2 text-sm font-semibold text-slate-400 hover:text-[#087F78] transition-colors">
-          <ArrowLeft size={16} /> Home pe wapas
+          <ArrowLeft size={16} /> Back to home
         </Link>
 
         <div className="w-full max-w-md">
@@ -166,7 +162,7 @@ export default function PartnerLoginPage() {
           </div>
 
           <h2 className="text-3xl md:text-4xl font-extrabold text-[#0D1B1E] mb-2">
-            {stage === "phone" ? <>Welcome <span className="font-deva italic text-[#087F78]">नमस्ते 🙏</span></> : "Enter your code"}
+            {stage === "phone" ? <>Welcome <span className="italic text-[#087F78]" style={{ fontFamily: "var(--font-instrument), Georgia, serif" }}>back</span></> : "Enter your code"}
           </h2>
           <p className="text-slate-500 mb-8">
             {stage === "phone" ? (
@@ -181,7 +177,7 @@ export default function PartnerLoginPage() {
           {stage === "phone" ? (
             <form onSubmit={(e) => { e.preventDefault(); if (canSendOtp) handleSendOtp(); }} className="flex flex-col gap-5">
               <div>
-                <label htmlFor="phone" className="block text-xs font-bold uppercase tracking-widest text-[#0D1B1E] mb-3 ml-1">Phone number / फ़ोन नंबर</label>
+                <label htmlFor="phone" className="block text-xs font-bold uppercase tracking-widest text-[#0D1B1E] mb-3 ml-1">Phone number</label>
                 <div className={`flex items-center rounded-2xl bg-white border-2 transition-all focus-within:border-[#087F78] focus-within:ring-4 focus-within:ring-[#087F78]/10 ${error ? "border-red-300" : "border-slate-200"}`}>
                   <span className="flex items-center gap-2 pl-4 pr-3 py-4 border-r border-slate-200 font-bold text-[#0D1B1E]">
                     <Smartphone size={18} className="text-[#087F78]" /> +91

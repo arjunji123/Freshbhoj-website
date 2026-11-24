@@ -18,12 +18,11 @@ import {
   ChefHat,
   Handshake,
   Sparkles,
-  CalendarDays,
   ArrowUpRight,
   type LucideIcon,
 } from "lucide-react";
 import { Navbar, Footer } from "../Components";
-import { Eyebrow, Torana } from "../Components/desi";
+import { Torana } from "../Components/desi";
 
 declare global {
   interface Window {
@@ -140,10 +139,8 @@ export default function ContactUs() {
         <div className="pointer-events-none absolute inset-0 jaali-light [mask-image:linear-gradient(to_bottom,black,transparent_85%)]" />
         <div className="pointer-events-none absolute inset-0 opacity-50 [background-image:radial-gradient(#087F78_1px,transparent_1px)] [background-size:28px_28px] [mask-image:radial-gradient(ellipse_at_top,black,transparent_70%)]" />
         <div className="pointer-events-none absolute -top-24 -left-24 w-[420px] h-[420px] rounded-full bg-[#1DB9A0]/25 blur-[110px] animate-[drift_14s_ease-in-out_infinite]" />
-        <div className="pointer-events-none absolute top-10 -right-24 w-[380px] h-[380px] rounded-full bg-[#FFC21A]/20 blur-[110px] animate-[drift_18s_ease-in-out_infinite_reverse]" />
 
         <div className="relative max-w-5xl mx-auto px-6 text-center">
-          <Eyebrow en="Contact us" className="mb-5" />
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold text-[#0D1B1E] leading-[1.02] mb-6">
             Let&apos;s{" "}
             <span className="inline-block pr-[0.14em] -mr-[0.14em]" style={gradientText}><span className="italic" style={{ fontFamily: "var(--font-instrument), Georgia, serif" }}>talk.</span></span>
@@ -228,8 +225,8 @@ export default function ContactUs() {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                       <div>
-                        <label className="block text-xs font-bold text-[#0D1B1E] uppercase tracking-widest mb-3 ml-1">Aapka naam</label>
-                        <input type="text" placeholder="Poora naam" required className={inputCls} value={msgData.name} onChange={(e) => setMsgData({ ...msgData, name: e.target.value })} disabled={isSubmitting} />
+                        <label className="block text-xs font-bold text-[#0D1B1E] uppercase tracking-widest mb-3 ml-1">Your name</label>
+                        <input type="text" placeholder="Full name" required className={inputCls} value={msgData.name} onChange={(e) => setMsgData({ ...msgData, name: e.target.value })} disabled={isSubmitting} />
                       </div>
                       <div>
                         <label className="block text-xs font-bold text-[#0D1B1E] uppercase tracking-widest mb-3 ml-1">Email</label>
@@ -277,9 +274,8 @@ export default function ContactUs() {
 
           {/* Channels */}
           <div className="flex flex-col gap-4">
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-slate-400">Prefer another way?</p>
             {[
-              { icon: <MessageCircle size={22} />, label: "WhatsApp / Call", value: "+91 80583 18556", sub: "Mon – Sat · 9am – 7pm", href: "https://wa.me/918058318556", tag: "Fastest" },
+              { icon: <MessageCircle size={22} />, label: "WhatsApp / Call", value: "+91 80583 18556", sub: "Mon – Sat · 9am – 7pm", href: "https://wa.me/918058318556" },
               { icon: <Mail size={22} />, label: "Email", value: "arjun@freshbhoj.com", sub: "Replies within 2–4 hours", href: "mailto:arjun@freshbhoj.com" },
               { icon: <Linkedin size={22} />, label: "LinkedIn", value: "Arjun Singh Naruka", sub: "Partnerships & press", href: "https://www.linkedin.com/in/arjun-singh-naruka/" },
             ].map((c) => (
@@ -295,10 +291,7 @@ export default function ContactUs() {
                   <span className="relative">{c.icon}</span>
                 </span>
                 <span className="min-w-0 flex-1">
-                  <span className="flex items-center gap-2">
-                    <span className="text-sm font-bold text-[#0D1B1E]">{c.label}</span>
-                    {"tag" in c && c.tag ? <span className="text-[9px] font-bold uppercase tracking-widest bg-[#FFC21A] text-[#0D1B1E] rounded-full px-2 py-0.5">{c.tag}</span> : null}
-                  </span>
+                  <span className="block text-sm font-bold text-[#0D1B1E]">{c.label}</span>
                   <span className="block text-slate-600 text-sm truncate">{c.value}</span>
                   <span className="flex items-center gap-1 text-[11px] text-slate-400 mt-0.5"><Clock3 size={11} />{c.sub}</span>
                 </span>
@@ -307,7 +300,7 @@ export default function ContactUs() {
             ))}
 
             <div className="mt-4">
-              <p className="text-xs font-bold uppercase tracking-[0.2em] text-slate-400 mb-4">Follow our journey</p>
+              <p className="text-sm font-semibold text-slate-500 mb-4">Follow our journey</p>
               <div className="flex gap-3">
                 {[
                   { icon: <Instagram className="w-5 h-5" />, href: "https://www.instagram.com/freshbhoj", label: "Instagram" },
@@ -334,7 +327,6 @@ export default function ContactUs() {
         {/* ── FAQ ── */}
         <section className="max-w-3xl mx-auto mb-20 md:mb-28">
           <div className="text-center mb-10">
-            <Eyebrow en="Quick answers" className="mb-3" />
             <h2 className="text-4xl md:text-5xl font-extrabold text-[#0D1B1E]">
               We may have{" "}
               <span className="inline-block pr-[0.14em] -mr-[0.14em]" style={gradientText}><span className="italic" style={{ fontFamily: "var(--font-instrument), Georgia, serif" }}>already answered it</span></span>
@@ -365,17 +357,13 @@ export default function ContactUs() {
         {/* ── Founders call ── */}
         <section className="relative overflow-hidden rounded-[2.5rem] lg:rounded-[3.5rem] text-white bg-[linear-gradient(135deg,#0B4F6C_0%,#087F78_60%,#14ADA0_100%)] p-8 md:p-14 lg:p-16 flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
           <div className="pointer-events-none absolute -top-24 -left-16 w-80 h-80 rounded-full bg-[#5EE6D0]/30 blur-3xl animate-[drift_14s_ease-in-out_infinite]" />
-          <div className="pointer-events-none absolute -bottom-28 right-0 w-96 h-96 rounded-full bg-white/15 blur-3xl animate-[drift_18s_ease-in-out_infinite_reverse]" />
-          <div className="relative flex-1 text-center lg:text-left">
-            <span className="inline-flex items-center gap-2 rounded-full bg-white/15 border border-white/25 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.2em] mb-6">
-              <CalendarDays size={14} /> 30-minute call
-            </span>
+            <div className="relative flex-1 text-center lg:text-left">
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-[1.05] mb-5">
               Talk to the{" "}
               <span className="text-[#FFC21A] italic" style={{ fontFamily: "var(--font-instrument), Georgia, serif" }}>founders</span>
             </h2>
             <p className="text-white/80 text-base md:text-lg max-w-xl mx-auto lg:mx-0 mb-8 leading-relaxed">
-              Partnership, roadmap or a big idea? Book a direct session with our founding team.
+              Partnership, roadmap or a big idea? Book a 30-minute session with our founding team.
             </p>
             <button
               onClick={() => {
@@ -407,7 +395,7 @@ export default function ContactUs() {
               </div>
               <div className="mt-4 flex items-center gap-3 w-full">
                 <div className="h-px flex-1 bg-slate-200" />
-                <p className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.3em] whitespace-nowrap">Scan to book a time</p>
+                <p className="text-xs font-medium text-slate-400 whitespace-nowrap">Scan to book a time</p>
                 <div className="h-px flex-1 bg-slate-200" />
               </div>
             </div>

@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { Navbar, Footer } from "../Components";
 
 const gradientStyle = {
@@ -62,14 +61,6 @@ export default function TermsOfService() {
       {/* Hero Header */}
       <div className="w-full pt-36 md:pt-40 pb-4 md:pb-4">
         <div className="w-full max-w-5xl mx-auto px-6">
-          <div className="flex items-center gap-2 bg-[#EFFAF8] border border-[#D3F1EE] rounded-full px-4 py-1.5 w-fit mb-4">
-            <div className="relative w-3.5 h-3.5">
-              <Image src="/legal.svg" alt="legal" fill className="object-contain" />
-            </div>
-            <span className="text-[#087F78] text-[10px] font-bold uppercase tracking-[0.2em]">
-              Legal Documentation
-            </span>
-          </div>
           <h1 className="font-extrabold text-5xl md:text-6xl lg:text-7xl leading-tight tracking-tight mb-4">
             <span className="text-[#0D1B1E]">Terms of </span>
             <span

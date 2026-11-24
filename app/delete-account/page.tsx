@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { Navbar, Footer } from "../Components";
 
 const gradientStyle = {
@@ -96,12 +95,6 @@ export default function DeleteAccountPage() {
 
       <div className="w-full pt-36 md:pt-40 pb-8 md:pb-16 border-b border-slate-100">
         <div className="w-full max-w-3xl mx-auto px-6">
-          <div className="flex items-center gap-2 bg-[#EFFAF8] rounded-full px-4 py-1.5 w-fit mb-4">
-            <div className="relative w-3.5 h-3.5">
-              <Image src="/legal.svg" alt="legal" fill className="object-contain" />
-            </div>
-            <span className="text-[#087F78] text-[10px] font-bold uppercase tracking-[0.2em]">Account</span>
-          </div>
           <h1 className="font-extrabold text-4xl md:text-6xl leading-tight tracking-tight mb-4">
             Delete your <span style={gradientStyle}>FreshBhoj</span> account
           </h1>

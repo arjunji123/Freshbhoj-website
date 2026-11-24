@@ -3,12 +3,12 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Torana } from "./desi";
-import { BadgeCheck, MapPinned, ClipboardCheck, Star, ShieldCheck, Clock3, Search } from "lucide-react";
+import { BadgeCheck, MapPinned, ClipboardCheck, Star, Clock3, Search } from "lucide-react";
 
 const STEPS = [
   {
     icon: MapPinned,
-    title: "We show up in person",
+    title: "We visit in person",
     description: "The FreshBhoj team physically visits every kitchen. No paper-only approvals.",
   },
   {
@@ -66,16 +66,12 @@ export default function VerifiedKitchens() {
       >
         {/* Left: story + timeline */}
         <div>
-          <div className="inline-flex items-center gap-2 rounded-full pl-2 pr-5 py-2 mb-8 bg-white border border-[#087F78]/15 shadow-sm">
-            <span className="w-7 h-7 rounded-full text-white flex items-center justify-center" style={{ background: "linear-gradient(135deg,#14ADA0,#0B4F6C)" }}><BadgeCheck size={16} /></span>
-            <span className="text-[10px] lg:text-xs font-bold uppercase tracking-[0.2em] text-[#087F78]">FreshBhoj Verified</span>
-          </div>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#0D1B1E] mb-6 leading-[1.05] tracking-tight">
             Trust you can{" "}
             <span className="inline-block pr-[0.14em] -mr-[0.14em] bg-gradient-to-r from-[#1DB9A0] via-[#087F78] to-[#0B4F6C] bg-clip-text text-transparent"><span className="italic" style={{ fontFamily: "var(--font-instrument), Georgia, serif" }}>actually see.</span></span>
           </h2>
-          <p className="text-slate-500 text-base md:text-xl leading-relaxed mb-10 max-w-xl">
-            Any kitchen can sell here. The ones we visit and verify ourselves earn a Verified badge and are showcased separately, so you always know where your food comes from.
+          <p className="text-slate-500 text-base md:text-xl leading-relaxed mb-8 max-w-xl">
+            Kitchens we visit and verify ourselves earn a Verified badge, so you always know where your food comes from.
           </p>
 
           <ol className="relative flex flex-col gap-3">
@@ -98,7 +94,6 @@ export default function VerifiedKitchens() {
                     <Icon size={20} strokeWidth={2.2} />
                   </span>
                   <div className="pt-0.5">
-                    <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-0.5">Step 0{i + 1}</p>
                     <h3 className="font-extrabold text-[#0D1B1E] text-lg mb-1">{title}</h3>
                     <p className="text-slate-500 text-sm md:text-base leading-relaxed">{description}</p>
                   </div>
@@ -110,25 +105,6 @@ export default function VerifiedKitchens() {
 
         {/* Right: seal + app mock */}
         <div className="relative flex justify-center py-10">
-          {/* rotating seal */}
-          <svg viewBox="0 0 200 200" className="absolute -top-2 -right-2 md:right-4 w-28 md:w-36 z-20 animate-[spin_26s_linear_infinite] drop-shadow-lg" aria-hidden>
-            <defs>
-              <path id="seal-path" d="M100,100 m-72,0 a72,72 0 1,1 144,0 a72,72 0 1,1 -144,0" />
-              <linearGradient id="seal-g" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stopColor="#1DB9A0" />
-                <stop offset="1" stopColor="#0B4F6C" />
-              </linearGradient>
-            </defs>
-            <circle cx="100" cy="100" r="98" fill="url(#seal-g)" />
-            <circle cx="100" cy="100" r="62" fill="none" stroke="#fff" strokeOpacity=".35" strokeDasharray="3 5" />
-            <text fill="#fff" fontSize="14" fontWeight="800">
-              <textPath href="#seal-path" textLength="446" lengthAdjust="spacing">FRESHBHOJ VERIFIED • TRUSTED • </textPath>
-            </text>
-          </svg>
-          <span className="absolute -top-2 -right-2 md:right-4 w-28 md:w-36 aspect-square z-30 flex items-center justify-center pointer-events-none">
-            <BadgeCheck className="text-white w-10 md:w-12 h-10 md:h-12" strokeWidth={2.2} />
-          </span>
-
           {/* glow behind card */}
           <div className="absolute inset-x-10 top-16 bottom-0 rounded-[3rem] bg-gradient-to-br from-[#1DB9A0]/40 via-[#1E7BD8]/20 to-[#FFC21A]/30 blur-3xl" />
 
@@ -192,21 +168,6 @@ export default function VerifiedKitchens() {
             </div>
           </div>
 
-          {/* floating chips */}
-          <div className="hidden sm:flex absolute -left-2 lg:-left-14 top-[34%] z-20 items-center gap-2 rounded-2xl bg-white px-4 py-3 shadow-xl border border-slate-100 animate-[float_4s_ease-in-out_infinite]">
-            <span className="w-8 h-8 rounded-full bg-[#1E7BD8]/10 text-[#1E7BD8] flex items-center justify-center"><ShieldCheck size={16} /></span>
-            <div>
-              <p className="text-[11px] font-extrabold text-[#0D1B1E] leading-tight">Inspected in person</p>
-              <p className="text-[10px] text-slate-500">By the FreshBhoj team</p>
-            </div>
-          </div>
-          <div className="hidden sm:flex absolute right-2 lg:right-0 bottom-12 z-20 items-center gap-2 rounded-2xl bg-white px-4 py-3 shadow-xl border border-slate-100 animate-[float_5s_ease-in-out_infinite]" style={{ animationDelay: "1s" }}>
-            <span className="w-8 h-8 rounded-full bg-[#087F78]/10 text-[#087F78] flex items-center justify-center"><ClipboardCheck size={16} /></span>
-            <div>
-              <p className="text-[11px] font-extrabold text-[#0D1B1E] leading-tight">Hygiene check</p>
-              <p className="text-[10px] text-slate-500">Licence &amp; storage</p>
-            </div>
-          </div>
         </div>
       </div>
     </section>

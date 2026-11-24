@@ -118,8 +118,6 @@ export default function FitCalculator() {
 
       <div className="relative overflow-hidden rounded-[2rem] bg-[#0D1B1E] text-white p-6 lg:p-9 flex flex-col">
         <div className="pointer-events-none absolute -top-24 -right-16 w-72 h-72 rounded-full bg-[#087F78]/50 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-24 -left-10 w-64 h-64 rounded-full bg-[#FFC21A]/10 blur-3xl" />
-        <p className="relative text-xs font-bold uppercase tracking-[0.2em] text-[#FFC21A] mb-5">Your daily target</p>
 
         {result ? (
           <div className="relative flex flex-col flex-1" aria-live="polite">

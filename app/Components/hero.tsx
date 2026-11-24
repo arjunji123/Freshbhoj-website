@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRef, type PointerEvent } from "react";
-import { ArrowUpRight, BadgeCheck, Leaf, Truck, ShieldCheck, Flame, CalendarSync } from "lucide-react";
+import { ArrowUpRight, BadgeCheck } from "lucide-react";
 import Navbar from "./navbar";
 
 const serif = { fontFamily: "var(--font-instrument), Georgia, serif", fontStyle: "italic" as const, fontWeight: 400 };
@@ -34,16 +34,6 @@ const Hero = () => {
       {/* ── Background layers ── */}
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute -top-40 -left-32 w-[620px] h-[620px] rounded-full bg-[#5EE6D0]/35 blur-[120px] animate-[drift_16s_ease-in-out_infinite]" />
-        <div className="absolute top-1/3 right-[12%] w-[460px] h-[460px] rounded-full bg-[#FFC21A]/25 blur-[130px] animate-[drift_20s_ease-in-out_infinite_reverse]" />
-        <div className="absolute -bottom-48 -right-24 w-[620px] h-[620px] rounded-full bg-[#0B4F6C]/70 blur-[120px]" />
-        <div className="absolute inset-0 opacity-[0.18] [background-image:radial-gradient(#fff_1px,transparent_1px)] [background-size:30px_30px] [mask-image:radial-gradient(ellipse_at_center,black_25%,transparent_75%)]" />
-        {/* concentric rings behind the phone */}
-        <div className="hidden lg:block absolute right-[6%] top-1/2 -translate-y-1/2 w-[760px] h-[760px]">
-          <span className="absolute inset-0 rounded-full border border-white/15" />
-          <span className="absolute inset-[90px] rounded-full border border-white/15" />
-          <span className="absolute inset-[180px] rounded-full border border-white/20" />
-          <span className="absolute inset-[250px] rounded-full bg-white/5 blur-2xl" />
-        </div>
       </div>
 
       <Navbar />
@@ -52,11 +42,6 @@ const Hero = () => {
       <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-6 px-6 pt-32 lg:pt-28 pb-16 lg:pb-16 lg:flex-1">
         {/* Copy */}
         <div className="w-full lg:w-[52%] flex flex-col items-start text-left">
-          <div className="inline-flex items-center gap-3 rounded-full bg-white/12 border border-white/25 backdrop-blur-md pl-2 pr-4 py-1.5 mb-7">
-            <span className="rounded-full bg-[#FFC21A] text-[#0D1B1E] px-3 py-1 text-[10px] font-extrabold uppercase tracking-widest">New</span>
-            <span className="text-white text-xs lg:text-sm font-bold">Early access is now open</span>
-          </div>
-
           <h1 className="font-extrabold text-white text-[2.9rem] sm:text-6xl lg:text-[3.9vw] xl:text-[4.7rem] leading-[1.02] tracking-[-0.03em] mb-5">
             India&apos;s First
             <br />
@@ -70,15 +55,11 @@ const Hero = () => {
             Food Discovery
           </h1>
 
-          <p className="font-deva italic text-[#FFE08A] text-3xl sm:text-4xl lg:text-[2.6vw] xl:text-5xl leading-tight mb-5 -mt-1">
-            देखो, परखो, फिर खाओ।
-          </p>
-
           <p className="text-white/85 text-base md:text-lg lg:text-xl leading-relaxed max-w-xl mb-7">
-            Watch your food being made, check the nutrition, and order in one tap. Fresh meals from tiffin services, cloud kitchens, restaurants and cafés our team has personally visited and verified.
+            Watch your food being made, check the nutrition, and order from kitchens we have visited and verified.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto mb-7">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto mb-2">
             <Link
               href="/pre-register?type=foodie"
               className="group inline-flex items-center justify-center gap-3 h-14 pl-8 pr-2 rounded-full bg-white text-[#0D1B1E] font-extrabold text-base lg:text-lg shadow-[0_20px_50px_-15px_rgba(0,0,0,0.45)] hover:scale-[1.03] active:scale-95 transition-transform"
@@ -96,29 +77,6 @@ const Hero = () => {
             </Link>
           </div>
 
-          <div className="flex flex-wrap items-center gap-x-5 gap-y-4">
-            <div className="flex items-center gap-3">
-              <div className="relative h-10 w-24">
-                <Image src="/Social.png" alt="" fill className="object-contain object-left" />
-              </div>
-              <p className="text-white/85 text-sm font-medium leading-tight">
-                <span className="block text-white font-extrabold text-base">2,500+</span>
-                foodies on the waitlist
-              </p>
-            </div>
-            <span className="hidden sm:block w-px h-10 bg-white/25" />
-            <ul className="flex flex-wrap gap-2">
-              {[
-                { icon: ShieldCheck, t: "Verified kitchens" },
-                { icon: Leaf, t: "Transparent nutrition" },
-                { icon: CalendarSync, t: "Flexible plans" },
-              ].map(({ icon: Icon, t }) => (
-                <li key={t} className="inline-flex items-center gap-1.5 rounded-full bg-white/10 border border-white/20 px-3 py-1.5 text-xs font-semibold text-white/90">
-                  <Icon size={13} className="text-[#FFC21A]" /> {t}
-                </li>
-              ))}
-            </ul>
-          </div>
         </div>
 
         {/* Visual */}
@@ -142,15 +100,6 @@ const Hero = () => {
               </div>
             </div>
 
-            <div className="absolute -right-2 sm:-right-6 lg:-right-10 top-[46%] animate-float [animation-delay:1.2s]">
-              <div className="flex items-center gap-3 rounded-2xl bg-white/90 backdrop-blur-xl pl-3 pr-5 py-3 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.4)]">
-                <span className="w-10 h-10 rounded-xl bg-[#FFC21A]/20 text-[#F59E0B] flex items-center justify-center"><Flame size={20} /></span>
-                <span className="leading-tight">
-                  <span className="block text-xs font-extrabold text-[#0D1B1E]">420 kcal · 18g protein</span>
-                  <span className="block text-[10px] text-slate-500">On every dish</span>
-                </span>
-              </div>
-            </div>
           </div>
         </div>
       </div>

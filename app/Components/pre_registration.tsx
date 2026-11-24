@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Torana } from "./desi";
-import { ArrowUpRight, Clapperboard, Megaphone, Percent, ShoppingBag, Sparkles, Truck, UtensilsCrossed, Wallet, Check, BellRing, type LucideIcon } from "lucide-react";
+import { ArrowUpRight, Clapperboard, Megaphone, Percent, Sparkles, Truck, Wallet, Check, BellRing, type LucideIcon } from "lucide-react";
 
 type Perk = { icon: LucideIcon; text: string };
 
@@ -21,9 +21,9 @@ const KITCHEN_PERKS: Perk[] = [
 ];
 
 const ROADMAP = [
-  { tag: "Live now", title: "Pre-registration", text: "Secure your spot and your launch rewards today.", live: true },
-  { tag: "Next", title: "Early access invites", text: "Waitlist members get in first.", live: false },
-  { tag: "Coming soon", title: "City-by-city launch", text: "Reels, verified kitchens and subscriptions go live as we expand.", live: false },
+  { title: "Pre-registration", text: "Secure your spot and your launch rewards today.", live: true },
+  { title: "Early access invites", text: "Waitlist members get in first.", live: false },
+  { title: "City-by-city launch", text: "Reels, verified kitchens and subscriptions go live as we expand.", live: false },
 ];
 
 export default function PreRegistration() {
@@ -48,9 +48,6 @@ export default function PreRegistration() {
       <div className="relative w-full max-w-7xl mx-auto px-6">
         {/* ── Header ── */}
         <div className={`text-center max-w-3xl mx-auto mb-14 lg:mb-20 ${reveal()}`}>
-          <span className="inline-flex items-center gap-2 rounded-full bg-white border border-[#087F78]/15 shadow-sm px-5 py-2 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-[#087F78] mb-7">
-            <span className="w-2 h-2 rounded-full bg-[#FFC21A] animate-pulse" /> Limited early spots
-          </span>
           <h2 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-[#0D1B1E] leading-[1.05] mb-6">
             Join early.{" "}
             <span className="inline-block pr-[0.14em] -mr-[0.14em] bg-gradient-to-r from-[#1DB9A0] via-[#087F78] to-[#0B4F6C] bg-clip-text text-transparent" >
@@ -58,7 +55,7 @@ export default function PreRegistration() {
             </span>
           </h2>
           <p className="text-slate-500 text-base md:text-xl leading-relaxed">
-            Be part of FreshBhoj before the public launch and unlock rewards reserved for early members. Seats are limited.
+            Pre-register before launch and unlock rewards reserved for early members.
           </p>
         </div>
 
@@ -67,11 +64,7 @@ export default function PreRegistration() {
           {/* Foodies */}
           <div className="group relative overflow-hidden rounded-[2.5rem] bg-white border border-slate-100 p-8 lg:p-12 shadow-[0_30px_70px_-40px_rgba(8,127,120,0.5)] hover:-translate-y-1.5 transition-transform duration-500 flex flex-col">
             <div className="pointer-events-none absolute -top-24 -right-24 w-72 h-72 rounded-full bg-[#1DB9A0]/15 blur-3xl group-hover:bg-[#1DB9A0]/25 transition-colors" />
-            <div className="relative flex items-center justify-between mb-8">
-              <span className="inline-flex items-center gap-2 rounded-full bg-[#087F78]/10 text-[#087F78] px-4 py-2 text-xs font-bold uppercase tracking-widest">
-                <ShoppingBag size={14} /> For Foodies
-              </span>
-            </div>
+            <h3 className="relative text-xl font-extrabold text-[#087F78] mb-4">For foodies</h3>
             <div className="relative mb-8">
               <p className="text-7xl lg:text-8xl font-extrabold leading-none bg-gradient-to-br from-[#1DB9A0] to-[#0B4F6C] bg-clip-text text-transparent">₹100</p>
               <p className="text-slate-500 font-semibold mt-2">wallet credit for early members</p>
@@ -98,12 +91,7 @@ export default function PreRegistration() {
           <div className="group relative overflow-hidden rounded-[2.5rem] bg-[#0D1B1E] text-white p-8 lg:p-12 shadow-[0_30px_70px_-30px_rgba(11,79,108,0.7)] hover:-translate-y-1.5 transition-transform duration-500 flex flex-col">
             <div className="pointer-events-none absolute -top-24 -left-20 w-80 h-80 rounded-full bg-[#087F78]/50 blur-3xl animate-[drift_14s_ease-in-out_infinite]" />
             <div className="pointer-events-none absolute -bottom-28 -right-16 w-80 h-80 rounded-full bg-[#0B4F6C]/60 blur-3xl animate-[drift_18s_ease-in-out_infinite_reverse]" />
-            <div className="relative flex items-center justify-between mb-8">
-              <span className="inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/15 px-4 py-2 text-xs font-bold uppercase tracking-widest">
-                <UtensilsCrossed size={14} /> For Kitchens
-              </span>
-              <span className="rounded-full bg-[#FFC21A] text-[#0D1B1E] px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-widest">Special offer</span>
-            </div>
+            <h3 className="relative text-xl font-extrabold text-[#FFC21A] mb-4">For kitchens</h3>
             <div className="relative mb-8">
               <p className="text-7xl lg:text-8xl font-extrabold leading-none bg-gradient-to-br from-[#FFE08A] to-[#FFC21A] bg-clip-text text-transparent">0%</p>
               <p className="text-white/70 font-semibold mt-2">commission for the first 3 months</p>
@@ -129,9 +117,6 @@ export default function PreRegistration() {
 
         {/* ── Launch roadmap ── */}
         <div className={`relative rounded-[2.5rem] lg:rounded-[3.5rem] border border-[#087F78]/10 bg-white/70 backdrop-blur px-6 py-12 lg:px-16 lg:py-16 text-center shadow-[0_30px_80px_-50px_rgba(8,127,120,0.5)] ${reveal("delay-300")}`}>
-          <span className="inline-flex items-center gap-2 rounded-full bg-[#087F78]/10 text-[#087F78] px-5 py-2 text-[10px] lg:text-xs font-bold uppercase tracking-[0.2em] mb-6">
-            <span className="w-2 h-2 rounded-full bg-[#087F78] animate-pulse" /> Launching across India
-          </span>
           <h3 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#0D1B1E] leading-[1.05] mb-4">
             Tomorrow is{" "}
             <span className="inline-block pr-[0.14em] -mr-[0.14em] bg-gradient-to-r from-[#1DB9A0] to-[#0B4F6C] bg-clip-text text-transparent">
@@ -139,7 +124,7 @@ export default function PreRegistration() {
             </span>
           </h3>
           <p className="text-slate-500 text-base md:text-lg max-w-2xl mx-auto mb-12 leading-relaxed">
-            We are launching city by city. Pre-register now and be the first to know when we arrive in yours.
+            Pre-register now and be the first to know when we arrive in your city.
           </p>
 
           <ol className="relative grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6 max-w-4xl mx-auto text-left">
@@ -156,7 +141,6 @@ export default function PreRegistration() {
                   </span>
                 </span>
                 <div>
-                  <span className={`inline-block text-[10px] font-bold uppercase tracking-widest rounded-full px-3 py-1 mb-2 ${s.live ? "bg-[#087F78] text-white" : "bg-slate-100 text-slate-500"}`}>{s.tag}</span>
                   <h4 className="font-extrabold text-[#0D1B1E] text-lg mb-1">{s.title}</h4>
                   <p className="text-slate-500 text-sm leading-relaxed">{s.text}</p>
                 </div>

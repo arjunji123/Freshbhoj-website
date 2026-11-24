@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowUpRight, Beef, Droplets, Gauge, SlidersHorizontal, Target } from "lucide-react";
+import { ArrowUpRight, Droplets, Gauge, SlidersHorizontal, Target } from "lucide-react";
 
 const PERKS = [
   { icon: Target, text: "Goal-based daily targets" },
@@ -22,9 +22,6 @@ export default function FitPromo() {
           <div className="pointer-events-none absolute -bottom-28 -right-16 w-80 h-80 rounded-full bg-[#FFC21A]/15 blur-3xl" />
           <div className="relative grid lg:grid-cols-[1.1fr_0.9fr] gap-10 items-center">
             <div>
-              <span className="inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/15 px-4 py-2 text-xs font-bold uppercase tracking-widest mb-6">
-                <Beef size={14} /> New: BhojFit
-              </span>
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-[1.05] mb-4">
                 Eat for your{" "}
                 <span className="inline-block pr-[0.14em] -mr-[0.14em] bg-gradient-to-r from-[#5EE6D0] to-[#FFC21A] bg-clip-text text-transparent">
@@ -32,7 +29,7 @@ export default function FitPromo() {
                 </span>
               </h2>
               <p className="text-white/70 text-base lg:text-lg leading-relaxed max-w-xl mb-6">
-                Training, staying active or just eating better? BhojFit gives you a daily calorie and protein target and shows the macros on every meal.
+                A daily calorie and protein target, with macros on every meal.
               </p>
               <span className="inline-flex items-center gap-2 font-extrabold text-[#FFC21A]">
                 Explore BhojFit <ArrowUpRight size={18} className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
