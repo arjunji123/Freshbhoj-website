@@ -11,7 +11,7 @@ const LINKS = [
   { label: "How it works", href: "/#problem-fix" },
   { label: "Verified", href: "/#verified" },
   { label: "Features", href: "/#features" },
-  { label: "Fit", href: "/fit" },
+  { label: "BhojFit", href: "/bhojfit" },
   { label: "Contact", href: "/contact-us" },
 ] as const;
 

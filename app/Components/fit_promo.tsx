@@ -8,14 +8,14 @@ const PERKS = [
   { icon: Droplets, text: "Hydration tracker" },
 ] as const;
 
-/** Home-page promo for /fit. The whole card is the link (no separate button), so the home CTA rule stays intact. */
+/** Home-page promo for /bhojfit. The whole card is the link (no separate button), so the home CTA rule stays intact. */
 export default function FitPromo() {
   return (
     <section className="relative w-full font-sans py-16 lg:py-24 bg-[#F3F8F8]">
       <div className="max-w-7xl mx-auto px-6">
         <Link
-          href="/fit"
-          aria-label="Explore FreshBhoj Fit"
+          href="/bhojfit"
+          aria-label="Explore BhojFit"
           className="group relative block overflow-hidden rounded-[2.5rem] lg:rounded-[3.5rem] bg-[#0D1B1E] text-white p-8 lg:p-14 shadow-[0_30px_70px_-30px_rgba(11,79,108,0.7)] hover:-translate-y-1 transition-transform duration-500"
         >
           <div className="pointer-events-none absolute -top-24 -left-20 w-80 h-80 rounded-full bg-[#087F78]/50 blur-3xl animate-[drift_14s_ease-in-out_infinite]" />
@@ -23,7 +23,7 @@ export default function FitPromo() {
           <div className="relative grid lg:grid-cols-[1.1fr_0.9fr] gap-10 items-center">
             <div>
               <span className="inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/15 px-4 py-2 text-xs font-bold uppercase tracking-widest mb-6">
-                <Beef size={14} /> New: FreshBhoj Fit
+                <Beef size={14} /> New: BhojFit
               </span>
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-[1.05] mb-4">
                 Eat for your{" "}
@@ -32,10 +32,10 @@ export default function FitPromo() {
                 </span>
               </h2>
               <p className="text-white/70 text-base lg:text-lg leading-relaxed max-w-xl mb-6">
-                Training, staying active or just eating better? Fit gives you a daily calorie and protein target and shows the macros on every meal.
+                Training, staying active or just eating better? BhojFit gives you a daily calorie and protein target and shows the macros on every meal.
               </p>
               <span className="inline-flex items-center gap-2 font-extrabold text-[#FFC21A]">
-                Explore Fit <ArrowUpRight size={18} className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                Explore BhojFit <ArrowUpRight size={18} className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
               </span>
             </div>
             <ul className="grid gap-3">

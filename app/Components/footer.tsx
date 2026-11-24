@@ -34,7 +34,7 @@ export default function Footer() {
         {/* Nav Links */}
         <div className="flex flex-row flex-wrap justify-center items-center gap-6 md:gap-12 mb-12">
           {[
-            { label: "Fit", href: "/fit" },
+            { label: "BhojFit", href: "/bhojfit" },
             { label: "Privacy Policy", href: "/privacy-policy" },
             { label: "Terms of Service", href: "/terms-of-service" },
             { label: "Contact Us", href: "/contact-us" },

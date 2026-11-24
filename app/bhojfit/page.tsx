@@ -7,18 +7,18 @@ import {
 import { Navbar, Footer } from "../Components";
 import FitCalculator from "./FitCalculator";
 
-const TITLE = "FreshBhoj Fit: Eat to Your Goal";
+const TITLE = "BhojFit: Eat to Your Goal";
 const DESCRIPTION =
-  "Fit is the FreshBhoj section for people who train or just want to eat well. Set a goal, get your daily calorie and protein target, and order macro-counted meals from verified kitchens.";
+  "BhojFit is the FreshBhoj section for people who train or just want to eat well. Set a goal, get your daily calorie and protein target, and order macro-counted meals from verified kitchens.";
 
 export const metadata: Metadata = {
   title: TITLE,
   description: DESCRIPTION,
-  alternates: { canonical: "https://freshbhoj.com/fit" },
+  alternates: { canonical: "https://freshbhoj.com/bhojfit" },
   openGraph: {
     title: `${TITLE} | FreshBhoj`,
     description: DESCRIPTION,
-    url: "https://freshbhoj.com/fit",
+    url: "https://freshbhoj.com/bhojfit",
     siteName: "FreshBhoj",
     images: [{ url: "https://freshbhoj.com/og-image.jpg", width: 1200, height: 630 }],
     locale: "en_IN",
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
 const serif = { fontFamily: "var(--font-instrument), Georgia, serif", fontStyle: "italic" as const, fontWeight: 400 };
 
 const STEPS = [
-  { n: "01", icon: Target, title: "Pick your goal", text: "Muscle gain, fat loss or stay balanced. Fit shapes everything around it." },
+  { n: "01", icon: Target, title: "Pick your goal", text: "Muscle gain, fat loss or stay balanced. BhojFit shapes everything around it." },
   { n: "02", icon: Calculator, title: "Get your daily target", text: "Tell us your weight, height, age and activity. We work out your calories and protein." },
   { n: "03", icon: UtensilsCrossed, title: "Order meals that fit", text: "Every meal shows its macros, so you can hit your numbers without the guesswork." },
 ] as const;
@@ -45,19 +45,19 @@ const FEATURES: { icon: LucideIcon; title: string; text: string; big?: boolean; 
   { icon: Calculator, title: "Personal daily target", text: "A calorie and protein target built from your own body and activity." },
   { icon: SlidersHorizontal, title: "Macro filters", text: "Narrow the menu in one tap.", chips: ["High protein 30g+", "Under 400 kcal", "Veg only"] },
   { icon: UtensilsCrossed, title: "Macro-counted meals", text: "Calories, protein, carbs and fat on every card. No hunting for numbers.", big: true, chips: ["kcal", "Protein", "Carbs", "Fat"] },
-  { icon: BadgeCheck, title: "Fit kitchens", text: "Kitchens ranked by protein, so the best high-protein food is at the top." },
+  { icon: BadgeCheck, title: "BhojFit kitchens", text: "Kitchens ranked by protein, so the best high-protein food is at the top." },
   { icon: Gauge, title: "Live cart meter", text: "See how your cart adds up against your daily target before you pay." },
   { icon: Droplets, title: "Hydration tracker", text: "Log your water through the day and stay on track." },
-  { icon: CalendarSync, title: "Weekly Fit meal plans", text: "Subscribe to a week of meals planned around your goal. Pause or skip any day.", big: true, chips: ["Weekly plans", "Pause anytime", "Skip a day"] },
+  { icon: CalendarSync, title: "Weekly BhojFit meal plans", text: "Subscribe to a week of meals planned around your goal. Pause or skip any day.", big: true, chips: ["Weekly plans", "Pause anytime", "Skip a day"] },
 ];
 
 const FAQ = [
-  { q: "Who is Fit for?", a: "Anyone who trains, plays a sport, or simply wants to eat healthier. You do not need to follow a strict diet. Fit just makes the nutrition on your plate easy to see." },
+  { q: "Who is BhojFit for?", a: "Anyone who trains, plays a sport, or simply wants to eat healthier. You do not need to follow a strict diet. BhojFit just makes the nutrition on your plate easy to see." },
   { q: "How is my daily target calculated?", a: "We use the Mifflin-St Jeor formula for your resting energy, scale it for your activity level, then adjust for your goal. Protein is set between 1.6 and 2.2 g per kg of body weight depending on the goal. It is an estimate, and you can adjust it in the app." },
   { q: "Are the macros on each meal accurate?", a: "Kitchens add nutrition for each dish, and FreshBhoj AI helps estimate calories, protein, carbs and fat. Treat the numbers as a close guide rather than a lab result." },
   { q: "Can I find vegetarian options?", a: "Yes. Switch on the Veg only filter and combine it with High protein or Under 400 kcal." },
-  { q: "Is Fit free to use?", a: "Fit is part of the FreshBhoj app. You pay for the meals you order and any meal plan you subscribe to. Pre-register to hear when the app launches in your city." },
-  { q: "Is this medical advice?", a: "No. Fit gives general guidance. If you have a medical condition, are pregnant, or are under 18, please speak to a doctor or dietitian first." },
+  { q: "Is BhojFit free to use?", a: "BhojFit is part of the FreshBhoj app. You pay for the meals you order and any meal plan you subscribe to. Pre-register to hear when the app launches in your city." },
+  { q: "Is this medical advice?", a: "No. BhojFit gives general guidance. If you have a medical condition, are pregnant, or are under 18, please speak to a doctor or dietitian first." },
 ];
 
 const jsonLd = {
@@ -98,7 +98,7 @@ function SampleCard() {
           <div className="flex items-start justify-between gap-3 mb-4">
             <div>
               <h3 className="font-extrabold text-lg leading-tight">Paneer tikka power bowl</h3>
-              <p className="text-xs text-slate-500 mt-1 inline-flex items-center gap-1"><BadgeCheck size={13} className="text-[#1E7BD8]" /> Sample Fit kitchen</p>
+              <p className="text-xs text-slate-500 mt-1 inline-flex items-center gap-1"><BadgeCheck size={13} className="text-[#1E7BD8]" /> Sample BhojFit kitchen</p>
             </div>
             <div className="relative w-20 h-20 shrink-0">
               <svg viewBox="0 0 80 80" className="w-full h-full -rotate-90" role="img" aria-label="Protein covers 34 of 40 grams target for this meal">
@@ -150,13 +150,13 @@ export default function FitPage() {
           <div>
             <span className="inline-flex items-center gap-3 rounded-full bg-white/10 border border-white/20 pl-2 pr-4 py-1.5 mb-7">
               <span className="rounded-full bg-[#FFC21A] text-[#0D1B1E] px-3 py-1 text-[10px] font-extrabold uppercase tracking-widest">New</span>
-              <span className="text-xs lg:text-sm font-bold">FreshBhoj Fit</span>
+              <span className="text-xs lg:text-sm font-bold">BhojFit</span>
             </span>
             <h1 className="font-extrabold text-5xl sm:text-6xl lg:text-7xl leading-[1.02] tracking-[-0.03em] mb-6">
               Eat for the goal<br />you are <Accent>training for.</Accent>
             </h1>
             <p className="text-white/80 text-lg lg:text-xl leading-relaxed max-w-xl mb-8">
-              Fit is a dedicated space in the FreshBhoj app for people who train, stay active or simply want to eat well. Know your daily target, see the macros on every meal and order from verified kitchens.
+              BhojFit is a dedicated space in the FreshBhoj app for people who train, stay active or simply want to eat well. Know your daily target, see the macros on every meal and order from verified kitchens.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-8">
               <Link
@@ -214,7 +214,7 @@ export default function FitPage() {
         <div className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[480px] rounded-full bg-[#087F78]/30 blur-[140px]" />
         <div className="relative max-w-7xl mx-auto px-6">
           <div className="text-center max-w-2xl mx-auto mb-12 lg:mb-16">
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#FFC21A] mb-4">What is inside Fit</p>
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#FFC21A] mb-4">What is inside BhojFit</p>
             <h2 className="text-4xl md:text-5xl font-extrabold leading-tight">
               Everything you need to <Accent>eat on target.</Accent>
             </h2>
@@ -254,7 +254,7 @@ export default function FitPage() {
               Know your numbers in{" "}
               <span className="inline-block pr-[0.14em] -mr-[0.14em] bg-gradient-to-r from-[#1DB9A0] via-[#087F78] to-[#0B4F6C] bg-clip-text text-transparent"><span style={serif}>ten seconds.</span></span>
             </h2>
-            <p className="text-slate-600 text-lg">This is the same calculation Fit runs inside the app. Nothing you enter here is saved.</p>
+            <p className="text-slate-600 text-lg">This is the same calculation BhojFit runs inside the app. Nothing you enter here is saved.</p>
           </div>
           <FitCalculator />
         </div>
