@@ -62,7 +62,7 @@ export default function FitCalculator() {
 
   return (
     <div className="grid lg:grid-cols-[1.05fr_0.95fr] gap-6 lg:gap-8">
-      <div className="rounded-[2rem] bg-[#F3F8F8] border border-[#087F78]/10 p-6 lg:p-9">
+      <div className="rounded-3xl bg-[#F3F8F8] border border-[#087F78]/10 p-6 lg:p-9">
         <fieldset className="mb-6">
           <legend className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-3">Your goal</legend>
           <div className="grid sm:grid-cols-3 gap-2.5">
@@ -116,9 +116,7 @@ export default function FitCalculator() {
         </p>
       </div>
 
-      <div className="relative overflow-hidden rounded-[2rem] bg-[#0D1B1E] text-white p-6 lg:p-9 flex flex-col">
-        <div className="pointer-events-none absolute -top-24 -right-16 w-72 h-72 rounded-full bg-[#087F78]/50 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-24 -left-10 w-64 h-64 rounded-full bg-[#FFC21A]/10 blur-3xl" />
+      <div className="relative overflow-hidden rounded-3xl bg-[linear-gradient(150deg,#087F78_0%,#0B4F6C_100%)] text-white p-6 lg:p-9 flex flex-col">
         <p className="relative text-xs font-bold uppercase tracking-[0.2em] text-[#FFC21A] mb-5">Your daily target</p>
 
         {result ? (
@@ -159,7 +157,7 @@ export default function FitCalculator() {
             <div className="flex items-center gap-3 rounded-2xl bg-white/[0.06] border border-white/10 px-4 py-3 mb-6">
               <Droplets size={20} className="text-[#5EE6D0] shrink-0" />
               <p className="text-sm text-white/80">
-                Aim for about <span className="font-extrabold text-white">{result.water} L</span> of water a day. The app tracks it for you.
+                Aim for about <span className="font-extrabold text-white">{result.water} L</span> of water a day.
               </p>
             </div>
 

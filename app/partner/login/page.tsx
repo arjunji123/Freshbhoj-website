@@ -4,8 +4,7 @@ import { useEffect, useRef, useState, type ClipboardEvent, type KeyboardEvent } 
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ArrowUpRight, BadgeCheck, ShieldCheck, Smartphone } from "lucide-react";
-import DashboardPreview from "./DashboardPreview";
+import { BadgeCheck, Smartphone } from "lucide-react";
 import { kitchenAuthApi } from "../../../lib/kitchenApi";
 import { ApiError } from "../../../lib/kitchenApi";
 import { useKitchenAuth } from "../../../lib/KitchenAuthProvider";
@@ -101,76 +100,19 @@ export default function PartnerLoginPage() {
   const phoneReady = phoneDigits.replace(/\D/g, "").length === 10;
 
   return (
-    <div className="min-h-screen lg:h-screen lg:overflow-hidden w-full grid lg:grid-cols-[1.45fr_1fr] font-sans bg-white">
-      {/* ── Brand panel ── */}
-      <aside className="relative overflow-hidden text-white bg-[linear-gradient(160deg,#14ADA0_0%,#087F78_45%,#0B4F6C_100%)] px-6 py-8 lg:px-10 xl:px-12 lg:py-7 flex flex-col lg:h-screen lg:min-h-0">
-        <div className="pointer-events-none absolute -top-24 -left-20 w-96 h-96 rounded-full bg-[#5EE6D0]/30 blur-3xl animate-[drift_14s_ease-in-out_infinite]" />
-        <div className="pointer-events-none absolute -bottom-32 -right-16 w-[28rem] h-[28rem] rounded-full bg-white/15 blur-3xl animate-[drift_18s_ease-in-out_infinite_reverse]" />
-        <div className="pointer-events-none absolute inset-0 opacity-[0.12] [background-image:radial-gradient(#fff_1px,transparent_1px)] [background-size:26px_26px] [mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)]" />
+    <div className="min-h-screen w-full flex flex-col items-center justify-center px-6 py-12 font-sans bg-[#F3F8F8]">
+      <Link href="/" aria-label="FreshBhoj home" className="mb-8">
+        <Image src="/FreshBhoj.svg" alt="FreshBhoj" width={160} height={44} className="h-9 w-auto object-contain" priority />
+      </Link>
 
-        <div className="relative flex items-center justify-between">
-          <Link href="/" aria-label="FreshBhoj home">
-            <Image src="/FreshBhoj.svg" alt="FreshBhoj" width={160} height={44} className="h-9 w-auto object-contain" priority />
-          </Link>
-          <Link href="/" className="lg:hidden text-sm font-semibold text-white/80 hover:text-white">← Home</Link>
-        </div>
-
-        <div className="relative mt-6 lg:mt-5">
-          <span className="inline-flex items-center gap-2 rounded-full bg-white/15 border border-white/25 backdrop-blur px-4 py-2 text-[10px] lg:text-xs font-bold uppercase tracking-[0.2em] mb-3">
-            <span className="w-2 h-2 rounded-full bg-[#FFC21A] animate-pulse" /> Partner Portal · Sample preview
-          </span>
-          <h1 className="text-3xl md:text-4xl xl:text-[2.6rem] font-extrabold leading-[1.08] mb-2">
-            Your kitchen's{" "}
-            <span className="text-[#FFC21A] italic" style={{ fontFamily: "var(--font-instrument), Georgia, serif" }}>command centre.</span>
-          </h1>
-          <p className="text-white/80 text-sm lg:text-base max-w-xl leading-relaxed">
-            Orders, menu, Reels, ads and payouts in one dashboard. This is what you get after logging in. The numbers below are samples.
-          </p>
-        </div>
-
-        <div className="relative flex-1 min-h-[340px] lg:min-h-0 mt-5 lg:mt-5 overflow-hidden">
-          <DashboardPreview />
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#0B4F6C] to-transparent" />
-        </div>
-
-        <div className="relative mt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <p className="text-xs text-white/70 max-w-xs">This is sample data, not a real kitchen. Want a walkthrough before you sign up?</p>
-          <Link href="/contact-us" className="inline-flex items-center justify-center gap-2 rounded-full bg-white text-[#0D1B1E] font-bold px-7 py-3.5 hover:scale-105 active:scale-95 transition-transform shadow-xl">
-            Talk to us <ArrowUpRight size={18} />
-          </Link>
-        </div>
-      </aside>
-
-      {/* ── Form panel ── */}
-      <main className="relative flex items-center justify-center px-6 py-12 lg:py-6 lg:h-screen lg:overflow-y-auto bg-[#F3F8F8] lg:bg-white">
-        <Link href="/" className="hidden lg:inline-flex absolute top-8 left-8 items-center gap-2 text-sm font-semibold text-slate-400 hover:text-[#087F78] transition-colors">
-          <ArrowLeft size={16} /> Home pe wapas
-        </Link>
-
-        <div className="w-full max-w-md">
-          {/* steps */}
-          <div className="flex items-center gap-3 mb-8">
-            {["Phone", "Verify"].map((label, i) => {
-              const done = (stage === "otp" && i === 0);
-              const on = (stage === "phone" && i === 0) || (stage === "otp" && i === 1);
-              return (
-                <div key={label} className="flex items-center gap-3 flex-1 last:flex-none">
-                  <span className={`w-8 h-8 rounded-full text-xs font-bold flex items-center justify-center transition-all ${done || on ? "text-white shadow-lg shadow-[#087F78]/30" : "bg-slate-100 text-slate-400"}`} style={done || on ? { background: "linear-gradient(135deg,#1DB9A0,#0B4F6C)" } : undefined}>
-                    {done ? "✓" : i + 1}
-                  </span>
-                  <span className={`text-sm font-bold ${on || done ? "text-[#0D1B1E]" : "text-slate-400"}`}>{label}</span>
-                  {i === 0 ? <span className={`flex-1 h-0.5 rounded-full transition-colors ${stage === "otp" ? "bg-[#087F78]" : "bg-slate-200"}`} /> : null}
-                </div>
-              );
-            })}
-          </div>
-
-          <h2 className="text-3xl md:text-4xl font-extrabold text-[#0D1B1E] mb-2">
-            {stage === "phone" ? <>Welcome <span className="font-deva italic text-[#087F78]">नमस्ते 🙏</span></> : "Enter your code"}
+      <main className="w-full max-w-md rounded-3xl bg-white border border-slate-100 shadow-[0_24px_60px_-40px_rgba(8,127,120,0.5)] p-6 sm:p-10">
+        <div className="w-full">
+          <h2 className="text-3xl font-extrabold tracking-[-0.03em] text-[#0D1B1E] mb-2">
+            {stage === "phone" ? "Partner login" : "Enter your code"}
           </h2>
           <p className="text-slate-500 mb-8">
             {stage === "phone" ? (
-              "Log in or register your kitchen, restaurant or café with just your phone number. No password needed."
+              "Log in or register your kitchen with your phone number. No password needed."
             ) : (
               <>We sent a code to <span className="font-bold text-[#0D1B1E]">+91 {phoneDigits}</span>.{" "}
                 <button type="button" onClick={() => { setStage("phone"); setOtp(""); setError(null); }} className="text-[#087F78] font-bold hover:underline">Change</button>
@@ -181,7 +123,7 @@ export default function PartnerLoginPage() {
           {stage === "phone" ? (
             <form onSubmit={(e) => { e.preventDefault(); if (canSendOtp) handleSendOtp(); }} className="flex flex-col gap-5">
               <div>
-                <label htmlFor="phone" className="block text-xs font-bold uppercase tracking-widest text-[#0D1B1E] mb-3 ml-1">Phone number / फ़ोन नंबर</label>
+                <label htmlFor="phone" className="block text-xs font-bold uppercase tracking-widest text-[#0D1B1E] mb-3 ml-1">Phone number</label>
                 <div className={`flex items-center rounded-2xl bg-white border-2 transition-all focus-within:border-[#087F78] focus-within:ring-4 focus-within:ring-[#087F78]/10 ${error ? "border-red-300" : "border-slate-200"}`}>
                   <span className="flex items-center gap-2 pl-4 pr-3 py-4 border-r border-slate-200 font-bold text-[#0D1B1E]">
                     <Smartphone size={18} className="text-[#087F78]" /> +91
@@ -204,8 +146,8 @@ export default function PartnerLoginPage() {
               <button
                 type="submit"
                 disabled={!canSendOtp}
-                className="w-full py-4 rounded-2xl text-white font-bold text-lg flex items-center justify-center gap-2 shadow-[0_20px_40px_-12px_rgba(8,127,120,0.55)] transition-all enabled:hover:scale-[1.01] enabled:active:scale-[0.99] disabled:opacity-50 disabled:shadow-none disabled:cursor-not-allowed"
-                style={{ background: "linear-gradient(135deg,#14ADA0,#087F78 55%,#0B4F6C)" }}
+                className="w-full py-4 rounded-2xl bg-[#087F78] hover:bg-[#066b65] text-white font-bold text-lg flex items-center justify-center gap-2 shadow-[0_20px_40px_-12px_rgba(8,127,120,0.55)] transition-all enabled:hover:scale-[1.01] enabled:active:scale-[0.99] disabled:opacity-50 disabled:shadow-none disabled:cursor-not-allowed"
+               
               >
                 {isSending ? <Spinner /> : null} Send OTP
               </button>
@@ -239,8 +181,8 @@ export default function PartnerLoginPage() {
                 type="button"
                 onClick={handleVerify}
                 disabled={!canVerify}
-                className="w-full py-4 rounded-2xl text-white font-bold text-lg flex items-center justify-center gap-2 shadow-[0_20px_40px_-12px_rgba(8,127,120,0.55)] transition-all enabled:hover:scale-[1.01] enabled:active:scale-[0.99] disabled:opacity-50 disabled:shadow-none disabled:cursor-not-allowed"
-                style={{ background: "linear-gradient(135deg,#14ADA0,#087F78 55%,#0B4F6C)" }}
+                className="w-full py-4 rounded-2xl bg-[#087F78] hover:bg-[#066b65] text-white font-bold text-lg flex items-center justify-center gap-2 shadow-[0_20px_40px_-12px_rgba(8,127,120,0.55)] transition-all enabled:hover:scale-[1.01] enabled:active:scale-[0.99] disabled:opacity-50 disabled:shadow-none disabled:cursor-not-allowed"
+               
               >
                 {isVerifying ? <Spinner /> : null} Verify and continue
               </button>
@@ -256,19 +198,17 @@ export default function PartnerLoginPage() {
             </div>
           )}
 
-          <div className="mt-7 flex items-start gap-3 rounded-2xl bg-[#EFFAF8] border border-[#087F78]/10 p-4">
-            <ShieldCheck size={20} className="text-[#087F78] shrink-0 mt-0.5" />
-            <p className="text-xs text-slate-500 leading-relaxed">
-              New here? Logging in creates your kitchen account. By continuing, you agree to our{" "}
-              <Link href="/terms-of-service" className="font-bold text-[#087F78] hover:underline">Terms</Link> and{" "}
-              <Link href="/privacy-policy" className="font-bold text-[#087F78] hover:underline">Privacy Policy</Link>.
-            </p>
-          </div>
-          <p className="text-center text-sm text-slate-400 mt-4">
-            Need help? <Link href="/contact-us" className="font-bold text-[#087F78] hover:underline">Talk to us</Link>
+          <p className="text-xs text-slate-500 leading-relaxed text-center mt-7">
+            New here? Logging in creates your kitchen account. By continuing, you agree to our{" "}
+            <Link href="/terms-of-service" className="font-bold text-[#087F78] hover:underline">Terms</Link> and{" "}
+            <Link href="/privacy-policy" className="font-bold text-[#087F78] hover:underline">Privacy Policy</Link>.
           </p>
         </div>
       </main>
+
+      <p className="text-center text-sm text-slate-500 mt-6">
+        Need help? <Link href="/contact-us" className="font-bold text-[#087F78] hover:underline">Talk to us</Link>
+      </p>
     </div>
   );
 }

@@ -1,51 +1,29 @@
 import Link from "next/link";
-import { ArrowUpRight, Beef, Droplets, Gauge, SlidersHorizontal, Target } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
-const PERKS = [
-  { icon: Target, text: "Goal-based daily targets" },
-  { icon: SlidersHorizontal, text: "High protein and low kcal filters" },
-  { icon: Gauge, text: "Live cart nutrition meter" },
-  { icon: Droplets, text: "Hydration tracker" },
-] as const;
-
-/** Home-page promo for /fit. The whole card is the link (no separate button), so the home CTA rule stays intact. */
+/** Home-page promo for /fit. The whole band is the link, so the home CTA rule stays intact. */
 export default function FitPromo() {
   return (
-    <section className="relative w-full font-sans py-16 lg:py-24 bg-[#F3F8F8]">
-      <div className="max-w-7xl mx-auto px-6">
+    <section className="w-full font-sans py-20 md:py-28 bg-[#F3F8F8]">
+      <div className="max-w-6xl mx-auto px-6">
         <Link
           href="/fit"
           aria-label="Explore FreshBhoj Fit"
-          className="group relative block overflow-hidden rounded-[2.5rem] lg:rounded-[3.5rem] bg-[#0D1B1E] text-white p-8 lg:p-14 shadow-[0_30px_70px_-30px_rgba(11,79,108,0.7)] hover:-translate-y-1 transition-transform duration-500"
+          className="group relative block overflow-hidden rounded-[2.5rem] bg-[#0D1B1E] text-white p-10 md:p-16 shadow-[0_30px_70px_-30px_rgba(11,79,108,0.7)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#087F78]"
         >
-          <div className="pointer-events-none absolute -top-24 -left-20 w-80 h-80 rounded-full bg-[#087F78]/50 blur-3xl animate-[drift_14s_ease-in-out_infinite]" />
-          <div className="pointer-events-none absolute -bottom-28 -right-16 w-80 h-80 rounded-full bg-[#FFC21A]/15 blur-3xl" />
-          <div className="relative grid lg:grid-cols-[1.1fr_0.9fr] gap-10 items-center">
-            <div>
-              <span className="inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/15 px-4 py-2 text-xs font-bold uppercase tracking-widest mb-6">
-                <Beef size={14} /> New: FreshBhoj Fit
-              </span>
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-[1.05] mb-4">
-                Eat for your{" "}
-                <span className="inline-block pr-[0.14em] -mr-[0.14em] bg-gradient-to-r from-[#5EE6D0] to-[#FFC21A] bg-clip-text text-transparent">
-                  <span className="italic" style={{ fontFamily: "var(--font-instrument), Georgia, serif" }}>goal.</span>
-                </span>
-              </h2>
-              <p className="text-white/70 text-base lg:text-lg leading-relaxed max-w-xl mb-6">
-                Training, staying active or just eating better? Fit gives you a daily calorie and protein target and shows the macros on every meal.
-              </p>
-              <span className="inline-flex items-center gap-2 font-extrabold text-[#FFC21A]">
-                Explore Fit <ArrowUpRight size={18} className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-              </span>
-            </div>
-            <ul className="grid gap-3">
-              {PERKS.map(({ icon: Icon, text }) => (
-                <li key={text} className="flex items-center gap-4 rounded-2xl bg-white/[0.06] border border-white/10 px-4 py-3.5 group-hover:bg-white/10 transition-colors">
-                  <span className="w-10 h-10 shrink-0 rounded-xl bg-white/10 text-[#5EE6D0] flex items-center justify-center"><Icon size={18} /></span>
-                  <span className="font-bold">{text}</span>
-                </li>
-              ))}
-            </ul>
+          <div className="pointer-events-none absolute -top-24 -right-20 w-96 h-96 rounded-full bg-[#087F78]/50 blur-3xl" />
+          <div className="relative max-w-2xl">
+            <p className="text-sm font-bold uppercase tracking-widest text-[#5EE6D0] mb-5">FreshBhoj Fit</p>
+            <h2 className="text-4xl md:text-6xl font-extrabold leading-[1.05] tracking-tight mb-5">
+              Eat for your{" "}
+              <span className="text-[#FFC21A]" style={{ fontFamily: "var(--font-instrument), Georgia, serif", fontStyle: "italic", fontWeight: 400 }}>goal.</span>
+            </h2>
+            <p className="text-white/75 text-lg md:text-xl leading-relaxed mb-8">
+              Daily calorie and protein targets, with the macros shown on every meal.
+            </p>
+            <span className="inline-flex items-center gap-2 font-extrabold text-[#FFC21A]">
+              Explore Fit <ArrowUpRight size={18} className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+            </span>
           </div>
         </Link>
       </div>

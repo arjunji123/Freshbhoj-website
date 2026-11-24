@@ -1,14 +1,4 @@
-"use client";
-
-import Image from "next/image";
 import { Navbar, Footer } from "../Components";
-
-const gradientStyle = {
-  background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)",
-  WebkitBackgroundClip: "text" as const,
-  WebkitTextFillColor: "transparent" as const,
-  backgroundClip: "text" as const,
-};
 
 const sections = [
   {
@@ -26,12 +16,10 @@ const sections = [
     cards: [
       {
         title: "Personal Information",
-        icon: "/person.svg",
         items: ["Name and Contact Data", "Credentials", "Payment Data"],
       },
       {
         title: "Automatically Collected",
-        icon: "/automatically.svg",
         items: ["IP Address", "Browser Characteristics", "Device Information"],
       },
     ],
@@ -63,12 +51,7 @@ const sections = [
     content: [
       "In some regions (like the EEA and UK), you have certain rights under applicable data protection laws. These may include the right to:",
     ],
-    rights: [
-      { label: "Request Access", icon: "/request-access.svg" },
-      { label: "Request Erasure", icon: "/request-erasure.svg" },
-      { label: "Object to Processing", icon: "/object-processing.svg" },
-      { label: "Data Portability", icon: "/data-portability.svg" },
-    ],
+    rights: ["Request Access", "Request Erasure", "Object to Processing", "Data Portability"],
   }
 ];
 
@@ -77,184 +60,68 @@ export default function PrivacyPolicy() {
     <div className="min-h-screen bg-white flex flex-col font-sans">
       <Navbar />
 
-      {/* Hero Header — No Background */}
-      <div className="w-full pt-36 md:pt-40 pb-8 md:pb-16 lg:pb-24 border-b border-slate-100">
-        <div className="w-full max-w-5xl mx-auto px-6">
-          <div className="flex items-center gap-2 bg-[#EFFAF8] rounded-full px-4 py-1.5 w-fit mb-4">
-            <div className="relative w-3.5 h-3.5">
-              <Image src="/legal.svg" alt="legal" fill className="object-contain" />
-            </div>
-            <span className="text-[#087F78] text-[10px] font-bold uppercase tracking-[0.2em]">
-              Legal
-            </span>
-          </div>
-          <h1 className="font-extrabold text-5xl md:text-6xl lg:text-7xl leading-tight tracking-tight mb-4">
-            <span className="text-[#0D1B1E]">Privacy </span>
-            <span
-              className="inline-block"
-              style={{
-                background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text"
-              }}
-            >
-              Policy
-            </span>
-          </h1>
-          <p className="text-slate-600 text-base md:text-lg max-w-2xl mb-3">
-            Your privacy is our responsibility. Below is exactly what we collect and why.
-          </p>
-          <p className="text-slate-400 text-sm font-medium">
-            Last Updated: March 17, 2026
-          </p>
+      <header className="w-full pt-36 md:pt-40 pb-12 border-b border-slate-100">
+        <div className="max-w-3xl mx-auto px-6">
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#087F78] mb-4">Legal</p>
+          <h1 className="font-extrabold text-5xl md:text-6xl tracking-[-0.03em] leading-[1.05] text-[#0D1B1E] mb-4">Privacy Policy</h1>
+          <p className="text-slate-600 text-lg mb-3">Your privacy is our responsibility. Below is what we collect and why.</p>
+          <p className="text-slate-500 text-sm font-medium">Last updated: March 17, 2026</p>
         </div>
-      </div>
+      </header>
 
-      {/* Content */}
-      <main className="w-full max-w-5xl mx-auto px-6 py-16 lg:py-24 flex-1">
-        <div className="flex flex-col gap-16">
+      <main className="w-full max-w-3xl mx-auto px-6 py-14 md:py-20 flex-1">
+        <nav aria-label="Contents" className="mb-14 rounded-2xl bg-[#F3F8F8] border border-slate-100 p-6">
+          <p className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-3">Contents</p>
+          <ol className="grid sm:grid-cols-2 gap-x-6 gap-y-1.5 text-[#087F78] font-semibold">
+            {sections.map((s) => (
+              <li key={s.number}><a href={`#section-${s.number}`} className="hover:underline">{s.number}. {s.title}</a></li>
+            ))}
+          </ol>
+        </nav>
+
+        <div className="flex flex-col gap-14">
           {sections.map((section) => (
-            <div key={section.number} className="flex flex-col gap-6">
-              {/* Section Heading */}
-              <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
-                <span
-                  className="inline-block"
-                  style={gradientStyle}
-                >
-                  {section.number}.
-                </span>{" "}
-                <span
-                  className="inline-block"
-                  style={gradientStyle}
-                >
-                  {section.title}
-                </span>
-              </h2>
+            <section key={section.number} id={`section-${section.number}`} className="flex flex-col gap-5 scroll-mt-28">
+              <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-[#0D1B1E]">{section.number}. {section.title}</h2>
 
-              {/* Text Content — skip for sections that have rights (content is inside the card) */}
-              {!section.rights && section.content.map((para, i) => (
-                <p
-                  key={i}
-                  className="text-slate-600 text-base md:text-lg leading-relaxed whitespace-pre-line"
-                >
-                  {para}
-                </p>
+              {section.content.map((para, i) => (
+                <p key={i} className="text-slate-600 text-base md:text-lg leading-relaxed whitespace-pre-line">{para}</p>
               ))}
 
-              {/* Cards (Data Collection) */}
               {section.cards && (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-2">
+                <div className="grid gap-6 sm:grid-cols-2">
                   {section.cards.map((card) => (
-                    <div
-                      key={card.title}
-                      className="bg-slate-50 border border-slate-100 rounded-2xl p-8 hover:shadow-lg transition-all duration-300"
-                    >
-                      {/* Card Icon */}
-                      <div className="relative w-6 h-6 mb-4">
-                        <Image
-                          src={card.icon}
-                          alt={card.title}
-                          fill
-                          className="object-contain"
-                        />
-                      </div>
-                      <h3 className="font-extrabold text-[#0D1B1E] text-lg mb-4">{card.title}</h3>
-                      <ul className="flex flex-col gap-3">
-                        {card.items.map((item) => (
-                          <li key={item} className="flex items-center gap-3 text-slate-600 font-medium text-sm md:text-base">
-                            <span
-                              className="w-2 h-2 rounded-full flex-shrink-0"
-                              style={{ background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)" }}
-                            />
-                            {item}
-                          </li>
-                        ))}
+                    <div key={card.title}>
+                      <h3 className="font-extrabold text-[#0D1B1E] mb-2">{card.title}</h3>
+                      <ul className="list-disc pl-5 marker:text-[#087F78] text-slate-600 leading-relaxed space-y-1">
+                        {card.items.map((item) => <li key={item}>{item}</li>)}
                       </ul>
                     </div>
                   ))}
                 </div>
               )}
 
-              {/* Points (How We Use) */}
               {section.points && (
-                <ul className="flex flex-col gap-5 mt-2">
+                <ul className="list-disc pl-5 marker:text-[#087F78] space-y-4 text-slate-600 text-base md:text-lg leading-relaxed">
                   {section.points.map((point, i) => (
-                    <li
-                      key={i}
-                      className="flex items-start gap-4 text-slate-600 text-base md:text-lg leading-relaxed"
-                    >
-                      <div className="relative w-6 h-6 flex-shrink-0 mt-1">
-                        <Image
-                          src="/right-circle.svg"
-                          alt="check"
-                          fill
-                          className="object-contain"
-                        />
-                      </div>
-                      <span>
-                        <span className="font-bold text-[#0D1B1E]">{point.bold}</span> {point.text}
-                      </span>
-                    </li>
+                    <li key={i}><span className="font-bold text-[#0D1B1E]">{point.bold}</span> {point.text}</li>
                   ))}
                 </ul>
               )}
 
-              {/* Rights — Bordered Card with 2x2 Grid */}
               {section.rights && (
-                <div className="rounded-2xl bg-[#EFFAF8] border-l-4 p-6 mt-2" style={{ borderColor: "#087F78" }}>
-                  {/* Description text inside card */}
-                  {section.content.map((para, i) => (
-                    <p key={i} className="text-slate-600 text-sm md:text-base leading-relaxed mb-6">
-                      {para}
-                    </p>
-                  ))}
-                  {/* 2x2 Grid */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {section.rights.map((right) => (
-                      <div
-                        key={right.label}
-                        className="flex items-center gap-4 bg-white border border-slate-100 rounded-xl px-5 py-4 shadow-sm hover:shadow-md transition-all duration-300"
-                      >
-                        <div className="relative w-6 h-6 flex-shrink-0">
-                          <Image
-                            src={right.icon}
-                            alt={right.label}
-                            fill
-                            className="object-contain"
-                          />
-                        </div>
-                        <span className="font-semibold text-[#0D1B1E] text-sm md:text-base">
-                          {right.label}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+                <ul className="list-disc pl-5 marker:text-[#087F78] space-y-1 text-slate-600 text-base md:text-lg">
+                  {section.rights.map((r) => <li key={r}>{r}</li>)}
+                </ul>
               )}
-            </div>
+            </section>
           ))}
         </div>
 
-        {/* Contact CTA */}
-        <div className="mt-24 rounded-[2.5rem] lg:rounded-[3.5rem] py-16 px-8 text-center overflow-hidden relative bg-[#0D1B1E] border border-white/5">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-[#087F78] opacity-10 blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2" />
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500 opacity-10 blur-[100px] rounded-full" />
-          <div className="relative z-10">
-            <p className="text-slate-400 font-medium text-base md:text-lg mb-8">
-              Have more questions about your privacy?
-            </p>
-            <a
-              href="mailto:privacy@freshbhoj.com"
-              className="inline-flex items-center justify-center px-10 py-5 text-white font-bold rounded-2xl transition-all hover:scale-105 active:scale-95 shadow-xl"
-              style={{
-                background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)",
-              }}
-            >
-              Contact Support Team →
-            </a>
-          </div>
-        </div>
+        <p className="mt-16 pt-8 border-t border-slate-100 text-slate-600 text-lg">
+          Questions about your privacy? Write to{" "}
+          <a href="mailto:privacy@freshbhoj.com" className="font-bold text-[#087F78] hover:underline">privacy@freshbhoj.com</a>.
+        </p>
       </main>
 
       <Footer />
