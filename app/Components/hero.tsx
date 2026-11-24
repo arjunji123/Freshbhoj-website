@@ -151,18 +151,6 @@ const Hero = () => {
                 </span>
               </div>
             </div>
-
-            <div className="hidden sm:block absolute -left-4 lg:-left-12 bottom-[12%] animate-float [animation-delay:2.2s]">
-              <div className="rounded-2xl bg-white/90 backdrop-blur-xl px-4 py-3 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.4)] w-[190px]">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="w-8 h-8 rounded-lg bg-[#087F78]/10 text-[#087F78] flex items-center justify-center"><Truck size={16} /></span>
-                  <span className="text-xs font-extrabold text-[#0D1B1E]">On the way</span>
-                </div>
-                <div className="h-1.5 rounded-full bg-slate-200 overflow-hidden">
-                  <span className="block h-full w-[72%] rounded-full" style={{ background: "linear-gradient(90deg,#1DB9A0,#FFC21A)" }} />
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
