@@ -1,4 +1,4 @@
-import { Hero, Marquee, ProblemFix, VerifiedKitchens, Features, PreRegistration, Footer } from "./Components";
+import { Hero, Marquee, ProblemFix, VerifiedKitchens, FitPromo, Features, PreRegistration, Footer } from "./Components";
 
 export default function Home() {
   return (
@@ -7,6 +7,7 @@ export default function Home() {
       <Marquee />
       <ProblemFix />
       <VerifiedKitchens />
+      <FitPromo />
       <Features />
       <PreRegistration />
       <Footer />

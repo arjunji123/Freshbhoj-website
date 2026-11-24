@@ -11,6 +11,7 @@ const LINKS = [
   { label: "How it works", href: "/#problem-fix" },
   { label: "Verified", href: "/#verified" },
   { label: "Features", href: "/#features" },
+  { label: "Fit", href: "/fit" },
   { label: "Contact", href: "/contact-us" },
 ] as const;
 
@@ -68,7 +69,7 @@ const Navbar = () => {
                 <Link
                   key={l.label}
                   href={l.href}
-                  className={`h-10 inline-flex items-center px-4 rounded-full text-sm font-bold transition-colors ${
+                  className={`h-10 inline-flex items-center px-3 xl:px-4 rounded-full text-sm font-bold transition-colors ${
                     active
                       ? onDark
                         ? "bg-white text-[#087F78]"

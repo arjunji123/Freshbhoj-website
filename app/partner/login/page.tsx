@@ -170,7 +170,7 @@ export default function PartnerLoginPage() {
           </h2>
           <p className="text-slate-500 mb-8">
             {stage === "phone" ? (
-              "Log in or register your kitchen with just your phone number. No password needed."
+              "Log in or register your kitchen, restaurant or café with just your phone number. No password needed."
             ) : (
               <>We sent a code to <span className="font-bold text-[#0D1B1E]">+91 {phoneDigits}</span>.{" "}
                 <button type="button" onClick={() => { setStage("phone"); setOtp(""); setError(null); }} className="text-[#087F78] font-bold hover:underline">Change</button>

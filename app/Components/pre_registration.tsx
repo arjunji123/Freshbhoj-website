@@ -107,6 +107,7 @@ export default function PreRegistration() {
             <div className="relative mb-8">
               <p className="text-7xl lg:text-8xl font-extrabold leading-none bg-gradient-to-br from-[#FFE08A] to-[#FFC21A] bg-clip-text text-transparent">0%</p>
               <p className="text-white/70 font-semibold mt-2">commission for the first 3 months</p>
+              <p className="text-white/50 text-sm mt-1">For tiffin services, cloud kitchens, restaurants and cafés</p>
             </div>
             <ul className="relative flex flex-col gap-3 mb-10">
               {KITCHEN_PERKS.map(({ icon: Icon, text }) => (

@@ -41,7 +41,7 @@ const INTENTS: { icon: LucideIcon; subject: (typeof SUBJECTS)[number]; title: st
 ];
 
 const FAQS = [
-  { q: "How do I register my kitchen?", a: "Open the Partner Portal, log in with your phone number (OTP) and complete the onboarding steps. Any food business can apply: restaurants, dhabas, cafés, bakeries, cloud kitchens and home kitchens." },
+  { q: "How do I register my kitchen?", a: "Open the Partner Portal, log in with your phone number (OTP) and complete the onboarding steps. Any food business can apply: tiffin services, cloud kitchens, restaurants, cafés, dhabas, bakeries and home kitchens." },
   { q: "What does 'Verified' mean?", a: "The FreshBhoj team visits the kitchen in person and checks hygiene and licences. Kitchens that pass earn a Verified badge and appear in their own section." },
   { q: "When will the app reach my city?", a: "We are launching city by city. Pre-register as a foodie and we'll tell you the moment we arrive in yours." },
   { q: "How fast will I get a reply?", a: "Usually within 2–4 hours on working days. For anything urgent, WhatsApp is fastest." },

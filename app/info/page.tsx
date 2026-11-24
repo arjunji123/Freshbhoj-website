@@ -89,7 +89,7 @@ export default function InfoPage() {
             <p>
               FreshBhoj is a food-ordering app that connects two kinds of people:{" "}
               <strong>customers</strong> who want fresh, trustworthy food delivered to them, and{" "}
-              <strong>kitchen partners</strong> — any food business, big or small —
+              <strong>kitchen partners</strong> — any food business, big or small, from tiffin services and cloud kitchens to restaurants and cafés —
               who want an easy way to sell their food to far more people than
               they could reach on their own.
             </p>

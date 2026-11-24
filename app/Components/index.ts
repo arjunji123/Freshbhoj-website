@@ -9,4 +9,5 @@ export { default as SplashScreen } from "./SplashScreen";
 export { default as ProblemFix } from "./problem_fix";
 export { default as Features } from "./features";
 export { default as Marquee } from "./Marquee";
+export { default as FitPromo } from "./fit_promo";
 export { Deva, Torana, Garland, Eyebrow } from "./desi";

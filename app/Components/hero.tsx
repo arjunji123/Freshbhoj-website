@@ -75,7 +75,7 @@ const Hero = () => {
           </p>
 
           <p className="text-white/85 text-base md:text-lg lg:text-xl leading-relaxed max-w-xl mb-7">
-            Watch your food being made, check the nutrition, and order in one tap. Fresh meals from kitchens our team has personally visited and verified.
+            Watch your food being made, check the nutrition, and order in one tap. Fresh meals from tiffin services, cloud kitchens, restaurants and cafés our team has personally visited and verified.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto mb-7">
