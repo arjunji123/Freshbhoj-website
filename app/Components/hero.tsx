@@ -27,7 +27,7 @@ const Hero = () => {
 
   return (
     <section
-      className="relative w-full flex flex-col font-sans overflow-hidden lg:min-h-screen bg-[linear-gradient(150deg,#14ADA0_0%,#087F78_42%,#0B4F6C_100%)]"
+      className="relative w-full flex flex-col font-sans overflow-hidden lg:min-h-screen bg-[linear-gradient(150deg,#2BBE82_0%,#12865F_42%,#0C4A38_100%)]"
       onPointerMove={onMove}
       onPointerLeave={onLeave}
     >
@@ -65,7 +65,7 @@ const Hero = () => {
               className="group inline-flex items-center justify-center gap-3 h-14 pl-8 pr-2 rounded-full bg-white text-[#0D1B1E] font-extrabold text-base lg:text-lg shadow-[0_20px_50px_-15px_rgba(0,0,0,0.45)] hover:scale-[1.03] active:scale-95 transition-transform"
             >
               Pre-Register Now
-              <span className="w-10 h-10 rounded-full flex items-center justify-center text-white group-hover:rotate-45 transition-transform" style={{ background: "linear-gradient(135deg,#14ADA0,#0B4F6C)" }}>
+              <span className="w-10 h-10 rounded-full flex items-center justify-center text-white group-hover:rotate-45 transition-transform" style={{ background: "linear-gradient(135deg,#2BBE82,#0C4A38)" }}>
                 <ArrowUpRight size={20} />
               </span>
             </Link>

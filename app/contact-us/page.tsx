@@ -33,10 +33,10 @@ declare global {
 const SUBJECTS = ["Customer Support", "Kitchen Onboarding", "Partnership Inquiry", "Other"] as const;
 
 const INTENTS: { icon: LucideIcon; subject: (typeof SUBJECTS)[number]; title: string; text: string; tone: string }[] = [
-  { icon: Headphones, subject: "Customer Support", title: "I'm a customer", text: "Questions about orders, your account or the app.", tone: "from-[#1DB9A0] to-[#087F78]" },
+  { icon: Headphones, subject: "Customer Support", title: "I'm a customer", text: "Questions about orders, your account or the app.", tone: "from-[#34C98A] to-[#12865F]" },
   { icon: ChefHat, subject: "Kitchen Onboarding", title: "I run a kitchen", text: "Register, get verified and start selling.", tone: "from-[#FFC21A] to-[#F59E0B]" },
   { icon: Handshake, subject: "Partnership Inquiry", title: "Partner / Invest", text: "Collaboration, press and investors.", tone: "from-[#5EA8FF] to-[#1E7BD8]" },
-  { icon: Sparkles, subject: "Other", title: "Something else", text: "Feedback, ideas, or just a hello.", tone: "from-[#0B4F6C] to-[#087F78]" },
+  { icon: Sparkles, subject: "Other", title: "Something else", text: "Feedback, ideas, or just a hello.", tone: "from-[#0C4A38] to-[#12865F]" },
 ];
 
 const FAQS = [
@@ -54,14 +54,14 @@ const SUBJECT_LABEL: Record<(typeof SUBJECTS)[number], string> = {
 };
 
 const gradientText = {
-  background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)",
+  background: "linear-gradient(169.21deg, #34C98A 9%, #12865F 77%, #0C4A38 100%)",
   WebkitBackgroundClip: "text" as const,
   WebkitTextFillColor: "transparent" as const,
   backgroundClip: "text" as const,
 };
 
 const gradientBg = {
-  background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)",
+  background: "linear-gradient(169.21deg, #34C98A 9%, #12865F 77%, #0C4A38 100%)",
 };
 
 export default function ContactUs() {
@@ -124,7 +124,7 @@ export default function ContactUs() {
   };
 
   const inputCls =
-    "w-full px-5 py-4 rounded-2xl bg-[#F3F8F8] border border-transparent hover:border-slate-200 focus:bg-white focus:border-[#087F78]/40 focus:ring-4 focus:ring-[#087F78]/10 outline-none transition-all placeholder:text-slate-400 text-[#0D1B1E]";
+    "w-full px-5 py-4 rounded-2xl bg-[#F3F8F8] border border-transparent hover:border-slate-200 focus:bg-white focus:border-[#12865F]/40 focus:ring-4 focus:ring-[#12865F]/10 outline-none transition-all placeholder:text-slate-400 text-[#0D1B1E]";
 
   return (
     <div className="min-h-screen bg-white flex flex-col font-sans overflow-x-hidden">
@@ -135,10 +135,10 @@ export default function ContactUs() {
       <Script src="https://assets.calendly.com/assets/external/widget.js" strategy="lazyOnload" />
 
       {/* ── Hero ── */}
-      <header className="relative overflow-hidden bg-gradient-to-b from-[#EFFAF8] via-white to-white pt-28 md:pt-32 pb-12 md:pb-16">
+      <header className="relative overflow-hidden bg-gradient-to-b from-[#EEFBF4] via-white to-white pt-28 md:pt-32 pb-12 md:pb-16">
         <div className="pointer-events-none absolute inset-0 jaali-light [mask-image:linear-gradient(to_bottom,black,transparent_85%)]" />
-        <div className="pointer-events-none absolute inset-0 opacity-50 [background-image:radial-gradient(#087F78_1px,transparent_1px)] [background-size:28px_28px] [mask-image:radial-gradient(ellipse_at_top,black,transparent_70%)]" />
-        <div className="pointer-events-none absolute -top-24 -left-24 w-[420px] h-[420px] rounded-full bg-[#1DB9A0]/25 blur-[110px] animate-[drift_14s_ease-in-out_infinite]" />
+        <div className="pointer-events-none absolute inset-0 opacity-50 [background-image:radial-gradient(#12865F_1px,transparent_1px)] [background-size:28px_28px] [mask-image:radial-gradient(ellipse_at_top,black,transparent_70%)]" />
+        <div className="pointer-events-none absolute -top-24 -left-24 w-[420px] h-[420px] rounded-full bg-[#34C98A]/25 blur-[110px] animate-[drift_14s_ease-in-out_infinite]" />
 
         <div className="relative max-w-5xl mx-auto px-6 text-center">
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold text-[#0D1B1E] leading-[1.02] mb-6">
@@ -162,7 +162,7 @@ export default function ContactUs() {
                 type="button"
                 onClick={() => pickSubject(subject)}
                 className={`group relative text-left rounded-[2rem] p-6 lg:p-7 border transition-all duration-300 hover:-translate-y-1.5 overflow-hidden ${
-                  on ? "bg-white border-[#087F78]/40 shadow-[0_24px_50px_-20px_rgba(8,127,120,0.55)]" : "bg-white border-slate-100 shadow-sm hover:shadow-xl"
+                  on ? "bg-white border-[#12865F]/40 shadow-[0_24px_50px_-20px_rgba(18, 134, 95,0.55)]" : "bg-white border-slate-100 shadow-sm hover:shadow-xl"
                 }`}
               >
                 <div className={`pointer-events-none absolute -top-10 -right-10 w-32 h-32 rounded-full bg-gradient-to-br ${tone} opacity-10 group-hover:opacity-25 transition-opacity`} />
@@ -171,7 +171,7 @@ export default function ContactUs() {
                 </div>
                 <h3 className="relative text-xl font-extrabold text-[#0D1B1E] mb-1.5">{title}</h3>
                 <p className="relative text-slate-500 text-sm leading-relaxed mb-5">{text}</p>
-                <span className="relative inline-flex items-center gap-1 text-sm font-bold text-[#087F78]">
+                <span className="relative inline-flex items-center gap-1 text-sm font-bold text-[#12865F]">
                   {on ? "Chun liya" : "Humein likho"} <ArrowUpRight size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 </span>
               </button>
@@ -182,12 +182,12 @@ export default function ContactUs() {
         {/* ── Form + channels ── */}
         <section className="grid grid-cols-1 lg:grid-cols-[1.15fr_0.85fr] gap-10 lg:gap-14 items-start mb-20 md:mb-28">
           {/* Form */}
-          <div ref={formRef} className="relative rounded-[2.5rem] p-px bg-[linear-gradient(135deg,#1DB9A0,rgba(8,127,120,0.1)_40%,#FFC21A)] shadow-[0_40px_80px_-40px_rgba(8,127,120,0.45)]">
+          <div ref={formRef} className="relative rounded-[2.5rem] p-px bg-[linear-gradient(135deg,#34C98A,rgba(18, 134, 95,0.1)_40%,#FFC21A)] shadow-[0_40px_80px_-40px_rgba(18, 134, 95,0.45)]">
             <div className="relative rounded-[calc(2.5rem-1px)] bg-white p-6 md:p-12 overflow-hidden">
               {msgSubmitted ? (
                 <div className="text-center py-16 flex flex-col items-center animate-in zoom-in duration-500">
                   <div className="relative w-24 h-24 mb-8">
-                    <span className="absolute inset-0 rounded-full bg-[#1DB9A0]/20 animate-ping" />
+                    <span className="absolute inset-0 rounded-full bg-[#34C98A]/20 animate-ping" />
                     <span className="relative w-24 h-24 rounded-full flex items-center justify-center text-white" style={gradientBg}>
                       <Check size={44} strokeWidth={3} />
                     </span>
@@ -200,7 +200,7 @@ export default function ContactUs() {
                 </div>
               ) : (
                 <>
-                  <h2 className="text-3xl md:text-4xl font-extrabold text-[#0D1B1E] mb-2">Send us a <span className="italic text-[#087F78]" style={{ fontFamily: "var(--font-instrument), Georgia, serif" }}>message</span></h2>
+                  <h2 className="text-3xl md:text-4xl font-extrabold text-[#0D1B1E] mb-2">Send us a <span className="italic text-[#12865F]" style={{ fontFamily: "var(--font-instrument), Georgia, serif" }}>message</span></h2>
                   <p className="text-slate-500 mb-8">Tell us a little, and we'll take care of the rest.</p>
 
                   <form className="space-y-5" onSubmit={handleSubmit}>
@@ -213,7 +213,7 @@ export default function ContactUs() {
                             type="button"
                             onClick={() => setMsgData({ ...msgData, subject: sub })}
                             className={`px-4 py-2.5 rounded-full text-sm font-bold border transition-all ${
-                              msgData.subject === sub ? "text-white border-transparent shadow-lg shadow-[#087F78]/25" : "bg-white text-slate-600 border-slate-200 hover:border-[#087F78]/40"
+                              msgData.subject === sub ? "text-white border-transparent shadow-lg shadow-[#12865F]/25" : "bg-white text-slate-600 border-slate-200 hover:border-[#12865F]/40"
                             }`}
                             style={msgData.subject === sub ? gradientBg : undefined}
                           >
@@ -246,13 +246,13 @@ export default function ContactUs() {
                     )}
 
                     <button type="button" className="flex items-start gap-3 text-left w-full group/check" onClick={() => setMsgData({ ...msgData, agreed: !msgData.agreed })}>
-                      <span className={`mt-0.5 w-6 h-6 rounded-full border-2 shrink-0 flex items-center justify-center transition-all relative overflow-hidden ${msgData.agreed ? "border-transparent" : "border-slate-300 group-hover/check:border-[#087F78]/60"}`}>
+                      <span className={`mt-0.5 w-6 h-6 rounded-full border-2 shrink-0 flex items-center justify-center transition-all relative overflow-hidden ${msgData.agreed ? "border-transparent" : "border-slate-300 group-hover/check:border-[#12865F]/60"}`}>
                         <span className={`absolute inset-0 transition-opacity ${msgData.agreed ? "opacity-100" : "opacity-0"}`} style={gradientBg} />
                         <Check className={`relative w-3.5 h-3.5 text-white transition-transform ${msgData.agreed ? "scale-100" : "scale-0"}`} strokeWidth={4} />
                       </span>
                       <span className="text-[13px] text-slate-500 leading-relaxed select-none">
                         I agree to the{" "}
-                        <Link href="/privacy-policy" className="text-[#087F78] font-bold hover:underline" onClick={(e) => e.stopPropagation()}>Privacy Policy</Link>{" "}
+                        <Link href="/privacy-policy" className="text-[#12865F] font-bold hover:underline" onClick={(e) => e.stopPropagation()}>Privacy Policy</Link>{" "}
                         and allow FreshBhoj to contact me about this enquiry.
                       </span>
                     </button>
@@ -260,7 +260,7 @@ export default function ContactUs() {
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className={`group/send w-full py-5 rounded-2xl text-white font-bold text-lg shadow-[0_20px_40px_-12px_rgba(8,127,120,0.5)] hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-3 ${isSubmitting ? "opacity-70 cursor-not-allowed" : ""}`}
+                      className={`group/send w-full py-5 rounded-2xl text-white font-bold text-lg shadow-[0_20px_40px_-12px_rgba(18, 134, 95,0.5)] hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-3 ${isSubmitting ? "opacity-70 cursor-not-allowed" : ""}`}
                       style={gradientBg}
                     >
                       {isSubmitting ? "Sending..." : "Send message"}
@@ -284,9 +284,9 @@ export default function ContactUs() {
                 href={c.href}
                 target={c.href.startsWith("http") ? "_blank" : undefined}
                 rel="noopener noreferrer"
-                className="group flex items-center gap-5 rounded-3xl bg-white border border-slate-100 p-5 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-[#087F78]/25 transition-all"
+                className="group flex items-center gap-5 rounded-3xl bg-white border border-slate-100 p-5 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-[#12865F]/25 transition-all"
               >
-                <span className="relative w-14 h-14 shrink-0 rounded-2xl bg-[#EFFAF8] text-[#087F78] flex items-center justify-center overflow-hidden group-hover:text-white transition-colors">
+                <span className="relative w-14 h-14 shrink-0 rounded-2xl bg-[#EEFBF4] text-[#12865F] flex items-center justify-center overflow-hidden group-hover:text-white transition-colors">
                   <span className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity" style={gradientBg} />
                   <span className="relative">{c.icon}</span>
                 </span>
@@ -295,7 +295,7 @@ export default function ContactUs() {
                   <span className="block text-slate-600 text-sm truncate">{c.value}</span>
                   <span className="flex items-center gap-1 text-[11px] text-slate-400 mt-0.5"><Clock3 size={11} />{c.sub}</span>
                 </span>
-                <ArrowUpRight size={18} className="text-slate-300 group-hover:text-[#087F78] transition-colors shrink-0" />
+                <ArrowUpRight size={18} className="text-slate-300 group-hover:text-[#12865F] transition-colors shrink-0" />
               </a>
             ))}
 
@@ -313,7 +313,7 @@ export default function ContactUs() {
                     aria-label={social.label}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="relative w-12 h-12 rounded-full flex items-center justify-center bg-white border border-slate-200 text-[#087F78] transition-all overflow-hidden group/social hover:-translate-y-1 hover:shadow-[0_10px_24px_-6px_rgba(8,127,120,0.6)]"
+                    className="relative w-12 h-12 rounded-full flex items-center justify-center bg-white border border-slate-200 text-[#12865F] transition-all overflow-hidden group/social hover:-translate-y-1 hover:shadow-[0_10px_24px_-6px_rgba(18, 134, 95,0.6)]"
                   >
                     <span className="absolute inset-0 opacity-0 group-hover/social:opacity-100 transition-opacity" style={gradientBg} />
                     <span className="relative z-10 group-hover/social:text-white transition-colors">{social.icon}</span>
@@ -336,10 +336,10 @@ export default function ContactUs() {
             {FAQS.map((f, i) => {
               const open = openFaq === i;
               return (
-                <div key={f.q} className={`rounded-3xl border transition-all ${open ? "bg-[#EFFAF8] border-[#087F78]/20" : "bg-white border-slate-100"}`}>
+                <div key={f.q} className={`rounded-3xl border transition-all ${open ? "bg-[#EEFBF4] border-[#12865F]/20" : "bg-white border-slate-100"}`}>
                   <button className="w-full flex items-center justify-between gap-4 text-left p-5 md:p-6" aria-expanded={open} onClick={() => setOpenFaq(open ? null : i)}>
                     <span className="font-bold text-[#0D1B1E] md:text-lg">{f.q}</span>
-                    <span className={`w-9 h-9 shrink-0 rounded-full flex items-center justify-center transition-all ${open ? "rotate-45 text-white" : "bg-[#EFFAF8] text-[#087F78]"}`} style={open ? gradientBg : undefined}>
+                    <span className={`w-9 h-9 shrink-0 rounded-full flex items-center justify-center transition-all ${open ? "rotate-45 text-white" : "bg-[#EEFBF4] text-[#12865F]"}`} style={open ? gradientBg : undefined}>
                       <Plus size={18} />
                     </span>
                   </button>
@@ -355,7 +355,7 @@ export default function ContactUs() {
         </section>
 
         {/* ── Founders call ── */}
-        <section className="relative overflow-hidden rounded-[2.5rem] lg:rounded-[3.5rem] text-white bg-[linear-gradient(135deg,#0B4F6C_0%,#087F78_60%,#14ADA0_100%)] p-8 md:p-14 lg:p-16 flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
+        <section className="relative overflow-hidden rounded-[2.5rem] lg:rounded-[3.5rem] text-white bg-[linear-gradient(135deg,#0C4A38_0%,#12865F_60%,#2BBE82_100%)] p-8 md:p-14 lg:p-16 flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
           <div className="pointer-events-none absolute -top-24 -left-16 w-80 h-80 rounded-full bg-[#5EE6D0]/30 blur-3xl animate-[drift_14s_ease-in-out_infinite]" />
             <div className="relative flex-1 text-center lg:text-left">
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-[1.05] mb-5">

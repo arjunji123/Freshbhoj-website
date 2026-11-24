@@ -103,7 +103,7 @@ export default function PartnerLoginPage() {
   return (
     <div className="min-h-screen lg:h-screen lg:overflow-hidden w-full grid lg:grid-cols-[1.45fr_1fr] font-sans bg-white">
       {/* ── Brand panel ── */}
-      <aside className="relative overflow-hidden text-white bg-[linear-gradient(160deg,#14ADA0_0%,#087F78_45%,#0B4F6C_100%)] px-6 py-8 lg:px-10 xl:px-12 lg:py-7 flex flex-col lg:h-screen lg:min-h-0">
+      <aside className="relative overflow-hidden text-white bg-[linear-gradient(160deg,#2BBE82_0%,#12865F_45%,#0C4A38_100%)] px-6 py-8 lg:px-10 xl:px-12 lg:py-7 flex flex-col lg:h-screen lg:min-h-0">
         <div className="pointer-events-none absolute -top-24 -left-20 w-96 h-96 rounded-full bg-[#5EE6D0]/30 blur-3xl animate-[drift_14s_ease-in-out_infinite]" />
         <div className="pointer-events-none absolute inset-0 opacity-[0.12] [background-image:radial-gradient(#fff_1px,transparent_1px)] [background-size:26px_26px] [mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)]" />
 
@@ -126,7 +126,7 @@ export default function PartnerLoginPage() {
 
         <div className="relative flex-1 min-h-[340px] lg:min-h-0 mt-5 lg:mt-5 overflow-hidden">
           <DashboardPreview />
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#0B4F6C] to-transparent" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#0C4A38] to-transparent" />
         </div>
 
         <div className="relative mt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -139,7 +139,7 @@ export default function PartnerLoginPage() {
 
       {/* ── Form panel ── */}
       <main className="relative flex items-center justify-center px-6 py-12 lg:py-6 lg:h-screen lg:overflow-y-auto bg-[#F3F8F8] lg:bg-white">
-        <Link href="/" className="hidden lg:inline-flex absolute top-8 left-8 items-center gap-2 text-sm font-semibold text-slate-400 hover:text-[#087F78] transition-colors">
+        <Link href="/" className="hidden lg:inline-flex absolute top-8 left-8 items-center gap-2 text-sm font-semibold text-slate-400 hover:text-[#12865F] transition-colors">
           <ArrowLeft size={16} /> Back to home
         </Link>
 
@@ -151,25 +151,25 @@ export default function PartnerLoginPage() {
               const on = (stage === "phone" && i === 0) || (stage === "otp" && i === 1);
               return (
                 <div key={label} className="flex items-center gap-3 flex-1 last:flex-none">
-                  <span className={`w-8 h-8 rounded-full text-xs font-bold flex items-center justify-center transition-all ${done || on ? "text-white shadow-lg shadow-[#087F78]/30" : "bg-slate-100 text-slate-400"}`} style={done || on ? { background: "linear-gradient(135deg,#1DB9A0,#0B4F6C)" } : undefined}>
+                  <span className={`w-8 h-8 rounded-full text-xs font-bold flex items-center justify-center transition-all ${done || on ? "text-white shadow-lg shadow-[#12865F]/30" : "bg-slate-100 text-slate-400"}`} style={done || on ? { background: "linear-gradient(135deg,#34C98A,#0C4A38)" } : undefined}>
                     {done ? "✓" : i + 1}
                   </span>
                   <span className={`text-sm font-bold ${on || done ? "text-[#0D1B1E]" : "text-slate-400"}`}>{label}</span>
-                  {i === 0 ? <span className={`flex-1 h-0.5 rounded-full transition-colors ${stage === "otp" ? "bg-[#087F78]" : "bg-slate-200"}`} /> : null}
+                  {i === 0 ? <span className={`flex-1 h-0.5 rounded-full transition-colors ${stage === "otp" ? "bg-[#12865F]" : "bg-slate-200"}`} /> : null}
                 </div>
               );
             })}
           </div>
 
           <h2 className="text-3xl md:text-4xl font-extrabold text-[#0D1B1E] mb-2">
-            {stage === "phone" ? <>Welcome <span className="italic text-[#087F78]" style={{ fontFamily: "var(--font-instrument), Georgia, serif" }}>back</span></> : "Enter your code"}
+            {stage === "phone" ? <>Welcome <span className="italic text-[#12865F]" style={{ fontFamily: "var(--font-instrument), Georgia, serif" }}>back</span></> : "Enter your code"}
           </h2>
           <p className="text-slate-500 mb-8">
             {stage === "phone" ? (
               "Log in or register your kitchen, restaurant or café with just your phone number. No password needed."
             ) : (
               <>We sent a code to <span className="font-bold text-[#0D1B1E]">+91 {phoneDigits}</span>.{" "}
-                <button type="button" onClick={() => { setStage("phone"); setOtp(""); setError(null); }} className="text-[#087F78] font-bold hover:underline">Change</button>
+                <button type="button" onClick={() => { setStage("phone"); setOtp(""); setError(null); }} className="text-[#12865F] font-bold hover:underline">Change</button>
               </>
             )}
           </p>
@@ -178,9 +178,9 @@ export default function PartnerLoginPage() {
             <form onSubmit={(e) => { e.preventDefault(); if (canSendOtp) handleSendOtp(); }} className="flex flex-col gap-5">
               <div>
                 <label htmlFor="phone" className="block text-xs font-bold uppercase tracking-widest text-[#0D1B1E] mb-3 ml-1">Phone number</label>
-                <div className={`flex items-center rounded-2xl bg-white border-2 transition-all focus-within:border-[#087F78] focus-within:ring-4 focus-within:ring-[#087F78]/10 ${error ? "border-red-300" : "border-slate-200"}`}>
+                <div className={`flex items-center rounded-2xl bg-white border-2 transition-all focus-within:border-[#12865F] focus-within:ring-4 focus-within:ring-[#12865F]/10 ${error ? "border-red-300" : "border-slate-200"}`}>
                   <span className="flex items-center gap-2 pl-4 pr-3 py-4 border-r border-slate-200 font-bold text-[#0D1B1E]">
-                    <Smartphone size={18} className="text-[#087F78]" /> +91
+                    <Smartphone size={18} className="text-[#12865F]" /> +91
                   </span>
                   <input
                     id="phone"
@@ -192,7 +192,7 @@ export default function PartnerLoginPage() {
                     autoFocus
                     className="flex-1 min-w-0 px-4 py-4 text-lg font-semibold tracking-wide bg-transparent outline-none placeholder:text-slate-300 placeholder:font-medium"
                   />
-                  {phoneReady ? <BadgeCheck size={20} className="text-[#087F78] mr-4 shrink-0" /> : null}
+                  {phoneReady ? <BadgeCheck size={20} className="text-[#12865F] mr-4 shrink-0" /> : null}
                 </div>
                 {error ? <p role="alert" className="text-sm font-semibold text-red-600 mt-2 ml-1">{error}</p> : null}
               </div>
@@ -200,8 +200,8 @@ export default function PartnerLoginPage() {
               <button
                 type="submit"
                 disabled={!canSendOtp}
-                className="w-full py-4 rounded-2xl text-white font-bold text-lg flex items-center justify-center gap-2 shadow-[0_20px_40px_-12px_rgba(8,127,120,0.55)] transition-all enabled:hover:scale-[1.01] enabled:active:scale-[0.99] disabled:opacity-50 disabled:shadow-none disabled:cursor-not-allowed"
-                style={{ background: "linear-gradient(135deg,#14ADA0,#087F78 55%,#0B4F6C)" }}
+                className="w-full py-4 rounded-2xl text-white font-bold text-lg flex items-center justify-center gap-2 shadow-[0_20px_40px_-12px_rgba(18, 134, 95,0.55)] transition-all enabled:hover:scale-[1.01] enabled:active:scale-[0.99] disabled:opacity-50 disabled:shadow-none disabled:cursor-not-allowed"
+                style={{ background: "linear-gradient(135deg,#2BBE82,#12865F 55%,#0C4A38)" }}
               >
                 {isSending ? <Spinner /> : null} Send OTP
               </button>
@@ -224,7 +224,7 @@ export default function PartnerLoginPage() {
                       autoFocus={i === 0}
                       maxLength={1}
                       aria-label={`Digit ${i + 1}`}
-                      className={`w-full aspect-[4/5] max-w-[56px] text-center text-2xl font-extrabold rounded-2xl bg-white border-2 outline-none transition-all text-[#0D1B1E] focus:border-[#087F78] focus:ring-4 focus:ring-[#087F78]/10 ${otp[i] ? "border-[#087F78]/60 bg-[#EFFAF8]" : error ? "border-red-300" : "border-slate-200"}`}
+                      className={`w-full aspect-[4/5] max-w-[56px] text-center text-2xl font-extrabold rounded-2xl bg-white border-2 outline-none transition-all text-[#0D1B1E] focus:border-[#12865F] focus:ring-4 focus:ring-[#12865F]/10 ${otp[i] ? "border-[#12865F]/60 bg-[#EEFBF4]" : error ? "border-red-300" : "border-slate-200"}`}
                     />
                   ))}
                 </div>
@@ -235,8 +235,8 @@ export default function PartnerLoginPage() {
                 type="button"
                 onClick={handleVerify}
                 disabled={!canVerify}
-                className="w-full py-4 rounded-2xl text-white font-bold text-lg flex items-center justify-center gap-2 shadow-[0_20px_40px_-12px_rgba(8,127,120,0.55)] transition-all enabled:hover:scale-[1.01] enabled:active:scale-[0.99] disabled:opacity-50 disabled:shadow-none disabled:cursor-not-allowed"
-                style={{ background: "linear-gradient(135deg,#14ADA0,#087F78 55%,#0B4F6C)" }}
+                className="w-full py-4 rounded-2xl text-white font-bold text-lg flex items-center justify-center gap-2 shadow-[0_20px_40px_-12px_rgba(18, 134, 95,0.55)] transition-all enabled:hover:scale-[1.01] enabled:active:scale-[0.99] disabled:opacity-50 disabled:shadow-none disabled:cursor-not-allowed"
+                style={{ background: "linear-gradient(135deg,#2BBE82,#12865F 55%,#0C4A38)" }}
               >
                 {isVerifying ? <Spinner /> : null} Verify and continue
               </button>
@@ -245,23 +245,23 @@ export default function PartnerLoginPage() {
                 type="button"
                 onClick={handleSendOtp}
                 disabled={cooldown > 0 || isSending}
-                className="text-sm font-bold text-[#087F78] hover:underline disabled:text-slate-400 disabled:no-underline"
+                className="text-sm font-bold text-[#12865F] hover:underline disabled:text-slate-400 disabled:no-underline"
               >
                 {cooldown > 0 ? `Resend OTP in ${cooldown}s` : "Resend OTP"}
               </button>
             </div>
           )}
 
-          <div className="mt-7 flex items-start gap-3 rounded-2xl bg-[#EFFAF8] border border-[#087F78]/10 p-4">
-            <ShieldCheck size={20} className="text-[#087F78] shrink-0 mt-0.5" />
+          <div className="mt-7 flex items-start gap-3 rounded-2xl bg-[#EEFBF4] border border-[#12865F]/10 p-4">
+            <ShieldCheck size={20} className="text-[#12865F] shrink-0 mt-0.5" />
             <p className="text-xs text-slate-500 leading-relaxed">
               New here? Logging in creates your kitchen account. By continuing, you agree to our{" "}
-              <Link href="/terms-of-service" className="font-bold text-[#087F78] hover:underline">Terms</Link> and{" "}
-              <Link href="/privacy-policy" className="font-bold text-[#087F78] hover:underline">Privacy Policy</Link>.
+              <Link href="/terms-of-service" className="font-bold text-[#12865F] hover:underline">Terms</Link> and{" "}
+              <Link href="/privacy-policy" className="font-bold text-[#12865F] hover:underline">Privacy Policy</Link>.
             </p>
           </div>
           <p className="text-center text-sm text-slate-400 mt-4">
-            Need help? <Link href="/contact-us" className="font-bold text-[#087F78] hover:underline">Talk to us</Link>
+            Need help? <Link href="/contact-us" className="font-bold text-[#12865F] hover:underline">Talk to us</Link>
           </p>
         </div>
       </main>

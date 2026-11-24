@@ -3,7 +3,7 @@
 import { Navbar, Footer } from "../Components";
 
 const gradientStyle = {
-  background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)",
+  background: "linear-gradient(169.21deg, #34C98A 9%, #12865F 77%, #0C4A38 100%)",
   WebkitBackgroundClip: "text" as const,
   WebkitTextFillColor: "transparent" as const,
   backgroundClip: "text" as const,
@@ -66,7 +66,7 @@ export default function TermsOfService() {
             <span
               className="inline-block"
               style={{
-                background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)",
+                background: "linear-gradient(169.21deg, #34C98A 9%, #12865F 77%, #0C4A38 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
@@ -122,7 +122,7 @@ export default function TermsOfService() {
                       <span
                         className="mt-2 w-1.5 h-1.5 rounded-full flex-shrink-0"
                         style={{
-                          background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)",
+                          background: "linear-gradient(169.21deg, #34C98A 9%, #12865F 77%, #0C4A38 100%)",
                         }}
                       />
                       {item}
@@ -135,7 +135,7 @@ export default function TermsOfService() {
         </div>
 
         {/* Contact CTA */}
-        <div className="mt-12 rounded-2xl bg-[#EFFAF8] border border-slate-100 p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="mt-12 rounded-2xl bg-[#EEFBF4] border border-slate-100 p-8 flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
             <h3 className="text-[#0D1B1E] font-extrabold text-lg md:text-xl mb-1">
               Questions about our Terms?
@@ -148,7 +148,7 @@ export default function TermsOfService() {
             href="mailto:legal@freshbhoj.com"
             className="inline-flex items-center gap-3 px-8 py-4 text-white font-bold rounded-xl transition-all hover:scale-105 active:scale-95 shadow-lg whitespace-nowrap"
             style={{
-              background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)",
+              background: "linear-gradient(169.21deg, #34C98A 9%, #12865F 77%, #0C4A38 100%)",
             }}
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>

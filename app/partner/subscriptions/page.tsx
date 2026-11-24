@@ -148,7 +148,7 @@ export default function SubscriptionsPage() {
 
       {isLoading ? (
         <div className="flex items-center justify-center py-24">
-          <Spinner className="w-8 h-8 text-[#087F78]" />
+          <Spinner className="w-8 h-8 text-[#12865F]" />
         </div>
       ) : items.length === 0 && error ? (
         <Card>
@@ -261,7 +261,7 @@ function SubscriberCard({
     <Card className="!p-4 flex flex-col gap-3">
       <Link href={`/partner/subscriptions/${sub.id}`} className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-3 min-w-0">
-          <div className="w-10 h-10 rounded-full bg-[#087F78]/10 overflow-hidden shrink-0 flex items-center justify-center text-[#087F78] font-bold">
+          <div className="w-10 h-10 rounded-full bg-[#12865F]/10 overflow-hidden shrink-0 flex items-center justify-center text-[#12865F] font-bold">
             {sub.customer.profileImage ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img src={sub.customer.profileImage} alt="" className="w-full h-full object-cover" />

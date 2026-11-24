@@ -25,7 +25,7 @@ export default function PublicKitchenPage() {
   if (isLoading) {
     return (
       <div className="min-h-screen w-full flex items-center justify-center bg-[#F3F8F8]">
-        <Spinner className="w-8 h-8 text-[#087F78]" />
+        <Spinner className="w-8 h-8 text-[#12865F]" />
       </div>
     );
   }
@@ -46,7 +46,7 @@ export default function PublicKitchenPage() {
           // eslint-disable-next-line @next/next/no-img-element
           <img src={kitchen.coverImage} alt="" className="w-full h-full object-cover" />
         ) : (
-          <div className="w-full h-full" style={{ background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)" }} />
+          <div className="w-full h-full" style={{ background: "linear-gradient(169.21deg, #34C98A 9%, #12865F 77%, #0C4A38 100%)" }} />
         )}
       </div>
 
@@ -63,7 +63,7 @@ export default function PublicKitchenPage() {
         <div className="bg-white rounded-3xl border border-slate-100 shadow-[0_4px_20px_-8px_rgba(0,0,0,0.06)] p-6">
           <div className="flex items-center gap-2 flex-wrap mb-1">
             <h1 className="text-xl font-extrabold text-slate-900">{kitchen.name}</h1>
-            {kitchen.isVerified ? <BadgeCheck size={18} className="text-[#087F78] shrink-0" /> : null}
+            {kitchen.isVerified ? <BadgeCheck size={18} className="text-[#12865F] shrink-0" /> : null}
           </div>
           {kitchen.tagline ? <p className="text-sm text-slate-500 mb-3">{kitchen.tagline}</p> : null}
 

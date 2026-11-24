@@ -9,7 +9,7 @@ import PartnerShell from "./PartnerShell";
 function FullScreenLoader() {
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-[#F3F8F8]">
-      <Spinner className="w-8 h-8 text-[#087F78]" />
+      <Spinner className="w-8 h-8 text-[#12865F]" />
     </div>
   );
 }

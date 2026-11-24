@@ -39,10 +39,10 @@ export default function PreRegistration() {
   const reveal = (delay = "") => `transition-all duration-1000 ease-out ${delay} ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`;
 
   return (
-    <section id="pre-reg" ref={sectionRef} className="relative w-full overflow-hidden font-sans pt-24 pb-16 lg:pt-32 lg:pb-28 bg-gradient-to-b from-white via-[#EFFAF8] to-white">
+    <section id="pre-reg" ref={sectionRef} className="relative w-full overflow-hidden font-sans pt-24 pb-16 lg:pt-32 lg:pb-28 bg-gradient-to-b from-white via-[#EEFBF4] to-white">
       <Torana />
-      <div className="pointer-events-none absolute inset-0 opacity-40 [background-image:radial-gradient(#087F78_1px,transparent_1px)] [background-size:28px_28px] [mask-image:radial-gradient(ellipse_at_top,black_10%,transparent_65%)]" />
-      <div className="pointer-events-none absolute top-20 -left-24 w-[380px] h-[380px] rounded-full bg-[#1DB9A0]/20 blur-[110px]" />
+      <div className="pointer-events-none absolute inset-0 opacity-40 [background-image:radial-gradient(#12865F_1px,transparent_1px)] [background-size:28px_28px] [mask-image:radial-gradient(ellipse_at_top,black_10%,transparent_65%)]" />
+      <div className="pointer-events-none absolute top-20 -left-24 w-[380px] h-[380px] rounded-full bg-[#34C98A]/20 blur-[110px]" />
       <div className="pointer-events-none absolute top-40 -right-24 w-[340px] h-[340px] rounded-full bg-[#FFC21A]/20 blur-[110px]" />
 
       <div className="relative w-full max-w-7xl mx-auto px-6">
@@ -50,7 +50,7 @@ export default function PreRegistration() {
         <div className={`text-center max-w-3xl mx-auto mb-14 lg:mb-20 ${reveal()}`}>
           <h2 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-[#0D1B1E] leading-[1.05] mb-6">
             Join early.{" "}
-            <span className="inline-block pr-[0.14em] -mr-[0.14em] bg-gradient-to-r from-[#1DB9A0] via-[#087F78] to-[#0B4F6C] bg-clip-text text-transparent" >
+            <span className="inline-block pr-[0.14em] -mr-[0.14em] bg-gradient-to-r from-[#34C98A] via-[#12865F] to-[#0C4A38] bg-clip-text text-transparent" >
               <span className="italic" style={{ fontFamily: "var(--font-instrument), Georgia, serif" }}>Win big.</span>
             </span>
           </h2>
@@ -62,26 +62,26 @@ export default function PreRegistration() {
         {/* ── Cards ── */}
         <div className={`grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 mb-16 lg:mb-24 ${reveal("delay-200")}`}>
           {/* Foodies */}
-          <div className="group relative overflow-hidden rounded-[2.5rem] bg-white border border-slate-100 p-8 lg:p-12 shadow-[0_30px_70px_-40px_rgba(8,127,120,0.5)] hover:-translate-y-1.5 transition-transform duration-500 flex flex-col">
-            <div className="pointer-events-none absolute -top-24 -right-24 w-72 h-72 rounded-full bg-[#1DB9A0]/15 blur-3xl group-hover:bg-[#1DB9A0]/25 transition-colors" />
-            <h3 className="relative text-xl font-extrabold text-[#087F78] mb-4">For foodies</h3>
+          <div className="group relative overflow-hidden rounded-[2.5rem] bg-white border border-slate-100 p-8 lg:p-12 shadow-[0_30px_70px_-40px_rgba(18, 134, 95,0.5)] hover:-translate-y-1.5 transition-transform duration-500 flex flex-col">
+            <div className="pointer-events-none absolute -top-24 -right-24 w-72 h-72 rounded-full bg-[#34C98A]/15 blur-3xl group-hover:bg-[#34C98A]/25 transition-colors" />
+            <h3 className="relative text-xl font-extrabold text-[#12865F] mb-4">For foodies</h3>
             <div className="relative mb-8">
-              <p className="text-7xl lg:text-8xl font-extrabold leading-none bg-gradient-to-br from-[#1DB9A0] to-[#0B4F6C] bg-clip-text text-transparent">₹100</p>
+              <p className="text-7xl lg:text-8xl font-extrabold leading-none bg-gradient-to-br from-[#34C98A] to-[#0C4A38] bg-clip-text text-transparent">₹100</p>
               <p className="text-slate-500 font-semibold mt-2">wallet credit for early members</p>
             </div>
             <ul className="relative flex flex-col gap-3 mb-10">
               {FOODIE_PERKS.map(({ icon: Icon, text }) => (
-                <li key={text} className="flex items-center gap-4 rounded-2xl bg-[#F3F8F8] px-4 py-3.5 group-hover:bg-[#EFFAF8] transition-colors">
-                  <span className="w-10 h-10 shrink-0 rounded-xl bg-white text-[#087F78] shadow-sm flex items-center justify-center"><Icon size={18} /></span>
+                <li key={text} className="flex items-center gap-4 rounded-2xl bg-[#F3F8F8] px-4 py-3.5 group-hover:bg-[#EEFBF4] transition-colors">
+                  <span className="w-10 h-10 shrink-0 rounded-xl bg-white text-[#12865F] shadow-sm flex items-center justify-center"><Icon size={18} /></span>
                   <span className="font-bold text-[#0D1B1E]">{text}</span>
-                  <Check size={16} className="ml-auto text-[#087F78] shrink-0" strokeWidth={3} />
+                  <Check size={16} className="ml-auto text-[#12865F] shrink-0" strokeWidth={3} />
                 </li>
               ))}
             </ul>
             <Link
               href="/pre-register?type=foodie"
-              className="relative mt-auto inline-flex items-center justify-center gap-2 w-full h-14 rounded-2xl text-white font-extrabold text-lg shadow-[0_20px_40px_-14px_rgba(8,127,120,0.7)] hover:scale-[1.02] active:scale-[0.99] transition-transform"
-              style={{ background: "linear-gradient(135deg,#14ADA0,#087F78 55%,#0B4F6C)" }}
+              className="relative mt-auto inline-flex items-center justify-center gap-2 w-full h-14 rounded-2xl text-white font-extrabold text-lg shadow-[0_20px_40px_-14px_rgba(18, 134, 95,0.7)] hover:scale-[1.02] active:scale-[0.99] transition-transform"
+              style={{ background: "linear-gradient(135deg,#2BBE82,#12865F 55%,#0C4A38)" }}
             >
               Pre-Register Now <ArrowUpRight size={20} />
             </Link>
@@ -89,8 +89,8 @@ export default function PreRegistration() {
 
           {/* Kitchens */}
           <div className="group relative overflow-hidden rounded-[2.5rem] bg-[#0D1B1E] text-white p-8 lg:p-12 shadow-[0_30px_70px_-30px_rgba(11,79,108,0.7)] hover:-translate-y-1.5 transition-transform duration-500 flex flex-col">
-            <div className="pointer-events-none absolute -top-24 -left-20 w-80 h-80 rounded-full bg-[#087F78]/50 blur-3xl animate-[drift_14s_ease-in-out_infinite]" />
-            <div className="pointer-events-none absolute -bottom-28 -right-16 w-80 h-80 rounded-full bg-[#0B4F6C]/60 blur-3xl animate-[drift_18s_ease-in-out_infinite_reverse]" />
+            <div className="pointer-events-none absolute -top-24 -left-20 w-80 h-80 rounded-full bg-[#12865F]/50 blur-3xl animate-[drift_14s_ease-in-out_infinite]" />
+            <div className="pointer-events-none absolute -bottom-28 -right-16 w-80 h-80 rounded-full bg-[#0C4A38]/60 blur-3xl animate-[drift_18s_ease-in-out_infinite_reverse]" />
             <h3 className="relative text-xl font-extrabold text-[#FFC21A] mb-4">For kitchens</h3>
             <div className="relative mb-8">
               <p className="text-7xl lg:text-8xl font-extrabold leading-none bg-gradient-to-br from-[#FFE08A] to-[#FFC21A] bg-clip-text text-transparent">0%</p>
@@ -116,10 +116,10 @@ export default function PreRegistration() {
         </div>
 
         {/* ── Launch roadmap ── */}
-        <div className={`relative rounded-[2.5rem] lg:rounded-[3.5rem] border border-[#087F78]/10 bg-white/70 backdrop-blur px-6 py-12 lg:px-16 lg:py-16 text-center shadow-[0_30px_80px_-50px_rgba(8,127,120,0.5)] ${reveal("delay-300")}`}>
+        <div className={`relative rounded-[2.5rem] lg:rounded-[3.5rem] border border-[#12865F]/10 bg-white/70 backdrop-blur px-6 py-12 lg:px-16 lg:py-16 text-center shadow-[0_30px_80px_-50px_rgba(18, 134, 95,0.5)] ${reveal("delay-300")}`}>
           <h3 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#0D1B1E] leading-[1.05] mb-4">
             Tomorrow is{" "}
-            <span className="inline-block pr-[0.14em] -mr-[0.14em] bg-gradient-to-r from-[#1DB9A0] to-[#0B4F6C] bg-clip-text text-transparent">
+            <span className="inline-block pr-[0.14em] -mr-[0.14em] bg-gradient-to-r from-[#34C98A] to-[#0C4A38] bg-clip-text text-transparent">
               <span className="italic" style={{ fontFamily: "var(--font-instrument), Georgia, serif" }}>cooking.</span>
             </span>
           </h3>
@@ -128,14 +128,14 @@ export default function PreRegistration() {
           </p>
 
           <ol className="relative grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6 max-w-4xl mx-auto text-left">
-            <span className="hidden md:block absolute top-5 left-[16.6%] right-[16.6%] h-0.5 bg-gradient-to-r from-[#087F78] via-[#087F78]/30 to-slate-200" />
+            <span className="hidden md:block absolute top-5 left-[16.6%] right-[16.6%] h-0.5 bg-gradient-to-r from-[#12865F] via-[#12865F]/30 to-slate-200" />
             {ROADMAP.map((s, i) => (
               <li key={s.title} className="relative flex md:flex-col md:items-center md:text-center gap-4">
                 <span className="relative shrink-0 w-10 h-10">
-                  {s.live ? <span className="absolute inset-0 rounded-full bg-[#087F78]/30 animate-ping" /> : null}
+                  {s.live ? <span className="absolute inset-0 rounded-full bg-[#12865F]/30 animate-ping" /> : null}
                   <span
                     className={`relative w-10 h-10 rounded-full flex items-center justify-center text-sm font-extrabold ${s.live ? "text-white" : "bg-white border-2 border-slate-200 text-slate-400"}`}
-                    style={s.live ? { background: "linear-gradient(135deg,#14ADA0,#0B4F6C)" } : undefined}
+                    style={s.live ? { background: "linear-gradient(135deg,#2BBE82,#0C4A38)" } : undefined}
                   >
                     {i + 1}
                   </span>

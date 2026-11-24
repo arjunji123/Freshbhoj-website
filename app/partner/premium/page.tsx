@@ -65,7 +65,7 @@ export default function PremiumPricingPage() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-24">
-        <Spinner className="w-8 h-8 text-[#087F78]" />
+        <Spinner className="w-8 h-8 text-[#12865F]" />
       </div>
     );
   }
@@ -106,14 +106,14 @@ export default function PremiumPricingPage() {
             <div key={catalogTier.tier} className="relative">
               {catalogTier.isMostPopular ? (
                 <div
-                  className="absolute -top-3 left-1/2 -translate-x-1/2 z-10 text-white text-[10px] font-extrabold uppercase tracking-wide px-4 py-1.5 rounded-full shadow-[0_10px_25px_-8px_rgba(8,127,120,0.5)]"
+                  className="absolute -top-3 left-1/2 -translate-x-1/2 z-10 text-white text-[10px] font-extrabold uppercase tracking-wide px-4 py-1.5 rounded-full shadow-[0_10px_25px_-8px_rgba(18, 134, 95,0.5)]"
                   style={GRADIENT_BG}
                 >
                   Most Popular
                 </div>
               ) : null}
               <Card
-                className={`!p-6 h-full flex flex-col ${catalogTier.isMostPopular ? "border-2 !border-[#087F78]" : ""}`}
+                className={`!p-6 h-full flex flex-col ${catalogTier.isMostPopular ? "border-2 !border-[#12865F]" : ""}`}
               >
                 <div className="mb-4">
                   <p className="text-sm font-extrabold text-slate-900">{TIER_LABEL[catalogTier.tier]}</p>
@@ -163,7 +163,7 @@ export default function PremiumPricingPage() {
             <div>
               <p className="text-xs font-semibold text-red-600">{purchaseError}</p>
               {insufficientBalance ? (
-                <Link href="/partner/wallet" className="inline-block mt-2 text-xs font-bold text-[#087F78]">
+                <Link href="/partner/wallet" className="inline-block mt-2 text-xs font-bold text-[#12865F]">
                   Add money to your wallet →
                 </Link>
               ) : null}

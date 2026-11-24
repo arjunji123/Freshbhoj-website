@@ -21,7 +21,7 @@ const ACTIVITY = [
 ] as const;
 
 const fieldCls =
-  "w-full h-12 rounded-2xl bg-white border border-slate-200 px-4 text-base font-semibold text-[#0D1B1E] outline-none transition focus:border-[#087F78] focus:ring-4 focus:ring-[#087F78]/10";
+  "w-full h-12 rounded-2xl bg-white border border-slate-200 px-4 text-base font-semibold text-[#0D1B1E] outline-none transition focus:border-[#12865F] focus:ring-4 focus:ring-[#12865F]/10";
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
@@ -62,7 +62,7 @@ export default function FitCalculator() {
 
   return (
     <div className="grid lg:grid-cols-[1.05fr_0.95fr] gap-6 lg:gap-8">
-      <div className="rounded-[2rem] bg-[#F3F8F8] border border-[#087F78]/10 p-6 lg:p-9">
+      <div className="rounded-[2rem] bg-[#F3F8F8] border border-[#12865F]/10 p-6 lg:p-9">
         <fieldset className="mb-6">
           <legend className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-3">Your goal</legend>
           <div className="grid sm:grid-cols-3 gap-2.5">
@@ -73,7 +73,7 @@ export default function FitCalculator() {
                 onClick={() => setGoal(g.id)}
                 aria-pressed={goal === g.id}
                 className={`text-left rounded-2xl border-2 px-4 py-3 transition-all ${
-                  goal === g.id ? "border-[#087F78] bg-white shadow-[0_12px_30px_-16px_rgba(8,127,120,0.7)]" : "border-transparent bg-white/70 hover:bg-white"
+                  goal === g.id ? "border-[#12865F] bg-white shadow-[0_12px_30px_-16px_rgba(18, 134, 95,0.7)]" : "border-transparent bg-white/70 hover:bg-white"
                 }`}
               >
                 <span className="block font-extrabold text-[#0D1B1E] text-sm">{g.label}</span>
@@ -117,7 +117,7 @@ export default function FitCalculator() {
       </div>
 
       <div className="relative overflow-hidden rounded-[2rem] bg-[#0D1B1E] text-white p-6 lg:p-9 flex flex-col">
-        <div className="pointer-events-none absolute -top-24 -right-16 w-72 h-72 rounded-full bg-[#087F78]/50 blur-3xl" />
+        <div className="pointer-events-none absolute -top-24 -right-16 w-72 h-72 rounded-full bg-[#12865F]/50 blur-3xl" />
 
         {result ? (
           <div className="relative flex flex-col flex-1" aria-live="polite">
@@ -127,7 +127,7 @@ export default function FitCalculator() {
                 <p className="text-4xl lg:text-5xl font-extrabold leading-none">{result.kcal.toLocaleString("en-IN")}</p>
                 <p className="text-xs text-white/60 font-semibold mt-1.5">kcal per day</p>
               </div>
-              <div className="rounded-2xl bg-gradient-to-br from-[#14ADA0]/40 to-[#0B4F6C]/40 border border-white/15 p-4">
+              <div className="rounded-2xl bg-gradient-to-br from-[#2BBE82]/40 to-[#0C4A38]/40 border border-white/15 p-4">
                 <Beef size={18} className="text-[#5EE6D0] mb-2" />
                 <p className="text-4xl lg:text-5xl font-extrabold leading-none">{result.protein}<span className="text-xl">g</span></p>
                 <p className="text-xs text-white/70 font-semibold mt-1.5">protein per day</p>
@@ -137,13 +137,13 @@ export default function FitCalculator() {
             <div className="h-3 rounded-full overflow-hidden flex bg-white/10 mb-3" role="img" aria-label={`Calories from protein ${pShare} percent, carbs ${cShare} percent, fat ${fShare} percent`}>
               <span style={{ width: `${pShare}%` }} className="bg-[#5EE6D0]" />
               <span style={{ width: `${cShare}%` }} className="bg-[#FFC21A]" />
-              <span style={{ width: `${fShare}%` }} className="bg-[#14ADA0]/60" />
+              <span style={{ width: `${fShare}%` }} className="bg-[#2BBE82]/60" />
             </div>
             <ul className="grid grid-cols-3 gap-2 text-center mb-5">
               {[
                 { icon: Beef, label: "Protein", v: result.protein, dot: "bg-[#5EE6D0]" },
                 { icon: Wheat, label: "Carbs", v: result.carbs, dot: "bg-[#FFC21A]" },
-                { icon: Droplet, label: "Fat", v: result.fat, dot: "bg-[#14ADA0]/60" },
+                { icon: Droplet, label: "Fat", v: result.fat, dot: "bg-[#2BBE82]/60" },
               ].map(({ label, v, dot }) => (
                 <li key={label} className="rounded-xl bg-white/[0.05] py-3">
                   <span className="flex items-center justify-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-white/60">

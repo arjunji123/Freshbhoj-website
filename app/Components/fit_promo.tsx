@@ -18,7 +18,7 @@ export default function FitPromo() {
           aria-label="Explore BhojFit"
           className="group relative block overflow-hidden rounded-[2.5rem] lg:rounded-[3.5rem] bg-[#0D1B1E] text-white p-8 lg:p-14 shadow-[0_30px_70px_-30px_rgba(11,79,108,0.7)] hover:-translate-y-1 transition-transform duration-500"
         >
-          <div className="pointer-events-none absolute -top-24 -left-20 w-80 h-80 rounded-full bg-[#087F78]/50 blur-3xl animate-[drift_14s_ease-in-out_infinite]" />
+          <div className="pointer-events-none absolute -top-24 -left-20 w-80 h-80 rounded-full bg-[#12865F]/50 blur-3xl animate-[drift_14s_ease-in-out_infinite]" />
           <div className="pointer-events-none absolute -bottom-28 -right-16 w-80 h-80 rounded-full bg-[#FFC21A]/15 blur-3xl" />
           <div className="relative grid lg:grid-cols-[1.1fr_0.9fr] gap-10 items-center">
             <div>

@@ -19,7 +19,7 @@ export function Garland({ className = "" }: { className?: string }) {
 export function Eyebrow({ en, hi, tone = "light", className = "" }: { en: string; hi?: string; tone?: "light" | "dark"; className?: string }) {
   const dark = tone === "dark";
   return (
-    <p className={`inline-flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.2em] ${dark ? "text-[#FFC21A]" : "text-[#087F78]"} ${className}`}>
+    <p className={`inline-flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.2em] ${dark ? "text-[#FFC21A]" : "text-[#12865F]"} ${className}`}>
       {en}
       {hi ? (
         <>

@@ -85,7 +85,7 @@ export default function TimingsPage() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-24">
-        <Spinner className="w-8 h-8 text-[#087F78]" />
+        <Spinner className="w-8 h-8 text-[#12865F]" />
       </div>
     );
   }
@@ -353,13 +353,13 @@ function HolidaysSection({
               <div className="flex gap-2">
                 <button
                   onClick={() => setIsClosed(true)}
-                  className={`flex-1 rounded-xl px-3 py-3 text-xs font-bold transition-colors ${isClosed ? "bg-[#087F78] text-white" : "bg-slate-100 text-slate-500"}`}
+                  className={`flex-1 rounded-xl px-3 py-3 text-xs font-bold transition-colors ${isClosed ? "bg-[#12865F] text-white" : "bg-slate-100 text-slate-500"}`}
                 >
                   Closed all day
                 </button>
                 <button
                   onClick={() => setIsClosed(false)}
-                  className={`flex-1 rounded-xl px-3 py-3 text-xs font-bold transition-colors ${!isClosed ? "bg-[#087F78] text-white" : "bg-slate-100 text-slate-500"}`}
+                  className={`flex-1 rounded-xl px-3 py-3 text-xs font-bold transition-colors ${!isClosed ? "bg-[#12865F] text-white" : "bg-slate-100 text-slate-500"}`}
                 >
                   Custom hours
                 </button>

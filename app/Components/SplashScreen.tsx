@@ -57,10 +57,10 @@ const SplashScreen = () => {
         {/* Torana across the top, like a doorway to a thali */}
         <div className="fixed top-0 inset-x-0 torana pointer-events-none" aria-hidden />
         {/* Elegant Backdrop Glow */}
-        <div className="absolute w-[300px] h-[300px] bg-gradient-to-r from-[#1DB9A0]/10 via-[#087F78]/5 to-transparent rounded-full blur-[60px] animate-pulse-slow" />
+        <div className="absolute w-[300px] h-[300px] bg-gradient-to-r from-[#34C98A]/10 via-[#12865F]/5 to-transparent rounded-full blur-[60px] animate-pulse-slow" />
 
         {/* Logo Container */}
-        <div className="relative mb-14 drop-shadow-[0_10px_30px_rgba(8,127,120,0.15)]">
+        <div className="relative mb-14 drop-shadow-[0_10px_30px_rgba(18, 134, 95,0.15)]">
           <div className="relative z-10 animate-logo-reveal">
             <Image
               src="/freshbhoj-red-new.svg"
@@ -77,7 +77,7 @@ const SplashScreen = () => {
 
         {/* Bottom Text/Tagline Reveal */}
         <div className="overflow-hidden pt-4 pb-2 mb-1">
-          <p className="font-deva italic leading-[1.6] text-[#087F78] text-2xl md:text-4xl animate-text-slide-up">
+          <p className="font-deva italic leading-[1.6] text-[#12865F] text-2xl md:text-4xl animate-text-slide-up">
             स्वाद भी, भरोसा भी।
           </p>
         </div>
@@ -89,7 +89,7 @@ const SplashScreen = () => {
 
         {/* Minimal Progress Loader */}
         <div className="w-40 h-[1.5px] bg-gray-100/80 overflow-hidden rounded-full">
-          <div className="h-full bg-gradient-to-r from-[#1DB9A0] to-[#087F78] animate-progress-load" />
+          <div className="h-full bg-gradient-to-r from-[#34C98A] to-[#12865F] animate-progress-load" />
         </div>
       </div>
 

@@ -136,7 +136,7 @@ export default function ReelsPage() {
 
       {isLoading ? (
         <div className="flex items-center justify-center py-24">
-          <Spinner className="w-8 h-8 text-[#087F78]" />
+          <Spinner className="w-8 h-8 text-[#12865F]" />
         </div>
       ) : error ? (
         <Card>
@@ -229,7 +229,7 @@ export default function ReelsPage() {
 
                 {reel.caption ? <p className="text-sm font-medium text-slate-700 line-clamp-2 break-words">{reel.caption}</p> : null}
                 {reel.hashtags.length > 0 ? (
-                  <p className="text-xs font-semibold text-[#087F78] line-clamp-1 break-words">{reel.hashtags.map((t) => `#${t}`).join(" ")}</p>
+                  <p className="text-xs font-semibold text-[#12865F] line-clamp-1 break-words">{reel.hashtags.map((t) => `#${t}`).join(" ")}</p>
                 ) : null}
 
                 <div className="flex items-center gap-1 mt-auto pt-1">
@@ -241,7 +241,7 @@ export default function ReelsPage() {
                     aria-label={reel.isPaused ? "Resume reel" : "Pause reel"}
                     title={reel.isPaused ? "Resume reel" : "Pause reel"}
                   >
-                    {busyId === reel.id ? <Spinner /> : reel.isPaused ? <Play size={16} className="text-[#087F78]" /> : <Pause size={16} />}
+                    {busyId === reel.id ? <Spinner /> : reel.isPaused ? <Play size={16} className="text-[#12865F]" /> : <Pause size={16} />}
                   </button>
                   <button
                     type="button"
@@ -263,7 +263,7 @@ export default function ReelsPage() {
                     <Trash2 size={16} />
                   </button>
                   {reel.status === "PUBLISHED" && !reel.isPaused ? (
-                    <Link href="/partner/ads" className="ml-auto text-xs font-bold text-[#087F78] hover:underline px-2 py-3">
+                    <Link href="/partner/ads" className="ml-auto text-xs font-bold text-[#12865F] hover:underline px-2 py-3">
                       Promote
                     </Link>
                   ) : null}
@@ -469,7 +469,7 @@ function ComposeReel({ meals, isElite, onPublished, onCancel }: { meals: MealDet
             </button>
           </div>
         ) : (
-          <label className="flex flex-col items-center justify-center w-40 aspect-[9/13] rounded-xl border-2 border-dashed border-slate-200 cursor-pointer text-xs font-bold text-slate-400 hover:border-[#087F78]/30 hover:text-[#087F78] transition-colors focus-within:border-[#087F78]/50">
+          <label className="flex flex-col items-center justify-center w-40 aspect-[9/13] rounded-xl border-2 border-dashed border-slate-200 cursor-pointer text-xs font-bold text-slate-400 hover:border-[#12865F]/30 hover:text-[#12865F] transition-colors focus-within:border-[#12865F]/50">
             <Clapperboard size={22} className="mb-1" />
             Add video
             <input type="file" accept="video/*" className="sr-only" onChange={(e) => handlePickFile(e.target.files?.[0] ?? null)} />
@@ -488,7 +488,7 @@ function ComposeReel({ meals, isElite, onPublished, onCancel }: { meals: MealDet
             <p className="mt-2 text-xs font-semibold text-slate-500">
               {toolNotice}{" "}
               {!isElite ? (
-                <Link href="/partner/premium" className="text-[#087F78] underline">
+                <Link href="/partner/premium" className="text-[#12865F] underline">
                   View Elite plan
                 </Link>
               ) : null}
@@ -541,7 +541,7 @@ function EditToolPill({ icon: Icon, label, onClick }: { icon: React.ComponentTyp
     <button
       type="button"
       onClick={onClick}
-      className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 px-3.5 py-2 text-xs font-bold text-slate-600 hover:border-[#087F78]/30 hover:text-[#087F78] transition-colors"
+      className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 px-3.5 py-2 text-xs font-bold text-slate-600 hover:border-[#12865F]/30 hover:text-[#12865F] transition-colors"
     >
       <Icon size={13} /> {label}
     </button>

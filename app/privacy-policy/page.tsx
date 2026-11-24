@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Navbar, Footer } from "../Components";
 
 const gradientStyle = {
-  background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)",
+  background: "linear-gradient(169.21deg, #34C98A 9%, #12865F 77%, #0C4A38 100%)",
   WebkitBackgroundClip: "text" as const,
   WebkitTextFillColor: "transparent" as const,
   backgroundClip: "text" as const,
@@ -85,7 +85,7 @@ export default function PrivacyPolicy() {
             <span
               className="inline-block"
               style={{
-                background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)",
+                background: "linear-gradient(169.21deg, #34C98A 9%, #12865F 77%, #0C4A38 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text"
@@ -157,7 +157,7 @@ export default function PrivacyPolicy() {
                           <li key={item} className="flex items-center gap-3 text-slate-600 font-medium text-sm md:text-base">
                             <span
                               className="w-2 h-2 rounded-full flex-shrink-0"
-                              style={{ background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)" }}
+                              style={{ background: "linear-gradient(169.21deg, #34C98A 9%, #12865F 77%, #0C4A38 100%)" }}
                             />
                             {item}
                           </li>
@@ -194,7 +194,7 @@ export default function PrivacyPolicy() {
 
               {/* Rights — Bordered Card with 2x2 Grid */}
               {section.rights && (
-                <div className="rounded-2xl bg-[#EFFAF8] border-l-4 p-6 mt-2" style={{ borderColor: "#087F78" }}>
+                <div className="rounded-2xl bg-[#EEFBF4] border-l-4 p-6 mt-2" style={{ borderColor: "#12865F" }}>
                   {/* Description text inside card */}
                   {section.content.map((para, i) => (
                     <p key={i} className="text-slate-600 text-sm md:text-base leading-relaxed mb-6">
@@ -230,7 +230,7 @@ export default function PrivacyPolicy() {
 
         {/* Contact CTA */}
         <div className="mt-24 rounded-[2.5rem] lg:rounded-[3.5rem] py-16 px-8 text-center overflow-hidden relative bg-[#0D1B1E] border border-white/5">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-[#087F78] opacity-10 blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2" />
+          <div className="absolute top-0 right-0 w-64 h-64 bg-[#12865F] opacity-10 blur-[100px] rounded-full -translate-y-1/2 translate-x-1/2" />
           <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500 opacity-10 blur-[100px] rounded-full" />
           <div className="relative z-10">
             <p className="text-slate-400 font-medium text-base md:text-lg mb-8">
@@ -240,7 +240,7 @@ export default function PrivacyPolicy() {
               href="mailto:privacy@freshbhoj.com"
               className="inline-flex items-center justify-center px-10 py-5 text-white font-bold rounded-2xl transition-all hover:scale-105 active:scale-95 shadow-xl"
               style={{
-                background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)",
+                background: "linear-gradient(169.21deg, #34C98A 9%, #12865F 77%, #0C4A38 100%)",
               }}
             >
               Contact Support Team →

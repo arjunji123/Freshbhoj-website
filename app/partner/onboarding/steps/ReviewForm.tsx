@@ -47,7 +47,7 @@ export function ReviewForm({
             ))}
           </ul>
           {needsMenu ? (
-            <Link href="/partner/menu/new" className="inline-block mt-2 text-xs font-bold text-[#087F78]">
+            <Link href="/partner/menu/new" className="inline-block mt-2 text-xs font-bold text-[#12865F]">
               Add a dish now →
             </Link>
           ) : null}

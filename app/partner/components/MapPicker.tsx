@@ -57,8 +57,8 @@ export default function MapPicker({ latitude, longitude, onMoveEnd, zoom = 16, c
       <div className="pointer-events-none absolute inset-0 z-[1000] flex items-center justify-center">
         <MapPin
           size={36}
-          className="-translate-y-1/2 text-[#087F78] drop-shadow-md"
-          fill="#1DB9A0"
+          className="-translate-y-1/2 text-[#12865F] drop-shadow-md"
+          fill="#34C98A"
           fillOpacity={0.25}
           strokeWidth={2.4}
         />

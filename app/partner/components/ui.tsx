@@ -6,14 +6,14 @@ import Link from "next/link";
 import { ArrowLeft, Inbox, X } from "lucide-react";
 
 export const GRADIENT_TEXT = {
-  background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)",
+  background: "linear-gradient(169.21deg, #34C98A 9%, #12865F 77%, #0C4A38 100%)",
   WebkitBackgroundClip: "text" as const,
   WebkitTextFillColor: "transparent" as const,
   backgroundClip: "text" as const,
 };
 
 export const GRADIENT_BG = {
-  background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)",
+  background: "linear-gradient(169.21deg, #34C98A 9%, #12865F 77%, #0C4A38 100%)",
 };
 
 const FIELD_LABEL = "block text-sm font-bold text-slate-700 mb-2";
@@ -82,9 +82,9 @@ export function Button({ variant = "primary", loading, disabled, className, chil
     "inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-bold transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:pointer-events-none";
 
   const variantClass = {
-    primary: "text-white shadow-[0_10px_25px_-8px_rgba(8,127,120,0.5)] hover:scale-[1.02]",
+    primary: "text-white shadow-[0_10px_25px_-8px_rgba(18, 134, 95,0.5)] hover:scale-[1.02]",
     secondary: "bg-slate-900 text-white hover:bg-slate-800",
-    outline: "border-2 border-[#087F78]/20 text-[#087F78] hover:bg-[#087F78]/5",
+    outline: "border-2 border-[#12865F]/20 text-[#12865F] hover:bg-[#12865F]/5",
     ghost: "text-slate-600 hover:bg-slate-100",
     danger: "bg-red-50 text-red-600 hover:bg-red-100",
   }[variant];
@@ -138,7 +138,7 @@ export function Badge({
     success: "bg-emerald-50 text-emerald-700",
     warning: "bg-amber-50 text-amber-700",
     danger: "bg-red-50 text-red-700",
-    brand: "bg-[#087F78]/10 text-[#087F78]",
+    brand: "bg-[#12865F]/10 text-[#12865F]",
   }[tone];
 
   return (
@@ -172,12 +172,12 @@ export function TabBar<T extends string>({
           key={key}
           onClick={() => onChange(key)}
           className={`inline-flex items-center px-5 py-2 rounded-xl text-sm font-bold transition-colors ${
-            activeKey === key ? "bg-white text-[#087F78] shadow-sm" : "text-slate-500"
+            activeKey === key ? "bg-white text-[#12865F] shadow-sm" : "text-slate-500"
           }`}
         >
           {label}
           {count ? (
-            <span className="ml-1.5 inline-flex items-center justify-center min-w-[18px] h-[18px] px-1 rounded-full text-[10px] font-extrabold bg-[#087F78]/10 text-[#087F78]">
+            <span className="ml-1.5 inline-flex items-center justify-center min-w-[18px] h-[18px] px-1 rounded-full text-[10px] font-extrabold bg-[#12865F]/10 text-[#12865F]">
               {count}
             </span>
           ) : null}
@@ -225,14 +225,14 @@ export function Toggle({
       {onLabel || offLabel ? <span className="text-sm font-bold">{checked ? onLabel : offLabel}</span> : null}
       <span
         className={`relative w-11 h-6 shrink-0 rounded-full transition-colors ${
-          tone === "light" ? (checked ? "bg-[#087F78]" : "bg-slate-300") : checked ? "bg-white" : "bg-black/25"
+          tone === "light" ? (checked ? "bg-[#12865F]" : "bg-slate-300") : checked ? "bg-white" : "bg-black/25"
         }`}
       >
         <span
           className={`absolute left-0.5 top-0.5 w-5 h-5 rounded-full shadow-sm transition-transform ${
             tone === "light"
               ? checked ? "translate-x-5 bg-white" : "translate-x-0 bg-white"
-              : checked ? "translate-x-5 bg-[#087F78]" : "translate-x-0 bg-white/90"
+              : checked ? "translate-x-5 bg-[#12865F]" : "translate-x-0 bg-white/90"
           }`}
         />
       </span>
@@ -258,12 +258,12 @@ export function OptionCard({
       aria-pressed={selected}
       className={`flex flex-col items-center justify-center gap-2 rounded-2xl border-2 px-4 py-5 text-center transition-all duration-200 active:scale-95 ${
         selected
-          ? "border-transparent text-white shadow-[0_10px_25px_-8px_rgba(8,127,120,0.5)]"
-          : "border-slate-100 text-slate-600 hover:border-[#087F78]/20 hover:bg-[#087F78]/5"
+          ? "border-transparent text-white shadow-[0_10px_25px_-8px_rgba(18, 134, 95,0.5)]"
+          : "border-slate-100 text-slate-600 hover:border-[#12865F]/20 hover:bg-[#12865F]/5"
       }`}
       style={selected ? GRADIENT_BG : undefined}
     >
-      <span className={`[&>svg]:w-6 [&>svg]:h-6 ${selected ? "text-white" : "text-[#087F78]"}`}>{icon}</span>
+      <span className={`[&>svg]:w-6 [&>svg]:h-6 ${selected ? "text-white" : "text-[#12865F]"}`}>{icon}</span>
       <span className="text-sm font-bold">{label}</span>
     </button>
   );
@@ -394,7 +394,7 @@ export function BackLink(
   props: { label?: string } & ({ href: string; onClick?: undefined } | { href?: undefined; onClick: () => void }),
 ) {
   const { label = "Back" } = props;
-  const className = "inline-flex items-center gap-1.5 text-sm font-bold text-slate-500 hover:text-[#087F78] transition-colors mb-4";
+  const className = "inline-flex items-center gap-1.5 text-sm font-bold text-slate-500 hover:text-[#12865F] transition-colors mb-4";
   const content = (
     <>
       <ArrowLeft size={15} strokeWidth={2.4} />
@@ -466,7 +466,7 @@ export function RangeSlider({
         step={step}
         value={value}
         onChange={(e) => onChange(Number(e.target.value))}
-        className="w-full accent-[#087F78]"
+        className="w-full accent-[#12865F]"
       />
       <div className="flex justify-between text-[10px] font-semibold text-slate-400 mt-1">
         <span>{minLabel ?? min}</span>

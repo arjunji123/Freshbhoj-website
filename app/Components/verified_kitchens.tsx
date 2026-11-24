@@ -25,7 +25,7 @@ const STEPS = [
 
 const KITCHENS = [
   { name: "Sharma Family Kitchen", meta: "North Indian · 1.2 km", rating: "4.8", time: "25 min", verified: true, tone: "from-[#FFE7A8] to-[#FFC21A]", img: "/food/rice.webp" },
-  { name: "Night Owl Café", meta: "Snacks · 3.1 km", rating: "4.3", time: "30 min", verified: false, tone: "from-[#D3F1EE] to-[#5EE6D0]", img: "/food/momo.webp" },
+  { name: "Night Owl Café", meta: "Snacks · 3.1 km", rating: "4.3", time: "30 min", verified: false, tone: "from-[#D5F5E4] to-[#5EE6D0]", img: "/food/momo.webp" },
   { name: "Highway Dhaba Express", meta: "Punjabi · 2.4 km", rating: "4.5", time: "35 min", verified: true, tone: "from-[#FFD9B0] to-[#F59E0B]", img: "/food/naan.webp" },
   { name: "Mithai Corner", meta: "Sweets · 1.9 km", rating: "4.4", time: "20 min", verified: false, tone: "from-[#FFE7A8] to-[#FFB84D]", img: "/food/mango.webp" },
 ] as const;
@@ -52,11 +52,11 @@ export default function VerifiedKitchens() {
   const list = KITCHENS.filter((k) => !onlyVerified || k.verified);
 
   return (
-    <section ref={ref} id="verified" className="relative w-full font-sans pt-24 pb-16 lg:pt-32 lg:pb-28 bg-gradient-to-b from-white via-[#EFFAF8] to-white overflow-hidden">
+    <section ref={ref} id="verified" className="relative w-full font-sans pt-24 pb-16 lg:pt-32 lg:pb-28 bg-gradient-to-b from-white via-[#EEFBF4] to-white overflow-hidden">
       <Torana />
       {/* dotted grid + glows */}
-      <div className="pointer-events-none absolute inset-0 opacity-[0.5] [background-image:radial-gradient(#087F78_1px,transparent_1px)] [background-size:28px_28px] [mask-image:radial-gradient(ellipse_at_center,black_20%,transparent_70%)]" />
-      <div className="pointer-events-none absolute top-10 -left-24 w-[420px] h-[420px] rounded-full bg-[#1DB9A0]/20 blur-[110px]" />
+      <div className="pointer-events-none absolute inset-0 opacity-[0.5] [background-image:radial-gradient(#12865F_1px,transparent_1px)] [background-size:28px_28px] [mask-image:radial-gradient(ellipse_at_center,black_20%,transparent_70%)]" />
+      <div className="pointer-events-none absolute top-10 -left-24 w-[420px] h-[420px] rounded-full bg-[#34C98A]/20 blur-[110px]" />
       <div className="pointer-events-none absolute bottom-0 right-0 w-[380px] h-[380px] rounded-full bg-[#1E7BD8]/15 blur-[110px]" />
 
       <div
@@ -68,14 +68,14 @@ export default function VerifiedKitchens() {
         <div>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#0D1B1E] mb-6 leading-[1.05] tracking-tight">
             Trust you can{" "}
-            <span className="inline-block pr-[0.14em] -mr-[0.14em] bg-gradient-to-r from-[#1DB9A0] via-[#087F78] to-[#0B4F6C] bg-clip-text text-transparent"><span className="italic" style={{ fontFamily: "var(--font-instrument), Georgia, serif" }}>actually see.</span></span>
+            <span className="inline-block pr-[0.14em] -mr-[0.14em] bg-gradient-to-r from-[#34C98A] via-[#12865F] to-[#0C4A38] bg-clip-text text-transparent"><span className="italic" style={{ fontFamily: "var(--font-instrument), Georgia, serif" }}>actually see.</span></span>
           </h2>
           <p className="text-slate-500 text-base md:text-xl leading-relaxed mb-8 max-w-xl">
             Kitchens we visit and verify ourselves earn a Verified badge, so you always know where your food comes from.
           </p>
 
           <ol className="relative flex flex-col gap-3">
-            <span className="absolute left-[27px] top-8 bottom-8 w-px bg-gradient-to-b from-[#1DB9A0] via-[#087F78]/40 to-transparent" />
+            <span className="absolute left-[27px] top-8 bottom-8 w-px bg-gradient-to-b from-[#34C98A] via-[#12865F]/40 to-transparent" />
             {STEPS.map(({ icon: Icon, title, description }, i) => {
               const on = i === step;
               return (
@@ -83,12 +83,12 @@ export default function VerifiedKitchens() {
                   key={title}
                   onMouseEnter={() => setStep(i)}
                   className={`relative flex items-start gap-4 rounded-3xl p-4 pr-5 border transition-all duration-500 cursor-default ${
-                    on ? "bg-white border-[#087F78]/20 shadow-[0_20px_40px_-20px_rgba(8,127,120,0.45)] translate-x-1" : "bg-transparent border-transparent"
+                    on ? "bg-white border-[#12865F]/20 shadow-[0_20px_40px_-20px_rgba(18, 134, 95,0.45)] translate-x-1" : "bg-transparent border-transparent"
                   }`}
                 >
                   <span
                     className={`relative z-10 w-12 h-12 shrink-0 rounded-2xl flex items-center justify-center transition-all duration-500 ${
-                      on ? "bg-gradient-to-br from-[#1DB9A0] to-[#0B4F6C] text-white scale-105" : "bg-white text-[#087F78] border border-slate-200"
+                      on ? "bg-gradient-to-br from-[#34C98A] to-[#0C4A38] text-white scale-105" : "bg-white text-[#12865F] border border-slate-200"
                     }`}
                   >
                     <Icon size={20} strokeWidth={2.2} />
@@ -106,7 +106,7 @@ export default function VerifiedKitchens() {
         {/* Right: seal + app mock */}
         <div className="relative flex justify-center py-10">
           {/* glow behind card */}
-          <div className="absolute inset-x-10 top-16 bottom-0 rounded-[3rem] bg-gradient-to-br from-[#1DB9A0]/40 via-[#1E7BD8]/20 to-[#FFC21A]/30 blur-3xl" />
+          <div className="absolute inset-x-10 top-16 bottom-0 rounded-[3rem] bg-gradient-to-br from-[#34C98A]/40 via-[#1E7BD8]/20 to-[#FFC21A]/30 blur-3xl" />
 
           {/* phone-like card */}
           <div className="relative w-full max-w-[420px] rounded-[2.5rem] bg-[#0D1B1E] p-3 shadow-[0_40px_80px_-30px_rgba(11,79,108,0.6)] ring-1 ring-white/10 mt-10">

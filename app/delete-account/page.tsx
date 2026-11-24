@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Navbar, Footer } from "../Components";
 
 const gradientStyle = {
-  background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)",
+  background: "linear-gradient(169.21deg, #34C98A 9%, #12865F 77%, #0C4A38 100%)",
   WebkitBackgroundClip: "text" as const,
   WebkitTextFillColor: "transparent" as const,
   backgroundClip: "text" as const,
@@ -111,7 +111,7 @@ export default function DeleteAccountPage() {
             <ul className="space-y-2.5">
               {DELETED_ITEMS.map((item) => (
                 <li key={item} className="flex gap-2.5 text-sm text-slate-600">
-                  <span className="text-[#087F78] font-bold mt-0.5">&#10005;</span>
+                  <span className="text-[#12865F] font-bold mt-0.5">&#10005;</span>
                   {item}
                 </li>
               ))}
@@ -130,7 +130,7 @@ export default function DeleteAccountPage() {
           </div>
         </div>
 
-        <div className="bg-[#F5FCFB] border border-[#D3F1EE] rounded-3xl p-6 md:p-10 max-w-xl mx-auto">
+        <div className="bg-[#F5FCFB] border border-[#D5F5E4] rounded-3xl p-6 md:p-10 max-w-xl mx-auto">
           {step === "phone" ? (
             <>
               <h3 className="font-extrabold text-xl mb-1.5 text-slate-900">Step 1 — Verify it&apos;s you</h3>

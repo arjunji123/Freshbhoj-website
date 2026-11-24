@@ -70,7 +70,7 @@ export default function WalletPage() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-24">
-        <Spinner className="w-8 h-8 text-[#087F78]" />
+        <Spinner className="w-8 h-8 text-[#12865F]" />
       </div>
     );
   }
@@ -104,7 +104,7 @@ export default function WalletPage() {
           <p className="text-xs font-semibold text-slate-400 mt-0.5">Current balance</p>
         </Card>
         <Card className="!p-5">
-          <div className="w-9 h-9 rounded-xl bg-[#087F78]/10 text-[#087F78] flex items-center justify-center mb-3">
+          <div className="w-9 h-9 rounded-xl bg-[#12865F]/10 text-[#12865F] flex items-center justify-center mb-3">
             <IndianRupee size={16} />
           </div>
           <p className="text-2xl font-extrabold text-slate-900">₹{summary.totalCreditsRs.toLocaleString("en-IN")}</p>

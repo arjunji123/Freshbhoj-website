@@ -48,7 +48,7 @@ export default function OnboardingPage() {
                   s.isComplete
                     ? "bg-emerald-50 text-emerald-700"
                     : s.isCurrent
-                    ? "bg-[#087F78]/10 text-[#087F78]"
+                    ? "bg-[#12865F]/10 text-[#12865F]"
                     : "bg-slate-100 text-slate-400"
                 }`}
               >

@@ -47,7 +47,7 @@ const Navbar = () => {
           className={`pointer-events-auto mx-auto max-w-6xl flex items-center justify-between gap-3 rounded-full h-[60px] md:h-[68px] pl-6 pr-2.5 transition-all duration-300 border ${
             onDark
               ? "bg-white/10 backdrop-blur-xl border-white/25"
-              : "bg-white/85 backdrop-blur-xl border-slate-200/70 shadow-[0_10px_40px_-12px_rgba(8,127,120,0.35)]"
+              : "bg-white/85 backdrop-blur-xl border-slate-200/70 shadow-[0_10px_40px_-12px_rgba(18, 134, 95,0.35)]"
           }`}
         >
           <Link href="/" aria-label="FreshBhoj home" className="shrink-0">
@@ -71,11 +71,11 @@ const Navbar = () => {
                   className={`h-10 inline-flex items-center px-3 xl:px-4 rounded-full text-sm font-bold transition-colors ${
                     active
                       ? onDark
-                        ? "bg-white text-[#087F78]"
-                        : "bg-[#087F78]/10 text-[#087F78]"
+                        ? "bg-white text-[#12865F]"
+                        : "bg-[#12865F]/10 text-[#12865F]"
                       : onDark
                         ? "text-white/85 hover:text-white hover:bg-white/10"
-                        : "text-slate-600 hover:text-[#087F78] hover:bg-[#087F78]/5"
+                        : "text-slate-600 hover:text-[#12865F] hover:bg-[#12865F]/5"
                   }`}
                 >
                   {l.label}
@@ -88,7 +88,7 @@ const Navbar = () => {
             <Link
               href="/partner/login"
               className={`hidden md:inline-flex items-center h-11 px-5 rounded-full text-sm font-bold border transition-colors ${
-                onDark ? "text-white border-white/35 hover:bg-white/10" : "text-[#087F78] border-[#087F78]/25 hover:bg-[#087F78]/5"
+                onDark ? "text-white border-white/35 hover:bg-white/10" : "text-[#12865F] border-[#12865F]/25 hover:bg-[#12865F]/5"
               }`}
             >
               Partner Login
@@ -100,7 +100,7 @@ const Navbar = () => {
               Pre-register <ArrowUpRight size={15} />
             </Link>
             <button
-              className={`lg:hidden w-11 h-11 shrink-0 rounded-full flex items-center justify-center transition-colors ${onDark ? "bg-white/15 text-white" : "bg-[#087F78]/10 text-[#087F78]"}`}
+              className={`lg:hidden w-11 h-11 shrink-0 rounded-full flex items-center justify-center transition-colors ${onDark ? "bg-white/15 text-white" : "bg-[#12865F]/10 text-[#12865F]"}`}
               onClick={() => setMenuOpen((v) => !v)}
               aria-label={menuOpen ? "Close menu" : "Open menu"}
               aria-expanded={menuOpen}
@@ -135,7 +135,7 @@ const Navbar = () => {
                 href={l.href}
                 onClick={() => setMenuOpen(false)}
                 className={`flex items-center justify-between rounded-2xl px-4 py-3.5 text-xl font-extrabold transition-colors ${
-                  isActive(l.href) ? "bg-[#087F78]/10 text-[#087F78]" : "text-[#0D1B1E] hover:bg-slate-50"
+                  isActive(l.href) ? "bg-[#12865F]/10 text-[#12865F]" : "text-[#0D1B1E] hover:bg-slate-50"
                 }`}
                 style={{ transitionDelay: menuOpen ? `${i * 30}ms` : "0ms" }}
               >
@@ -146,7 +146,7 @@ const Navbar = () => {
           </nav>
           <div className="torana h-[22px] bg-[length:81px_22px] mb-5 opacity-90" aria-hidden />
           <div className="grid grid-cols-2 gap-3">
-            <Link href="/partner/login" onClick={() => setMenuOpen(false)} className="text-center rounded-full border-2 border-[#087F78]/25 text-[#087F78] font-bold py-3.5">
+            <Link href="/partner/login" onClick={() => setMenuOpen(false)} className="text-center rounded-full border-2 border-[#12865F]/25 text-[#12865F] font-bold py-3.5">
               Partner Login
             </Link>
             <Link href="/pre-register" onClick={() => setMenuOpen(false)} className="text-center rounded-full bg-[#FFC21A] text-[#0D1B1E] font-extrabold py-3.5">
@@ -154,9 +154,9 @@ const Navbar = () => {
             </Link>
           </div>
           <div className="flex items-center justify-center gap-4 mt-6 text-xs font-semibold text-slate-400">
-            <Link href="/privacy-policy" onClick={() => setMenuOpen(false)} className="hover:text-[#087F78]">Privacy Policy</Link>
+            <Link href="/privacy-policy" onClick={() => setMenuOpen(false)} className="hover:text-[#12865F]">Privacy Policy</Link>
             <span className="w-1 h-1 rounded-full bg-slate-300" />
-            <Link href="/terms-of-service" onClick={() => setMenuOpen(false)} className="hover:text-[#087F78]">Terms of Service</Link>
+            <Link href="/terms-of-service" onClick={() => setMenuOpen(false)} className="hover:text-[#12865F]">Terms of Service</Link>
           </div>
         </div>
       </div>

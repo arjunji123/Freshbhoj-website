@@ -83,7 +83,7 @@ export default function SuggestionHistoryPage() {
 
       {isLoading ? (
         <div className="flex items-center justify-center py-24">
-          <Spinner className="w-8 h-8 text-[#087F78]" />
+          <Spinner className="w-8 h-8 text-[#12865F]" />
         </div>
       ) : items.length === 0 && error ? (
         <Card>

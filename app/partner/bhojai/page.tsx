@@ -104,7 +104,7 @@ export default function BhojAiPage() {
         <button
           onClick={handleReset}
           disabled={isResetting || messages.length === 0}
-          className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-500 hover:text-[#087F78] transition-colors disabled:opacity-40 disabled:pointer-events-none shrink-0"
+          className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-500 hover:text-[#12865F] transition-colors disabled:opacity-40 disabled:pointer-events-none shrink-0"
         >
           <RotateCcw size={13} className={isResetting ? "animate-spin" : ""} />
           New conversation
@@ -115,7 +115,7 @@ export default function BhojAiPage() {
         <div className="flex-1 overflow-y-auto px-5 py-6 flex flex-col gap-4">
           {isLoadingHistory ? (
             <div className="flex-1 flex items-center justify-center">
-              <Spinner className="w-6 h-6 text-[#087F78]" />
+              <Spinner className="w-6 h-6 text-[#12865F]" />
             </div>
           ) : messages.length === 0 ? (
             <EmptyChatState onPick={handleSend} />
@@ -173,7 +173,7 @@ function EmptyChatState({ onPick }: { onPick: (text: string) => void }) {
           <button
             key={q}
             onClick={() => onPick(q)}
-            className="px-3.5 py-2 rounded-full text-xs font-bold bg-[#087F78]/10 text-[#087F78] hover:bg-[#087F78]/15 transition-colors"
+            className="px-3.5 py-2 rounded-full text-xs font-bold bg-[#12865F]/10 text-[#12865F] hover:bg-[#12865F]/15 transition-colors"
           >
             {q}
           </button>
@@ -249,7 +249,7 @@ function BhojAiCard({ card }: { card: Record<string, unknown> }) {
         {estimatedDaysLeft !== null && estimatedDaysLeft !== undefined ? (
           <p className="text-[11px] text-slate-400 mt-3">~{estimatedDaysLeft} day{estimatedDaysLeft === 1 ? "" : "s"} left (estimate)</p>
         ) : null}
-        <Link href="/partner/fssai-assistance" className="inline-flex items-center gap-1 text-xs font-bold text-[#087F78] mt-3">
+        <Link href="/partner/fssai-assistance" className="inline-flex items-center gap-1 text-xs font-bold text-[#12865F] mt-3">
           Open FSSAI Assistance <ArrowRight size={12} />
         </Link>
       </div>

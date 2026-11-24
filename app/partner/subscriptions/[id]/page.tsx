@@ -126,7 +126,7 @@ export default function SubscriptionDetailPage() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-24">
-        <Spinner className="w-8 h-8 text-[#087F78]" />
+        <Spinner className="w-8 h-8 text-[#12865F]" />
       </div>
     );
   }
@@ -152,7 +152,7 @@ export default function SubscriptionDetailPage() {
 
       <div className="flex flex-wrap items-start justify-between gap-4 mb-6">
         <div className="flex items-center gap-4">
-          <div className="w-14 h-14 rounded-full bg-[#087F78]/10 overflow-hidden shrink-0 flex items-center justify-center text-[#087F78] font-bold text-lg">
+          <div className="w-14 h-14 rounded-full bg-[#12865F]/10 overflow-hidden shrink-0 flex items-center justify-center text-[#12865F] font-bold text-lg">
             {sub.customer.profileImage ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img src={sub.customer.profileImage} alt="" className="w-full h-full object-cover" />
@@ -167,7 +167,7 @@ export default function SubscriptionDetailPage() {
               </h1>
               <Badge tone={STATUS_TONE[sub.status]}>{sub.status}</Badge>
             </div>
-            <a href={`tel:${sub.customer.phone}`} className="inline-flex items-center gap-1.5 text-sm font-bold text-[#087F78] mt-1">
+            <a href={`tel:${sub.customer.phone}`} className="inline-flex items-center gap-1.5 text-sm font-bold text-[#12865F] mt-1">
               <Phone size={13} /> {sub.customer.phone}
             </a>
           </div>
@@ -176,7 +176,7 @@ export default function SubscriptionDetailPage() {
         <div className="flex items-center gap-2 flex-wrap">
           <a
             href={`tel:${sub.customer.phone}`}
-            className="inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-bold border-2 border-[#087F78]/20 text-[#087F78] hover:bg-[#087F78]/5 transition-colors"
+            className="inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-bold border-2 border-[#12865F]/20 text-[#12865F] hover:bg-[#12865F]/5 transition-colors"
           >
             <Phone size={15} /> Call customer
           </a>
@@ -413,7 +413,7 @@ function DeliveryCell({ day, isToday }: { day: SubscriptionDeliveryScheduleItem;
   return (
     <div
       className={`flex flex-col items-center gap-1.5 rounded-2xl px-2 py-3 ${tone.bg} ${
-        isToday ? "ring-2 ring-[#087F78]/40" : ""
+        isToday ? "ring-2 ring-[#12865F]/40" : ""
       }`}
     >
       <p className={`text-[10px] font-bold uppercase tracking-wide ${tone.text}`}>{isToday ? "Today" : weekday}</p>

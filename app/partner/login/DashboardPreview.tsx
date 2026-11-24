@@ -36,7 +36,7 @@ const DESIGN_W = 1120;
 function Stat({ icon: Icon, label, value, sub, accent }: { icon: LucideIcon; label: string; value: string | number; sub?: string; accent?: boolean }) {
   return (
     <Card className="!p-5">
-      <div className={`w-9 h-9 rounded-xl flex items-center justify-center mb-3 ${accent ? "text-white" : "bg-[#087F78]/10 text-[#087F78]"}`} style={accent ? GRADIENT_BG : undefined}>
+      <div className={`w-9 h-9 rounded-xl flex items-center justify-center mb-3 ${accent ? "text-white" : "bg-[#12865F]/10 text-[#12865F]"}`} style={accent ? GRADIENT_BG : undefined}>
         <Icon size={16} />
       </div>
       <p className="text-2xl font-extrabold text-slate-900">{value}</p>
@@ -49,7 +49,7 @@ function Stat({ icon: Icon, label, value, sub, accent }: { icon: LucideIcon; lab
 function Quick({ icon: Icon, label }: { icon: LucideIcon; label: string }) {
   return (
     <div className="flex items-center gap-3 bg-white rounded-2xl border border-slate-100 shadow-[0_4px_20px_-8px_rgba(0,0,0,0.06)] px-4 py-3.5">
-      <div className="w-8 h-8 rounded-lg bg-[#087F78]/10 flex items-center justify-center text-[#087F78] shrink-0"><Icon size={15} /></div>
+      <div className="w-8 h-8 rounded-lg bg-[#12865F]/10 flex items-center justify-center text-[#12865F] shrink-0"><Icon size={15} /></div>
       <span className="text-xs font-bold text-slate-700">{label}</span>
     </div>
   );
@@ -123,7 +123,7 @@ export default function DashboardPreview({ className = "" }: { className?: strin
                 <div className="flex items-center gap-3">
                   <span className="relative w-11 h-11 rounded-2xl bg-white/15 flex items-center justify-center">
                     <Bell size={18} />
-                    <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-white text-[#087F78] text-[10px] font-extrabold flex items-center justify-center">3</span>
+                    <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-white text-[#12865F] text-[10px] font-extrabold flex items-center justify-center">3</span>
                   </span>
                   <Toggle checked={accepting} onChange={() => setAccepting((v) => !v)} onLabel="Taking orders" offLabel="Paused" className="bg-white/15 rounded-2xl px-4 py-3" />
                 </div>
@@ -156,16 +156,16 @@ export default function DashboardPreview({ className = "" }: { className?: strin
                   <p className="text-xs font-bold text-slate-400 uppercase tracking-wide">Last 7 days</p>
                   <h3 className="text-base font-extrabold text-slate-900">Revenue trend</h3>
                 </div>
-                <div className="w-9 h-9 rounded-xl bg-[#087F78]/10 text-[#087F78] flex items-center justify-center"><TrendingUp size={16} /></div>
+                <div className="w-9 h-9 rounded-xl bg-[#12865F]/10 text-[#12865F] flex items-center justify-center"><TrendingUp size={16} /></div>
               </div>
               <LineChart width={800} height={180} data={WEEK} margin={{ top: 8, right: 12, bottom: 0, left: 0 }}>
                 <defs>
-                  <linearGradient id="prevLine" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stopColor="#1DB9A0" /><stop offset="100%" stopColor="#087F78" /></linearGradient>
+                  <linearGradient id="prevLine" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stopColor="#34C98A" /><stop offset="100%" stopColor="#12865F" /></linearGradient>
                 </defs>
                 <CartesianGrid vertical={false} stroke="#F1F5F9" />
                 <XAxis dataKey="label" padding={{ left: 24, right: 24 }} axisLine={false} tickLine={false} tick={{ fontSize: 11, fontWeight: 700, fill: "#94A3B8" }} />
                 <YAxis hide />
-                <Line type="monotone" dataKey="revenue" stroke="url(#prevLine)" strokeWidth={2.5} strokeLinecap="round" dot={{ r: 3, fill: "#087F78", strokeWidth: 0 }} isAnimationActive={false} />
+                <Line type="monotone" dataKey="revenue" stroke="url(#prevLine)" strokeWidth={2.5} strokeLinecap="round" dot={{ r: 3, fill: "#12865F", strokeWidth: 0 }} isAnimationActive={false} />
               </LineChart>
             </Card>
 
@@ -173,7 +173,7 @@ export default function DashboardPreview({ className = "" }: { className?: strin
               <Card className="col-span-2 !p-0 overflow-hidden">
                 <div className="flex items-center justify-between px-6 pt-6 pb-4">
                   <h3 className="text-base font-extrabold text-slate-900">Live orders</h3>
-                  <span className="inline-flex items-center gap-1 text-xs font-bold text-[#087F78]">View board <ArrowRight size={13} /></span>
+                  <span className="inline-flex items-center gap-1 text-xs font-bold text-[#12865F]">View board <ArrowRight size={13} /></span>
                 </div>
                 <div className="divide-y divide-slate-50">
                   {ORDERS.map((o) => (
@@ -207,12 +207,12 @@ export default function DashboardPreview({ className = "" }: { className?: strin
                 <Card className="!p-5 flex-1">
                   <div className="flex items-center justify-between mb-3">
                     <p className="text-xs font-bold text-slate-400 uppercase tracking-wide">Your stories</p>
-                    <span className="text-[11px] font-bold text-[#087F78]">Manage</span>
+                    <span className="text-[11px] font-bold text-[#12865F]">Manage</span>
                   </div>
                   <div className="flex gap-2">
                     {STORIES.map((s) => (
                       <div key={s.img} className="shrink-0 w-14">
-                        <div className="w-14 h-14 rounded-2xl bg-[#EFFAF8] overflow-hidden border-2 border-[#087F78]/20">
+                        <div className="w-14 h-14 rounded-2xl bg-[#EEFBF4] overflow-hidden border-2 border-[#12865F]/20">
                           <Image src={s.img} alt="" width={56} height={56} className="w-full h-full object-cover" />
                         </div>
                         <div className="flex items-center justify-center gap-1.5 mt-1 text-[10px] text-slate-400 font-semibold">

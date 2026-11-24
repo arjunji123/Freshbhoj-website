@@ -19,18 +19,18 @@ import {
 import { Navbar, Footer } from "../Components";
 
 const gradientText = {
-  background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)",
+  background: "linear-gradient(169.21deg, #34C98A 9%, #12865F 77%, #0C4A38 100%)",
   WebkitBackgroundClip: "text" as const,
   WebkitTextFillColor: "transparent" as const,
   backgroundClip: "text" as const,
 };
 
 const gradientBg = {
-  background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)",
+  background: "linear-gradient(169.21deg, #34C98A 9%, #12865F 77%, #0C4A38 100%)",
 };
 
 const contactUsInputBorder =
-  "bg-slate-50 border border-slate-200/80 hover:border-slate-300 focus:bg-white focus:border-[#087F78]/20 focus:ring-4 focus:ring-[#087F78]/5 outline-none transition-all placeholder:text-slate-300";
+  "bg-slate-50 border border-slate-200/80 hover:border-slate-300 focus:bg-white focus:border-[#12865F]/20 focus:ring-4 focus:ring-[#12865F]/5 outline-none transition-all placeholder:text-slate-300";
 
 const scrollToTop = () => {
   // Smooth scrolling can cause "fixed" navbar flicker on some mobile browsers.
@@ -228,7 +228,7 @@ function PreRegisterContent() {
 
       <main className="flex-1 w-full max-w-7xl mx-auto px-6 py-12 md:py-20 pt-36 md:pt-40 relative">
         {/* Subtle background accents (keeps page from looking flat) */}
-        <div className="pointer-events-none absolute -top-20 right-[-140px] w-[420px] h-[420px] bg-[#087F78]/[0.06] blur-[90px] rounded-full" />
+        <div className="pointer-events-none absolute -top-20 right-[-140px] w-[420px] h-[420px] bg-[#12865F]/[0.06] blur-[90px] rounded-full" />
 
         {/* Header Section */}
         <div className="text-center max-w-4xl mx-auto mb-10 md:mb-16 px-4">
@@ -244,8 +244,8 @@ Pre-register now for early access and launch benefits across FreshBhoj.
           /* Success Screen */
           <div className="max-w-2xl mx-auto py-12 md:py-20 px-6 text-center animate-in fade-in zoom-in duration-1000">
             <div className="relative w-32 h-32 mx-auto mb-10">
-              <div className="absolute inset-0 bg-[#087F78]/10 rounded-[3rem] animate-ping duration-[3s]" />
-              <div className="relative w-full h-full bg-white rounded-[2.5rem] shadow-xl border border-[#087F78]/10 flex items-center justify-center shadow-[#087F78]/5">
+              <div className="absolute inset-0 bg-[#12865F]/10 rounded-[3rem] animate-ping duration-[3s]" />
+              <div className="relative w-full h-full bg-white rounded-[2.5rem] shadow-xl border border-[#12865F]/10 flex items-center justify-center shadow-[#12865F]/5">
                 <Image src="/select.svg" alt="Success" width={60} height={60} />
               </div>
               <div className="absolute -top-2 -right-2 bg-white p-2 rounded-xl shadow-lg border border-slate-50 animate-bounce">
@@ -257,15 +257,15 @@ Pre-register now for early access and launch benefits across FreshBhoj.
               You're on the list!
             </h2>
             <p className="text-lg text-slate-500 mb-10 leading-relaxed max-w-lg mx-auto">
-              Your spot is secured. <span className="font-bold text-[#087F78]">We'll let you know as soon as the app launches</span> in your city.
+              Your spot is secured. <span className="font-bold text-[#12865F]">We'll let you know as soon as the app launches</span> in your city.
             </p>
 
-            <div className="text-left rounded-3xl border border-[#087F78]/15 bg-[#EFFAF8] p-6 md:p-8 mb-10">
+            <div className="text-left rounded-3xl border border-[#12865F]/15 bg-[#EEFBF4] p-6 md:p-8 mb-10">
               <h3 className="text-lg font-bold text-[#0D1B1E] mb-5">Your early member benefits</h3>
               <ul className="space-y-4">
                 {BENEFITS.map(({ icon: Icon, title, text }) => (
                   <li key={title} className="flex items-start gap-4">
-                    <span className="w-10 h-10 shrink-0 rounded-xl bg-white text-[#087F78] shadow-sm flex items-center justify-center"><Icon size={18} /></span>
+                    <span className="w-10 h-10 shrink-0 rounded-xl bg-white text-[#12865F] shadow-sm flex items-center justify-center"><Icon size={18} /></span>
                     <div>
                       <p className="font-bold text-[#0D1B1E] leading-tight">{title}</p>
                       <p className="text-sm text-slate-500 mt-0.5">{text}</p>
@@ -277,7 +277,7 @@ Pre-register now for early access and launch benefits across FreshBhoj.
 
             <Link
               href="/"
-              className="inline-flex items-center justify-center px-12 py-5 rounded-3xl text-white font-bold text-lg shadow-[0_20px_40px_-10px_rgba(8,127,120,0.3)] hover:scale-[1.05] active:scale-95 transition-all"
+              className="inline-flex items-center justify-center px-12 py-5 rounded-3xl text-white font-bold text-lg shadow-[0_20px_40px_-10px_rgba(18, 134, 95,0.3)] hover:scale-[1.05] active:scale-95 transition-all"
               style={gradientBg}
             >
               Back to Home <ChevronRight className="ml-2 w-5 h-5" />
@@ -287,7 +287,7 @@ Pre-register now for early access and launch benefits across FreshBhoj.
           /* Foodie Registration Flow */
           <div ref={formTopRef} className="max-w-4xl mx-auto relative scroll-mt-28 md:scroll-mt-32">
 
-            <div className="relative bg-white/90 backdrop-blur-2xl rounded-[2.5rem] border border-[#087F78]/15 shadow-[0_40px_90px_-35px_rgba(8,127,120,0.28)] overflow-hidden mb-12 ring-1 ring-white/60">
+            <div className="relative bg-white/90 backdrop-blur-2xl rounded-[2.5rem] border border-[#12865F]/15 shadow-[0_40px_90px_-35px_rgba(18, 134, 95,0.28)] overflow-hidden mb-12 ring-1 ring-white/60">
               <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white to-transparent opacity-80" />
               {/* Stepper Header */}
               <div className="p-8 md:p-10 border-b border-slate-50">
@@ -320,7 +320,7 @@ Pre-register now for early access and launch benefits across FreshBhoj.
                     {/* Personal Information */}
                     <div>
                       <div className="flex items-center gap-3 mb-8">
-                        <div className="w-10 h-10 rounded-xl bg-[#EFFAF8] flex items-center justify-center">
+                        <div className="w-10 h-10 rounded-xl bg-[#EEFBF4] flex items-center justify-center">
                           <Image src="/personal.svg" alt="Personal" width={20} height={20} />
                         </div>
                         <h3 className="text-lg font-semibold text-[#0D1B1E]">Your details</h3>
@@ -421,7 +421,7 @@ Pre-register now for early access and launch benefits across FreshBhoj.
                     {/* About Yourself */}
                     <div>
                       <div className="flex items-center gap-3 mb-8">
-                        <div className="w-10 h-10 rounded-xl bg-[#EFFAF8] flex items-center justify-center">
+                        <div className="w-10 h-10 rounded-xl bg-[#EEFBF4] flex items-center justify-center">
                           <Image src="/about-yourself.svg" alt="About" width={20} height={20} />
                         </div>
                         <h3 className="text-lg font-semibold text-[#0D1B1E]">About you</h3>
@@ -434,7 +434,7 @@ Pre-register now for early access and launch benefits across FreshBhoj.
                               key={item}
                               onClick={() => setFoodieData({ ...foodieData, aboutSelf: item })}
                               className={`px-6 py-3 rounded-full font-semibold text-sm transition-all border-2 ${foodieData.aboutSelf === item
-                                ? "border-[#087F78] bg-[#EFFAF8]"
+                                ? "border-[#12865F] bg-[#EEFBF4]"
                                 : "border-slate-100 text-slate-500 hover:border-slate-200"
                                 }`}
                               style={foodieData.aboutSelf === item ? gradientText : {}}
@@ -454,7 +454,7 @@ Pre-register now for early access and launch benefits across FreshBhoj.
                       <button
                         onClick={nextStep}
                         disabled={!isFoodieStep1Valid}
-                        className={`w-full py-5 rounded-3xl text-white font-semibold text-xl shadow-[0_15px_30px_-5px_rgba(8,127,120,0.3)] transition-all flex items-center justify-center gap-3 group ${!isFoodieStep1Valid ? "opacity-50 cursor-not-allowed bg-slate-300 shadow-none scale-100" : "hover:scale-[1.02] active:scale-95"}`}
+                        className={`w-full py-5 rounded-3xl text-white font-semibold text-xl shadow-[0_15px_30px_-5px_rgba(18, 134, 95,0.3)] transition-all flex items-center justify-center gap-3 group ${!isFoodieStep1Valid ? "opacity-50 cursor-not-allowed bg-slate-300 shadow-none scale-100" : "hover:scale-[1.02] active:scale-95"}`}
                         style={isFoodieStep1Valid ? gradientBg : {}}
                       >
                         Agla Step <ChevronRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
@@ -466,7 +466,7 @@ Pre-register now for early access and launch benefits across FreshBhoj.
                     {/* Taste Section */}
                     <div className="animate-in fade-in slide-in-from-right-10 duration-500">
                       <div className="flex items-center gap-3 mb-8">
-                        <div className="w-10 h-10 rounded-xl bg-[#EFFAF8] flex items-center justify-center">
+                        <div className="w-10 h-10 rounded-xl bg-[#EEFBF4] flex items-center justify-center">
                           <Image src="/taste.svg" alt="Taste" width={20} height={20} />
                         </div>
                         <h3 className="text-lg font-semibold text-[#0D1B1E]">Tell us your taste</h3>
@@ -485,7 +485,7 @@ Pre-register now for early access and launch benefits across FreshBhoj.
                                 key={pref.id}
                                 onClick={() => setFoodieData({ ...foodieData, foodPreference: pref.id })}
                                 className={`p-6 rounded-[1.5rem] border-2 transition-all flex flex-col items-center gap-4 text-center ${foodieData.foodPreference === pref.id
-                                  ? "border-[#087F78] bg-[#087F78]/5 shadow-md shadow-[#087F78]/5"
+                                  ? "border-[#12865F] bg-[#12865F]/5 shadow-md shadow-[#12865F]/5"
                                   : "border-slate-100 bg-white hover:border-slate-200"
                                   }`}
                               >
@@ -517,7 +517,7 @@ Pre-register now for early access and launch benefits across FreshBhoj.
                                   setFoodieData({ ...foodieData, lookingFor: newLooking });
                                 }}
                                 className={`px-6 py-4 rounded-2xl font-semibold text-sm transition-all border-2 flex items-center justify-between ${foodieData.lookingFor.includes(item.id)
-                                  ? "border-[#087F78] bg-[#087F78]/5 shadow-sm shadow-[#087F78]/5"
+                                  ? "border-[#12865F] bg-[#12865F]/5 shadow-sm shadow-[#12865F]/5"
                                   : "border-slate-100 text-slate-500 hover:border-slate-200 bg-white"
                                   }`}
                               >
@@ -566,7 +566,7 @@ Pre-register now for early access and launch benefits across FreshBhoj.
                         <button
                           onClick={handleFoodieSubmit}
                           disabled={isSubmitting || !isFoodieStep2Valid}
-                          className={`w-full md:flex-1 py-4 md:py-5 rounded-3xl text-white font-semibold text-lg md:text-xl shadow-[0_15px_30px_-5px_rgba(8,127,120,0.3)] transition-all flex items-center justify-center gap-2 md:gap-3 ${isSubmitting || !isFoodieStep2Valid ? "opacity-50 cursor-not-allowed bg-slate-300 shadow-none scale-100" : "hover:scale-[1.02] active:scale-95"}`}
+                          className={`w-full md:flex-1 py-4 md:py-5 rounded-3xl text-white font-semibold text-lg md:text-xl shadow-[0_15px_30px_-5px_rgba(18, 134, 95,0.3)] transition-all flex items-center justify-center gap-2 md:gap-3 ${isSubmitting || !isFoodieStep2Valid ? "opacity-50 cursor-not-allowed bg-slate-300 shadow-none scale-100" : "hover:scale-[1.02] active:scale-95"}`}
                           style={!isSubmitting && isFoodieStep2Valid ? gradientBg : {}}
                         >
                           {isSubmitting ? (
@@ -605,7 +605,7 @@ export default function PreRegister() {
   return (
     <Suspense fallback={
       <div className="min-h-screen bg-[#FDFCFB] flex items-center justify-center">
-        <div className="w-12 h-12 border-4 border-[#087F78]/20 border-t-[#087F78] rounded-full animate-spin" />
+        <div className="w-12 h-12 border-4 border-[#12865F]/20 border-t-[#12865F] rounded-full animate-spin" />
       </div>
     }>
       <PreRegisterContent />
