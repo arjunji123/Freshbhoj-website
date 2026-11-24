@@ -1,4 +1,14 @@
+"use client";
+
+import Image from "next/image";
 import { Navbar, Footer } from "../Components";
+
+const gradientStyle = {
+  background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)",
+  WebkitBackgroundClip: "text" as const,
+  WebkitTextFillColor: "transparent" as const,
+  backgroundClip: "text" as const,
+};
 
 const sections = [
   {
@@ -49,45 +59,113 @@ export default function TermsOfService() {
     <div className="min-h-screen bg-white flex flex-col font-sans">
       <Navbar />
 
-      <header className="w-full pt-36 md:pt-40 pb-12 border-b border-slate-100">
-        <div className="max-w-3xl mx-auto px-6">
-          <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#087F78] mb-4">Legal</p>
-          <h1 className="font-extrabold text-5xl md:text-6xl tracking-[-0.03em] leading-[1.05] text-[#0D1B1E] mb-4">Terms of Service</h1>
-          <p className="text-slate-600 text-lg mb-3">Please read these terms before using FreshBhoj.</p>
-          <p className="text-slate-500 text-sm font-medium">Last updated: March 17, 2026</p>
+      {/* Hero Header */}
+      <div className="w-full pt-36 md:pt-40 pb-4 md:pb-4">
+        <div className="w-full max-w-5xl mx-auto px-6">
+          <div className="flex items-center gap-2 bg-[#EFFAF8] border border-[#D3F1EE] rounded-full px-4 py-1.5 w-fit mb-4">
+            <div className="relative w-3.5 h-3.5">
+              <Image src="/legal.svg" alt="legal" fill className="object-contain" />
+            </div>
+            <span className="text-[#087F78] text-[10px] font-bold uppercase tracking-[0.2em]">
+              Legal Documentation
+            </span>
+          </div>
+          <h1 className="font-extrabold text-5xl md:text-6xl lg:text-7xl leading-tight tracking-tight mb-4">
+            <span className="text-[#0D1B1E]">Terms of </span>
+            <span
+              className="inline-block"
+              style={{
+                background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}
+            >
+              Service
+            </span>
+          </h1>
+          <p className="text-slate-600 text-base md:text-lg max-w-2xl mb-3">
+            Please read these terms before using FreshBhoj. Plain language, no surprises.
+          </p>
+          <p className="text-slate-400 text-sm font-medium">
+            Last Updated: March 17, 2026
+          </p>
         </div>
-      </header>
+      </div>
 
-      <main className="w-full max-w-3xl mx-auto px-6 py-14 md:py-20 flex-1">
-        <nav aria-label="Contents" className="mb-14 rounded-2xl bg-[#F3F8F8] border border-slate-100 p-6">
-          <p className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-3">Contents</p>
-          <ol className="grid sm:grid-cols-2 gap-x-6 gap-y-1.5 text-[#087F78] font-semibold">
-            {sections.map((s) => (
-              <li key={s.number}><a href={`#section-${s.number}`} className="hover:underline">{s.number}. {s.title}</a></li>
-            ))}
-          </ol>
-        </nav>
-
-        <div className="flex flex-col gap-14">
+      {/* Content */}
+      <main className="w-full max-w-5xl mx-auto px-6 py-14 lg:py-18 flex-1">
+        {/* All sections in one bordered card like the image */}
+        <div className="rounded-2xl border border-slate-100 bg-white shadow-sm overflow-hidden divide-y divide-slate-100">
           {sections.map((section) => (
-            <section key={section.number} id={`section-${section.number}`} className="flex flex-col gap-5 scroll-mt-28">
-              <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-[#0D1B1E]">{section.number}. {section.title}</h2>
+            <div key={section.number} className="p-8 lg:p-12 flex flex-col gap-5">
+
+              {/* Section Heading */}
+              <h2 className="text-xl md:text-2xl font-bold tracking-tight">
+                <span className="inline-block" style={gradientStyle}>
+                  {section.number}.
+                </span>{" "}
+                <span className="inline-block" style={gradientStyle}>
+                  {section.title}
+                </span>
+              </h2>
+
+              {/* Text Content */}
               {section.content.map((para, i) => (
-                <p key={i} className="text-slate-600 text-base md:text-lg leading-relaxed">{para}</p>
+                <p
+                  key={i}
+                  className="text-slate-600 text-sm md:text-base leading-relaxed"
+                >
+                  {para}
+                </p>
               ))}
+
+              {/* Bullet Points */}
               {section.bullets && (
-                <ul className="list-disc pl-5 marker:text-[#087F78] space-y-3 text-slate-600 text-base md:text-lg leading-relaxed">
-                  {section.bullets.map((item, i) => <li key={i}>{item}</li>)}
+                <ul className="flex flex-col gap-3 pl-2">
+                  {section.bullets.map((item, i) => (
+                    <li
+                      key={i}
+                      className="flex items-start gap-3 text-slate-600 text-sm md:text-base leading-relaxed"
+                    >
+                      <span
+                        className="mt-2 w-1.5 h-1.5 rounded-full flex-shrink-0"
+                        style={{
+                          background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)",
+                        }}
+                      />
+                      {item}
+                    </li>
+                  ))}
                 </ul>
               )}
-            </section>
+            </div>
           ))}
         </div>
 
-        <p className="mt-16 pt-8 border-t border-slate-100 text-slate-600 text-lg">
-          Questions about these terms? Write to{" "}
-          <a href="mailto:legal@freshbhoj.com" className="font-bold text-[#087F78] hover:underline">legal@freshbhoj.com</a>.
-        </p>
+        {/* Contact CTA */}
+        <div className="mt-12 rounded-2xl bg-[#EFFAF8] border border-slate-100 p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div>
+            <h3 className="text-[#0D1B1E] font-extrabold text-lg md:text-xl mb-1">
+              Questions about our Terms?
+            </h3>
+            <p className="text-slate-500 text-sm">
+              Our legal team is here to help you understand your rights.
+            </p>
+          </div>
+          <a
+            href="mailto:legal@freshbhoj.com"
+            className="inline-flex items-center gap-3 px-8 py-4 text-white font-bold rounded-xl transition-all hover:scale-105 active:scale-95 shadow-lg whitespace-nowrap"
+            style={{
+              background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)",
+            }}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+            Contact Legal
+          </a>
+        </div>
       </main>
 
       <Footer />

@@ -94,11 +94,11 @@ export default function PublicKitchenPage() {
 
           <div className="flex items-center gap-4 mt-5 pt-4 border-t border-slate-100 text-xs text-slate-400 font-semibold">
             <span>{kitchen.followerCount} followers</span>
-            <span>{kitchen.prepTimeMins} min prep time</span>
+            <span>{kitchen.prepTimeMins} min me taiyaar</span>
           </div>
         </div>
 
-        <p className="text-center text-xs text-slate-400 mt-6">Powered by FreshBhoj</p>
+        <p className="text-center text-xs text-slate-400 mt-6">Powered by FreshBhoj · <span className="font-deva text-sm text-[#087F78]">स्वाद भी, भरोसा भी</span></p>
       </div>
     </div>
   );

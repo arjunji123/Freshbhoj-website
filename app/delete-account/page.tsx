@@ -1,7 +1,15 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { Navbar, Footer } from "../Components";
+
+const gradientStyle = {
+  background: "linear-gradient(169.21deg, #1DB9A0 9%, #087F78 77%, #0B4F6C 100%)",
+  WebkitBackgroundClip: "text" as const,
+  WebkitTextFillColor: "transparent" as const,
+  backgroundClip: "text" as const,
+};
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -86,15 +94,22 @@ export default function DeleteAccountPage() {
     <div className="min-h-screen bg-white flex flex-col font-sans">
       <Navbar />
 
-      <header className="w-full pt-36 md:pt-40 pb-12 border-b border-slate-100">
-        <div className="max-w-3xl mx-auto px-6">
-          <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#087F78] mb-4">Account</p>
-          <h1 className="font-extrabold text-4xl md:text-6xl tracking-[-0.03em] leading-[1.05] text-[#0D1B1E] mb-4">Delete your FreshBhoj account</h1>
-          <p className="text-slate-600 text-lg max-w-xl">
-            Permanently delete your account and personal data here. No app install or login needed, just your phone number.
+      <div className="w-full pt-36 md:pt-40 pb-8 md:pb-16 border-b border-slate-100">
+        <div className="w-full max-w-3xl mx-auto px-6">
+          <div className="flex items-center gap-2 bg-[#EFFAF8] rounded-full px-4 py-1.5 w-fit mb-4">
+            <div className="relative w-3.5 h-3.5">
+              <Image src="/legal.svg" alt="legal" fill className="object-contain" />
+            </div>
+            <span className="text-[#087F78] text-[10px] font-bold uppercase tracking-[0.2em]">Account</span>
+          </div>
+          <h1 className="font-extrabold text-4xl md:text-6xl leading-tight tracking-tight mb-4">
+            Delete your <span style={gradientStyle}>FreshBhoj</span> account
+          </h1>
+          <p className="text-slate-500 text-lg max-w-xl">
+            Permanently delete your FreshBhoj account and personal data right here. No app install or login needed, just your phone number.
           </p>
         </div>
-      </header>
+      </div>
 
       <div className="w-full max-w-3xl mx-auto px-6 py-12 md:py-16 flex-1">
         <div className="grid md:grid-cols-2 gap-10 mb-14">
@@ -103,7 +118,7 @@ export default function DeleteAccountPage() {
             <ul className="space-y-2.5">
               {DELETED_ITEMS.map((item) => (
                 <li key={item} className="flex gap-2.5 text-sm text-slate-600">
-                  <span className="text-slate-400 font-bold mt-0.5" aria-hidden>&#10005;</span>
+                  <span className="text-[#087F78] font-bold mt-0.5">&#10005;</span>
                   {item}
                 </li>
               ))}
@@ -114,7 +129,7 @@ export default function DeleteAccountPage() {
             <ul className="space-y-2.5">
               {RETAINED_ITEMS.map((item) => (
                 <li key={item} className="flex gap-2.5 text-sm text-slate-600">
-                  <span className="text-[#087F78] font-bold mt-0.5" aria-hidden>&#10003;</span>
+                  <span className="text-emerald-600 font-bold mt-0.5">&#10003;</span>
                   {item}
                 </li>
               ))}
@@ -122,7 +137,7 @@ export default function DeleteAccountPage() {
           </div>
         </div>
 
-        <div className="bg-[#F3F8F8] border border-slate-100 rounded-3xl p-6 md:p-10 max-w-xl mx-auto">
+        <div className="bg-[#F5FCFB] border border-[#D3F1EE] rounded-3xl p-6 md:p-10 max-w-xl mx-auto">
           {step === "phone" ? (
             <>
               <h3 className="font-extrabold text-xl mb-1.5 text-slate-900">Step 1 — Verify it&apos;s you</h3>
@@ -144,8 +159,8 @@ export default function DeleteAccountPage() {
               <button
                 onClick={handleSendOtp}
                 disabled={!isPhoneValid || isLoading}
-                className="w-full rounded-xl py-3.5 bg-[#087F78] hover:bg-[#066b65] text-white font-bold text-sm disabled:opacity-50 transition-transform active:scale-[0.98]"
-                
+                className="w-full rounded-xl py-3.5 text-white font-bold text-sm disabled:opacity-50 transition-transform active:scale-[0.98]"
+                style={{ background: gradientStyle.background }}
               >
                 {isLoading ? "Sending…" : "Send verification code"}
               </button>
@@ -196,7 +211,7 @@ export default function DeleteAccountPage() {
           )}
         </div>
 
-        <p className="text-xs text-slate-500 text-center mt-8 max-w-xl mx-auto">
+        <p className="text-xs text-slate-400 text-center mt-8 max-w-xl mx-auto">
           Questions about your data? Contact us at{" "}
           <a href="mailto:privacy@freshbhoj.com" className="font-bold text-slate-500">
             privacy@freshbhoj.com
