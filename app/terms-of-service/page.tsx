@@ -51,6 +51,11 @@ const sections = [
       "Our failure to enforce any right or provision of these Terms will not be considered a waiver of those rights.",
     ],
   },
+  {
+    number: "6",
+    title: "Credits",
+    content: ["App and Bhoj Fit icons: Solar icon set by 480 Design, used under the Creative Commons Attribution 4.0 (CC BY 4.0) licence."],
+  },
 ];
 
 export default function TermsOfService() {

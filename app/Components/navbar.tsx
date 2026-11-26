@@ -5,12 +5,13 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { ArrowUpRight, X } from "lucide-react";
+import BhojFitIcon from "./BhojFitIcon";
 
 const LINKS = [
   { label: "Home", href: "/" },
   { label: "What you get", href: "/#features" },
   { label: "Verified", href: "/#verified" },
-  { label: "BhojFit", href: "/bhojfit" },
+  { label: "Bhoj Fit", href: "/bhojfit" },
   { label: "Contact", href: "/contact-us" },
 ] as const;
 
@@ -78,6 +79,7 @@ const Navbar = () => {
                         : "text-slate-600 hover:text-[#12865F] hover:bg-[#12865F]/5"
                   }`}
                 >
+                  {l.href === "/bhojfit" ? <BhojFitIcon size={20} className="mr-1.5" /> : null}
                   {l.label}
                 </Link>
               );
@@ -139,7 +141,10 @@ const Navbar = () => {
                 }`}
                 style={{ transitionDelay: menuOpen ? `${i * 30}ms` : "0ms" }}
               >
-                <span>{l.label}</span>
+                <span className="inline-flex items-center gap-2.5">
+                  {l.href === "/bhojfit" ? <BhojFitIcon size={26} /> : null}
+                  {l.label}
+                </span>
                 <ArrowUpRight size={18} className="text-slate-300" />
               </Link>
             ))}

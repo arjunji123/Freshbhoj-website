@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowUpRight, Droplets, Gauge, SlidersHorizontal, Target } from "lucide-react";
+import BhojFitIcon from "./BhojFitIcon";
 
 const PERKS = [
   { icon: Target, text: "Goal-based daily targets" },
@@ -15,13 +16,17 @@ export default function FitPromo() {
       <div className="max-w-7xl mx-auto px-6">
         <Link
           href="/bhojfit"
-          aria-label="Explore BhojFit"
+          aria-label="Explore Bhoj Fit"
           className="group relative block overflow-hidden rounded-[2.5rem] lg:rounded-[3.5rem] bg-[#0D1B1E] text-white p-8 lg:p-14 shadow-[0_30px_70px_-30px_rgba(11,79,108,0.7)] hover:-translate-y-1 transition-transform duration-500"
         >
           <div className="pointer-events-none absolute -top-24 -left-20 w-80 h-80 rounded-full bg-[#12865F]/50 blur-3xl animate-[drift_14s_ease-in-out_infinite]" />
           <div className="pointer-events-none absolute -bottom-28 -right-16 w-80 h-80 rounded-full bg-[#FFC21A]/15 blur-3xl" />
           <div className="relative grid lg:grid-cols-[1.1fr_0.9fr] gap-10 items-center">
             <div>
+              <div className="flex items-center gap-3 mb-5">
+                <BhojFitIcon size={56} />
+                <span className="text-2xl font-extrabold">Bhoj <span className="text-[#C6F432] italic">Fit</span></span>
+              </div>
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-[1.05] mb-4">
                 Eat for your{" "}
                 <span className="inline-block pr-[0.14em] -mr-[0.14em] bg-gradient-to-r from-[#5EE6D0] to-[#FFC21A] bg-clip-text text-transparent">
@@ -32,7 +37,7 @@ export default function FitPromo() {
                 A daily calorie and protein target, with macros on every meal.
               </p>
               <span className="inline-flex items-center gap-2 font-extrabold text-[#FFC21A]">
-                Explore BhojFit <ArrowUpRight size={18} className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                Explore Bhoj Fit <ArrowUpRight size={18} className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
               </span>
             </div>
             <ul className="grid gap-3">

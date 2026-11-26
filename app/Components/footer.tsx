@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Deva, Garland } from "./desi";
+import BhojFitIcon from "./BhojFitIcon";
 
 export default function Footer() {
   return (
@@ -34,7 +35,7 @@ export default function Footer() {
         {/* Nav Links */}
         <div className="flex flex-row flex-wrap justify-center items-center gap-6 md:gap-12 mb-12">
           {[
-            { label: "BhojFit", href: "/bhojfit" },
+            { label: "Bhoj Fit", href: "/bhojfit" },
             { label: "Privacy Policy", href: "/privacy-policy" },
             { label: "Terms of Service", href: "/terms-of-service" },
             { label: "Contact Us", href: "/contact-us" },
@@ -44,6 +45,7 @@ export default function Footer() {
               href={link.href}
               className="text-slate-400 font-medium text-sm lg:text-base hover:text-white transition-all relative group"
             >
+              {link.href === "/bhojfit" ? <BhojFitIcon size={18} className="inline-block align-[-4px] mr-1.5" /> : null}
               {link.label}
               <span
                 className="absolute -bottom-1 left-0 w-0 h-px transition-all group-hover:w-full"

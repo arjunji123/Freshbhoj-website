@@ -8,7 +8,7 @@ const CUSTOMER: Row[] = [
   { icon: BadgeCheck, title: "Verified kitchens with FSSAI", text: "Kitchens our team has visited in person earn a Verified badge." },
   { icon: Leaf, title: "Calories and protein on every dish", text: "Know what you are eating before you order." },
   { icon: CalendarSync, title: "Daily tiffin subscriptions", text: "Pick a plan, swap a meal, pause or skip any day." },
-  { icon: Beef, title: "BhojFit healthy meals", text: "Daily calorie and protein targets for your goal." },
+  { icon: Beef, title: "Bhoj Fit healthy meals", text: "Daily calorie and protein targets for your goal." },
 ];
 
 const KITCHEN: Row[] = [
