@@ -12,11 +12,11 @@ export const metadata: Metadata = {
 
     icons: {
         icon: [
-            { url: "/icon.svg", type: "image/svg+xml" },
-            { url: "/icon.svg" },
+            { url: "/icon.svg?v=green", type: "image/svg+xml" },
+            { url: "/icon.svg?v=green" },
         ],
-        shortcut: "/icon.svg",
-        apple: "/icon.svg",
+        shortcut: "/icon.svg?v=green",
+        apple: "/icon.svg?v=green",
     },
     manifest: "/manifest.json",
 
